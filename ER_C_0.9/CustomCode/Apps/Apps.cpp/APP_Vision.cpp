@@ -77,12 +77,11 @@ void Vision_classdef::SendToPC(VisionSendMsg_u *pack2vision)
  * @param[in]  data
  * @retval     None
  */
-
 void Vision_classdef::RecvFromPC(uint8_t *data, uint16_t ReceiveLen)
 {
-	float qingling[20]={0};
-	float duibi[20]={0};
-	int	zongshu[20]={0},max=0,chuzongzhi=0;
+	float reset_zero[20]={0};
+	float contrast[20]={0};
+	int	all_num[20]={0},max=0,sub_val=0;
 	DevicesMonitor.Get_FPS(&TIME, &FPS);
 	CRCBuf = Checksum_CRC8(Recv_Msg.data+1, sizeof(Recv_Msg.Pack)-3);
 	if(Recv_Msg.Pack.start_Tag == 'S' && Recv_Msg.Pack.end_tag == 'E' && Send_Msg.Pack.detection==1)
@@ -93,53 +92,40 @@ void Vision_classdef::RecvFromPC(uint8_t *data, uint16_t ReceiveLen)
 		}
 		else
 		{
-			Yaw_Reserve[Reserve_Num] = Recv_Msg.Pack.Yaw;
-			Depth_Reserve[Reserve_Num] = Recv_Msg.Pack.Depth;
-			Reserve_Num++;
-			if(Reserve_Num==20)
+			//根据距离过滤一些其他柱子物的误识别
+			if(Recv_Msg.Pack.Depth < 1.6)
+			{
+				Yaw_Reserve[Reserve_Num] = Recv_Msg.Pack.Yaw;
+				Depth_Reserve[Reserve_Num] = Recv_Msg.Pack.Depth;
+				Reserve_Num++;
+			}
+			//对视觉数据进行处理
+			if(Reserve_Num==5)
 			{
 				Use_Yaw = 0;
 				Reserve_Num = 0;
 				Send_Msg.Pack.detection = aim = 0;
-				// for(int i=0;i<20;i++)
-				// {
-				// 	Use_Yaw += Yaw_Reserve[i];
-				// 	Use_Depth += Depth_Reserve[i];
-				// }
-				// Use_Yaw/=20;Use_Depth/=20;
-				// Bubble_sort(Yaw_Reserve,20);
-				// Use_Yaw = (Yaw_Reserve[10]+Yaw_Reserve[11])/2;
-				
-				// 	Use_Yaw += Yaw_Reserve[2];
-				// 	Use_Yaw += Yaw_Reserve[4];
-				// 	Use_Yaw += Yaw_Reserve[6];
-				// 	Use_Yaw += Yaw_Reserve[8];
-				// 	Use_Yaw += Yaw_Reserve[10];
-				// 	Use_Yaw += Yaw_Reserve[12];
-				// 	Use_Yaw += Yaw_Reserve[14];
-				// 	Use_Yaw += Yaw_Reserve[16];
-				// 	Use_Yaw += Yaw_Reserve[18];
-				// 	Use_Yaw/=9;
-				
-				// Bubble_sort(Yaw_Reserve,20);
-				for(int j = 0; j < 20 ;j++)
+
+				//
+				//将记录的数据取出
+				for(int j = 0; j < 5 ;j++)
 				{
-						qingling[j] = duibi[j] = Yaw_Reserve[j];
-				}
-				
-				for(int i=0; i<20 ; i++)
+					reset_zero[j] = contrast[j] = Yaw_Reserve[j];
+				}	
+				//判断数据，从头开始记录数据并以其为中心在一定范围记录其他在此范围出现的数据的次数
+				for(int i=0; i<5 ; i++)
 				{
-					if(qingling[i] != 0)
+					if(reset_zero[i] != 0)
 					{
-						for(int l=0; l<20 ; l++)
+						for(int l=0; l<5 ; l++)
 						{
-							if(duibi[i] >= Yaw_Reserve[l]+1 || duibi[i] <= Yaw_Reserve[l]-1)
+							if(contrast[i] >= Yaw_Reserve[l]+1 || contrast[i] <= Yaw_Reserve[l]-1)
 							{
 							}
 							else
 							{
-								qingling[l] = 0;
-								zongshu[i]++;
+								reset_zero[l] = 0;
+								all_num[i]++;
 							}
 						}
 					}
@@ -147,16 +133,16 @@ void Vision_classdef::RecvFromPC(uint8_t *data, uint16_t ReceiveLen)
 					{
 					}
 				}
-						
-				max = zongshu[0];chuzongzhi = 0;
-				for(int k = 0; k<20 ; k++)
+				//寻找出现次数最多的数据范围
+				max = all_num[0];sub_val = 0;
+				for(int k = 0; k<5 ; k++)
 				{
-					if(zongshu[k] > max){max = zongshu[k];chuzongzhi = k;}
+					if(all_num[k] > max){max = all_num[k];sub_val = k;}
 				}
-						
-				for(int m = 0; m<20 ; m++)
+				//求取数据范围的数据的平均值，并以之作为最终目标叠加值
+				for(int m = 0; m<5 ; m++)
 				{
-					if(duibi[chuzongzhi] >= Yaw_Reserve[m]+1 || duibi[chuzongzhi] <= Yaw_Reserve[m]-1)
+					if(contrast[sub_val] >= Yaw_Reserve[m]+1 || contrast[sub_val] <= Yaw_Reserve[m]-1)
 					{
 					}
 					else

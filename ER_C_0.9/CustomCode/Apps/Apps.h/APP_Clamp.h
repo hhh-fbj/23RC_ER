@@ -76,6 +76,7 @@ public:
 	uint8_t Pos_Flag;
 	uint8_t Should_Init_Flag = 1;
 	uint8_t Should_Place_Flag;
+	uint8_t Auto_Aim_Flag;
 
 	void Control();
 	void Init(void);

@@ -24,7 +24,7 @@
 
 
 
-/*------------------------------------------------------------ 初�?�化 ------------------------------------------------------------*/
+/*------------------------------------------------------------ 初�?�化 ------------------------------------------------------------*/
 /**
  * @brief      Initialize CTRL_DR16 Class
  * @param[in]  None
@@ -40,7 +40,7 @@ CTRL_DR16_classdef::CTRL_DR16_classdef()
 
 }
 
-/*------------------------------------------------------------ RC遥控器控�? ------------------------------------------------------------*/
+/*------------------------------------------------------------ RC遥控器控�? ------------------------------------------------------------*/
 //拨杆模式更新
 uint16_t Reset_cnt;
 uint8_t init_pick,DW_zero;
@@ -60,8 +60,8 @@ void CTRL_DR16_classdef::LeverMode_Update(void)
                     Shoot.Pull_Mode_Set(Pull_LockMode);//(Pull_DebugMode);
                     Clamp.setMode(Clamp_DebugMode);
                 }
-                break;  /* �?
-                �?-右上 END ------------------------------------------*/
+                break;  /* �?
+                �?-右上 END ------------------------------------------*/
                 
                 case Lever_MID:/* 左上-右中 START ------------------------------------------*/ 
                 {
@@ -85,58 +85,59 @@ void CTRL_DR16_classdef::LeverMode_Update(void)
 
                 case Lever_DOWN:/* 左上-右下 START ------------------------------------------*/ 
                 {
-                    //�?�?
-									 Gimbal.Mode = Gimbal_PCMode;
-									 Shoot.Shoot_Mode = Shoot_LockMode;
-									 Shoot.Pull_Mode_Set(Pull_LockMode);
-										Clamp.setMode(Clamp_LockMode);
-									 if(DR16.Get_DW_Norm() <= -550)
-									 {
-											 Vision.aim = 0;
-									 }
-									 else if(DR16.Get_DW_Norm() >= 550)
-									 {
-											 Vision.aim = 1;
-									 }
+                //�?�?
+                    // Gimbal.Mode = Gimbal_PCMode;
+                    // Shoot.Shoot_Mode = Shoot_LockMode;
+                    // Shoot.Pull_Mode_Set(Pull_LockMode);
+                    // Clamp.setMode(Clamp_LockMode);
+                    // if(DR16.Get_DW_Norm() <= -550)
+                    // {
+                    //                 Vision.aim = 0;
+                    // }
+                    // else if(DR16.Get_DW_Norm() >= 550)
+                    // {
+                    //                 Vision.aim = 1;
+                    // }
                     
-                    //
-//                    Gimbal.Mode = Gimbal_LockMode;
-//                    Shoot.Shoot_Mode = Shoot_NewAutoMode;
-//                    Shoot.Pull_Mode_Set(Pull_LockMode);
-//                    Clamp.setMode(Clamp_AutoMode);
+                    
+                  Gimbal.Mode = Gimbal_HalfAutoMode;
+                  Shoot.Shoot_Mode = Shoot_NewAutoMode;
+                  Shoot.Pull_Mode_Set(Pull_LockMode);
+                  Clamp.setMode(Clamp_AutoMode);
 
-//                    if(DR16.Get_DW_Norm() == 0 && DW_zero==0)
-//                    {
-//                        DW_zero = 1;
-//                    }
-//                    if(DR16.Get_DW_Norm() >= 110 && DW_zero)
-//                    {
-//                        if(Clamp.Init_Flag || Clamp.Pick_Flag ||\
-//                         Clamp.Place_Point_Flag || Clamp.Place_Flag){}
-//                         else
-//                         {
-//                            if(init_pick)
-//                            {
-//                                init_pick = 0;
-//                                Clamp.Pick_Flag = 1;
-//                            }
-//                            else
-//                            {
-//                                Clamp.Place_Flag = 1;
-//                            }
-//                         }
-//                         DW_zero = 0;
-//                    }
-//                    else if(DR16.Get_DW_Norm() <= -110 && DW_zero)
-//                    {
-//                        init_pick = 1;
-//                        Clamp.Should_Init_Flag = 2;
-//                        Clamp.Init_Flag = 1;
-//                        Clamp.Pick_Flag = 0;
-//                        Clamp.Place_Point_Flag = 0;
-//                        Clamp.Place_Flag = 0;
-//                        DW_zero = 0;
-//                    }
+                  if(DR16.Get_DW_Norm() == 0 && DW_zero==0)
+                  {
+                      DW_zero = 1;
+                  }
+                  if(DR16.Get_DW_Norm() >= 110 && DW_zero)
+                  {
+                      if(Clamp.Init_Flag || Clamp.Pick_Flag ||\
+                       Clamp.Place_Point_Flag || Clamp.Place_Flag){}
+                       else
+                       {
+                          if(init_pick)
+                          {
+                              init_pick = 0;
+                              Clamp.Pick_Flag = 1;
+                          }
+                          else
+                          {
+                            //   Clamp.Place_Flag = 1;
+                              Vision.aim = 1;
+                          }
+                       }
+                       DW_zero = 0;
+                  }
+                  else if(DR16.Get_DW_Norm() <= -110 && DW_zero)
+                  {
+                      init_pick = 1;
+                      Clamp.Should_Init_Flag = 2;
+                      Clamp.Init_Flag = 1;
+                      Clamp.Pick_Flag = 0;
+                      Clamp.Place_Point_Flag = 0;
+                      Clamp.Place_Flag = 0;
+                      DW_zero = 0;
+                  }
                     
                 }
                 break;  /* 左上-右下 END ------------------------------------------*/
@@ -190,8 +191,8 @@ void CTRL_DR16_classdef::LeverMode_Update(void)
                 Reset_cnt++;
                 if(Reset_cnt == 1500)//--- 拨轮打上3s重启
                 {
-                    //--- �?片�?�位
-                    __set_FAULTMASK(1);    //关闭所有中�?
+                    //--- �?片�?�位
+                    __set_FAULTMASK(1);    //关闭所有中�?
                     HAL_NVIC_SystemReset();//复位
                 }
             }
@@ -208,7 +209,7 @@ void CTRL_DR16_classdef::LeverMode_Update(void)
 		RCCtrl_Update();
 }
 
-//RC控制模式 - 对�?��?�置�?标�?
+//RC控制模式 - 对�?��?�置�?标�?
 void CTRL_DR16_classdef::RCCtrl_Update(void)
 {
     switch((uint8_t)Gimbal.Mode)
@@ -237,13 +238,13 @@ void CTRL_DR16_classdef::RCCtrl_Update(void)
             Expt.R_Y = DR16.Get_RY_Norm() * 0;
         break;
 				
-				case Gimbal_LockMode:
+        case Gimbal_LockMode:
             Expt.L_X = DR16.Get_LX_Norm() * 0.1;
             Expt.L_Y = DR16.Get_LY_Norm() * 1;
             Expt.D_W = DR16.Get_DW_Norm() * 1;
             Expt.R_X = DR16.Get_RX_Norm() * 15;
             Expt.R_Y = DR16.Get_RY_Norm() * 0.1;
-				break;
+        break;
 				
 				case Gimbal_HalfAutoMode:
             Expt.L_X = DR16.Get_LX_Norm() * 1;
@@ -257,11 +258,11 @@ void CTRL_DR16_classdef::RCCtrl_Update(void)
 }
 
 /*------------------------------------------------------------ 处理 ------------------------------------------------------------*/
-//数据监测 ———�? - 0:Normal - 1:Abnormal
+//数据监测 ———�? - 0:Normal - 1:Abnormal
 int8_t CTRL_DR16_classdef::Data_Monitor(void)
 {
-    if((DR16.Get_S1_L() != Lever_UP && DR16.Get_S1_L() != Lever_MID && DR16.Get_S1_L() != Lever_DOWN && DR16.Get_S1_L() != Lever_NONE) || /*<! 左拨�? */
-       (DR16.Get_S2_R() != Lever_UP && DR16.Get_S2_R() != Lever_MID && DR16.Get_S2_R() != Lever_DOWN && DR16.Get_S2_R() != Lever_NONE) || /*<! 右拨�? */
+    if((DR16.Get_S1_L() != Lever_UP && DR16.Get_S1_L() != Lever_MID && DR16.Get_S1_L() != Lever_DOWN && DR16.Get_S1_L() != Lever_NONE) || /*<! 左拨�? */
+       (DR16.Get_S2_R() != Lever_UP && DR16.Get_S2_R() != Lever_MID && DR16.Get_S2_R() != Lever_DOWN && DR16.Get_S2_R() != Lever_NONE) || /*<! 右拨�? */
        (DR16.Get_RX_Norm() > 660 || DR16.Get_RX_Norm() < -660) ||                                                                    /*<! CH0 */
        (DR16.Get_RY_Norm() > 660 || DR16.Get_RY_Norm() < -660) ||                                                                    /*<! CH1 */
        (DR16.Get_LX_Norm() > 660 || DR16.Get_LX_Norm() < -660) ||                                                                    /*<! CH2 */
@@ -289,7 +290,7 @@ void CTRL_DR16_classdef::ExptData_Reset(void)
     Expt.D_W = 0;
 }
 
-//获取对�?�输出数�? ———�? - export data
+//获取对�?�输出数�? ———�? - export data
 float CTRL_DR16_classdef::Get_LX()
 {
     return Expt.L_X;

@@ -382,6 +382,7 @@ uint8_t Auto_classdef::Detection_Point(int *Spots)
 
 float L_L,R_L;
 float LR_time = 0;
+float LR_out_time = 0;
 void Auto_classdef::Left_PickIdea(void)
 {
 	//µã¡ª¡ªÇ½¸½¼þ
@@ -420,14 +421,15 @@ void Auto_classdef::Left_PickIdea(void)
 				if(Analog.LaserRanging[9]<35000 && Analog.LaserRanging[9]>30000 &&\
 				Analog.LaserRanging[8]<35000 && Analog.LaserRanging[8]>30000)
 				{
-					Chassis.Laser_PID[0].Target = 33455+33405;
-           			Chassis.Laser_PID[0].Current = Analog.LaserRanging[9]+Analog.LaserRanging[8];
-					Vy = Chassis.Laser_PID[0].Cal();
-					Vx = -66;
-					Chassis.try_bl = 1.5;
-					// Vy = 0;
-					// L_L = Analog.LaserRanging[9];
-					// R_L = Analog.LaserRanging[8];
+						Chassis.Laser_PID[0].Target = 33505+33505;
+						Chassis.Laser_PID[0].Current = Analog.LaserRanging[9]+Analog.LaserRanging[8];
+						Vy = Chassis.Laser_PID[0].Cal();
+						Vx = -66;
+						Chassis.try_bl = 1.5;
+						// Vy = 0;
+						// L_L = Analog.LaserRanging[9];
+						// R_L = Analog.LaserRanging[8];
+						LR_out_time++;
 				}
 				else
 				{
@@ -435,7 +437,7 @@ void Auto_classdef::Left_PickIdea(void)
 					Chassis.try_bl = 1.5;
 				}
 				
-				if(abs(33505+33505-(Analog.LaserRanging[9]+Analog.LaserRanging[8]))<120)
+				if(abs(33505+33505-(Analog.LaserRanging[9]+Analog.LaserRanging[8])) < 120)
 				{
 					LR_time++;
 				}
@@ -444,8 +446,8 @@ void Auto_classdef::Left_PickIdea(void)
 					LR_time=0;
 				}
 				// if(Vy == 0)
-				if(LR_time > 15)
-				{Chassis.try_bl=0;overFlag = 1;startFlag = 0;Vx=Vy=Vw=0;WallFlag=WallTime=0;HAL_GPIO_WritePin(GPIOI, GPIO_PIN_7, GPIO_PIN_SET);}
+				if(LR_time > 15|| (LR_out_time > 1000 && abs(33505+33505-(Analog.LaserRanging[9]+Analog.LaserRanging[8]))<500))
+				{LR_out_time=0;Chassis.try_bl=0;overFlag = 1;startFlag = 0;Vx=Vy=Vw=0;WallFlag=WallTime=0;HAL_GPIO_WritePin(GPIOI, GPIO_PIN_7, GPIO_PIN_SET);}
 			}
 		}
 	}

@@ -302,14 +302,14 @@ void Chassis_classdef::ChassisTar_Update()
 
 //底盘数据处理
 float Ramp_Vy, Ramp_Vx, Ramp_Vw;
-float ACCCCC_VAL = 15.0f, DECCCCC_VAL = 30.0f;
+float ACCCCC_VAL = 20.0f, DECCCCC_VAL = 40.0f;
 void Chassis_classdef::Process(float Vx, float Vy, float Vw)
 {		
     //--- 速度斜坡	作用?
     Drv_Slow(&Ramp_Vx, Vx, 10.0f, ACCCCC_VAL, DECCCCC_VAL);//
     Drv_Slow(&Ramp_Vy, Vy, 10.0f, ACCCCC_VAL, DECCCCC_VAL);
     Drv_Slow(&Ramp_Vw, Vw*0.5, 6.0f, ACCCCC_VAL*0.6, DECCCCC_VAL*0.6);
-    //Ramp_Vx=Vx;Ramp_Vy=Vy;Ramp_Vw=Vw;
+//    Ramp_Vx=Vx;Ramp_Vy=Vy;Ramp_Vw=Vw;
 
     //运动解算
     Rudder_Solve(Ramp_Vx, Ramp_Vy, Ramp_Vw, Cal_Speed);

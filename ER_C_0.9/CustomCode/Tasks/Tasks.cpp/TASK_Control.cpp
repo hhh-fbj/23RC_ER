@@ -21,9 +21,9 @@ void Task_Control(void *argument)
 		Shoot.Control();
 		Clamp.Control();
 		// ---发送CAN
-//		MotorMsgSend(&hcan2, Shoot.Motor); 
-//		MotorMsgSend(&hcan1, Gimbal.Yaw_Motor);
-//		MotorMsgSend(&hcan1, Clamp.Motor);
+		MotorMsgSend(&hcan2, Shoot.Motor); 
+		MotorMsgSend(&hcan1, Gimbal.Yaw_Motor);
+		MotorMsgSend(&hcan1, Clamp.Motor);
 		vTaskDelayUntil(&xLastWakeTime, TimeIncrement);
   }
 }

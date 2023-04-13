@@ -225,6 +225,13 @@ void Clamp_classdef::Tar_Update(void)
 					Should_Place_Flag = 0;
 					Init_Flag = 1;
 				}
+				else if(Auto_Aim_Flag)
+				{
+					if(Should_Place_Flag && Vision.aim==0)
+					{
+						Vision.aim=1;
+					}
+				}
 				else if(Should_Place_Flag)
 				{
 					Place_Flag = 1;
@@ -376,10 +383,7 @@ void Clamp_classdef::Init(void)
 			AddVar[1] = 0;
 		}
 
-		if(Gimbal.Midpoint_Flag == 0)
-		{
-			Gimbal.Midpoint_Flag = 1;
-		}
+
 
 		//³ö
 		AddVar[0] = Param.Stretch_Speed;
@@ -387,6 +391,11 @@ void Clamp_classdef::Init(void)
 
 		if(E14 == GPIO_PIN_RESET)
 		{
+			if(Gimbal.Midpoint_Flag == 0)
+			{
+				Gimbal.Midpoint_Flag = 1;
+			}
+
 			Set_TurnPlacel(116,1995);
 			if(UseTarget[0] == Param.Stretch_Max &&\
 			abs(Stretch_Encider.getTotolAngle() - Param.Stretch_Max)<=500 &&\

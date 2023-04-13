@@ -178,6 +178,7 @@ uint8_t Gimbal_classdef::ProblemDetection(void)
  * @note       这里的数值会换成和电机相同的量纲
  * @retval     None
  */
+float once;
 GPIO_PinState last_I6;
 void Gimbal_classdef::TargetAngle_Update(void)
 {
@@ -225,20 +226,45 @@ void Gimbal_classdef::TargetAngle_Update(void)
 
 		case Gimbal_HalfAutoMode:
 			//io口接收到可发射信号
-			if(I6 == GPIO_PIN_SET && I6 != last_I6)
+			if(Vision.Use_Flag)
 			{
-				//自瞄
-				Vision.aim = 1;
-			}
-			else if(Vision.Use_Flag)
-			{
-				UseTarget[Yaw] += (Vision.Use_Yaw*TURN_GROY);
-				Vision.Use_Flag = 1;
+				if(once == 0)
+				{
+					UseTarget[Yaw] -= (Vision.Use_Yaw*TURN_GROY);
+					once = 1;
+				}
+				if(abs(Yaw_Encider.getTotolAngle() - UseTarget[Yaw]) < 800)
+				{
+					Clamp.Place_Flag = 1;
+					Vision.Use_Flag = 0;
+					once = 0;
+				}
 			}
 			else if(Vision.aim == 0)
 			{
-				UseTarget[Yaw] -= CTRL_DR16.Get_RX();
+				if(Midpoint_Flag==1)
+				{
+					if(UseTarget[Yaw] > Param.Yaw_Centre + Param.Yaw_Speed)
+					{
+						UseTarget[Yaw] -= Param.Yaw_Speed;
+					}
+					else if(UseTarget[Yaw] < Param.Yaw_Centre - Param.Yaw_Speed)
+					{
+						UseTarget[Yaw] += Param.Yaw_Speed;
+					}
+					else
+					{
+						UseTarget[Yaw] = Param.Yaw_Centre;
+						Midpoint_Flag = 2;
+					}
+				}
+				else
+				{
+					UseTarget[Yaw] -= CTRL_DR16.Get_RX();
+				}
 			}
+			
+
 			last_I6 = I6;
 		break;
 	}
