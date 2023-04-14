@@ -76,7 +76,10 @@ public:
 	uint8_t Pos_Flag;
 	uint8_t Should_Init_Flag = 1;
 	uint8_t Should_Place_Flag;
-	uint8_t Auto_Aim_Flag;
+	uint8_t Auto_Aim_Flag=1;
+	
+	GPIO_PinState I7;
+	GPIO_PinState E14;
 
 	void Control();
 	void Init(void);

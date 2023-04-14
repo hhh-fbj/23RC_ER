@@ -144,7 +144,7 @@ void MX_GPIO_Init(void)
 void MX_GPIO_Init_USER(void)//�Զ���
 {  
   GPIO_InitTypeDef GPIO_InitStruct = {0};
-	// HAL_GPIO_WritePin(GPIOI, GPIO_PIN_7, GPIO_PIN_RESET);//��
+	HAL_GPIO_WritePin(GPIOE, GPIO_PIN_9, GPIO_PIN_RESET);//��
 	
   //取放
 	GPIO_InitStruct.Pin = GPIO_PIN_7;
@@ -183,7 +183,12 @@ void MX_GPIO_Init_USER(void)//�Զ���
   GPIO_InitStruct.Pull = GPIO_PULLUP;
   HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
   
-
+  //发送底盘
+	GPIO_InitStruct.Pin = GPIO_PIN_9;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+  HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
 }
 
 /* USER CODE END 2 */

@@ -4,6 +4,7 @@
         "string": "cpp",
         "string_view": "cpp",
         "usart.h": "c",
-        "algorithm": "cpp"
+        "algorithm": "cpp",
+        "tim.h": "c"
     }
 }

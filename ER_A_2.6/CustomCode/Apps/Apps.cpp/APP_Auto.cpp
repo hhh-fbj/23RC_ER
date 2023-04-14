@@ -35,6 +35,7 @@ void Auto_classdef::Process(void)
     }
 }
 
+float two_time_sum;
 void Auto_classdef::Text_Step(void)
 {
 	switch(text_step)
@@ -59,23 +60,76 @@ void Auto_classdef::Text_Step(void)
 				Chassis.POS_PID[Posture_Y][PID_Outer].Target = Posture.POS_Y();
 				Chassis.POS_PID[Posture_W][PID_Outer].Target = Posture.POS_W();
 			}
+			HAL_GPIO_WritePin(GPIOI, GPIO_PIN_7, GPIO_PIN_RESET);
 		break;
 
 		case 1:
 			Left_PickIdea();
+			HAL_GPIO_WritePin(GPIOI, GPIO_PIN_7, GPIO_PIN_RESET);
 		break;
 			
 		case 2:
 			startFlag = 0;
 			Chassis.NO_PostureMode = 2;
+			HAL_GPIO_WritePin(GPIOI, GPIO_PIN_7, GPIO_PIN_SET);
+			if(Chassis.Ready_Flag == GPIO_PIN_SET)
+			{
+				two_time_sum++;
+			}
+			else
+			{
+				two_time_sum = 0;
+			}
+
+			if(two_time_sum>30)
+			{
+				startFlag = 0;
+				text_step = 0;
+			}
+		break;
+
+		case 3:
+			if(startFlag == 1 && overFlag == 0)
+			{
+				Chassis.NO_PostureMode = 0;
+				Chassis.POS_PID[Posture_X][PID_Outer].Target = Spots[1][0];
+				Chassis.POS_PID[Posture_Y][PID_Outer].Target = Spots[1][1];
+				Chassis.POS_PID[Posture_W][PID_Outer].Target = Spots[1][2];
+				if(Detection_Point(Spots[1])){overFlag = 0;startFlag = 1;Vx=Vy=Vw=0;text_step = 4;}
+			}
+			else if(startFlag == 0 &&overFlag == 1)
+			{
+				overFlag = 0;
+			}
+			else if(startFlag == 0 && overFlag == 0)
+			{
+				Chassis.NO_PostureMode = 0;
+				Chassis.POS_PID[Posture_X][PID_Outer].Target = Posture.POS_X();
+				Chassis.POS_PID[Posture_Y][PID_Outer].Target = Posture.POS_Y();
+				Chassis.POS_PID[Posture_W][PID_Outer].Target = Posture.POS_W();
+			}
+			HAL_GPIO_WritePin(GPIOI, GPIO_PIN_7, GPIO_PIN_RESET);
+		break;
+		
+		case 4:
+			Front_PlaceIdea();
+			HAL_GPIO_WritePin(GPIOI, GPIO_PIN_7, GPIO_PIN_RESET);
+		break;
+
+		case 5:
+			startFlag = 0;
+			Chassis.NO_PostureMode = 2;
+			HAL_GPIO_WritePin(GPIOI, GPIO_PIN_7, GPIO_PIN_SET);
+			if(Chassis.Ready_Flag == GPIO_PIN_SET)
+			{
+				startFlag = 1;
+				text_step = 6;
+			}
 		break;
 
 		case 6:
-
-		break;
-		
-		case 100:
-			
+			startFlag = 0;
+			Chassis.NO_PostureMode = 2;
 		break;
 	}
 }
@@ -331,15 +385,15 @@ uint8_t Auto_classdef::Detection_Point_text(int *Spots)
 	}
 }
 
-uint8_t Auto_classdef::Detection_Point(int *Spots)
+uint8_t Auto_classdef::Detection_Point(int *spots)
 {
-	if(abs(Posture.POS_X() - Spots[0]) < 100 &&\
-    abs(Posture.POS_Y() - Spots[1]) < 100 &&\
-    abs(Posture.POS_W() - Spots[2]) < 5 )
+	if(abs(Posture.POS_X() - spots[0]) < 100 &&\
+    abs(Posture.POS_Y() - spots[1]) < 100 &&\
+    abs(Posture.POS_W() - spots[2]) < 5 )
     {
-		if(abs(Posture.POS_X() - Spots[0]) < 10 &&\
-		abs(Posture.POS_Y() - Spots[1]) < 10 &&\
-		abs(Posture.POS_W() - Spots[2]) < 1 )
+		if(abs(Posture.POS_X() - spots[0]) < 10 &&\
+		abs(Posture.POS_Y() - spots[1]) < 10 &&\
+		abs(Posture.POS_W() - spots[2]) < 1 )
 		{
 			point_time++;
 			if(point_time > 150)
@@ -380,7 +434,6 @@ uint8_t Auto_classdef::Detection_Point(int *Spots)
 	}
 }
 
-float L_L,R_L;
 float LR_time = 0;
 float LR_out_time = 0;
 void Auto_classdef::Left_PickIdea(void)
@@ -403,17 +456,17 @@ void Auto_classdef::Left_PickIdea(void)
 			if(Chassis.EdgeDete[4] == GPIO_PIN_RESET &&\
 			Chassis.EdgeDete[5] == GPIO_PIN_RESET && WallFlag == 0)
 			{
-				if(Vx<-10){Vx += 7;}
-				else if(Vx>10){Vx -= 7;}
+				if(Vx<-20){Vx += 10;}
+				else if(Vx>20){Vx -= 10;}
 				else{WallFlag = 1;}
 			}
 			else if(Chassis.EdgeDete[4] == GPIO_PIN_SET)//左上
 			{
-				Vx = -330;Vy = 0;Vw = -0;
+				Vx = -220;Vy = 0;Vw = -55;
 			}
 			else if(Chassis.EdgeDete[5] == GPIO_PIN_SET)//左下
 			{
-				Vx = -330;Vy = 0;Vw = 0;
+				Vx = -220;Vy = 0;Vw = 55;
 			}
 			else if(WallFlag)
 			{
@@ -447,7 +500,58 @@ void Auto_classdef::Left_PickIdea(void)
 				}
 				// if(Vy == 0)
 				if(LR_time > 15|| (LR_out_time > 1000 && abs(33505+33505-(Analog.LaserRanging[9]+Analog.LaserRanging[8]))<500))
-				{LR_out_time=0;Chassis.try_bl=0;overFlag = 1;startFlag = 0;Vx=Vy=Vw=0;WallFlag=WallTime=0;HAL_GPIO_WritePin(GPIOI, GPIO_PIN_7, GPIO_PIN_SET);}
+				{LR_out_time=0;Chassis.try_bl=0;overFlag = 0;startFlag = 1;\
+				Vx=Vy=Vw=0;WallFlag=WallTime=0;\
+				text_step = 2;}
+			}
+		}
+	}
+	else if(startFlag == 0 && overFlag == 1)
+	{
+		overFlag = 0;
+	}
+}
+
+void Auto_classdef::Front_PlaceIdea(void)
+{
+	//点——墙附件
+	//贴墙
+	//交给云台
+	
+	//前走
+	if(startFlag == 1 && overFlag == 0)
+	{
+		Chassis.NO_PostureMode = 3;
+		if(Chassis.EdgeDete[2] && Chassis.EdgeDete[3])
+		{
+			Vx = 0;Vw = 0;Vy=550;
+		}
+		else
+		{
+			if(Chassis.EdgeDete[2] == GPIO_PIN_RESET &&\
+			Chassis.EdgeDete[3] == GPIO_PIN_RESET && WallFlag == 0)
+			{
+				if(Vy<-10){Vy += 1;}
+				else if(Vy>10){Vy -= 1;}
+				else{WallFlag = 1;}
+			}
+			else if(Chassis.EdgeDete[2] == GPIO_PIN_SET)//左上
+			{
+				Vx = 0;Vy = 0;Vw = -220;
+			}
+			else if(Chassis.EdgeDete[3] == GPIO_PIN_SET)//左下
+			{
+				Vx = 0;Vy = 0;Vw = 220;
+			}
+			else if(WallFlag)
+			{
+				
+				Vx = 0;Vy = 330;Vw=0;
+
+				WallTime++;
+				if(WallTime > 150)
+				{overFlag = 0;startFlag = 1;Vx=Vy=Vw=0;\
+				text_step = 5;WallFlag=WallTime=0;}
 			}
 		}
 	}

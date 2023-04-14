@@ -57,7 +57,7 @@ private:
     // AUTO_CtrlMode_e mode;
 
     int Spots[3][3] = {-950,  -600, 0,\
-                -0, -0, 0,\
+                0, 310, 0,\
                 -0,-0, 0};
 		
 		int Loop_Point_One[3]={-5881,608,0}, Loop_Point_Two[3], Loop_Point_Three[3], Loop_Point_Four[3];
@@ -75,7 +75,7 @@ private:
     void SemiAuto(void);
     void Auto(void);
     void Left_PickIdea(void);
-
+    void Front_PlaceIdea(void);
 
   uint8_t Detection_Point_text(int *Spots);
 public:

@@ -45,8 +45,7 @@ Clamp_classdef::Clamp_classdef()
 }
 
 
-GPIO_PinState I7;
-GPIO_PinState E14;
+
 
 int servo_time;
 void Clamp_classdef::Control()
@@ -108,7 +107,7 @@ uint8_t Clamp_classdef::ProblemDetection(void)
 		Motor[2].Out = 0;
 		Motor[3].Out = 0;
 
-		Set_TurnPlacel(0,1995);
+		Set_TurnPlacel(0,2050);
 		if(servo_time == 10)
 		{
 			TurnPlace_Servo.Torque(false);
@@ -216,7 +215,7 @@ void Clamp_classdef::Tar_Update(void)
 		case Clamp_AutoMode:
 			if(TurnPlace_Servo.Torque_Flag == 0)
 			{
-				Set_TurnPlacel(64,1995);
+				Set_TurnPlacel(64,2050);
 			}
 			if (Gimbal.I6 == GPIO_PIN_SET && Gimbal.Last_I6 == GPIO_PIN_RESET)
 			{
@@ -396,11 +395,11 @@ void Clamp_classdef::Init(void)
 				Gimbal.Midpoint_Flag = 1;
 			}
 
-			Set_TurnPlacel(116,1995);
+			Set_TurnPlacel(116,2050);
 			if(UseTarget[0] == Param.Stretch_Max &&\
 			abs(Stretch_Encider.getTotolAngle() - Param.Stretch_Max)<=500 &&\
 			I7 == GPIO_PIN_SET &&\
-			abs((int)TurnPlace_Servo.Posotion - 1995)<=20 &&\
+			abs((int)TurnPlace_Servo.Posotion - 2050)<=20 &&\
 			Gimbal.Midpoint_Flag == 2)
 			{
 				Gimbal.Midpoint_Flag = 0;
@@ -422,6 +421,7 @@ void Clamp_classdef::Init(void)
 				}
 			}
 		}
+		HAL_GPIO_WritePin(GPIOE, GPIO_PIN_9, GPIO_PIN_RESET);
 	}
 	else if(Should_Init_Flag == 1)
 	{
@@ -476,6 +476,7 @@ void Clamp_classdef::Pick(void)
 			TakeOut_Flag = 0;
 			Place_Point_Flag = 1;
 			Set_TurnPlacel(116,1479);
+			HAL_GPIO_WritePin(GPIOE, GPIO_PIN_9, GPIO_PIN_SET);
 		}
 	}
 }
@@ -509,6 +510,7 @@ void Clamp_classdef::Place_Point(void)
 			{
 				Place_Point_Flag = 0;
 			}
+			HAL_GPIO_WritePin(GPIOE, GPIO_PIN_9, GPIO_PIN_RESET);
 		}
 	}
 }
@@ -564,6 +566,7 @@ void Clamp_classdef::Place(void)
 				wait_flag = 0;
 				Homeing_Flag = 0;
 				Place_Flag = 0;
+				HAL_GPIO_WritePin(GPIOE, GPIO_PIN_9, GPIO_PIN_SET);
 				return;
 			}
 		}

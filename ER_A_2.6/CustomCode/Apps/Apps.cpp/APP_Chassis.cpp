@@ -121,6 +121,8 @@ void Chassis_classdef::Sensor(void)
     //×ó
     EdgeDete[4] = HAL_GPIO_ReadPin(GPIOI, GPIO_PIN_5);//ÓÒ
     EdgeDete[5] = HAL_GPIO_ReadPin(GPIOI, GPIO_PIN_6);//×ó	
+
+    Ready_Flag = HAL_GPIO_ReadPin(GPIOI, GPIO_PIN_2);
 }
 
 uint8_t Chassis_classdef::ProblemDetection(void)
@@ -199,7 +201,6 @@ void Chassis_classdef::ChassisTar_Update()
             switch(NO_PostureMode)
             {
                 case 0:
-                    HAL_GPIO_WritePin(GPIOD, GPIO_PIN_13, GPIO_PIN_RESET);//¸ß
                     POS_PID[Posture_X][PID_Outer].Current = Auto.Posture.POS_X();//Auto.Posture.POS_W();
                     POS_PID[Posture_Y][PID_Outer].Current = Auto.Posture.POS_Y();//Auto.Posture.POS_W();
                     POS_PID[Posture_W][PID_Outer].Current = Auto.Posture.POS_W();//Auto.Posture.POS_W();
@@ -212,7 +213,6 @@ void Chassis_classdef::ChassisTar_Update()
                 break;
                 
                 case 2:
-                    HAL_GPIO_WritePin(GPIOD, GPIO_PIN_13, GPIO_PIN_SET);//¸ß
                     Process(0, 0, 0);
                 break;
                     
@@ -225,7 +225,6 @@ void Chassis_classdef::ChassisTar_Update()
                 break;
 
                 case 66:
-                    HAL_GPIO_WritePin(GPIOD, GPIO_PIN_13, GPIO_PIN_RESET);//¸ß
                     POS_PID[Posture_X][PID_Outer].Current = Auto.Posture.POS_X();//Auto.Posture.POS_W();
                     POS_PID[Posture_Y][PID_Outer].Current = Auto.Posture.POS_Y();//Auto.Posture.POS_W();
                     POS_PID[Posture_W][PID_Outer].Current = Auto.Posture.POS_W();//Auto.Posture.POS_W();
@@ -294,7 +293,7 @@ void Chassis_classdef::ChassisTar_Update()
                 RUD_Motor[j].Out = 0;  
                 Cal_Speed[j] = 0;
             }
-						HAL_GPIO_WritePin(GPIOI, GPIO_PIN_7, GPIO_PIN_RESET);
+			HAL_GPIO_WritePin(GPIOI, GPIO_PIN_7, GPIO_PIN_RESET);
             Last_Mode = CHAS_DisableMode;
         break;
     }

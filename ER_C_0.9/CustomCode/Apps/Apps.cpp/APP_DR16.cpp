@@ -165,14 +165,18 @@ void CTRL_DR16_classdef::LeverMode_Update(void)
 
                 case Lever_DOWN:/* 左中-右下 START ------------------------------------------*/ 
                 {
-                    // if(DR16.Get_DW_Norm() >= 550)
-                    // {
-                    //     HAL_GPIO_WritePin(GPIOI, GPIO_PIN_7, GPIO_PIN_SET);
-                    // }
-                    // if(DR16.Get_DW_Norm() <= -550)
-                    // {
-                    //     HAL_GPIO_WritePin(GPIOI, GPIO_PIN_7, GPIO_PIN_RESET);
-                    // }
+                    Gimbal.Mode = Gimbal_DisableMode;
+                    Shoot.Shoot_Mode = Shoot_DisableMode;
+                    Shoot.Pull_Mode_Set(Pull_DisableMode);
+                    Clamp.setMode(Clamp_DisableMode);
+                    if(DR16.Get_DW_Norm() >= 550)
+                    {
+                        HAL_GPIO_WritePin(GPIOE, GPIO_PIN_9, GPIO_PIN_SET);
+                    }
+                    if(DR16.Get_DW_Norm() <= -550)
+                    {
+                        HAL_GPIO_WritePin(GPIOE, GPIO_PIN_9, GPIO_PIN_RESET);
+                    }
                 }
                 break;/* 左中-右下 END ------------------------------------------*/
             }

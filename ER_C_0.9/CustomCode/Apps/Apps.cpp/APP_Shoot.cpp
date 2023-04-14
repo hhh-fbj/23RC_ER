@@ -110,7 +110,7 @@ void Shoot_classdef::Shoot_NewSensor(GPIO_PinState IO_PIN)
 	}
 	else
 	{
-		if(Shoot_Place_Flag == 1)
+		if(Shoot_Place_Flag == 1 && Clamp.E14 == GPIO_PIN_RESET)
 		{
 			AddAngle = -Param.Shoot_Speed;
 			if(Shoot_TarAngle <= stop_shoot-Param.Shoot_Hold)
@@ -209,7 +209,7 @@ void Shoot_classdef::PullTar_Update(void)
 				if(CTRL_DR16.Get_LY() == 0)
 				{LeftPull_TarAngle = LeftPull_Motor.get_totalencoder();}\
 				else{LeftPull_TarAngle += (-CTRL_DR16.Get_LY());}
-				if(CTRL_DR16.Get_LX() == 0)
+				if(CTRL_DR16.Get_LY() == 0)
 				{RightPull_TarAngle = RightPull_Motor.get_totalencoder();}\
 				else{RightPull_TarAngle += (-CTRL_DR16.Get_LY());}
 			}
@@ -246,13 +246,13 @@ void Shoot_classdef::PullTar_Update(void)
 				else{LeftPull_TarAngle += (-CTRL_DR16.Get_LY());}
 			}
 			
-			if(CTRL_DR16.Get_LX() <= 0)
+			if(CTRL_DR16.Get_LY() <= 0)
 			{
 				if(Top_RightPull_Flag)
 				{
-					if(CTRL_DR16.Get_LX() == 0)
+					if(CTRL_DR16.Get_LY() == 0)
 					{RightPull_TarAngle = RightPull_Motor.get_totalencoder();}\
-					else{RightPull_TarAngle += (-CTRL_DR16.Get_LX());}
+					else{RightPull_TarAngle += (-CTRL_DR16.Get_LY());}
 				}
 				else
 				{
@@ -261,9 +261,9 @@ void Shoot_classdef::PullTar_Update(void)
 			}
 			else
 			{
-				if(CTRL_DR16.Get_LX() == 0)
+				if(CTRL_DR16.Get_LY() == 0)
 				{RightPull_TarAngle = RightPull_Motor.get_totalencoder();}\
-				else{RightPull_TarAngle += (-CTRL_DR16.Get_LX());}
+				else{RightPull_TarAngle += (-CTRL_DR16.Get_LY());}
 			}			
 		break;
 		

@@ -118,6 +118,7 @@ public:
     uint8_t over_init;//底盘初始化标记
     uint8_t NO_PostureMode = 0;
     float try_bl;
+    GPIO_PinState Ready_Flag;
     
     PositionPID POS_PID[3][2];
     PositionPID Laser_PID[2];
