@@ -1,0 +1,92 @@
+<html>
+<body>
+<pre>
+<h1>µVision Build Log</h1>
+<h2>Tool Versions:</h2>
+IDE-Version: ¦ÌVision V5.37.0.0
+Copyright (C) 2022 ARM Ltd and ARM Germany GmbH. All rights reserved.
+License Information: chen zijian, HG, LIC=D0D7S-LZP6P-30TNC-7KE1Q-9IMFR-Z45XK
+ 
+Tool Versions:
+Toolchain:       MDK-ARM Plus  Version: 5.37.0.0
+Toolchain Path:  C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin
+C Compiler:      ArmClang.exe V6.18
+Assembler:       Armasm.exe V6.18
+Linker/Locator:  ArmLink.exe V6.18
+Library Manager: ArmAr.exe V6.18
+Hex Converter:   FromElf.exe V6.18
+CPU DLL:         SARMCM3.DLL V5.37.0.0
+Dialog DLL:      DCM.DLL V1.17.5.0
+Target DLL:      CMSIS_AGDI.dll V1.33.12.0
+Dialog DLL:      TCM.DLL V1.56.1.0
+ 
+<h2>Project:</h2>
+C:\NewJourney\Active\Fight\Battlefields\23RC\rc\ER_idea\23RC_ER\ER_C_0.9\MDK-ARM\C_Gimbal.uvprojx
+Project File Date:  04/07/2023
+
+<h2>Output:</h2>
+*** Using Compiler 'V6.18', folder: 'C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin'
+Build target 'C_Gimbal'
+compiling DEV_COMM.cpp...
+compiling DEV_Buzzer.cpp...
+compiling DEV_MX106.cpp...
+compiling DEV_LED.cpp...
+compiling APP_Vision.cpp...
+../CustomCode/Tasks/Tasks.cpp/TASK_Check.cpp(8): warning: In file included from...
+../CustomCode/Devices/BMI088\calibrate_task.h(52): warning: 'packed' attribute ignored [-Wignored-attributes]
+typedef __packed struct
+        ^
+../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h(114): note: expanded from macro '__packed'
+    #define __packed  __attribute__((packed))
+                                     ^
+1 warning generated.
+compiling TASK_Check.cpp...
+compiling TASK_Can.cpp...
+compiling APP_DR16.cpp...
+compiling APP_Gimbal.cpp...
+compiling APP_Shoot.cpp...
+compiling APP_Clamp.cpp...
+compiling TASK_LED.cpp...
+../CustomCode/Unify/Universe.cpp/System_Config.cpp(10): warning: In file included from...
+../CustomCode/Devices/BMI088\calibrate_task.h(52): warning: 'packed' attribute ignored [-Wignored-attributes]
+typedef __packed struct
+        ^
+../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h(114): note: expanded from macro '__packed'
+    #define __packed  __attribute__((packed))
+                                     ^
+1 warning generated.
+compiling System_Config.cpp...
+compiling TASK_Waveform.cpp...
+compiling System_DataPool.cpp...
+compiling TASK_Control.cpp...
+linking...
+Program Size: Code=71940 RO-data=4284 RW-data=212 ZI-data=25884  
+FromELF: creating hex file...
+"C_Gimbal\C_Gimbal.axf" - 0 Error(s), 2 Warning(s).
+
+<h2>Software Packages used:</h2>
+
+Package Vendor: ARM
+                http://www.keil.com/pack/ARM.CMSIS.5.9.0.pack
+                ARM.CMSIS.5.9.0
+                CMSIS (Common Microcontroller Software Interface Standard)
+   * Component: CORE Version: 5.6.0
+
+Package Vendor: Keil
+                http://www.keil.com/pack/Keil.STM32F4xx_DFP.2.16.0.pack
+                Keil.STM32F4xx_DFP.2.16.0
+                STMicroelectronics STM32F4 Series Device Support, Drivers and Examples
+
+<h2>Collection of Component include folders:</h2>
+  ./RTE/_C_Gimbal
+  C:/NewJourney/Active/Equipment/Keil5/Packs/ARM/CMSIS/5.9.0/CMSIS/Core/Include
+  C:/NewJourney/Active/Equipment/Keil5/Packs/Keil/STM32F4xx_DFP/2.16.0/Drivers/CMSIS/Device/ST/STM32F4xx/Include
+
+<h2>Collection of Component Files used:</h2>
+
+   * Component: ARM::CMSIS:CORE:5.6.0
+      Include file:  CMSIS/Core/Include/tz_context.h
+Build Time Elapsed:  00:00:08
+</pre>
+</body>
+</html>
