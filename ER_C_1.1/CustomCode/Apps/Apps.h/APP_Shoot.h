@@ -56,13 +56,15 @@ private:
 	float Top_RightPull_Flag = 0;
 
 	struct{
+		float Shoot_Circle;
 		float Shoot_Hold;
 		float Shoot_Speed;
+		float Pull_Max;
 	}Param;
 
 	uint8_t ProblemDetection(void);
 	void AngleLimit(void);
-	void Shoot_Sensor(GPIO_PinState IO_PIN);
+	void Shoot_Sensor(GPIO_PinState io_pin);
 	void PullTar_Update(void);
 	void ShootSpe_Update(void);
 	void PullMotor_PIDCalc(void);

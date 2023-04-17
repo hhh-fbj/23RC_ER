@@ -1,9 +1,9 @@
 c_gimbal/tasks.o: ..\Middlewares\Third_Party\FreeRTOS\Source\tasks.c \
-  C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\stdlib.h \
-  C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\string.h \
+  C:\Users\chenzijian\Pad\App\keil5\ARM\ARMCLANG\Bin\..\include\stdlib.h \
+  C:\Users\chenzijian\Pad\App\keil5\ARM\ARMCLANG\Bin\..\include\string.h \
   ..\Middlewares\Third_Party\FreeRTOS\Source\include\FreeRTOS.h \
-  C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\stddef.h \
-  C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\stdint.h \
+  C:\Users\chenzijian\Pad\App\keil5\ARM\ARMCLANG\Bin\..\include\stddef.h \
+  C:\Users\chenzijian\Pad\App\keil5\ARM\ARMCLANG\Bin\..\include\stdint.h \
   ..\Core\Inc\FreeRTOSConfig.h \
   ..\Middlewares\Third_Party\FreeRTOS\Source\include\projdefs.h \
   ..\Middlewares\Third_Party\FreeRTOS\Source\include\portable.h \

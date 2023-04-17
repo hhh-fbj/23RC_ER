@@ -11,6 +11,9 @@
 #include "System_DataPool.h"
 
 
+//-834383
+//-1682762
+//848380
 
 /**
  * @brief  	   
@@ -25,12 +28,12 @@ Shoot_classdef::Shoot_classdef()
 	RightPull_PID[PID_Outer].SetPIDParam(/* 0.66f */0.35f, 0.0, 0.0f, 8000, 10000, 0.002f);//
 	RightPull_PID[PID_Inner].SetPIDParam(/* 0.66f */8.0f, 0.6, 0.0f, 8000, 15000, 0.002f);//
 			
-    Shoot_PID[PID_Outer].SetPIDParam(0.4f, 0.0, 0.0f, 8000, 15000, 0.002f);//
-    Shoot_PID[PID_Inner].SetPIDParam(13.0f, 5.0f, 0.015f, 8000, 15000, 0.002f);//
+	Shoot_PID[PID_Outer].SetPIDParam(0.4f, 0.0, 0.0f, 8000, 15000, 0.002f);//
+	Shoot_PID[PID_Inner].SetPIDParam(13.0f, 5.0f, 0.015f, 8000, 15000, 0.002f);//
 	Shoot_PID[PID_Inner].I_SeparThresh = 3000;
 
-    // Pre_PID[0].SetPIDParam(/* 0.66f */500.0f, 0.0, 0.0f, 5000, 18000, 0.002f);
-    // Pre_PID[1].SetPIDParam(/* 0.66f */500.0f, 0.0, 0.0f, 5000, 18000, 0.002f);
+	// Pre_PID[0].SetPIDParam(/* 0.66f */500.0f, 0.0, 0.0f, 5000, 18000, 0.002f);
+	// Pre_PID[1].SetPIDParam(/* 0.66f */500.0f, 0.0, 0.0f, 5000, 18000, 0.002f);
 
 	Shoot_TarAngle = Shoot_Motor.get_totalencoder();
 	LeftPull_TarAngle = LeftPull_Motor.get_totalencoder();
@@ -41,6 +44,8 @@ Shoot_classdef::Shoot_classdef()
 
 	Param.Shoot_Hold = 560000;
 	Param.Shoot_Speed = 880;
+	Param.Shoot_Circle = 848380;
+	Param.Pull_Max = 13100000;
 }
 
 
@@ -53,20 +58,20 @@ Shoot_classdef::Shoot_classdef()
 
 void Shoot_classdef::Control()
 {
-	//�?动开关与光电传感�?
-	//发射的光电传感器
-	C6 = HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_6);
-	E13 = HAL_GPIO_ReadPin(GPIOE, GPIO_PIN_13);
-	E11 = HAL_GPIO_ReadPin(GPIOE, GPIO_PIN_11);
+		//�?动开关与光电传感�?
+		//发射的光电传感器
+		C6 = HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_6);
+		E13 = HAL_GPIO_ReadPin(GPIOE, GPIO_PIN_13);
+		E11 = HAL_GPIO_ReadPin(GPIOE, GPIO_PIN_11);
 
-	//�?题�?��?
-	if(ProblemDetection()){return;}
-		
+		//�?题�?��?
+		if(ProblemDetection()){return;}
+
     //改拉�?+发射 �?
     PullTar_Update();
-	ShootSpe_Update();
+		ShootSpe_Update();
 
-	AngleLimit();
+		AngleLimit();
 
     //PID计算
     PullMotor_PIDCalc();
@@ -75,12 +80,11 @@ void Shoot_classdef::Control()
 
 
 
-void Shoot_classdef::Shoot_Sensor(GPIO_PinState IO_PIN)
+void Shoot_classdef::Shoot_Sensor(GPIO_PinState io_pin)
 {
 	if(first == 0)//�?一次情况—先到了再�?�其他情�?
 	{
-
-		if(IO_PIN == GPIO_PIN_SET)
+		if(io_pin == GPIO_PIN_SET)
 		{
 			stop_time++;
 		}
@@ -88,7 +92,7 @@ void Shoot_classdef::Shoot_Sensor(GPIO_PinState IO_PIN)
 		{
 			stop_time = 0;
 		}
-	
+		
 		if(stop_time>=15)
 		{
 			first = 1;
@@ -121,7 +125,9 @@ void Shoot_classdef::Shoot_Sensor(GPIO_PinState IO_PIN)
 		{
 			shoot_time++;
 			//消抖
-			if(IO_PIN == GPIO_PIN_SET)
+			if((io_pin == GPIO_PIN_SET &&\
+			Shoot_Motor.get_totalencoder()<(stop_shoot-Param.Shoot_Circle/2)) ||\
+			Shoot_Motor.get_totalencoder()<(stop_shoot-Param.Shoot_Circle-500))
 			{
 				stop_time++;
 			}
@@ -131,7 +137,7 @@ void Shoot_classdef::Shoot_Sensor(GPIO_PinState IO_PIN)
 			}
 			AddAngle = -Param.Shoot_Speed;
 			
-			if(stop_time>25)
+			if(stop_time>15)
 			{
 				stop_shoot = Shoot_TarAngle = Shoot_Motor.get_totalencoder();
 				shoot_time = 0;
@@ -139,6 +145,7 @@ void Shoot_classdef::Shoot_Sensor(GPIO_PinState IO_PIN)
 				AddAngle = 0;
 				Launch_Switch = 0;
 				Shoot_Place_Flag = 0;
+
 				if(Clamp.Place_Flag == 1)
 				{
 					Clamp.Homeing_Flag = 1;
@@ -256,9 +263,9 @@ void Shoot_classdef::AngleLimit(void)
 	}
 	else if(Top_LeftPull_Flag == 1)
 	{
-		if(LeftPull_TarAngle>=Top_LeftPull+13100000)
+		if(LeftPull_TarAngle>=Top_LeftPull+Param.Pull_Max)
 		{
-			LeftPull_TarAngle = Top_LeftPull+13100000;
+			LeftPull_TarAngle = Top_LeftPull+Param.Pull_Max;
 			Pull_AddAngle[0]=0;
 		}
 	}
@@ -280,9 +287,9 @@ void Shoot_classdef::AngleLimit(void)
 	}
 	else if(Top_RightPull_Flag == 1)
 	{
-		if(RightPull_TarAngle>=Top_RightPull+13100000)
+		if(RightPull_TarAngle>=Top_RightPull+Param.Pull_Max)
 		{
-			RightPull_TarAngle = Top_RightPull+13100000;
+			RightPull_TarAngle = Top_RightPull+Param.Pull_Max;
 			Pull_AddAngle[0]=0;
 			
 		}
