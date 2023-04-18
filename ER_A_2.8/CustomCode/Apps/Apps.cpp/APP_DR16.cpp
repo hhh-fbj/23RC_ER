@@ -16,8 +16,8 @@
 #include "System_DataPool.h"
 
 /* Private macros ------------------------------------------------------------*/
-#define LEVER_PERSONAL 1 // �?己用
-#define LEVER_STANDARD 2 // 规范�?
+#define LEVER_PERSONAL 1 // �?己用
+#define LEVER_STANDARD 2 // 规范�?
 #define LEVER_MODE     1
 
 #define DR16DATA_NORMAL   0
@@ -30,7 +30,7 @@
 
 
 
-/*------------------------------------------------------------ 初�?�化 ------------------------------------------------------------*/
+/*------------------------------------------------------------ 初�?�化 ------------------------------------------------------------*/
 /**
  * @brief      Initialize CTRL_DR16 Class
  * @param[in]  None
@@ -48,7 +48,7 @@ CTRL_DR16_classdef::CTRL_DR16_classdef()
     Coe.Pit_RC = -0.013f;
 }
 
-/*------------------------------------------------------------ RC遥控器控�? ------------------------------------------------------------*/
+/*------------------------------------------------------------ RC遥控器控�? ------------------------------------------------------------*/
 //拨杆模式更新
 uint16_t Reset_cnt;
 void CTRL_DR16_classdef::LeverMode_Update(void)
@@ -58,25 +58,25 @@ void CTRL_DR16_classdef::LeverMode_Update(void)
         case Lever_UP:  // --- 左上 -----------------------------------------------
         {
             Auto.Posture_ResFlag = 0;
-            Chassis.Set_Mode(CHAS_LockMode);
+            // Chassis.Set_Mode(CHAS_LockMode);
             switch((uint8_t)DR16.Get_S2_R())
             {
-                // --- PC�?控制
+                // --- PC�?控制
                 case Lever_UP:/* 左上-右上 START ------------------------------------------*/ 
                 {
-
+                    Chassis.Set_Mode(CHAS_LockMode);
                 }
                 break;  /* 左上-右上 END ------------------------------------------*/
                 
                 case Lever_MID:/* 左上-右中 START ------------------------------------------*/ 
                 {
-
+                    Chassis.Set_Mode(CHAS_PostureMode);
                 }
                 break;  /* 左上-右中 END ------------------------------------------*/
 
                 case Lever_DOWN:/* 左上-右下 START ------------------------------------------*/ 
                 {
-                    
+                    Chassis.Set_Mode(CHAS_LockMode);
                 }
                 break;  /* 左上-右下 END ------------------------------------------*/
             }
@@ -85,7 +85,7 @@ void CTRL_DR16_classdef::LeverMode_Update(void)
 
         case Lever_MID:  // --- 左中 ----------------------------------------------
         {
-						Auto.Posture_ResFlag = 0;
+            Auto.Posture_ResFlag = 0;
             switch((uint8_t)DR16.Get_S2_R())
             {
                 case Lever_UP:/* 左中-右上 START ------------------------------------------*/ 
@@ -140,8 +140,8 @@ void CTRL_DR16_classdef::LeverMode_Update(void)
                 Reset_cnt++;
                 if(Reset_cnt == 1500)//--- 拨轮打上3s重启
                 {
-                    //--- �?片�?�位
-                    __set_FAULTMASK(1);    //关闭所有中�?
+                    //--- �?片�?�位
+                    __set_FAULTMASK(1);    //关闭所有中�?
                     HAL_NVIC_SystemReset();//复位
                 } 
             }
@@ -157,8 +157,8 @@ void CTRL_DR16_classdef::LeverMode_Update(void)
     }
     RCCtrl_Update();
 }
-/*------------------------------------------------------------ 控制�? ------------------------------------------------------------*/
-//RC控制模式 - 对�?��?�置�?标�?
+/*------------------------------------------------------------ 控制�? ------------------------------------------------------------*/
+//RC控制模式 - 对�?��?�置�?标�?
 void CTRL_DR16_classdef::RCCtrl_Update(void)
 {
     Expt.Target_Vx = DR16.Get_LX_Norm()*20;//220
@@ -167,11 +167,11 @@ void CTRL_DR16_classdef::RCCtrl_Update(void)
 }
 
 /*------------------------------------------------------------ 处理 ------------------------------------------------------------*/
-//数据监测 ———�? - 0:Normal - 1:Abnormal
+//数据监测 ———�? - 0:Normal - 1:Abnormal
 int8_t CTRL_DR16_classdef::Data_Monitor(void)
 { 
-    if((DR16.Get_S1_L() != Lever_UP && DR16.Get_S1_L() != Lever_MID && DR16.Get_S1_L() != Lever_DOWN && DR16.Get_S1_L() != Lever_NONE) || /*<! 左拨�? */
-       (DR16.Get_S2_R() != Lever_UP && DR16.Get_S2_R() != Lever_MID && DR16.Get_S2_R() != Lever_DOWN && DR16.Get_S2_R() != Lever_NONE) || /*<! 右拨�? */
+    if((DR16.Get_S1_L() != Lever_UP && DR16.Get_S1_L() != Lever_MID && DR16.Get_S1_L() != Lever_DOWN && DR16.Get_S1_L() != Lever_NONE) || /*<! 左拨�? */
+       (DR16.Get_S2_R() != Lever_UP && DR16.Get_S2_R() != Lever_MID && DR16.Get_S2_R() != Lever_DOWN && DR16.Get_S2_R() != Lever_NONE) || /*<! 右拨�? */
        (DR16.Get_RX_Norm() > 660 || DR16.Get_RX_Norm() < -660) ||                                                                    /*<! CH0 */
        (DR16.Get_RY_Norm() > 660 || DR16.Get_RY_Norm() < -660) ||                                                                    /*<! CH1 */
        (DR16.Get_LX_Norm() > 660 || DR16.Get_LX_Norm() < -660) ||                                                                    /*<! CH2 */
@@ -199,7 +199,7 @@ void CTRL_DR16_classdef::ExptData_Reset(void)
     Expt.Target_Pit = 0;
 }
 
-//获取对�?�输出数�? ———�? - export data
+//获取对�?�输出数�? ———�? - export data
 float CTRL_DR16_classdef::Get_ExptVx()
 {
     return Expt.Target_Vx;

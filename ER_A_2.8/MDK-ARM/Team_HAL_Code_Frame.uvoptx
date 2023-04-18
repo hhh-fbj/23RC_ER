@@ -196,77 +196,52 @@
         <Ww>
           <count>1</count>
           <WinNumber>1</WinNumber>
-          <ItemText>Chassis,0x0A</ItemText>
+          <ItemText>CTRL_DR16</ItemText>
         </Ww>
         <Ww>
           <count>2</count>
           <WinNumber>1</WinNumber>
-          <ItemText>CTRL_DR16</ItemText>
+          <ItemText>DevicesMonitor,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>3</count>
           <WinNumber>1</WinNumber>
-          <ItemText>DevicesMonitor,0x0A</ItemText>
+          <ItemText>imu_Export,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>4</count>
           <WinNumber>1</WinNumber>
-          <ItemText>imu_Export,0x0A</ItemText>
+          <ItemText>huart6,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>5</count>
           <WinNumber>1</WinNumber>
-          <ItemText>huart6,0x0A</ItemText>
+          <ItemText>DevicesMonitor,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>6</count>
           <WinNumber>1</WinNumber>
-          <ItemText>DevicesMonitor,0x0A</ItemText>
+          <ItemText>\\Team_HAL_Code_Frame\../CustomCode/Unify/Universe.cpp/System_DataPool.cpp\Chassis,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>7</count>
           <WinNumber>1</WinNumber>
-          <ItemText>\\Team_HAL_Code_Frame\../CustomCode/Unify/Universe.cpp/System_DataPool.cpp\Chassis,0x0A</ItemText>
+          <ItemText>Auto,0x10</ItemText>
         </Ww>
         <Ww>
           <count>8</count>
           <WinNumber>1</WinNumber>
-          <ItemText>Auto,0x10</ItemText>
+          <ItemText>uchCRCLo</ItemText>
         </Ww>
         <Ww>
           <count>9</count>
           <WinNumber>1</WinNumber>
-          <ItemText>uchCRCLo</ItemText>
+          <ItemText>uchCRCHi</ItemText>
         </Ww>
         <Ww>
           <count>10</count>
           <WinNumber>1</WinNumber>
-          <ItemText>uchCRCHi</ItemText>
-        </Ww>
-        <Ww>
-          <count>11</count>
-          <WinNumber>1</WinNumber>
           <ItemText>uchCRCLo</ItemText>
-        </Ww>
-        <Ww>
-          <count>12</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>\\Team_HAL_Code_Frame\../CustomCode/Unify/Universe.cpp/System_DataPool.cpp\Auto</ItemText>
-        </Ww>
-        <Ww>
-          <count>13</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>L_L</ItemText>
-        </Ww>
-        <Ww>
-          <count>14</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>R_L</ItemText>
-        </Ww>
-        <Ww>
-          <count>15</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>LR_out_time</ItemText>
         </Ww>
       </WatchWindow1>
       <WatchWindow2>

@@ -3,7 +3,7 @@
  ------------------------------------------------------------------------------
  * @file    APP_Chassis.cpp
  * @author  Shake
- * @brief   µ×ÅÌ¿ØÖÆ
+ * @brief   åº•ç›˜æ§åˆ¶
  * @version V1.0
  * @date    2021-10
  * @copyright Copyright (c) 2021
@@ -32,23 +32,23 @@
 #define VALUE_CIRCLE 98304
 #define DEGREE_TURN_CIRCLE 273.06666666666666666666666666667
 
-#define CHASSIS_MAX_SPEED 4000  // µ×ÅÌÇı¶¯ÂÖ×î´óËÙ¶È
-#define CHASSIS_MAX_VW    0.8*CHASSIS_MAX_SPEED  // µ×ÅÌĞı×ª×î´óËÙ¶È
+#define CHASSIS_MAX_SPEED 1000  // åº•ç›˜é©±åŠ¨è½®æœ€å¤§é€Ÿåº¦
+#define CHASSIS_MAX_VW    0.8*CHASSIS_MAX_SPEED  // åº•ç›˜æ—‹è½¬æœ€å¤§é€Ÿåº¦
 
 
-/*------------------------------------------------------------ ³õÊ¼»¯ ------------------------------------------------------------*/
+/*------------------------------------------------------------ åˆå§‹åŒ– ------------------------------------------------------------*/
 float const Chassis_classdef::Ltheta = acos(-0.5);
-float const Chassis_classdef::Rtheta = acos(0.5);//ÈıÂÖºó
-float const Chassis_classdef::Ftheta = atan(1.0);//ËÄÂÖ
+float const Chassis_classdef::Rtheta = acos(0.5);//ä¸‰è½®å
+float const Chassis_classdef::Ftheta = atan(1.0);//å››è½®
 Chassis_classdef::Chassis_classdef()
 {
-	//×ªÏòÂÖ 2006
-	/*--- Íâ»· Î»ÖÃ PID -------------------------------------------------------------------------*/
+	//è½¬å‘è½® 2006
+	/*--- å¤–ç¯ ä½ç½® PID -------------------------------------------------------------------------*/
     RUD_PID[RF_Rud][PID_Outer].SetPIDParam(2.0, 0.0, 0.0, 5000, 16000, 0.002f);
     RUD_PID[LF_Rud][PID_Outer].SetPIDParam(2.0, 0.0, 0.0, 5000, 16000, 0.002f);
     RUD_PID[LB_Rud][PID_Outer].SetPIDParam(2.0, 0.0, 0.0, 5000, 16000, 0.002f);
     RUD_PID[RB_Rud][PID_Outer].SetPIDParam(2.0, 0.0, 0.0, 5000, 16000, 0.002f);
-//    /*--- ÄÚ»· ËÙ¶È PID -------------------------------------------------------------------------*/
+//    /*--- å†…ç¯ é€Ÿåº¦ PID -------------------------------------------------------------------------*/
     RUD_PID[RF_Rud][PID_Inner].SetPIDParam(5.0f, 3.0, 0.0f, 5000, 16000, 0.002f);
     RUD_PID[RF_Rud][PID_Inner].I_SeparThresh = 800;
     RUD_PID[LF_Rud][PID_Inner].SetPIDParam(5.0f, 3.0, 0.0f, 5000, 16000, 0.002f);
@@ -58,25 +58,25 @@ Chassis_classdef::Chassis_classdef()
     RUD_PID[RB_Rud][PID_Inner].SetPIDParam(5.0f, 3.0, 0.0f, 5000, 16000, 0.002f);
     RUD_PID[RF_Rud][PID_Inner].I_SeparThresh = 800;
 	
-	//È«³¡¶¨Î»
-	/*--- Íâ»· Î»ÖÃ PID -------------------------------------------------------------------------*/
+	//å…¨åœºå®šä½
+	/*--- å¤–ç¯ ä½ç½® PID -------------------------------------------------------------------------*/
     POS_PID[Posture_X][PID_Outer].SetPIDParam(2.5f, 0.0f, 0.0f, 4000, 15000, 0.002f);POS_PID[Posture_X][PID_Outer].DeadZone = 1;//4 11 0.0003
     POS_PID[Posture_X][PID_Outer].a_p = 4;POS_PID[Posture_X][PID_Outer].b_p = 11;POS_PID[Posture_X][PID_Outer].c_p = 0.0002;
     POS_PID[Posture_Y][PID_Outer].SetPIDParam(2.5f, 0.0f, 0.0f, 4000, 15000, 0.002f);POS_PID[Posture_Y][PID_Outer].DeadZone = 1;//3.5		6 0.003	
     POS_PID[Posture_Y][PID_Outer].a_p = 3.5;POS_PID[Posture_Y][PID_Outer].b_p = 6;POS_PID[Posture_Y][PID_Outer].c_p = 0.0003;
     POS_PID[Posture_Z][PID_Outer].SetPIDParam(90.0f, 0.0f, 0.0f, 2000, 10000, 0.002f);POS_PID[Posture_Z][PID_Outer].DeadZone = 0.5;
-    /*--- ÄÚ»· ËÙ¶È PID Ã»ÓÃ -------------------------------------------------------------------------*/
+    /*--- å†…ç¯ é€Ÿåº¦ PID æ²¡ç”¨ -------------------------------------------------------------------------*/
     POS_PID[Posture_X][PID_Inner].SetPIDParam(0.0f, 0.0f, 0.0f, 1000, 10000, 0.002f);
     POS_PID[Posture_Y][PID_Inner].SetPIDParam(0.0f, 0.0f, 0.0f, 1000, 10000, 0.002f);
     POS_PID[Posture_Z][PID_Inner].SetPIDParam(0.0f, 0.0f, 0.0f, 1000, 10000, 0.002f);
 
-    //ĞŞ¸´»·
-    /*--- Íâ»· Î»ÖÃ PID -------------------------------------------------------------------------*/
+    //ä¿®å¤ç¯
+    /*--- å¤–ç¯ ä½ç½® PID -------------------------------------------------------------------------*/
     Repair_PID[PID_Outer].SetPIDParam(360.0f, 0.0f, 0.0f, 4000, 10000, 0.002f);Repair_PID[PID_Outer].DeadZone = 1;
-    /*--- ÄÚ»· ËÙ¶È PID Ã»ÓÃ -------------------------------------------------------------------------*/
+    /*--- å†…ç¯ é€Ÿåº¦ PID æ²¡ç”¨ -------------------------------------------------------------------------*/
     Repair_PID[PID_Inner].SetPIDParam(0.0, 0.0f, 0.0f, 1000, 10000, 0.002f);Repair_PID[PID_Inner].DeadZone = 1;
 
-    //¼¤¹âË«»·¡ª¡ªÇ°½ø»·/Ğı×ª»·
+    //æ¿€å…‰åŒç¯â€”â€”å‰è¿›ç¯/æ—‹è½¬ç¯
     Laser_PID[0].SetPIDParam(0.4f, 0.01f, 0.0f, 200, 440, 0.002f);Laser_PID[0].DeadZone = 10;
     Laser_PID[1].SetPIDParam(0.5f, 0.0f, 0.0f, 4000, 10000, 0.002f);Laser_PID[1].DeadZone = 30;
 
@@ -84,8 +84,8 @@ Chassis_classdef::Chassis_classdef()
 
     for(int i=0;i<4;i++)
     {
-        FRONT[i] = 0;//Îª0Ê±£¬ÂÖ×Ó³¯Ç°
-        XYZ_PreTar_Angle[i] = 90;//Ä¬ÈÏÖ¸ÏòÎªXYZ_PreTar_AngleÉè¶¨Öµ
+        FRONT[i] = 0;//ä¸º0æ—¶ï¼Œè½®å­æœå‰
+        XYZ_PreTar_Angle[i] = 90;//é»˜è®¤æŒ‡å‘ä¸ºXYZ_PreTar_Angleè®¾å®šå€¼
     }
 
     Pos_Target[0] = 0;
@@ -94,17 +94,17 @@ Chassis_classdef::Chassis_classdef()
 }
 
 
-/*------------------------------------------------------------ ¿ØÖÆ ------------------------------------------------------------*/
-//µ×ÅÌ×Ü¿ØÖÆº¯Êı
+/*------------------------------------------------------------ æ§åˆ¶ ------------------------------------------------------------*/
+//åº•ç›˜æ€»æ§åˆ¶å‡½æ•°
 void Chassis_classdef::Control()
 {
-    //Î¢¶¯¿ª¹Ø¼ì²â
+    //å¾®åŠ¨å¼€å…³æ£€æµ‹
     Sensor();
 	
-    //ÎÊÌâ¼ì²â
+    //é—®é¢˜æ£€æµ‹
     if(ProblemDetection()){return;}
 
-    //µ×ÅÌ¸üĞÂÊı¾İ
+    //åº•ç›˜æ›´æ–°æ•°æ®
     ChassisTar_Update();
 		
     Send_Data();
@@ -112,15 +112,15 @@ void Chassis_classdef::Control()
 
 void Chassis_classdef::Sensor(void)
 {
-    //ÓÒ
-    EdgeDete[0] = HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_0);//ÓÒ
-    EdgeDete[1] = HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_1);//×ó
-    //Ç°
-    EdgeDete[2] = HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_2);//ÓÒ
-    EdgeDete[3] = HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_3);//×ó
-    //×ó
-    EdgeDete[4] = HAL_GPIO_ReadPin(GPIOI, GPIO_PIN_5);//ÓÒ
-    EdgeDete[5] = HAL_GPIO_ReadPin(GPIOI, GPIO_PIN_6);//×ó	
+    //å³
+    EdgeDete[0] = HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_0);//å³
+    EdgeDete[1] = HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_1);//å·¦
+    //å‰
+    EdgeDete[2] = HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_2);//å³
+    EdgeDete[3] = HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_3);//å·¦
+    //å·¦
+    EdgeDete[4] = HAL_GPIO_ReadPin(GPIOI, GPIO_PIN_5);//å³
+    EdgeDete[5] = HAL_GPIO_ReadPin(GPIOI, GPIO_PIN_6);//å·¦	
 
     Ready_Flag = HAL_GPIO_ReadPin(GPIOI, GPIO_PIN_2);
 }
@@ -173,15 +173,15 @@ void Chassis_classdef::ChassisTar_Update()
     switch ((int)Mode)
     {
         case CHAS_TransiMode:
-            POS_PID[Posture_X][PID_Outer].Target = Auto.Posture.POS_X();//Auto.Posture.POS_W();
-            POS_PID[Posture_Y][PID_Outer].Target = Auto.Posture.POS_Y();//Auto.Posture.POS_W();
-            POS_PID[Posture_W][PID_Outer].Target = Auto.Posture.POS_W();//Auto.Posture.POS_W();
+            Pos_Target[0] = POS_PID[Posture_X][PID_Outer].Target = Auto.Posture.POS_X();//Auto.Posture.POS_W();
+            Pos_Target[1] = POS_PID[Posture_Y][PID_Outer].Target = Auto.Posture.POS_Y();//Auto.Posture.POS_W();
+            Pos_Target[2] = POS_PID[Posture_W][PID_Outer].Target = Auto.Posture.POS_W();//Auto.Posture.POS_W();
             Auto.Vx = Auto.Vy = Auto.Vw = 0;
             Mode = Next_Mode;
             Last_Mode = CHAS_TransiMode;
         break;
 
-        case CHAS_ControlMode://ÊÓ¾õ¿ØÖÆµ×ÅÌ
+        case CHAS_ControlMode://è§†è§‰æ§åˆ¶åº•ç›˜
             Process(0, 0, 0);
             Last_Mode = CHAS_ControlMode;
         break;
@@ -196,7 +196,7 @@ void Chassis_classdef::ChassisTar_Update()
             Last_Mode = CHAS_LockMode;
         break;
 
-        case CHAS_AutoMode://ÅÜ×Ô¶¯
+        case CHAS_AutoMode://è·‘è‡ªåŠ¨
             Auto.Process();
             switch(NO_PostureMode)
             {
@@ -236,7 +236,7 @@ void Chassis_classdef::ChassisTar_Update()
             Last_Mode = CHAS_AutoMode;
         break;
 
-        case CHAS_IMUMode://Ê¹ÓÃCÍÓÂİÒÇ/È«³¡¶¨Î»ÍÓÂİÒÇ½øĞĞĞŞÕı
+        case CHAS_IMUMode://ä½¿ç”¨Cé™€èºä»ª/å…¨åœºå®šä½é™€èºä»ªè¿›è¡Œä¿®æ­£
             if(Last_Mode != CHAS_IMUMode){Repair_PID[PID_Outer].Target = RecvCan_Msg.Pack.Yaw_Z;}//Auto.Posture.POS_W();}
             if((CTRL_DR16.Get_ExptVx() != 0 || CTRL_DR16.Get_ExptVy() != 0) && CTRL_DR16.Get_ExptVw() == 0)
             {
@@ -253,7 +253,7 @@ void Chassis_classdef::ChassisTar_Update()
             Last_Mode = CHAS_IMUMode;
         break;
 
-        case CHAS_LaserMode://Ê¹ÓÃ¼¤¹â²â¾à½øĞĞĞŞÕı
+        case CHAS_LaserMode://ä½¿ç”¨æ¿€å…‰æµ‹è·è¿›è¡Œä¿®æ­£
             Laser_PID[0].Target = 32768+32665;
             Laser_PID[0].Current = Auto.Analog.LaserRanging[9]+Auto.Analog.LaserRanging[8];
             Laser_PID[1].Target = 32665-Auto.Analog.LaserRanging[8];
@@ -264,8 +264,8 @@ void Chassis_classdef::ChassisTar_Update()
 
         case CHAS_PostureMode://
             Pos_Target[0] += CTRL_DR16.Get_ExptVx()*0.0001;
-            Pos_Target[1] -= CTRL_DR16.Get_ExptVy()*0.0001;
-            Pos_Target[2] -= CTRL_DR16.Get_ExptVw()*0.00001;
+            Pos_Target[1] += CTRL_DR16.Get_ExptVy()*0.0001;
+            Pos_Target[2] += CTRL_DR16.Get_ExptVw()*0.00001;
             POS_PID[Posture_X][PID_Outer].Target = Pos_Target[0];//Auto.Posture.POS_W();
             POS_PID[Posture_Y][PID_Outer].Target = Pos_Target[1];//Auto.Posture.POS_W();
             POS_PID[Posture_W][PID_Outer].Target = Pos_Target[2];
@@ -274,7 +274,7 @@ void Chassis_classdef::ChassisTar_Update()
             POS_PID[Posture_Y][PID_Outer].Current = Auto.Posture.POS_Y();//Auto.Posture.POS_W();
             POS_PID[Posture_W][PID_Outer].Current = Auto.Posture.POS_W();//Auto.Posture.POS_W();
 
-            Process(POS_PID[Posture_X][PID_Outer].Cal(), -POS_PID[Posture_Y][PID_Outer].Cal(), -POS_PID[Posture_W][PID_Outer].Cal());
+            Process(POS_PID[Posture_X][PID_Outer].Cal(), POS_PID[Posture_Y][PID_Outer].Cal(), POS_PID[Posture_W][PID_Outer].Cal());
 
             Last_Mode = CHAS_PostureMode;
         break;
@@ -295,19 +295,19 @@ void Chassis_classdef::ChassisTar_Update()
     }
 }
 
-//µ×ÅÌÊı¾İ´¦Àí
+//åº•ç›˜æ•°æ®å¤„ç†
 void Chassis_classdef::Process(float Vx, float Vy, float Vw)
 {		
-    //--- ËÙ¶ÈĞ±ÆÂ	×÷ÓÃ?
+    //--- é€Ÿåº¦æ–œå¡	ä½œç”¨?
     Drv_Slow(&Ramp_Vx, Vx, 10.0f, ACCCCC_VAL, DECCCCC_VAL);//
     Drv_Slow(&Ramp_Vy, Vy, 10.0f, ACCCCC_VAL, DECCCCC_VAL);
     Drv_Slow(&Ramp_Vw, Vw*0.5, 6.0f, ACCCCC_VAL*0.6, DECCCCC_VAL*0.6);
 //    Ramp_Vx=Vx;Ramp_Vy=Vy;Ramp_Vw=Vw;
 
-    //ÔË¶¯½âËã
+    //è¿åŠ¨è§£ç®—
     Rudder_Solve(Ramp_Vx, Ramp_Vy, Ramp_Vw, Cal_Speed);
     
-    //PID¼ÆËã
+    //PIDè®¡ç®—
     for(uint8_t i = 0; i < 4; i++)
     {
         RUD_PIDCalc(i);  
@@ -328,21 +328,21 @@ void Chassis_classdef::Send_Data()
 }
 
 /**
- * @brief      µ×ÅÌËÙ¶ÈĞ±ÆÂ
+ * @brief      åº•ç›˜é€Ÿåº¦æ–œå¡
  * @param[in]  rec, target, slow_Inc
  * @retval     None
  */
 void Chassis_classdef::Drv_Slow(float *rec , float target , float slow_Inc, float Accval, float DecVal)
 {
-    if(abs(*rec) - abs(target) < 0)//¼ÓËÙÊ±
+    if(abs(*rec) - abs(target) < 0)//åŠ é€Ÿæ—¶
     {
         // if(abs(*rec) > 10)
         // {
-            slow_Inc = slow_Inc * Accval;//ËÙ¶ÈÌáÆğÀ´µÄÊ±ºòÔö´óµ½5±¶
+            slow_Inc = slow_Inc * Accval;//é€Ÿåº¦æèµ·æ¥çš„æ—¶å€™å¢å¤§åˆ°5å€
         // }
     }else if(abs(*rec) - abs(target) > 0)
     {
-        slow_Inc = slow_Inc * DecVal;//¼õËÙÊ±·Å´ó15±¶
+        slow_Inc = slow_Inc * DecVal;//å‡é€Ÿæ—¶æ”¾å¤§15å€
     }
 
     if(abs(*rec - target) < slow_Inc)
@@ -357,26 +357,26 @@ void Chassis_classdef::Drv_Slow(float *rec , float target , float slow_Inc, floa
 }
 
 
-//ÂÖ¶æÂÖÔË¶¯½âËã
+//è½®èˆµè½®è¿åŠ¨è§£ç®—
 void Chassis_classdef::Rudder_Solve(float Vx, float Vy, float Vw, float *cal_speed)
 {
     float Param = 1.0f;
     float MaxSpeed = 0.0f;
 
-	//ËÙ¶ÈÏŞÖÆ
+	//é€Ÿåº¦é™åˆ¶
     Constrain(&Vx, (float)(-CHASSIS_MAX_SPEED), (float)(CHASSIS_MAX_SPEED));
     Constrain(&Vy, (float)(-CHASSIS_MAX_SPEED), (float)(CHASSIS_MAX_SPEED));
     Constrain(&Vw, (float)(-CHASSIS_MAX_VW), (float)(CHASSIS_MAX_VW));
 
     RudAngle_Calc(Vx, Vy, Vw);
     
-    /* Çı¶¯ÂÖ ËÙ¶È½âËã ---------------------------------------------------------------------------------*/
+    /* é©±åŠ¨è½® é€Ÿåº¦è§£ç®— ---------------------------------------------------------------------------------*/
     cal_speed[RF_Rud] =  sqrt(pow(Vx + Vw*arm_cos_f32(Ftheta),2) + pow(Vy - Vw*arm_sin_f32(Ftheta),2));
     cal_speed[LF_Rud] =  sqrt(pow(Vx + Vw*arm_cos_f32(Ftheta),2) + pow(Vy + Vw*arm_sin_f32(Ftheta),2));
     cal_speed[LB_Rud] =  sqrt(pow(Vx - Vw*arm_cos_f32(Ftheta),2) + pow(Vy + Vw*arm_sin_f32(Ftheta),2));
     cal_speed[RB_Rud] =  sqrt(pow(Vx - Vw*arm_cos_f32(Ftheta),2) + pow(Vy - Vw*arm_sin_f32(Ftheta),2));
 
-    // Ñ°ÕÒ×î´óËÙ¶È
+    // å¯»æ‰¾æœ€å¤§é€Ÿåº¦
     for (uint8_t i = 0; i < 4; i++)
     {
         //RUD_PID[i][PID_Outer].Current = Vw; 
@@ -386,7 +386,7 @@ void Chassis_classdef::Rudder_Solve(float Vx, float Vy, float Vw, float *cal_spe
         }
     }
 
-    // ËÙ¶È·ÖÅä  
+    // é€Ÿåº¦åˆ†é…  
     if (MaxSpeed > CHASSIS_MAX_SPEED)
     {
         Param = (float)CHASSIS_MAX_SPEED / MaxSpeed;
@@ -405,7 +405,7 @@ void Chassis_classdef::Rudder_Solve(float Vx, float Vy, float Vw, float *cal_spe
 }
 
 /**
- * @brief      µ×ÅÌ×ªµç»úÎ»ÖÃÊ½Ê½PID¼ÆËã
+ * @brief      åº•ç›˜è½¬ç”µæœºä½ç½®å¼å¼PIDè®¡ç®—
  * @param[in]  motor
  * @param[in]  target
  * @param[in]  current
@@ -419,26 +419,26 @@ void Chassis_classdef::RUD_PIDCalc(uint8_t motor)
 	RUD_Motor[motor].Out = RUD_PID[motor][PID_Inner].Cal();
 }
 
-//ÈıÖáËÙ¶È½âËãËÄÂÖ¶æÂÖ ¶æ½Ç¶È (Ö±½Ç×ø±êÏµ)
+//ä¸‰è½´é€Ÿåº¦è§£ç®—å››è½®èˆµè½® èˆµè§’åº¦ (ç›´è§’åæ ‡ç³»)
 void Chassis_classdef::RudAngle_Calc(float Vx, float Vy, float Vw)
 {
-    //--- TODO ÒòÎªÍÓÂİÒÇÁãÆ¯»á²úÉúĞ¡·ù¶ÈµÄVwËÙ¶Èµ¼ÖÂÕâÀïµÄInitAngle»áÀ´»ØÌø±ä(ÔİÊ±ÓÃ¸öµÍ¼¶µÄ·½·¨½â¾ö)¡Ì
+    //--- TODO å› ä¸ºé™€èºä»ªé›¶æ¼‚ä¼šäº§ç”Ÿå°å¹…åº¦çš„Vwé€Ÿåº¦å¯¼è‡´è¿™é‡Œçš„InitAngleä¼šæ¥å›è·³å˜(æš‚æ—¶ç”¨ä¸ªä½çº§çš„æ–¹æ³•è§£å†³)âˆš
 
-    //--- TODO »¹ÓĞ¾ÍÊÇ45¶ÈÉ²³µ¿ÉÄÜÓÉÓÚ³µµÄÖØĞÄ½Ï¸ß£¬¸ßËÙÔË¶¯µÄÊ±ºò»áÉ²µÄ±È½ÏÃÍ»á³öÏÖÇ°Çã
-    //---      Ò»¸öË¼Â·ÊÇ²»Í¬µÄ¹¦ÂÊ¸ø²»Í¬µÄĞ±ÆÂ
-    //---      ÁíÒ»¸öÊÇÉ²³µµÄÊ±ºòÏÈ±£³ÖÔ­±¾µÄ½Ç¶È£¬ÏÈÈÃÇ°ÂÖÊ§ÄÜ£¬µÈ³µÎÈ¶¨ºóÔÙ³Ê45¶È¹éÖĞ
-    //---      ÔÙÒ»¸öÊÇÓÃ¸ß¼¶µãµÄ¼ÓËÙÇúÏß£¿
+    //--- TODO è¿˜æœ‰å°±æ˜¯45åº¦åˆ¹è½¦å¯èƒ½ç”±äºè½¦çš„é‡å¿ƒè¾ƒé«˜ï¼Œé«˜é€Ÿè¿åŠ¨çš„æ—¶å€™ä¼šåˆ¹çš„æ¯”è¾ƒçŒ›ä¼šå‡ºç°å‰å€¾
+    //---      ä¸€ä¸ªæ€è·¯æ˜¯ä¸åŒçš„åŠŸç‡ç»™ä¸åŒçš„æ–œå¡
+    //---      å¦ä¸€ä¸ªæ˜¯åˆ¹è½¦çš„æ—¶å€™å…ˆä¿æŒåŸæœ¬çš„è§’åº¦ï¼Œå…ˆè®©å‰è½®å¤±èƒ½ï¼Œç­‰è½¦ç¨³å®šåå†å‘ˆ45åº¦å½’ä¸­
+    //---      å†ä¸€ä¸ªæ˜¯ç”¨é«˜çº§ç‚¹çš„åŠ é€Ÿæ›²çº¿ï¼Ÿ
 
     if(Vx == 0 && Vy == 0 && Vw == 0)
     {
-        if(Mode == CHAS_LockMode || NO_PostureMode == 2)//ÂÖ×Ó45¶ÈXĞÍ³¯Ïò
+        if(Mode == CHAS_LockMode || NO_PostureMode == 2)//è½®å­45åº¦Xå‹æœå‘
         {
             XYZ_Angle[0] = 45;
             XYZ_Angle[1] = 135;
             XYZ_Angle[2] = 45;
             XYZ_Angle[3] = 135;
         }
-        else if(0)//ÂÖ×Ó45¶È¡óĞÍ³¯Ïò
+        else if(0)//è½®å­45åº¦â—‡å‹æœå‘
         {
             // XYZ_Angle[0] = 135;
             // XYZ_Angle[1] = 45;
@@ -447,7 +447,7 @@ void Chassis_classdef::RudAngle_Calc(float Vx, float Vy, float Vw)
         }
         else
         {
-            //--- Ä¿±ê½Ç¶ÈÎª×îºóËÙ¶ÈÖ¸Ïò;
+            //--- ç›®æ ‡è§’åº¦ä¸ºæœ€åé€Ÿåº¦æŒ‡å‘;
             for(uint8_t i = 0 ; i < 4 ; i++)
             {
                 XYZ_Angle[i] = XYZ_PreTar_Angle[i];
@@ -456,12 +456,12 @@ void Chassis_classdef::RudAngle_Calc(float Vx, float Vy, float Vw)
     }
     else
     {
-        //--- ÓĞÄ¿±êËÙ¶ÈµÄÊ±ºò²Å½øĞĞ¶æÂÖ½âËãµÄ¼ÆËã
+        //--- æœ‰ç›®æ ‡é€Ÿåº¦çš„æ—¶å€™æ‰è¿›è¡Œèˆµè½®è§£ç®—çš„è®¡ç®—
         XYZ_Angle[RF_Rud] = atan2(Vy - Vw*(Radius*arm_sin_f32(Ftheta)), Vx + Vw*(Radius*arm_cos_f32(Ftheta)))*(180/PI);
         XYZ_Angle[LF_Rud] = atan2(Vy + Vw*(Radius*arm_sin_f32(Ftheta)), Vx + Vw*(Radius*arm_cos_f32(Ftheta)))*(180/PI);
         XYZ_Angle[LB_Rud] = atan2(Vy + Vw*(Radius*arm_sin_f32(Ftheta)), Vx - Vw*(Radius*arm_cos_f32(Ftheta)))*(180/PI);
         XYZ_Angle[RB_Rud] = atan2(Vy - Vw*(Radius*arm_sin_f32(Ftheta)), Vx - Vw*(Radius*arm_cos_f32(Ftheta)))*(180/PI);
-        //--- ÎŞÄ¿±êËÙ¶ÈµÄÊ±ºò²»Ê¹ÓÃÉÏÒ»´Î½Ç¶ÈÀ´±£´æÊÇÒòÎª¸úËæÄ£Ê½ÏÂIMU¾²Ö¹µÄË²¼ä»á²úÉúÇáÎ¢µÄVwËÙ¶È
+        //--- æ— ç›®æ ‡é€Ÿåº¦çš„æ—¶å€™ä¸ä½¿ç”¨ä¸Šä¸€æ¬¡è§’åº¦æ¥ä¿å­˜æ˜¯å› ä¸ºè·Ÿéšæ¨¡å¼ä¸‹IMUé™æ­¢çš„ç¬é—´ä¼šäº§ç”Ÿè½»å¾®çš„Vwé€Ÿåº¦
 
         for(uint8_t i = 0 ; i < 4 ; i++)
         {
@@ -474,13 +474,13 @@ void Chassis_classdef::RudAngle_Calc(float Vx, float Vy, float Vw)
     //     XYZ_Angle[2] = 135;
     //     XYZ_Angle[3] = 45;
 
-    //--- ¸ü¸ÄÎª±£´æ¾­¹ıÁÓ»¡´¦ÀíµÄÄ¿±ê½Ç¶È(ÏÖÔÚÔİÊ±²»ÓÃÕâ¸öÉÏÒ»Ö¡µÄ½Ç¶È)
+    //--- æ›´æ”¹ä¸ºä¿å­˜ç»è¿‡åŠ£å¼§å¤„ç†çš„ç›®æ ‡è§’åº¦(ç°åœ¨æš‚æ—¶ä¸ç”¨è¿™ä¸ªä¸Šä¸€å¸§çš„è§’åº¦)
     for(uint8_t i = 0 ; i < 4 ; i++) 
     {
         XYZ_PreTar_Angle[i] = XYZ_Angle[i];
     }
     
-    //×ª³É¶ÔÓ¦±àÂëÆ÷µÄ¶ÈÁ¿ÊıÖµÇóÈ¡Îó²î
+    //è½¬æˆå¯¹åº”ç¼–ç å™¨çš„åº¦é‡æ•°å€¼æ±‚å–è¯¯å·®
     Angle_Treatment();
 }
 
@@ -489,13 +489,13 @@ void Chassis_classdef::Angle_Treatment(void)
     float Error;
     for(uint8_t i = 0 ; i < 4 ; i++)
     {
-        //×ª¶æ·Ö±æÂÊ
+        //è½¬èˆµåˆ†è¾¨ç‡
         XYZ_Angle[i] *= DEGREE_TURN_CIRCLE;
 				
         XYZ_Angle[i] += (FRONT[i]-24576);
         XYZ_Angle[i] = XYZ_Angle[i] - (floor(XYZ_Angle[i]/VALUE_CIRCLE)*VALUE_CIRCLE);
 
-        //ÁÓ»¡+·´×ªÅĞ¶Ï
+        //åŠ£å¼§+åè½¬åˆ¤æ–­
         Error = XYZ_Angle[i] - (RUD_Encider[i].getTotolAngle()%VALUE_CIRCLE);//(RUD_Encider[i].getTotolAngle() - floor(RUD_Encider[i].getTotolAngle()/VALUE_CIRCLE) * VALUE_CIRCLE);
         //
         if (Error > 49152)
@@ -525,7 +525,7 @@ void Chassis_classdef::Angle_Treatment(void)
     }
 }
 
-/*------------------------------------------------------------ ´¦ÀíÏà¹Ø ------------------------------------------------------------*/
+/*------------------------------------------------------------ å¤„ç†ç›¸å…³ ------------------------------------------------------------*/
 
 void Chassis_classdef::CAN_Send(void)
 {

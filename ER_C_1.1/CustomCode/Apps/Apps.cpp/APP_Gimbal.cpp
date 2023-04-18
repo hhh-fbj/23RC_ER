@@ -47,7 +47,7 @@ Gimbal_classdef::Gimbal_classdef()
     /* Yaw µç»ú½Ç¶È */
     UsePID[Yaw][PID_Outer].SetPIDParam(18.0f, 0.0, 0.0f, 8000, 80000, 0.002f);//
 	UsePID[Yaw][PID_Inner].SetPIDParam(4.0f, 1.2, 0.0f, 10000, 30000, 0.002f);//
-		UsePID[Yaw][PID_Inner].I_SeparThresh = 2000;
+	UsePID[Yaw][PID_Inner].I_SeparThresh = 2000;
 	
 	/*--- Angle Init -------------------------------------------------------------------------*/
 	Set_InitAngle();
