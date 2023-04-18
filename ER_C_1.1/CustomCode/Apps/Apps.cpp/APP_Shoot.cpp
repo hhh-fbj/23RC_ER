@@ -155,7 +155,7 @@ void Shoot_classdef::Shoot_Sensor(GPIO_PinState io_pin)
 	}
 }
 
-
+int anxi;
 void Shoot_classdef::PullTar_Update(void)
 {
 	Pull_Lock_Flag = 1;
@@ -236,6 +236,69 @@ void Shoot_classdef::PullTar_Update(void)
 				{RightPull_TarAngle = RightPull_Motor.get_totalencoder();}\
 				else{RightPull_TarAngle += (-CTRL_DR16.Get_LY());}
 			}			
+		break;
+
+		case Pull_GearSetMode:
+			if(Top_LeftPull_Flag){;}
+			else{LeftPull_TarAngle += -8000;}
+			if(Top_RightPull_Flag){;}
+			else{RightPull_TarAngle += -8000;}
+			if(Top_LeftPull_Flag && Top_RightPull_Flag)
+			{
+				// //L1
+				// LeftPull_TarAngle = 741510 + Top_LeftPull;
+				// RightPull_TarAngle = 789561 + Top_RightPull;
+				// //L2
+				// LeftPull_TarAngle = 11082351 + Top_LeftPull;
+				// RightPull_TarAngle = 11165807 + Top_RightPull;
+				// //L3
+				// LeftPull_TarAngle = 12685275 + Top_LeftPull;
+				// RightPull_TarAngle = 12770837 + Top_RightPull;
+				if(CTRL_DR16.Get_LY() == 0){anxi = 0;}
+				if(CTRL_DR16.Get_LY() >= 6666 && anxi == 0)
+				{
+					anxi = 1;
+					
+					if(LeftPull_TarAngle == 741510 + Top_LeftPull && RightPull_TarAngle == 789561 + Top_RightPull)
+					{
+						 LeftPull_TarAngle = Top_LeftPull;
+						 RightPull_TarAngle = Top_RightPull;
+					}
+					else if(LeftPull_TarAngle == 11082351 + Top_LeftPull && RightPull_TarAngle == 11165807 + Top_RightPull)
+					{
+						 LeftPull_TarAngle = 741510 + Top_LeftPull;
+						 RightPull_TarAngle = 789561 + Top_RightPull;
+					}
+					else if(LeftPull_TarAngle == 12685275 + Top_LeftPull && RightPull_TarAngle == 12770837 + Top_RightPull)
+					{
+						 LeftPull_TarAngle = 11082351 + Top_LeftPull;
+						 RightPull_TarAngle = 11165807 + Top_RightPull;
+					}
+				}
+				else if(CTRL_DR16.Get_LY() <= -6666 && anxi == 0)
+				{				
+					anxi = 1;
+					if(LeftPull_TarAngle == 11082351 + Top_LeftPull && RightPull_TarAngle == 11165807 + Top_RightPull)
+					{
+						 LeftPull_TarAngle = 12685275 + Top_LeftPull;
+						 RightPull_TarAngle = 12770837 + Top_RightPull;
+					}
+					else if(LeftPull_TarAngle == 741510 + Top_LeftPull && RightPull_TarAngle == 789561 + Top_RightPull)
+					{
+						 LeftPull_TarAngle = 11082351 + Top_LeftPull;
+						 RightPull_TarAngle = 11165807 + Top_RightPull;
+					}
+					else if(LeftPull_TarAngle == Top_LeftPull && RightPull_TarAngle == Top_RightPull)
+					{
+						 LeftPull_TarAngle = 741510 + Top_LeftPull;
+						 RightPull_TarAngle = 789561 + Top_RightPull;
+					}
+					
+					
+					
+					
+				}
+			}
 		break;
 		
 		case Pull_LockMode:

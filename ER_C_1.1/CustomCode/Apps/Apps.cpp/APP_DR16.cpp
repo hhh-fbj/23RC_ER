@@ -68,7 +68,7 @@ void CTRL_DR16_classdef::LeverMode_Update(void)
                     // 正常发射
                     Gimbal.Mode = Gimbal_NormalMode;
                     Shoot.Shoot_Mode = Shoot_NewAutoMode;//Shoot_AutoMode;
-                    Shoot.Pull_Mode_Set(Pull_DebugMode);
+                    Shoot.Pull_Mode_Set(Pull_GearSetMode);
                     Clamp.setMode(Clamp_LockMode);
                     if(DR16.Get_DW_Norm() >= 110)
                     {

@@ -3780,7 +3780,7 @@ I (..\Core\Inc\can.h)(0x643CB879)
 I (..\CustomCode\Unify\Wolf_Infantry.h)(0x643CB87A)
 I (..\CustomCode\Apps\Apps.h\APP_DR16.h)(0x643CB879)
 I (..\CustomCode\Apps\Apps.h\APP_Gimbal.h)(0x643CB879)
-I (..\CustomCode\Apps\Apps.h\APP_Shoot.h)(0x643D4C92)
+I (..\CustomCode\Apps\Apps.h\APP_Shoot.h)(0x643EA718)
 I (..\CustomCode\Devices\Devices.h\DEV_BsqJnP2.h)(0x643CB87A)
 I (..\CustomCode\Apps\Apps.h\APP_Clamp.h)(0x643CB879)
 I (..\CustomCode\Devices\Devices.h\DEV_MX106.h)(0x643CB87A)
@@ -3804,7 +3804,7 @@ I (..\Middlewares\Third_Party\FreeRTOS\Source\portable\RVDS\ARM_CM4F\portmacro.h
 I (..\Middlewares\Third_Party\FreeRTOS\Source\include\mpu_wrappers.h)(0x643CB889)
 I (..\Middlewares\Third_Party\FreeRTOS\Source\include\task.h)(0x643CB889)
 I (..\Middlewares\Third_Party\FreeRTOS\Source\include\list.h)(0x643CB889)
-F (..\CustomCode\Apps\Apps.cpp\APP_DR16.cpp)(0x643CB879)(-xc++ -std=c++17 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-funsigned-char -fshort-enums -fshort-wchar -fno-exceptions-gdwarf-4 -O1 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../Core/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../Drivers/CMSIS/DSP/Include -I ../Drivers/CMSIS/DSP/Include/dsp -I ../Drivers/CMSIS/Lib/ARM -I ../CustomCode/Apps/Apps.h -I ../CustomCode/Algorithm/Algorithm.h -I ../CustomCode/BSP/BSP.h -I ../CustomCode/Devices/Devices.h -I ../CustomCode/Devices -I ../CustomCode/Tasks/Tasks.h -I ../CustomCode/Unify -I ../CustomCode/Unify/Universe.h -I ../CustomCode/Algorithm/Algorithm.cpp -I ../CustomCode/Algorithm -I ../CustomCode/Tasks -I ../CustomCode/Devices/BMI088-I./RTE/_C_Gimbal-IC:/Users/chenzijian/Pad/Data/keil5/ARM/CMSIS/5.9.0/CMSIS/Core/Include-IC:/Users/chenzijian/Pad/Data/keil5/Keil/STM32F4xx_DFP/2.17.0/Drivers/CMSIS/Device/ST/STM32F4xx/Include-D__UVISION_VERSION="538" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx-o c_gimbal/app_dr16.o -MD)
+F (..\CustomCode\Apps\Apps.cpp\APP_DR16.cpp)(0x643EA72A)(-xc++ -std=c++17 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-funsigned-char -fshort-enums -fshort-wchar -fno-exceptions-gdwarf-4 -O1 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../Core/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../Drivers/CMSIS/DSP/Include -I ../Drivers/CMSIS/DSP/Include/dsp -I ../Drivers/CMSIS/Lib/ARM -I ../CustomCode/Apps/Apps.h -I ../CustomCode/Algorithm/Algorithm.h -I ../CustomCode/BSP/BSP.h -I ../CustomCode/Devices/Devices.h -I ../CustomCode/Devices -I ../CustomCode/Tasks/Tasks.h -I ../CustomCode/Unify -I ../CustomCode/Unify/Universe.h -I ../CustomCode/Algorithm/Algorithm.cpp -I ../CustomCode/Algorithm -I ../CustomCode/Tasks -I ../CustomCode/Devices/BMI088-I./RTE/_C_Gimbal-IC:/Users/chenzijian/Pad/Data/keil5/ARM/CMSIS/5.9.0/CMSIS/Core/Include-IC:/Users/chenzijian/Pad/Data/keil5/Keil/STM32F4xx_DFP/2.17.0/Drivers/CMSIS/Device/ST/STM32F4xx/Include-D__UVISION_VERSION="538" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx-o c_gimbal/app_dr16.o -MD)
 I (..\CustomCode\Apps\Apps.h\APP_DR16.h)(0x643CB879)
 I (..\CustomCode\Unify\include.h)(0x643CB87A)
 I (..\CustomCode\Unify\confing.h)(0x643CB87A)
@@ -4451,7 +4451,7 @@ I (..\CustomCode\Unify\Wolf_Infantry.h)(0x643CB87A)
 I (..\CustomCode\Apps\Apps.h\APP_Devices.h)(0x643CB879)
 I (..\CustomCode\Apps\Apps.h\APP_Gimbal.h)(0x643CB879)
 I (..\CustomCode\Apps\Apps.h\APP_Vision.h)(0x643CB879)
-I (..\CustomCode\Apps\Apps.h\APP_Shoot.h)(0x643D4C92)
+I (..\CustomCode\Apps\Apps.h\APP_Shoot.h)(0x643EA718)
 I (..\CustomCode\Devices\Devices.h\DEV_BsqJnP2.h)(0x643CB87A)
 I (..\CustomCode\Apps\Apps.h\APP_Clamp.h)(0x643CB879)
 I (..\CustomCode\Devices\Devices.h\DEV_MX106.h)(0x643CB87A)
@@ -4459,7 +4459,7 @@ I (..\CustomCode\Devices\Devices.h\DEV_CIMU.h)(0x643CB87A)
 I (..\CustomCode\Devices\Devices.h\DEV_Buzzer.h)(0x643CB87A)
 I (..\CustomCode\Devices\Devices.h\DEV_LED.h)(0x643CB87A)
 I (..\CustomCode\Devices\Devices.h\DEV_UpComputer.h)(0x643CB87A)
-F (..\CustomCode\Apps\Apps.cpp\APP_Gimbal.cpp)(0x643D05C2)(-xc++ -std=c++17 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-funsigned-char -fshort-enums -fshort-wchar -fno-exceptions-gdwarf-4 -O1 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../Core/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../Drivers/CMSIS/DSP/Include -I ../Drivers/CMSIS/DSP/Include/dsp -I ../Drivers/CMSIS/Lib/ARM -I ../CustomCode/Apps/Apps.h -I ../CustomCode/Algorithm/Algorithm.h -I ../CustomCode/BSP/BSP.h -I ../CustomCode/Devices/Devices.h -I ../CustomCode/Devices -I ../CustomCode/Tasks/Tasks.h -I ../CustomCode/Unify -I ../CustomCode/Unify/Universe.h -I ../CustomCode/Algorithm/Algorithm.cpp -I ../CustomCode/Algorithm -I ../CustomCode/Tasks -I ../CustomCode/Devices/BMI088-I./RTE/_C_Gimbal-IC:/Users/chenzijian/Pad/Data/keil5/ARM/CMSIS/5.9.0/CMSIS/Core/Include-IC:/Users/chenzijian/Pad/Data/keil5/Keil/STM32F4xx_DFP/2.17.0/Drivers/CMSIS/Device/ST/STM32F4xx/Include-D__UVISION_VERSION="538" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx-o c_gimbal/app_gimbal.o -MD)
+F (..\CustomCode\Apps\Apps.cpp\APP_Gimbal.cpp)(0x643DEB99)(-xc++ -std=c++17 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-funsigned-char -fshort-enums -fshort-wchar -fno-exceptions-gdwarf-4 -O1 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../Core/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../Drivers/CMSIS/DSP/Include -I ../Drivers/CMSIS/DSP/Include/dsp -I ../Drivers/CMSIS/Lib/ARM -I ../CustomCode/Apps/Apps.h -I ../CustomCode/Algorithm/Algorithm.h -I ../CustomCode/BSP/BSP.h -I ../CustomCode/Devices/Devices.h -I ../CustomCode/Devices -I ../CustomCode/Tasks/Tasks.h -I ../CustomCode/Unify -I ../CustomCode/Unify/Universe.h -I ../CustomCode/Algorithm/Algorithm.cpp -I ../CustomCode/Algorithm -I ../CustomCode/Tasks -I ../CustomCode/Devices/BMI088-I./RTE/_C_Gimbal-IC:/Users/chenzijian/Pad/Data/keil5/ARM/CMSIS/5.9.0/CMSIS/Core/Include-IC:/Users/chenzijian/Pad/Data/keil5/Keil/STM32F4xx_DFP/2.17.0/Drivers/CMSIS/Device/ST/STM32F4xx/Include-D__UVISION_VERSION="538" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx-o c_gimbal/app_gimbal.o -MD)
 I (..\CustomCode\Apps\Apps.h\APP_Gimbal.h)(0x643CB879)
 I (..\CustomCode\Unify\include.h)(0x643CB87A)
 I (..\CustomCode\Unify\confing.h)(0x643CB87A)
@@ -5106,7 +5106,7 @@ I (..\Middlewares\Third_Party\FreeRTOS\Source\include\event_groups.h)(0x643CB889
 I (..\Core\Inc\can.h)(0x643CB879)
 I (..\Core\Inc\usart.h)(0x643CB879)
 I (..\CustomCode\Unify\Wolf_Infantry.h)(0x643CB87A)
-I (..\CustomCode\Apps\Apps.h\APP_Shoot.h)(0x643D4C92)
+I (..\CustomCode\Apps\Apps.h\APP_Shoot.h)(0x643EA718)
 I (..\CustomCode\Devices\Devices.h\DEV_BsqJnP2.h)(0x643CB87A)
 I (..\CustomCode\Apps\Apps.h\APP_Clamp.h)(0x643CB879)
 I (..\CustomCode\Devices\Devices.h\DEV_MX106.h)(0x643CB87A)
@@ -5115,8 +5115,8 @@ I (..\CustomCode\Devices\Devices.h\DEV_Buzzer.h)(0x643CB87A)
 I (..\CustomCode\Devices\Devices.h\DEV_LED.h)(0x643CB87A)
 I (..\CustomCode\Devices\Devices.h\DEV_UpComputer.h)(0x643CB87A)
 I (..\CustomCode\Devices\BMI088\INS_task.h)(0x643CB87A)
-F (..\CustomCode\Apps\Apps.cpp\APP_Shoot.cpp)(0x643D4F8C)(-xc++ -std=c++17 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-funsigned-char -fshort-enums -fshort-wchar -fno-exceptions-gdwarf-4 -O1 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../Core/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../Drivers/CMSIS/DSP/Include -I ../Drivers/CMSIS/DSP/Include/dsp -I ../Drivers/CMSIS/Lib/ARM -I ../CustomCode/Apps/Apps.h -I ../CustomCode/Algorithm/Algorithm.h -I ../CustomCode/BSP/BSP.h -I ../CustomCode/Devices/Devices.h -I ../CustomCode/Devices -I ../CustomCode/Tasks/Tasks.h -I ../CustomCode/Unify -I ../CustomCode/Unify/Universe.h -I ../CustomCode/Algorithm/Algorithm.cpp -I ../CustomCode/Algorithm -I ../CustomCode/Tasks -I ../CustomCode/Devices/BMI088-I./RTE/_C_Gimbal-IC:/Users/chenzijian/Pad/Data/keil5/ARM/CMSIS/5.9.0/CMSIS/Core/Include-IC:/Users/chenzijian/Pad/Data/keil5/Keil/STM32F4xx_DFP/2.17.0/Drivers/CMSIS/Device/ST/STM32F4xx/Include-D__UVISION_VERSION="538" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx-o c_gimbal/app_shoot.o -MD)
-I (..\CustomCode\Apps\Apps.h\APP_Shoot.h)(0x643D4C92)
+F (..\CustomCode\Apps\Apps.cpp\APP_Shoot.cpp)(0x643EAA9C)(-xc++ -std=c++17 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-funsigned-char -fshort-enums -fshort-wchar -fno-exceptions-gdwarf-4 -O1 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../Core/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../Drivers/CMSIS/DSP/Include -I ../Drivers/CMSIS/DSP/Include/dsp -I ../Drivers/CMSIS/Lib/ARM -I ../CustomCode/Apps/Apps.h -I ../CustomCode/Algorithm/Algorithm.h -I ../CustomCode/BSP/BSP.h -I ../CustomCode/Devices/Devices.h -I ../CustomCode/Devices -I ../CustomCode/Tasks/Tasks.h -I ../CustomCode/Unify -I ../CustomCode/Unify/Universe.h -I ../CustomCode/Algorithm/Algorithm.cpp -I ../CustomCode/Algorithm -I ../CustomCode/Tasks -I ../CustomCode/Devices/BMI088-I./RTE/_C_Gimbal-IC:/Users/chenzijian/Pad/Data/keil5/ARM/CMSIS/5.9.0/CMSIS/Core/Include-IC:/Users/chenzijian/Pad/Data/keil5/Keil/STM32F4xx_DFP/2.17.0/Drivers/CMSIS/Device/ST/STM32F4xx/Include-D__UVISION_VERSION="538" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx-o c_gimbal/app_shoot.o -MD)
+I (..\CustomCode\Apps\Apps.h\APP_Shoot.h)(0x643EA718)
 I (..\CustomCode\Unify\include.h)(0x643CB87A)
 I (..\CustomCode\Unify\confing.h)(0x643CB87A)
 I (..\CustomCode\Devices\Devices.h\DEV_DR16.h)(0x643CB87A)
@@ -6421,7 +6421,7 @@ I (..\Core\Inc\usart.h)(0x643CB879)
 I (..\CustomCode\Unify\Wolf_Infantry.h)(0x643CB87A)
 I (..\CustomCode\Apps\Apps.h\APP_Gimbal.h)(0x643CB879)
 I (..\CustomCode\Apps\Apps.h\APP_Vision.h)(0x643CB879)
-I (..\CustomCode\Apps\Apps.h\APP_Shoot.h)(0x643D4C92)
+I (..\CustomCode\Apps\Apps.h\APP_Shoot.h)(0x643EA718)
 I (..\CustomCode\Devices\Devices.h\DEV_BsqJnP2.h)(0x643CB87A)
 I (..\CustomCode\Devices\Devices.h\DEV_CIMU.h)(0x643CB87A)
 I (..\CustomCode\Devices\Devices.h\DEV_Buzzer.h)(0x643CB87A)
@@ -7371,7 +7371,7 @@ I (..\CustomCode\Apps\Apps.h\APP_DR16.h)(0x643CB879)
 I (..\CustomCode\Apps\Apps.h\APP_Devices.h)(0x643CB879)
 I (..\CustomCode\Apps\Apps.h\APP_Gimbal.h)(0x643CB879)
 I (..\CustomCode\Apps\Apps.h\APP_Vision.h)(0x643CB879)
-I (..\CustomCode\Apps\Apps.h\APP_Shoot.h)(0x643D4C92)
+I (..\CustomCode\Apps\Apps.h\APP_Shoot.h)(0x643EA718)
 I (..\CustomCode\Devices\Devices.h\DEV_BsqJnP2.h)(0x643CB87A)
 I (..\CustomCode\Apps\Apps.h\APP_Clamp.h)(0x643CB879)
 I (..\CustomCode\Devices\Devices.h\DEV_MX106.h)(0x643CB87A)
@@ -8213,7 +8213,7 @@ I (..\CustomCode\Apps\Apps.h\APP_DR16.h)(0x643CB879)
 I (..\CustomCode\Apps\Apps.h\APP_Devices.h)(0x643CB879)
 I (..\CustomCode\Apps\Apps.h\APP_Gimbal.h)(0x643CB879)
 I (..\CustomCode\Apps\Apps.h\APP_Vision.h)(0x643CB879)
-I (..\CustomCode\Apps\Apps.h\APP_Shoot.h)(0x643D4C92)
+I (..\CustomCode\Apps\Apps.h\APP_Shoot.h)(0x643EA718)
 I (..\CustomCode\Devices\Devices.h\DEV_BsqJnP2.h)(0x643CB87A)
 I (..\CustomCode\Apps\Apps.h\APP_Clamp.h)(0x643CB879)
 I (..\CustomCode\Devices\Devices.h\DEV_MX106.h)(0x643CB87A)
@@ -8967,7 +8967,7 @@ I (..\CustomCode\Apps\Apps.h\APP_DR16.h)(0x643CB879)
 I (..\CustomCode\Apps\Apps.h\APP_Devices.h)(0x643CB879)
 I (..\CustomCode\Apps\Apps.h\APP_Gimbal.h)(0x643CB879)
 I (..\CustomCode\Apps\Apps.h\APP_Vision.h)(0x643CB879)
-I (..\CustomCode\Apps\Apps.h\APP_Shoot.h)(0x643D4C92)
+I (..\CustomCode\Apps\Apps.h\APP_Shoot.h)(0x643EA718)
 I (..\CustomCode\Devices\Devices.h\DEV_BsqJnP2.h)(0x643CB87A)
 I (..\CustomCode\Apps\Apps.h\APP_Clamp.h)(0x643CB879)
 I (..\CustomCode\Devices\Devices.h\DEV_MX106.h)(0x643CB87A)
@@ -10874,7 +10874,7 @@ I (..\CustomCode\Unify\Wolf_Infantry.h)(0x643CB87A)
 I (..\CustomCode\Apps\Apps.h\APP_DR16.h)(0x643CB879)
 I (..\CustomCode\Apps\Apps.h\APP_Gimbal.h)(0x643CB879)
 I (..\CustomCode\Apps\Apps.h\APP_Vision.h)(0x643CB879)
-I (..\CustomCode\Apps\Apps.h\APP_Shoot.h)(0x643D4C92)
+I (..\CustomCode\Apps\Apps.h\APP_Shoot.h)(0x643EA718)
 I (..\CustomCode\Devices\Devices.h\DEV_BsqJnP2.h)(0x643CB87A)
 I (..\CustomCode\Apps\Apps.h\APP_Clamp.h)(0x643CB879)
 I (..\CustomCode\Devices\Devices.h\DEV_CIMU.h)(0x643CB87A)
@@ -11530,7 +11530,7 @@ I (..\CustomCode\Apps\Apps.h\APP_DR16.h)(0x643CB879)
 I (..\CustomCode\Apps\Apps.h\APP_Devices.h)(0x643CB879)
 I (..\CustomCode\Apps\Apps.h\APP_Gimbal.h)(0x643CB879)
 I (..\CustomCode\Apps\Apps.h\APP_Vision.h)(0x643CB879)
-I (..\CustomCode\Apps\Apps.h\APP_Shoot.h)(0x643D4C92)
+I (..\CustomCode\Apps\Apps.h\APP_Shoot.h)(0x643EA718)
 I (..\CustomCode\Devices\Devices.h\DEV_BsqJnP2.h)(0x643CB87A)
 I (..\CustomCode\Apps\Apps.h\APP_Clamp.h)(0x643CB879)
 I (..\CustomCode\Devices\Devices.h\DEV_MX106.h)(0x643CB87A)
@@ -12187,7 +12187,7 @@ I (..\CustomCode\Unify\Wolf_Infantry.h)(0x643CB87A)
 I (..\CustomCode\Apps\Apps.h\APP_DR16.h)(0x643CB879)
 I (..\CustomCode\Apps\Apps.h\APP_Gimbal.h)(0x643CB879)
 I (..\CustomCode\Apps\Apps.h\APP_Vision.h)(0x643CB879)
-I (..\CustomCode\Apps\Apps.h\APP_Shoot.h)(0x643D4C92)
+I (..\CustomCode\Apps\Apps.h\APP_Shoot.h)(0x643EA718)
 I (..\CustomCode\Devices\Devices.h\DEV_BsqJnP2.h)(0x643CB87A)
 I (..\CustomCode\Apps\Apps.h\APP_Clamp.h)(0x643CB879)
 I (..\CustomCode\Devices\Devices.h\DEV_MX106.h)(0x643CB87A)
@@ -12844,7 +12844,7 @@ I (..\CustomCode\Apps\Apps.h\APP_DR16.h)(0x643CB879)
 I (..\CustomCode\Apps\Apps.h\APP_Devices.h)(0x643CB879)
 I (..\CustomCode\Apps\Apps.h\APP_Gimbal.h)(0x643CB879)
 I (..\CustomCode\Apps\Apps.h\APP_Vision.h)(0x643CB879)
-I (..\CustomCode\Apps\Apps.h\APP_Shoot.h)(0x643D4C92)
+I (..\CustomCode\Apps\Apps.h\APP_Shoot.h)(0x643EA718)
 I (..\CustomCode\Devices\Devices.h\DEV_BsqJnP2.h)(0x643CB87A)
 I (..\CustomCode\Apps\Apps.h\APP_Clamp.h)(0x643CB879)
 I (..\CustomCode\Devices\Devices.h\DEV_MX106.h)(0x643CB87A)
@@ -13502,7 +13502,7 @@ I (..\CustomCode\Apps\Apps.h\APP_DR16.h)(0x643CB879)
 I (..\CustomCode\Apps\Apps.h\APP_Devices.h)(0x643CB879)
 I (..\CustomCode\Apps\Apps.h\APP_Gimbal.h)(0x643CB879)
 I (..\CustomCode\Apps\Apps.h\APP_Vision.h)(0x643CB879)
-I (..\CustomCode\Apps\Apps.h\APP_Shoot.h)(0x643D4C92)
+I (..\CustomCode\Apps\Apps.h\APP_Shoot.h)(0x643EA718)
 I (..\CustomCode\Devices\Devices.h\DEV_BsqJnP2.h)(0x643CB87A)
 I (..\CustomCode\Apps\Apps.h\APP_Clamp.h)(0x643CB879)
 I (..\CustomCode\Devices\Devices.h\DEV_MX106.h)(0x643CB87A)
@@ -14159,7 +14159,7 @@ I (..\CustomCode\Apps\Apps.h\APP_DR16.h)(0x643CB879)
 I (..\CustomCode\Apps\Apps.h\APP_Devices.h)(0x643CB879)
 I (..\CustomCode\Apps\Apps.h\APP_Gimbal.h)(0x643CB879)
 I (..\CustomCode\Apps\Apps.h\APP_Vision.h)(0x643CB879)
-I (..\CustomCode\Apps\Apps.h\APP_Shoot.h)(0x643D4C92)
+I (..\CustomCode\Apps\Apps.h\APP_Shoot.h)(0x643EA718)
 I (..\CustomCode\Devices\Devices.h\DEV_BsqJnP2.h)(0x643CB87A)
 I (..\CustomCode\Apps\Apps.h\APP_Clamp.h)(0x643CB879)
 I (..\CustomCode\Devices\Devices.h\DEV_MX106.h)(0x643CB87A)
@@ -14818,7 +14818,7 @@ I (..\CustomCode\Apps\Apps.h\APP_DR16.h)(0x643CB879)
 I (..\CustomCode\Apps\Apps.h\APP_Devices.h)(0x643CB879)
 I (..\CustomCode\Apps\Apps.h\APP_Gimbal.h)(0x643CB879)
 I (..\CustomCode\Apps\Apps.h\APP_Vision.h)(0x643CB879)
-I (..\CustomCode\Apps\Apps.h\APP_Shoot.h)(0x643D4C92)
+I (..\CustomCode\Apps\Apps.h\APP_Shoot.h)(0x643EA718)
 I (..\CustomCode\Devices\Devices.h\DEV_BsqJnP2.h)(0x643CB87A)
 I (..\CustomCode\Apps\Apps.h\APP_Clamp.h)(0x643CB879)
 I (..\CustomCode\Devices\Devices.h\DEV_MX106.h)(0x643CB87A)
@@ -15483,7 +15483,7 @@ I (..\CustomCode\Apps\Apps.h\APP_DR16.h)(0x643CB879)
 I (..\CustomCode\Apps\Apps.h\APP_Devices.h)(0x643CB879)
 I (..\CustomCode\Apps\Apps.h\APP_Gimbal.h)(0x643CB879)
 I (..\CustomCode\Apps\Apps.h\APP_Vision.h)(0x643CB879)
-I (..\CustomCode\Apps\Apps.h\APP_Shoot.h)(0x643D4C92)
+I (..\CustomCode\Apps\Apps.h\APP_Shoot.h)(0x643EA718)
 I (..\CustomCode\Devices\Devices.h\DEV_BsqJnP2.h)(0x643CB87A)
 I (..\CustomCode\Apps\Apps.h\APP_Clamp.h)(0x643CB879)
 I (..\CustomCode\Devices\Devices.h\DEV_MX106.h)(0x643CB87A)

@@ -32,7 +32,7 @@
 #define VALUE_CIRCLE 98304
 #define DEGREE_TURN_CIRCLE 273.06666666666666666666666666667
 
-#define CHASSIS_MAX_SPEED 1000  // 底盘驱动轮最大速度
+#define CHASSIS_MAX_SPEED 4000  // 底盘驱动轮最大速度
 #define CHASSIS_MAX_VW    0.8*CHASSIS_MAX_SPEED  // 底盘旋转最大速度
 
 
@@ -77,7 +77,7 @@ Chassis_classdef::Chassis_classdef()
     Repair_PID[PID_Inner].SetPIDParam(0.0, 0.0f, 0.0f, 1000, 10000, 0.002f);Repair_PID[PID_Inner].DeadZone = 1;
 
     //激光双环——前进环/旋转环
-    Laser_PID[0].SetPIDParam(0.4f, 0.01f, 0.0f, 200, 440, 0.002f);Laser_PID[0].DeadZone = 10;
+    Laser_PID[0].SetPIDParam(0.52f, 0.012f, 0.0f, 200, 660, 0.002f);Laser_PID[0].DeadZone = 10;
     Laser_PID[1].SetPIDParam(0.5f, 0.0f, 0.0f, 4000, 10000, 0.002f);Laser_PID[1].DeadZone = 30;
 
 

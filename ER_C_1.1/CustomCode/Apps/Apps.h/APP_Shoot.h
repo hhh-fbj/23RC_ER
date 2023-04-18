@@ -25,6 +25,7 @@ enum Pull_CtrlMode_e
 	Pull_LockMode,
 	Pull_TransiMode,
 	Pull_NewDebugMode,
+	Pull_GearSetMode,
 };
 
 
