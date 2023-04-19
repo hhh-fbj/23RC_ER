@@ -77,7 +77,7 @@ Chassis_classdef::Chassis_classdef()
     Repair_PID[PID_Inner].SetPIDParam(0.0, 0.0f, 0.0f, 1000, 10000, 0.002f);Repair_PID[PID_Inner].DeadZone = 1;
 
     //激光双环——前进环/旋转环
-    Laser_PID[0].SetPIDParam(0.52f, 0.012f, 0.0f, 200, 660, 0.002f);Laser_PID[0].DeadZone = 10;
+    Laser_PID[0].SetPIDParam(0.48f, 0.012f, 0.0f, 200, 660, 0.002f);Laser_PID[0].DeadZone = 10;
     Laser_PID[1].SetPIDParam(0.5f, 0.0f, 0.0f, 4000, 10000, 0.002f);Laser_PID[1].DeadZone = 30;
 
 
@@ -225,7 +225,7 @@ void Chassis_classdef::ChassisTar_Update()
                     POS_PID[Posture_Y][PID_Outer].Current = Auto.Posture.POS_Y();//Auto.Posture.POS_W();
                     POS_PID[Posture_W][PID_Outer].Current = Auto.Posture.POS_W();//Auto.Posture.POS_W();
 
-                    Process(POS_PID[Posture_X][PID_Outer].Cal()-770, POS_PID[Posture_Y][PID_Outer].Cal(), POS_PID[Posture_W][PID_Outer].Cal());
+                    Process(POS_PID[Posture_X][PID_Outer].Cal()-880, POS_PID[Posture_Y][PID_Outer].Cal(), POS_PID[Posture_W][PID_Outer].Cal());
                 break;
                 
                 case 99:

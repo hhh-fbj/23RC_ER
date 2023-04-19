@@ -8,26 +8,29 @@
 uint8_t MX106_Data[MXDATASIZE];
 void MX106_classdef::Ping(void)
 {
-  uint8_t data[10];
   uint16_t crc;
-  data[0] = 0XFF;
-  data[1] = 0XFF;
-  data[2] = 0XFD;
-  data[3] = 0X00;
-  data[4] = ID;
-  data[5] = 0X03;
-  data[6] = 0X00;
-  data[7] = 0X01;
-  crc = update_crc(0, data, 8);
-  data[8] = (crc & 0xFF);
-  data[9] = ((crc>>8) & 0xFF);
-//		HAL_HalfDuplex_EnableTransmitter(&huart1);
-//  	HAL_UART_Transmit_DMA(&huart1 , data, sizeof(data));
-//		HAL_HalfDuplex_EnableReceiver(&huart1);
-	
-//	HAL_HalfDuplex_EnableTransmitter(&huart1);
-	HAL_UART_Transmit(&huart1, data, 10, 2000);
-//	//使能接收功能。每次接收前需要调用此函数
+  send_data[0] = 0XFF;
+  send_data[1] = 0XFF;
+  send_data[2] = 0XFD;
+  send_data[3] = 0X00;
+  send_data[4] = ID;
+  send_data[5] = 0X03;
+  send_data[6] = 0X00;
+  send_data[7] = 0X01;
+  crc = update_crc(0, send_data, 8);
+  send_data[8] = (crc & 0xFF);
+  send_data[9] = ((crc>>8) & 0xFF);
+  send_data[10] = 0X00;
+  send_data[11] = 0X00;
+  send_data[12] = 0X00;
+  send_data[13] = 0X00;
+  send_data[14] = 0X00;
+  send_data[15] = 0X00;
+
+  if((&huart1)->gState == HAL_UART_STATE_READY) 
+  {
+    HAL_UART_Transmit_DMA(&huart1, send_data, 10);
+  }
   State = 0X01;
 }
 
@@ -77,103 +80,119 @@ void MX106_classdef::Receive(uint8_t *data)
 
 void MX106_classdef::Torque(uint8_t NON)
 {
-    uint8_t data[13];
     uint16_t crc;
-    data[0] = 0XFF;
-    data[1] = 0XFF;
-    data[2] = 0XFD;
-    data[3] = 0X00;
-    data[4] = ID;
-    data[5] = 0X06;
-    data[6] = 0X00;
-    data[7] = 0X03;
-    data[8] = 0X40;
-    data[9] = 0X00;
-    data[10] = NON;
-    crc = update_crc(0, data, 11);
-    data[11] = (crc & 0xFF);
-    data[12] = ((crc>>8) & 0xFF);
-		HAL_UART_Transmit(&huart1, data, 13, 2000);
+    send_data[0] = 0XFF;
+    send_data[1] = 0XFF;
+    send_data[2] = 0XFD;
+    send_data[3] = 0X00;
+    send_data[4] = ID;
+    send_data[5] = 0X06;
+    send_data[6] = 0X00;
+    send_data[7] = 0X03;
+    send_data[8] = 0X40;
+    send_data[9] = 0X00;
+    send_data[10] = NON;
+    crc = update_crc(0, send_data, 11);
+    send_data[11] = (crc & 0xFF);
+    send_data[12] = ((crc>>8) & 0xFF);
+    send_data[13] = 0X00;
+    send_data[14] = 0X00;
+    send_data[15] = 0X00;
+    if((&huart1)->gState == HAL_UART_STATE_READY) 
+    {
+      HAL_UART_Transmit_DMA(&huart1, send_data, 13);
+    }
     set_Torque_state = NON;
     State = 0X03;
 }
 
 void MX106_classdef::Position_Control(uint32_t position)
 {
-    uint8_t data[16];
     uint16_t crc;
-    data[0] = 0XFF;
-    data[1] = 0XFF;
-    data[2] = 0XFD;
-    data[3] = 0X00;
-    data[4] = ID;
-    data[5] = 0X09;
-    data[6] = 0X00;
-    data[7] = 0X03;
-    data[8] = 0X74;
-    data[9] = 0X00;
+    send_data[0] = 0XFF;
+    send_data[1] = 0XFF;
+    send_data[2] = 0XFD;
+    send_data[3] = 0X00;
+    send_data[4] = ID;
+    send_data[5] = 0X09;
+    send_data[6] = 0X00;
+    send_data[7] = 0X03;
+    send_data[8] = 0X74;
+    send_data[9] = 0X00;
 
-    data[10] = (uint8_t)position;
-    data[11] = (uint8_t)(position>>8);
-    data[12] = (uint8_t)(position>>16);
-    data[13] = (uint8_t)(position>>24);
+    send_data[10] = (uint8_t)position;
+    send_data[11] = (uint8_t)(position>>8);
+    send_data[12] = (uint8_t)(position>>16);
+    send_data[13] = (uint8_t)(position>>24);
 
-    crc = update_crc(0, data, 14);
-    data[14] = (crc & 0xFF);
-    data[15] = ((crc>>8) & 0xFF);
-		HAL_UART_Transmit(&huart1, data, 16, 2000);
+    crc = update_crc(0, send_data, 14);
+    send_data[14] = (crc & 0xFF);
+    send_data[15] = ((crc>>8) & 0xFF);
+		// HAL_UART_Transmit(&huart1, send_data, 16, 2000);
+    if((&huart1)->gState == HAL_UART_STATE_READY) 
+    {
+      HAL_UART_Transmit_DMA(&huart1, send_data, 16);
+    }
     State = 0X04;
 }
 
 void MX106_classdef::ExtendPosition_Control(uint32_t position)
 {
-	  uint8_t data[16];
     uint16_t crc;
-    data[0] = 0XFF;
-    data[1] = 0XFF;
-    data[2] = 0XFD;
-    data[3] = 0X00;
-    data[4] = ID;
-    data[5] = 0X09;
-    data[6] = 0X00;
-    data[7] = 0X03;
-    data[8] = 0X74;
-    data[9] = 0X00;
+    send_data[0] = 0XFF;
+    send_data[1] = 0XFF;
+    send_data[2] = 0XFD;
+    send_data[3] = 0X00;
+    send_data[4] = ID;
+    send_data[5] = 0X09;
+    send_data[6] = 0X00;
+    send_data[7] = 0X03;
+    send_data[8] = 0X74;
+    send_data[9] = 0X00;
 
-    data[10] = (uint8_t)position;
-    data[11] = (uint8_t)(position>>8);
-    data[12] = (uint8_t)(position>>16);
-    data[13] = (uint8_t)(position>>24);
+    send_data[10] = (uint8_t)position;
+    send_data[11] = (uint8_t)(position>>8);
+    send_data[12] = (uint8_t)(position>>16);
+    send_data[13] = (uint8_t)(position>>24);
 
-    crc = update_crc(0, data, 14);
-    data[14] = (crc & 0xFF);
-    data[15] = ((crc>>8) & 0xFF);
-		HAL_UART_Transmit(&huart1, data, 16, 2000);
+    crc = update_crc(0, send_data, 14);
+    send_data[14] = (crc & 0xFF);
+    send_data[15] = ((crc>>8) & 0xFF);
+		// HAL_UART_Transmit(&huart1, send_data, 16, 2000);
+		if((&huart1)->gState == HAL_UART_STATE_READY) 
+    {
+      HAL_UART_Transmit_DMA(&huart1, send_data, 16);
+    }
     State = 0X04;
 }
 
 void MX106_classdef::ReadPosition()
 {
-		uint8_t data[14];
     uint16_t crc;
-    data[0] = 0XFF;
-    data[1] = 0XFF;
-    data[2] = 0XFD;
-    data[3] = 0X00;
-    data[4] = ID;
-    data[5] = 0X07;
-    data[6] = 0X00;
-    data[7] = 0X02;
+    send_data[0] = 0XFF;
+    send_data[1] = 0XFF;
+    send_data[2] = 0XFD;
+    send_data[3] = 0X00;
+    send_data[4] = ID;
+    send_data[5] = 0X07;
+    send_data[6] = 0X00;
+    send_data[7] = 0X02;
 
-    data[8] = 0x84;
-    data[9] = 0x00;
-    data[10] = 0x04;
-    data[11] = 0x00;
+    send_data[8] = 0x84;
+    send_data[9] = 0x00;
+    send_data[10] = 0x04;
+    send_data[11] = 0x00;
 
-    crc = update_crc(0, data, 12);
-    data[12] = (crc & 0xFF);
-    data[13] = ((crc>>8) & 0xFF);
-		HAL_UART_Transmit(&huart1, data, 16, 2000);
+    crc = update_crc(0, send_data, 12);
+    send_data[12] = (crc & 0xFF);
+    send_data[13] = ((crc>>8) & 0xFF);
+    send_data[14] = 0X00;
+    send_data[15] = 0X00;
+//		HAL_UART_Transmit(&huart1, send_data, 16, 2000);
+    if((&huart1)->gState == HAL_UART_STATE_READY) 
+    {
+      HAL_UART_Transmit_DMA(&huart1 , send_data, 14);
+    }
     State = 0X06;
 }
 

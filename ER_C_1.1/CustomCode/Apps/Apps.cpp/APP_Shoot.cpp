@@ -254,6 +254,8 @@ void Shoot_classdef::PullTar_Update(void)
 				// //L3
 				// LeftPull_TarAngle = 12685275 + Top_LeftPull;
 				// RightPull_TarAngle = 12770837 + Top_RightPull;
+				if(LeftPull_TarAngle < 741510 + Top_LeftPull){LeftPull_TarAngle = Top_LeftPull;}
+				if(RightPull_TarAngle < 789561 + Top_RightPull){RightPull_TarAngle = Top_RightPull;}
 				if(CTRL_DR16.Get_LY() == 0){anxi = 0;}
 				if(CTRL_DR16.Get_LY() >= 6666 && anxi == 0)
 				{

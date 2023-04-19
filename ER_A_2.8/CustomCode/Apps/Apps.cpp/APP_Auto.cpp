@@ -445,7 +445,7 @@ void Auto_classdef::Left_PickIdea(void)
 		Chassis.NO_PostureMode = 3;
 		if(Chassis.EdgeDete[4] && Chassis.EdgeDete[5])
 		{
-			Vx = -770;Vw = 0;Vy=0;
+			Vx = -1100;Vw = 0;Vy=0;
 		}
 		else
 		{
@@ -458,11 +458,11 @@ void Auto_classdef::Left_PickIdea(void)
 			}
 			else if(Chassis.EdgeDete[4] == GPIO_PIN_SET)//×óÉÏ
 			{
-				Vx = -660;Vy = 0;Vw = -330;
+				Vx = -1100;Vy = 0;Vw = -660;
 			}
 			else if(Chassis.EdgeDete[5] == GPIO_PIN_SET)//×óÏÂ
 			{
-				Vx = -660;Vy = 0;Vw = 330;
+				Vx = -1100;Vy = 0;Vw = 660;
 			}
 			else if(WallFlag)
 			{
@@ -496,7 +496,7 @@ void Auto_classdef::Left_PickIdea(void)
 					LR_time=0;
 				}
 				// if(Vy == 0)
-				if(LR_time > 5|| (LR_out_time > 1000 && abs(33505+33505-(Analog.LaserRanging[9]+Analog.LaserRanging[8]))<500))
+				if(LR_time > 5|| (LR_out_time > 800 && abs(33505+33505-(Analog.LaserRanging[9]+Analog.LaserRanging[8]))<500))
 				{LR_out_time=0;Chassis.try_bl=0;overFlag = 0;startFlag = 1;\
 				Vx=Vy=Vw=0;WallFlag=WallTime=0;\
 				text_step = 2;}

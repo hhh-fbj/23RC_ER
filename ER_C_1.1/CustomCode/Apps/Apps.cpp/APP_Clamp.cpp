@@ -55,7 +55,7 @@ void Clamp_classdef::Control()
 
 	//舵机读值——与舵机控制交错进行
 	servo_time++;
-	if(servo_time >= 20)
+	if(servo_time >= 10)
 	{
 		TurnPlace_Servo.ReadPosition();
 		servo_time = 0;
@@ -110,7 +110,7 @@ uint8_t Clamp_classdef::ProblemDetection(void)
 		Motor[3].Out = 0;
 
 		Set_TurnPlacel(0,2050);
-		if(servo_time == 10)
+		if(servo_time == 5)
 		{
 			TurnPlace_Servo.Torque(false);
 		}

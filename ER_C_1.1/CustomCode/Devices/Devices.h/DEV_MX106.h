@@ -55,6 +55,7 @@ private:
     uint8_t ID;
     unsigned short update_crc(unsigned short crc_accum, unsigned char *data_blk_ptr, unsigned short data_blk_size);
     uint8_t State,Error;
+    uint8_t send_data[16];
 public:
 		MX106_classdef(uint8_t id): ID(id){};
 		uint8_t MX106_Data[MXDATASIZE];
