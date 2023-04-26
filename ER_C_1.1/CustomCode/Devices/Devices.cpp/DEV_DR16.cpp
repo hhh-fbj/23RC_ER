@@ -38,6 +38,9 @@ void DR16_Classdef::DataCapture(DR16_DataPack_Typedef* captureData)
     //     return;
     // }
 
+    Last_S1_L = Get_S1_L();
+    Last_S2_R = Get_S2_R();
+
     DataPack = *captureData;
 
     /*各杂七杂八通道值归一化处理*/

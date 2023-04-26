@@ -138,7 +138,7 @@ void System_Tasks_Init(void)
 	// xTaskCreate(Task_Debug, "Debug", TASK_STACK_SIZE_128, NULL, PriorityAboveNormal, NULL);
 
 	//--- 总控制任务(放最后创建)
-	xTaskCreate(Task_Control, "Control", TASK_STACK_SIZE_512, NULL, PrioritySuperHigh, NULL);
+	xTaskCreate(Task_Control, "Control", TASK_STACK_SIZE_1024, NULL, PrioritySuperHigh, NULL);
 	
 //	//LED与音乐
 	Buzzer.SuperMario_Music(); //--- 蜂鸣器处理

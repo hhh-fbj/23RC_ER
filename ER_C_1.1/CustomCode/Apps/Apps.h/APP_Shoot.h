@@ -61,6 +61,17 @@ private:
 		float Shoot_Hold;
 		float Shoot_Speed;
 		float Pull_Max;
+
+		float Shoot_StopTime;
+		float Shoot_LowSpeed;
+		float Shoot_HightSpeed;
+		float Pull_InitSpeed;
+		float Pull_LeftFirst;
+		float Pull_RightFirst;
+		float Pull_LeftSecond;
+		float Pull_RightSecond;
+		float Pull_LeftThird;
+		float Pull_RightThird;
 	}Param;
 
 	uint8_t ProblemDetection(void);
@@ -78,6 +89,7 @@ public:
 	// BsqJnP2_Classdef BsqJnP2;
 
 	uint8_t Shoot_Place_Flag=0;
+	uint8_t Turn_Pull_Flag;
 	float Shoot_Speed_BL;
 	float LeftPull_TarAngle, RightPull_TarAngle;
 	float Manual_Flag;

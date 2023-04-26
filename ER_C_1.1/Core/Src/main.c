@@ -72,20 +72,8 @@ void MX_FREERTOS_Init(void);
   * @brief  The application entry point.
   * @retval int
   */
-//-2223
-//-1947777
-//-2454423
-//-3007332
-//-3421717
-//-3994441
-//-3994441
-//-4904910
 
-//482,659.75
-//490000
-//283527
-//1170172
-//-641,858
+//
 int main(void)
 {
   /* USER CODE BEGIN 1 */

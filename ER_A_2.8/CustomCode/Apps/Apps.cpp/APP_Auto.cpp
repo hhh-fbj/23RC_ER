@@ -473,7 +473,7 @@ void Auto_classdef::Left_PickIdea(void)
 						Chassis.Laser_PID[0].Target = 33505+33505;
 						Chassis.Laser_PID[0].Current = Analog.LaserRanging[9]+Analog.LaserRanging[8];
 						Vy = Chassis.Laser_PID[0].Cal();
-						Vx = -66;
+						Vx = -33;
 						Vw = 0;
 						Chassis.try_bl = 1.5;
 						// Vy = 0;
@@ -483,7 +483,7 @@ void Auto_classdef::Left_PickIdea(void)
 				}
 				else
 				{
-					Vx = -66;Vy = -880;Vw=0;
+					Vx = -33;Vy = -660;Vw=0;
 					Chassis.try_bl = 1.5;
 				}
 				

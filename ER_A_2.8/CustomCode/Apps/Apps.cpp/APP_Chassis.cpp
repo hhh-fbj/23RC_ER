@@ -77,7 +77,7 @@ Chassis_classdef::Chassis_classdef()
     Repair_PID[PID_Inner].SetPIDParam(0.0, 0.0f, 0.0f, 1000, 10000, 0.002f);Repair_PID[PID_Inner].DeadZone = 1;
 
     //激光双环——前进环/旋转环
-    Laser_PID[0].SetPIDParam(0.48f, 0.012f, 0.0f, 200, 660, 0.002f);Laser_PID[0].DeadZone = 10;
+    Laser_PID[0].SetPIDParam(0.48, 0.012f, 0.0f, 200, 660, 0.002f);Laser_PID[0].DeadZone = 10;
     Laser_PID[1].SetPIDParam(0.5f, 0.0f, 0.0f, 4000, 10000, 0.002f);Laser_PID[1].DeadZone = 30;
 
 
@@ -178,6 +178,14 @@ void Chassis_classdef::ChassisTar_Update()
             Pos_Target[2] = POS_PID[Posture_W][PID_Outer].Target = Auto.Posture.POS_W();//Auto.Posture.POS_W();
             Auto.Vx = Auto.Vy = Auto.Vw = 0;
             Mode = Next_Mode;
+						for(uint8_t i = 0 ; i < 4 ; i++)
+						{
+								RUD_Motor[i].	Out = 0;
+								RUD_PID[i][PID_Outer].Reset();
+								RUD_PID[i][PID_Inner].Reset();
+								Cal_Speed[i] = 0;
+								Buzzer.error = 1;
+						}
             Last_Mode = CHAS_TransiMode;
         break;
 

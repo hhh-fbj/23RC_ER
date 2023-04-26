@@ -3,7 +3,6 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "include.h"
-
 #include "DEV_MX106.h"
 
 enum Clamp_CtrlMode_e
@@ -22,7 +21,7 @@ private:
 	Clamp_CtrlMode_e Clamp_Mode;
 	Clamp_CtrlMode_e Clamp_Next_Mode;
 
-	GPIO_PinState last_I7 = GPIO_PIN_RESET;
+	GPIO_PinState last_I7 = GPIO_PIN_SET;
 	GPIO_PinState last_E14 = GPIO_PIN_SET;
 
 	uint8_t Top_Lift_Flag;
@@ -53,6 +52,15 @@ private:
 		float Stretch_Shoot;//伸出：发射时的伸出位置
 		float Stretch_Min;//伸出：软件限制最近位置
 		float PickPlace_Ready;//放环：最高点与十个环的距离
+
+		float Servo_CtrlTime;//舵机：控制间隔*2,需为2的倍数
+		float Servo_TorqueCtrl;//舵机：使能失能的控制指令
+		float Servo_PosCtrl;//舵机：控制位置的控制指令
+		float Servo_InitPos;//舵机：初始位置
+		float Servo_OverPos;//舵机：发射位置
+		float Servo_ErrorPos;//舵机：判断条件的范围
+		float Stretch_ErrorPos;//伸出：判断条件的范围
+		float Lift_ErrorPos;//抬伸：判断条件的范围
 	}Param;
 
 	uint8_t ProblemDetection(void);
@@ -85,7 +93,7 @@ public:
 	uint8_t Place_Flag;
 	uint8_t TakeOut_Flag;
 	uint8_t Homeing_Flag;
-	uint8_t Pos_Flag;
+	uint8_t Ctrl_Flag;
 	uint8_t Should_Init_Flag = 1;
 	uint8_t Should_Place_Flag;
 	uint8_t Auto_Aim_Flag=1;

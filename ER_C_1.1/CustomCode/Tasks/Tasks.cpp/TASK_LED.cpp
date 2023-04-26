@@ -26,14 +26,14 @@ void Task_LED(void *argument)
 
         if(BMQ_time % 25 == 0){Vision.SendToPC(&Vision.Send_Msg);}
 				
-					if(DevicesMonitor.Get_State(YAW_ENCODER_MONITOR)  == Off_line && (BMQ_time % 50 == 0))
-					{
-						Gimbal.Yaw_Encider.SetInstruction_U8(&hcan2,0x04,0xAA);
-					}
-					if(DevicesMonitor.Get_State(STRETCH_ENCODER_MONITOR)  == Off_line && (BMQ_time % 75 == 0))
-					{
-						Clamp.Stretch_Encider.SetInstruction_U8(&hcan2,0x04,0xAA);
-					}
+        if(DevicesMonitor.Get_State(YAW_ENCODER_MONITOR)  == Off_line && (BMQ_time % 50 == 0))
+        {
+            Gimbal.Yaw_Encider.SetInstruction_U8(&hcan2,0x04,0xAA);
+        }
+        if(DevicesMonitor.Get_State(STRETCH_ENCODER_MONITOR)  == Off_line && (BMQ_time % 75 == 0))
+        {
+            Clamp.Stretch_Encider.SetInstruction_U8(&hcan2,0x04,0xAA);
+        }
 
 //				if(CTRL_DR16.start == 1)
 //				{

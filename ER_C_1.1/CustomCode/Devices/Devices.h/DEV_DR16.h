@@ -128,6 +128,9 @@ private:
 public:
     /* Exported function declarations --------------------------------------------*/
     DR16_Classdef();
+    SW_Status_Typedef Last_S2_R;
+    SW_Status_Typedef Last_S1_L;
+
     void DataCapture(DR16_DataPack_Typedef* captureData);
 
     uint64_t Get_CH0(void);

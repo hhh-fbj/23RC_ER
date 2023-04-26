@@ -10,8 +10,8 @@ typedef struct
     float L_X;
     float L_Y;
     float R_X;
-		float R_Y;
-		float D_W;
+    float R_Y;
+    float D_W;
 
 }DR16Export_t;
 
@@ -19,7 +19,11 @@ typedef struct
 class CTRL_DR16_classdef
 {
 private:
-
+    bool LX_Zero;
+    bool LY_Zero;
+    bool RX_Zero;
+    bool RY_Zero;
+    bool DW_Zero;
 protected:
     float Yaw_Turn = 0.006;
 public:

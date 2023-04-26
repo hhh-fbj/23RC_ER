@@ -42,10 +42,22 @@ Shoot_classdef::Shoot_classdef()
 	// Pre_Tar[0] = -80;
 	// Pre_Tar[1] = -100;
 
-	Param.Shoot_Hold = 560000;
+	Param.Shoot_Hold = 520000;//560000
 	Param.Shoot_Speed = 880;
 	Param.Shoot_Circle = 848380;
 	Param.Pull_Max = 13100000;
+
+	Param.Shoot_StopTime = 15;
+	Param.Shoot_LowSpeed = -1500;
+	Param.Shoot_HightSpeed = -8000;
+	Param.Pull_InitSpeed = -8000;
+	Param.Pull_LeftFirst = 741510;
+	Param.Pull_RightFirst = 789561;
+	Param.Pull_LeftSecond = 11082351;
+	Param.Pull_RightSecond = 11165807;
+	Param.Pull_LeftThird = 12685275;
+	Param.Pull_RightThird = 12770837;
+
 }
 
 
@@ -69,9 +81,9 @@ void Shoot_classdef::Control()
 
     //改拉�?+发射 �?
     PullTar_Update();
-		ShootSpe_Update();
+	ShootSpe_Update();
 
-		AngleLimit();
+	AngleLimit();
 
     //PID计算
     PullMotor_PIDCalc();
@@ -93,7 +105,7 @@ void Shoot_classdef::Shoot_Sensor(GPIO_PinState io_pin)
 			stop_time = 0;
 		}
 		
-		if(stop_time>=15)
+		if(stop_time>=Param.Shoot_StopTime)
 		{
 			first = 1;
 			stop_time = 0;
@@ -137,7 +149,7 @@ void Shoot_classdef::Shoot_Sensor(GPIO_PinState io_pin)
 			}
 			AddAngle = -Param.Shoot_Speed;
 			
-			if(stop_time>15)
+			if(stop_time>Param.Shoot_StopTime)
 			{
 				stop_shoot = Shoot_TarAngle = Shoot_Motor.get_totalencoder();
 				shoot_time = 0;
@@ -155,7 +167,7 @@ void Shoot_classdef::Shoot_Sensor(GPIO_PinState io_pin)
 	}
 }
 
-int anxi;
+
 void Shoot_classdef::PullTar_Update(void)
 {
 	Pull_Lock_Flag = 1;
@@ -172,9 +184,9 @@ void Shoot_classdef::PullTar_Update(void)
 
 		case Pull_FixedMode:
 			if(Top_LeftPull_Flag){Pull_AddAngle[0] = 0;}
-			else{Pull_AddAngle[0] = -8000;}
+			else{Pull_AddAngle[0] = Param.Pull_InitSpeed;}
 			if(Top_RightPull_Flag){Pull_AddAngle[1] = 0;}
-			else{Pull_AddAngle[1] = -8000;}
+			else{Pull_AddAngle[1] = Param.Pull_InitSpeed;}
 			if(Top_LeftPull_Flag && Top_RightPull_Flag)
 			{
 				if(CTRL_DR16.Get_LY() == 0)
@@ -240,65 +252,69 @@ void Shoot_classdef::PullTar_Update(void)
 
 		case Pull_GearSetMode:
 			if(Top_LeftPull_Flag){;}
-			else{LeftPull_TarAngle += -8000;}
+			else{LeftPull_TarAngle += Param.Pull_InitSpeed;}
 			if(Top_RightPull_Flag){;}
-			else{RightPull_TarAngle += -8000;}
+			else{RightPull_TarAngle += Param.Pull_InitSpeed;}
 			if(Top_LeftPull_Flag && Top_RightPull_Flag)
 			{
 				// //L1
-				// LeftPull_TarAngle = 741510 + Top_LeftPull;
-				// RightPull_TarAngle = 789561 + Top_RightPull;
+				// LeftPull_TarAngle = Param.Pull_LeftFirst + Top_LeftPull;
+				// RightPull_TarAngle = Param.Pull_RightFirst + Top_RightPull;
 				// //L2
-				// LeftPull_TarAngle = 11082351 + Top_LeftPull;
-				// RightPull_TarAngle = 11165807 + Top_RightPull;
+				// LeftPull_TarAngle = Param.Pull_LeftSecond + Top_LeftPull;
+				// RightPull_TarAngle = Param.Pull_RightSecond + Top_RightPull;
 				// //L3
-				// LeftPull_TarAngle = 12685275 + Top_LeftPull;
-				// RightPull_TarAngle = 12770837 + Top_RightPull;
-				if(LeftPull_TarAngle < 741510 + Top_LeftPull){LeftPull_TarAngle = Top_LeftPull;}
-				if(RightPull_TarAngle < 789561 + Top_RightPull){RightPull_TarAngle = Top_RightPull;}
-				if(CTRL_DR16.Get_LY() == 0){anxi = 0;}
-				if(CTRL_DR16.Get_LY() >= 6666 && anxi == 0)
+				// LeftPull_TarAngle = Param.Pull_LeftThird + Top_LeftPull;
+				// RightPull_TarAngle = Param.Pull_RightThird + Top_RightPull;
+//				if(LeftPull_TarAngle < Param.Pull_LeftFirst + Top_LeftPull){LeftPull_TarAngle = Top_LeftPull;}
+//				if(RightPull_TarAngle < Param.Pull_RightFirst + Top_RightPull){RightPull_TarAngle = Top_RightPull;}
+				if(Turn_Pull_Flag == 1)
 				{
-					anxi = 1;
-					
-					if(LeftPull_TarAngle == 741510 + Top_LeftPull && RightPull_TarAngle == 789561 + Top_RightPull)
+					Turn_Pull_Flag = 6;
+					if(LeftPull_TarAngle == Param.Pull_LeftFirst + Top_LeftPull && RightPull_TarAngle == Param.Pull_RightFirst + Top_RightPull)
 					{
 						 LeftPull_TarAngle = Top_LeftPull;
 						 RightPull_TarAngle = Top_RightPull;
 					}
-					else if(LeftPull_TarAngle == 11082351 + Top_LeftPull && RightPull_TarAngle == 11165807 + Top_RightPull)
+					else if(LeftPull_TarAngle == Param.Pull_LeftSecond + Top_LeftPull && RightPull_TarAngle == Param.Pull_RightSecond + Top_RightPull)
 					{
-						 LeftPull_TarAngle = 741510 + Top_LeftPull;
-						 RightPull_TarAngle = 789561 + Top_RightPull;
+						 LeftPull_TarAngle = Param.Pull_LeftFirst + Top_LeftPull;
+						 RightPull_TarAngle = Param.Pull_RightFirst + Top_RightPull;
 					}
-					else if(LeftPull_TarAngle == 12685275 + Top_LeftPull && RightPull_TarAngle == 12770837 + Top_RightPull)
+					else if(LeftPull_TarAngle == Param.Pull_LeftThird + Top_LeftPull && RightPull_TarAngle == Param.Pull_RightThird + Top_RightPull)
 					{
-						 LeftPull_TarAngle = 11082351 + Top_LeftPull;
-						 RightPull_TarAngle = 11165807 + Top_RightPull;
+						 LeftPull_TarAngle = Param.Pull_LeftSecond + Top_LeftPull;
+						 RightPull_TarAngle = Param.Pull_RightSecond + Top_RightPull;
+					}
+					else
+					{
+						 LeftPull_TarAngle = Param.Pull_LeftFirst + Top_LeftPull;
+						 RightPull_TarAngle = Param.Pull_RightFirst + Top_RightPull;
 					}
 				}
-				else if(CTRL_DR16.Get_LY() <= -6666 && anxi == 0)
+				else if(Turn_Pull_Flag == 2)
 				{				
-					anxi = 1;
-					if(LeftPull_TarAngle == 11082351 + Top_LeftPull && RightPull_TarAngle == 11165807 + Top_RightPull)
+					Turn_Pull_Flag = 6;
+					if(LeftPull_TarAngle == Param.Pull_LeftSecond + Top_LeftPull && RightPull_TarAngle == Param.Pull_RightSecond + Top_RightPull)
 					{
-						 LeftPull_TarAngle = 12685275 + Top_LeftPull;
-						 RightPull_TarAngle = 12770837 + Top_RightPull;
+						 LeftPull_TarAngle = Param.Pull_LeftThird + Top_LeftPull;
+						 RightPull_TarAngle = Param.Pull_RightThird + Top_RightPull;
 					}
-					else if(LeftPull_TarAngle == 741510 + Top_LeftPull && RightPull_TarAngle == 789561 + Top_RightPull)
+					else if(LeftPull_TarAngle == Param.Pull_LeftFirst + Top_LeftPull && RightPull_TarAngle == Param.Pull_RightFirst + Top_RightPull)
 					{
-						 LeftPull_TarAngle = 11082351 + Top_LeftPull;
-						 RightPull_TarAngle = 11165807 + Top_RightPull;
+						 LeftPull_TarAngle = Param.Pull_LeftSecond + Top_LeftPull;
+						 RightPull_TarAngle = Param.Pull_RightSecond + Top_RightPull;
 					}
 					else if(LeftPull_TarAngle == Top_LeftPull && RightPull_TarAngle == Top_RightPull)
 					{
-						 LeftPull_TarAngle = 741510 + Top_LeftPull;
-						 RightPull_TarAngle = 789561 + Top_RightPull;
+						 LeftPull_TarAngle = Param.Pull_LeftFirst + Top_LeftPull;
+						 RightPull_TarAngle = Param.Pull_RightFirst + Top_RightPull;
 					}
-					
-					
-					
-					
+					else
+					{
+						 LeftPull_TarAngle = Param.Pull_LeftFirst + Top_LeftPull;
+						 RightPull_TarAngle = Param.Pull_RightFirst + Top_RightPull;
+					}
 				}
 			}
 		break;
@@ -378,7 +394,7 @@ void Shoot_classdef::ShootSpe_Update(void)
 		case Shoot_AutoMode:
 			Shoot_Sensor(C6);
 			Shoot_PID[PID_Inner].Target = \
-			-1500 * Shoot_Flag * Shoot_Speed_BL;
+			Param.Shoot_LowSpeed * Shoot_Flag * Shoot_Speed_BL;
 		break;
 			
 		case Shoot_NewAutoMode:
@@ -393,7 +409,7 @@ void Shoot_classdef::ShootSpe_Update(void)
 
 		case Shoot_ManualMode:
 			Shoot_PID[PID_Inner].Target = (Manual_Flag == 0 ? 0:\
-			(Manual_Flag == 1 ? -1500:-8000));
+			(Manual_Flag == 1 ? Param.Shoot_LowSpeed : Param.Shoot_HightSpeed));
 		break;
 
 		case Shoot_NewManualMode:
