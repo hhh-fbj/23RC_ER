@@ -182,32 +182,6 @@ void Shoot_classdef::PullTar_Update(void)
 			Pull_Mode = Pull_Next_Mode;
 		break;
 
-		case Pull_FixedMode:
-			if(Top_LeftPull_Flag){Pull_AddAngle[0] = 0;}
-			else{Pull_AddAngle[0] = Param.Pull_InitSpeed;}
-			if(Top_RightPull_Flag){Pull_AddAngle[1] = 0;}
-			else{Pull_AddAngle[1] = Param.Pull_InitSpeed;}
-			if(Top_LeftPull_Flag && Top_RightPull_Flag)
-			{
-				if(CTRL_DR16.Get_LY() == 0)
-				{LeftPull_TarAngle = LeftPull_Motor.get_totalencoder();}\
-				else{LeftPull_TarAngle += (-CTRL_DR16.Get_LY());}
-				if(CTRL_DR16.Get_LY() == 0)
-				{RightPull_TarAngle = RightPull_Motor.get_totalencoder();}\
-				else{RightPull_TarAngle += (-CTRL_DR16.Get_LY());}
-			}
-		break;
-
-		case Pull_NewDebugMode:
-			if(CTRL_DR16.Get_LY() == 0)
-			{LeftPull_TarAngle = LeftPull_Motor.get_totalencoder();}\
-			else{LeftPull_TarAngle += (-CTRL_DR16.Get_LY());}
-			
-			if(CTRL_DR16.Get_LX() == 0)
-			{RightPull_TarAngle = RightPull_Motor.get_totalencoder();}\
-			else{RightPull_TarAngle += (-CTRL_DR16.Get_LX());}				
-		break;
-		
 		case Pull_DebugMode:
 			if(CTRL_DR16.Get_LY() <= 0)
 			{
@@ -257,39 +231,28 @@ void Shoot_classdef::PullTar_Update(void)
 			else{RightPull_TarAngle += Param.Pull_InitSpeed;}
 			if(Top_LeftPull_Flag && Top_RightPull_Flag)
 			{
-				// //L1
-				// LeftPull_TarAngle = Param.Pull_LeftFirst + Top_LeftPull;
-				// RightPull_TarAngle = Param.Pull_RightFirst + Top_RightPull;
-				// //L2
-				// LeftPull_TarAngle = Param.Pull_LeftSecond + Top_LeftPull;
-				// RightPull_TarAngle = Param.Pull_RightSecond + Top_RightPull;
-				// //L3
-				// LeftPull_TarAngle = Param.Pull_LeftThird + Top_LeftPull;
-				// RightPull_TarAngle = Param.Pull_RightThird + Top_RightPull;
-//				if(LeftPull_TarAngle < Param.Pull_LeftFirst + Top_LeftPull){LeftPull_TarAngle = Top_LeftPull;}
-//				if(RightPull_TarAngle < Param.Pull_RightFirst + Top_RightPull){RightPull_TarAngle = Top_RightPull;}
 				if(Turn_Pull_Flag == 1)
 				{
 					Turn_Pull_Flag = 6;
 					if(LeftPull_TarAngle == Param.Pull_LeftFirst + Top_LeftPull && RightPull_TarAngle == Param.Pull_RightFirst + Top_RightPull)
 					{
-						 LeftPull_TarAngle = Top_LeftPull;
-						 RightPull_TarAngle = Top_RightPull;
+						LeftPull_TarAngle = Top_LeftPull;
+						RightPull_TarAngle = Top_RightPull;
 					}
 					else if(LeftPull_TarAngle == Param.Pull_LeftSecond + Top_LeftPull && RightPull_TarAngle == Param.Pull_RightSecond + Top_RightPull)
 					{
-						 LeftPull_TarAngle = Param.Pull_LeftFirst + Top_LeftPull;
-						 RightPull_TarAngle = Param.Pull_RightFirst + Top_RightPull;
+						LeftPull_TarAngle = Param.Pull_LeftFirst + Top_LeftPull;
+						RightPull_TarAngle = Param.Pull_RightFirst + Top_RightPull;
 					}
 					else if(LeftPull_TarAngle == Param.Pull_LeftThird + Top_LeftPull && RightPull_TarAngle == Param.Pull_RightThird + Top_RightPull)
 					{
-						 LeftPull_TarAngle = Param.Pull_LeftSecond + Top_LeftPull;
-						 RightPull_TarAngle = Param.Pull_RightSecond + Top_RightPull;
+						LeftPull_TarAngle = Param.Pull_LeftSecond + Top_LeftPull;
+						RightPull_TarAngle = Param.Pull_RightSecond + Top_RightPull;
 					}
 					else
 					{
-						 LeftPull_TarAngle = Param.Pull_LeftFirst + Top_LeftPull;
-						 RightPull_TarAngle = Param.Pull_RightFirst + Top_RightPull;
+						LeftPull_TarAngle = Param.Pull_LeftFirst + Top_LeftPull;
+						RightPull_TarAngle = Param.Pull_RightFirst + Top_RightPull;
 					}
 				}
 				else if(Turn_Pull_Flag == 2)
@@ -297,23 +260,23 @@ void Shoot_classdef::PullTar_Update(void)
 					Turn_Pull_Flag = 6;
 					if(LeftPull_TarAngle == Param.Pull_LeftSecond + Top_LeftPull && RightPull_TarAngle == Param.Pull_RightSecond + Top_RightPull)
 					{
-						 LeftPull_TarAngle = Param.Pull_LeftThird + Top_LeftPull;
-						 RightPull_TarAngle = Param.Pull_RightThird + Top_RightPull;
+						LeftPull_TarAngle = Param.Pull_LeftThird + Top_LeftPull;
+						RightPull_TarAngle = Param.Pull_RightThird + Top_RightPull;
 					}
 					else if(LeftPull_TarAngle == Param.Pull_LeftFirst + Top_LeftPull && RightPull_TarAngle == Param.Pull_RightFirst + Top_RightPull)
 					{
-						 LeftPull_TarAngle = Param.Pull_LeftSecond + Top_LeftPull;
-						 RightPull_TarAngle = Param.Pull_RightSecond + Top_RightPull;
+						LeftPull_TarAngle = Param.Pull_LeftSecond + Top_LeftPull;
+						RightPull_TarAngle = Param.Pull_RightSecond + Top_RightPull;
 					}
 					else if(LeftPull_TarAngle == Top_LeftPull && RightPull_TarAngle == Top_RightPull)
 					{
-						 LeftPull_TarAngle = Param.Pull_LeftFirst + Top_LeftPull;
-						 RightPull_TarAngle = Param.Pull_RightFirst + Top_RightPull;
+						LeftPull_TarAngle = Param.Pull_LeftFirst + Top_LeftPull;
+						RightPull_TarAngle = Param.Pull_RightFirst + Top_RightPull;
 					}
 					else
 					{
-						 LeftPull_TarAngle = Param.Pull_LeftFirst + Top_LeftPull;
-						 RightPull_TarAngle = Param.Pull_RightFirst + Top_RightPull;
+						LeftPull_TarAngle = Param.Pull_LeftFirst + Top_LeftPull;
+						RightPull_TarAngle = Param.Pull_RightFirst + Top_RightPull;
 					}
 				}
 			}
@@ -404,7 +367,6 @@ void Shoot_classdef::ShootSpe_Update(void)
 			Shoot_PID[PID_Outer].Target = Shoot_TarAngle;
 			Shoot_PID[PID_Outer].Current = Shoot_Motor.get_totalencoder();
 			Shoot_PID[PID_Inner].Target = Shoot_PID[PID_Outer].Cal();
-
 		break;
 
 		case Shoot_ManualMode:

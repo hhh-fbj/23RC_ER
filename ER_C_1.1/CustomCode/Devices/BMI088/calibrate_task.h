@@ -49,7 +49,8 @@ typedef enum
     CALI_LIST_LENGHT,
 } cali_id_e;
 
-typedef __packed struct
+#pragma pack(1)
+typedef struct
 {
     uint8_t name[3];                                    //device name
     uint8_t cali_done;                                  //0x55 means has been calibrated
@@ -59,6 +60,7 @@ typedef __packed struct
     uint8_t (*cali_hook)(uint32_t *point, uint8_t cmd);   //cali function
 	
 } cali_sensor_t;
+#pragma pack()
 extern cali_sensor_t cali_sensor[CALI_LIST_LENGHT];
 
 //gyro, accel, mag device

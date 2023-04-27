@@ -49,15 +49,15 @@ extern "C" {
 #define BMI088_GYRO_250_SEN     0.00013315805450396191230191732547673f
 #define BMI088_GYRO_125_SEN     0.000066579027251980956150958662738366f
 
-
-typedef __packed struct BMI088_RAW_DATA
+#pragma pack(1)
+typedef struct BMI088_RAW_DATA
 {
     uint8_t status;
     int16_t accel[3];
     int16_t temp;
     int16_t gyro[3];
 } bmi088_raw_data_t;
-
+#pragma pack()
 typedef struct BMI088_REAL_DATA
 {
     uint8_t status;

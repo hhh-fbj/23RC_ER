@@ -20,11 +20,9 @@ enum Shoot_CtrlMode_e
 enum Pull_CtrlMode_e
 {
 	Pull_DisableMode,	// 失能
-	Pull_FixedMode,
 	Pull_DebugMode,
 	Pull_LockMode,
 	Pull_TransiMode,
-	Pull_NewDebugMode,
 	Pull_GearSetMode,
 };
 

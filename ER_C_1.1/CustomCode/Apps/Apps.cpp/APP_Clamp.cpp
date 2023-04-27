@@ -155,12 +155,6 @@ void Clamp_classdef::Servo_Control(void)
 	}	
 }
 
-void Clamp_classdef::Set_TurnPlacel(uint8_t mode,float position)
-{
-	Ctrl_Flag = mode;
-	ServoPos_Target = position;
-}
-
 
 void Clamp_classdef::Tar_Update(void)
 {
@@ -237,10 +231,12 @@ void Clamp_classdef::Tar_Update(void)
 		break;
 		
 		case Clamp_AutoMode:
+			//舵机使能
 			if(TurnPlace_Servo.Torque_Flag == 0)
 			{
 				Set_TurnPlacel(Param.Servo_TorqueCtrl, Param.Servo_InitPos);
 			}
+			//与底盘联系进行自瞄发送与跑点
 			if (Gimbal.I6 == GPIO_PIN_SET &&\
 			 Gimbal.Last_I6 == GPIO_PIN_RESET)
 			{
@@ -265,6 +261,8 @@ void Clamp_classdef::Tar_Update(void)
 			Pick();
 			Place_Point();
 			Place();
+
+			//舵机摆正测才能往下走
 			if(abs((int)TurnPlace_Servo.Posotion - Param.Servo_InitPos) <= Param.Servo_ErrorPos && AddVar[2] > 0)
 			{
 				AddVar[1] = 0;
@@ -313,7 +311,7 @@ void Clamp_classdef::AngleLimit(void)
 	last_E14 = E14;
 	
 	//取放限位
-	if(I7 == GPIO_PIN_RESET)
+	if(I7 == GPIO_PIN_SET)
 	{
 		if(last_I7 !=  I7)
 		{
@@ -395,35 +393,15 @@ void Clamp_classdef::Init(void)
 {
 	if(Init_Flag)
 	{
-		//上
-		if(E14 != GPIO_PIN_RESET &&\
-		Stretch_Encider.getTotolAngle() >=Param.Stretch_Take)
-		{
-			AddVar[1] = -Param.Lift_Speed;
-		}
-		else
-		{
-			AddVar[1] = 0;
-		}
-
-
-
-		//出
-		AddVar[0] = Param.Stretch_Speed;
-		AddVar[2] = Param.PickPlace_Speed;
-
-		if(E14 == GPIO_PIN_RESET)
+		if(Lift(Lift_Motor.get_totalencoder(),true))
 		{
 			if(Gimbal.Midpoint_Flag == 0)
 			{
 				Gimbal.Midpoint_Flag = 1;
 			}
-
-			Set_TurnPlacel(Param.Servo_PosCtrl,Param.Servo_InitPos);
-			if(UseTarget[0] == Param.Stretch_Max &&\
-			abs(Stretch_Encider.getTotolAngle() - Param.Stretch_Max) <= Param.Lift_ErrorPos &&\
-			I7 == GPIO_PIN_RESET &&\
-			abs((int)TurnPlace_Servo.Posotion - Param.Servo_InitPos) <= Param.Servo_ErrorPos &&\
+			if(Stretch(Param.Stretch_Max,true) &&\
+			PickPlace(PickPlace_Motor.get_totalencoder(),true) &&\
+			Set_TurnPlacel(Param.Servo_PosCtrl, Param.Servo_InitPos) &&\
 			Gimbal.Midpoint_Flag == 2)
 			{
 				Gimbal.Midpoint_Flag = 0;
@@ -449,6 +427,7 @@ void Clamp_classdef::Init(void)
 	}
 	else if(Should_Init_Flag == 1)
 	{
+		Gimbal.Midpoint_Flag = 0;
 		Should_Place_Flag = 0;
 	}
 }
@@ -459,53 +438,56 @@ void Clamp_classdef::Init(void)
 //放环位置
 //放环
 //
+uint8_t step;
 void Clamp_classdef::Pick(void)
 {
 	if(Pick_Flag)
 	{
-		if(UseTarget[0] >=Param.Stretch_Take  &&\
-		UseTarget[0] <= Param.Stretch_Max &&\
-		Stretch_Encider.getTotolAngle()>Param.Stretch_Take &&\
-		TakeOut_Flag == 0)
+		switch (step)
 		{
-			AddVar[0] = 0;
-			AddVar[1] = Param.Lift_Speed;
-			AddVar[2] = -Param.PickPlace_Speed;
-		}
+			case 0:
+				if(Lift(Lift_Motor.get_totalencoder(),true))
+				{
+					if(Gimbal.Midpoint_Flag == 0)
+					{
+						Gimbal.Midpoint_Flag = 1;
+					}
+					if(Stretch(Param.Stretch_Max,true) &&\
+					PickPlace(PickPlace_Motor.get_totalencoder(),true) &&\
+					Set_TurnPlacel(Param.Servo_PosCtrl, Param.Servo_InitPos) &&\
+					Gimbal.Midpoint_Flag == 2)
+					{
+						step = 1;
+					}
+				}
+			break;
 
-		if(UseTarget[1] >= Param.Lift_Max+Top_Lift && TakeOut_Flag==0)
-		{
-			UseTarget[1] = Param.Lift_Max+Top_Lift;
-			AddVar[0] = 0;
-			if(abs(Lift_Motor.get_totalencoder() - (Param.Lift_Max+Top_Lift)) < Param.Lift_ErrorPos)
-			{
-				AddVar[1] = -Param.Lift_Speed;
-				TakeOut_Flag = 1;
-			}
-		}
-		if(UseTarget[2] <= Top_PickPlace-Param.PickPlace_Release)
-		{	
-			UseTarget[2] = Top_PickPlace-Param.PickPlace_Release;
-			AddVar[0] = 0;
-			AddVar[2] = 0;
-		}
+			case 1:
+				if(PickPlace(Top_PickPlace-Param.PickPlace_Release))
+				{
+					if(Lift(Param.Lift_Max+Top_Lift))
+					{
+						step = 2;
+					}
+				}
+			break;
 
-		if(E14 == GPIO_PIN_RESET && TakeOut_Flag == 1)
-		{
-			UseTarget[1] = Lift_Motor.get_totalencoder();
-			AddVar[0] = 0;
-			AddVar[1] = 0;
-			AddVar[2] = 0;
-			Pick_Flag =0;
-			TakeOut_Flag = 0;
-			Place_Point_Flag = 1;
-			Set_TurnPlacel(Param.Servo_PosCtrl, Param.Servo_OverPos);
-			HAL_GPIO_WritePin(GPIOE, GPIO_PIN_9, GPIO_PIN_SET);
+			case 2:
+				if(Lift(Top_Lift, true))
+				{
+					step = 0;
+					Pick_Flag =0;
+					Place_Point_Flag = 1;
+					HAL_GPIO_WritePin(GPIOE, GPIO_PIN_9, GPIO_PIN_SET);
+				}
+			break;
+		
+			default:
+			break;
 		}
 	}
 	else
 	{
-		TakeOut_Flag = 0;
 	}
 }
 
@@ -513,32 +495,39 @@ void Clamp_classdef::Place_Point(void)
 {
 	if(Place_Point_Flag)
 	{
-		Set_TurnPlacel(Param.Servo_PosCtrl, Param.Servo_OverPos);
-		if(E14 == GPIO_PIN_RESET)
-		{
-			AddVar[0] = -Param.Stretch_Speed;
-			AddVar[1] = 0;
-			AddVar[2] = -Param.PickPlace_Speed;
-		}
 
-		if(UseTarget[2] <= Top_PickPlace-Param.PickPlace_Ready)
+		switch (step)
 		{
-			UseTarget[2] = Top_PickPlace-Param.PickPlace_Ready;
-			AddVar[2] = 0;
-		}
-		
-		if(UseTarget[0] <= Param.Stretch_Min &&\
-		abs((int)TurnPlace_Servo.Posotion - Param.Servo_OverPos) <= Param.Servo_ErrorPos)
-		{
-			UseTarget[0] = Param.Stretch_Min;
-			AddVar[0] = 0;
-			AddVar[1] = 0;
-			AddVar[2] = 0;
-			if(abs(Stretch_Encider.getTotolAngle() - Param.Stretch_Min)< Param.Stretch_ErrorPos)
-			{
-				Place_Point_Flag = 0;
-			}
-			HAL_GPIO_WritePin(GPIOE, GPIO_PIN_9, GPIO_PIN_RESET);
+			case 0:
+				if(Lift(Lift_Motor.get_totalencoder(),true))
+				{
+					if(Gimbal.Midpoint_Flag == 0)
+					{
+						Gimbal.Midpoint_Flag = 1;
+					}
+					if(Stretch(Param.Stretch_Max,true) &&\
+					PickPlace(Top_PickPlace-Param.PickPlace_Release) &&\
+					Set_TurnPlacel(Param.Servo_PosCtrl, Param.Servo_InitPos) &&\
+					Gimbal.Midpoint_Flag == 2)
+					{
+						step = 1;
+					}
+				}
+			break;
+
+			case 1:
+				if(Set_TurnPlacel(Param.Servo_PosCtrl, Param.Servo_OverPos) && \
+				Stretch(Param.Stretch_Min) && \
+				PickPlace(Top_PickPlace-Param.PickPlace_Ready))
+				{
+					step = 0;
+					Place_Point_Flag = 0;
+					HAL_GPIO_WritePin(GPIOE, GPIO_PIN_9, GPIO_PIN_RESET);
+				}
+			break;
+
+			default:
+			break;
 		}
 	}
 }
@@ -547,99 +536,214 @@ void Clamp_classdef::Place(void)
 {
 	if(Place_Flag)
 	{
-		Set_TurnPlacel(Param.Servo_PosCtrl, Param.Servo_OverPos);
-		if(wait_flag==0)
+		switch (step)
 		{
-			if(Homeing_Flag==0 && UseTarget[0] <= Param.Stretch_Min && wait_flag==0)
-			{
-				UseTarget[0] = Param.Stretch_Min;
-				if(Shoot.Shoot_Place_Flag==2 &&\
-				 abs(Stretch_Encider.getTotolAngle()- Param.Stretch_Min) < Param.Stretch_ErrorPos)
+			case 0:
+				if(Lift(Lift_Motor.get_totalencoder(),true))
 				{
-					AddVar[0] = 0;
-					AddVar[1] = 0;
-					//放环+判断放环是否结束
-					AddVar[2] = -Param.PickPlace_Speed;
-					if(UseTarget[2] <= now_place-Param.PickPlace_Loop)
+					if(Stretch(Param.Stretch_Min) &&\
+					PickPlace(Top_PickPlace-Param.PickPlace_Ready) &&\
+					Set_TurnPlacel(Param.Servo_PosCtrl, Param.Servo_OverPos))
 					{
-						UseTarget[2] = now_place-Param.PickPlace_Loop;
-						AddVar[1] = 0;
-						AddVar[2] = 0;
-						if(abs(PickPlace_Motor.get_totalencoder()-(now_place-Param.PickPlace_Loop)<Param.PickPlace_ErrorPos))
-						{	
-							// AddVar[0] = Param.Stretch_Speed;
-							// wait_flag = 1;
-							AddVar[0] = 0;
-							Shoot.Set_Shoot(true);
-							wait_flag = 2;
-						}
-					}
-					else if(UseTarget[2] <= Top_PickPlace-Param.PickPlace_Max)
-					{
-						UseTarget[2] = Top_PickPlace-Param.PickPlace_Max;
-						AddVar[1] = 0;
-						AddVar[2] = 0;
-						if(abs(PickPlace_Motor.get_totalencoder()-(Top_PickPlace-Param.PickPlace_Max)<Param.PickPlace_ErrorPos))
-						{	
-							// UseTarget[2] = Top_PickPlace-Param.PickPlace_Max;
-							// AddVar[0] = Param.Stretch_Speed;
-							// wait_flag = 1;
-							
-							AddVar[0] = 0;
-							Shoot.Set_Shoot(true);
-							wait_flag = 2;
-						}
+						now_place = UseTarget[2];
+						step = 1;
 					}
 				}
-			}
-			else if(UseTarget[0] <= Param.Stretch_Min && Homeing_Flag==1)
-			{
-				UseTarget[0] = Param.Stretch_Min;
-				AddVar[0] = 0;
-				AddVar[1] = 0;
-				AddVar[2] = 0;
-				wait_flag = 0;
-				Homeing_Flag = 0;
-				Place_Flag = 0;
-				HAL_GPIO_WritePin(GPIOE, GPIO_PIN_9, GPIO_PIN_SET);
-				return;
-			}
-		}
-		// //后退再发射
-		// else if(UseTarget[0] >= Param.Stretch_Shoot && wait_flag == 1)
-		// {
-		// 	UseTarget[0] = Param.Stretch_Shoot;
-		// 	AddVar[0] = 0;
-		// 	AddVar[1] = 0;
-		// 	AddVar[2] = 0;
-		// 	if(abs(Stretch_Encider.getTotolAngle()-Param.Stretch_Shoot<Param.Stretch_ErrorPos))
-		// 	{
-		// 		Shoot.Set_Shoot(true);
-		// 		//因为后退所以与最末端有一定距离
-		// 		//故不会在wait_flag、Homeing_Flag为 0 时诱发放环条件
-		// 		//但若改掉后退则需要注意
-		// 		wait_flag = 0;
-		// 	}
-		// }
+			break;
 
-		if(Homeing_Flag == 1)
-		{
-			AddVar[0] = -Param.Stretch_Speed;
-			wait_flag = 0;
-		}
-		else
-		{
-			if(Shoot.Shoot_Place_Flag == 0)
-			{
-				Shoot.Shoot_Place_Flag = 1;
-			}
+			case 1:
+				if(Shoot.Shoot_Place_Flag == 0)
+				{
+					Shoot.Shoot_Place_Flag = 1;
+				}
+				if(Shoot.Shoot_Place_Flag==2)
+				{
+					if(PickPlace(now_place-Param.PickPlace_Loop))
+					{
+						Shoot.Set_Shoot(true);
+						step = 2;
+					}
+				}
+			break;
+
+			case 2:
+				if(Homeing_Flag)
+				{
+					step = 0;
+					Homeing_Flag = 0;
+					Place_Flag = 0;
+					HAL_GPIO_WritePin(GPIOE, GPIO_PIN_9, GPIO_PIN_SET);
+				}
+			break;
+
+			default:
+			break;
 		}
 	}
 	else
 	{
-		wait_flag = 0;
 		Homeing_Flag = 0;
 		Place_Flag = 0;
 		now_place = UseTarget[2];
+	}
+}
+
+
+
+
+bool Clamp_classdef::Stretch(float pos,bool datum,float*rp)
+{
+	if(datum)
+	{
+		AddVar[0] = Param.Stretch_Speed;
+		if(UseTarget[0] >= Param.Stretch_Max && \
+		abs(Stretch_Encider.getTotolAngle() - Param.Stretch_Max) <= \
+		Param.Lift_ErrorPos )
+		{
+			AddVar[0] = 0;
+			UseTarget[0] = Param.Stretch_Max;
+			return true;
+		}
+		return false;
+	}
+	else
+	{
+		if(UseTarget[0] <= pos-Param.Stretch_Speed)
+		{
+			AddVar[0] = Param.Stretch_Speed;
+			return false;
+		}
+		else if(UseTarget[0] >= pos+Param.Stretch_Speed)
+		{
+			AddVar[0] = -Param.Stretch_Speed;
+			return false;
+		}
+		else
+		{
+			AddVar[0] = 0;
+			UseTarget[0] = pos;
+			if(rp != NULL)
+			{
+				*rp = pos;
+			}
+
+			if(abs(Stretch_Encider.getTotolAngle() - Param.Stretch_Max) <= Param.Stretch_ErrorPos)
+			{
+				return true;
+			}
+			return false;
+		}
+	}
+}
+
+bool Clamp_classdef::Lift(float pos,bool datum,float*rp)
+{
+	if(datum)
+	{
+		if(E14 != GPIO_PIN_RESET)
+		{
+			AddVar[1] = -Param.Lift_Speed;
+			return false;
+		}
+		else 
+		{
+			UseTarget[1] = Lift_Motor.get_totalencoder();
+			AddVar[1] = 0;
+			return true;
+		}
+	}
+	else
+	{
+		if(UseTarget[1] <= pos-Param.Lift_Speed)
+		{
+			AddVar[1] = Param.Lift_Speed;
+			return false;
+		}
+		else if(UseTarget[1] >= pos+Param.Lift_Speed)
+		{
+			AddVar[1] = -Param.Lift_Speed;
+			return false;
+		}
+		else
+		{
+			AddVar[1] = 0;
+			UseTarget[1] = pos;
+			if(rp != NULL)
+			{
+				*rp = pos;
+			}
+
+			if(abs(Lift_Motor.get_totalencoder() - pos) < Param.Lift_ErrorPos)
+			{
+				return true;
+			}
+			return false;
+		}
+	}
+}
+
+bool Clamp_classdef::PickPlace(float pos,bool datum,float*rp)
+{
+	if(datum)
+	{
+		if(I7 == GPIO_PIN_SET)
+		{
+			AddVar[2] = Param.PickPlace_Speed;
+			return false;
+		}
+		else 
+		{
+			UseTarget[1] = PickPlace_Motor.get_totalencoder();
+			AddVar[2] = 0;
+			return true;
+		}
+	}
+	else
+	{
+		if(UseTarget[2] <= pos-Param.PickPlace_Speed)
+		{
+			AddVar[2] = Param.PickPlace_Speed;
+			return false;
+		}
+		else if(UseTarget[2] >= pos+Param.PickPlace_Speed)
+		{
+			AddVar[2] = -Param.PickPlace_Speed;
+			return false;
+		}
+		else
+		{
+			AddVar[2] = 0;
+			UseTarget[2] = pos;
+			if(rp != NULL)
+			{
+				*rp = pos;
+			}
+
+			if(abs(PickPlace_Motor.get_totalencoder() - pos) < Param.PickPlace_ErrorPos)
+			{
+				return true;
+			}
+			return false;
+		}
+	}
+}
+
+bool Clamp_classdef::Set_TurnPlacel(uint8_t mode,float position)
+{
+	if(mode && TurnPlace_Servo.Torque_Flag)
+	{
+		Ctrl_Flag = mode;
+		ServoPos_Target = position;
+		if(abs((int)TurnPlace_Servo.Posotion - position) <= Param.Servo_ErrorPos)
+		{
+			return true;
+		}
+		return false;
+	}
+	else
+	{
+		Ctrl_Flag = Param.Servo_TorqueCtrl;
+		ServoPos_Target = Param.Servo_InitPos;
+		return false;
 	}
 }

@@ -21,7 +21,7 @@ private:
 	Clamp_CtrlMode_e Clamp_Mode;
 	Clamp_CtrlMode_e Clamp_Next_Mode;
 
-	GPIO_PinState last_I7 = GPIO_PIN_SET;
+	GPIO_PinState last_I7 = GPIO_PIN_RESET;
 	GPIO_PinState last_E14 = GPIO_PIN_SET;
 
 	uint8_t Top_Lift_Flag;
@@ -35,7 +35,6 @@ private:
 	float Top_Lift = 0;
 	float Top_PickPlace = 0;
 	float now_place;
-	float wait_flag;
 
 	struct{
 		float Stretch_Hold;//伸出：实际最远位置
@@ -66,10 +65,14 @@ private:
 
 	uint8_t ProblemDetection(void);
 	void Servo_Control(void);
-	void Set_TurnPlacel(uint8_t mode,float position);
 	void Tar_Update(void);
 	void AngleLimit(void);
 	void Motor_PIDCalc(void);
+
+	bool Set_TurnPlacel(uint8_t mode,float position);
+	bool Lift(float pos,bool datum = false,float*rp=NULL);
+	bool Stretch(float pos,bool datum = false,float*rp=NULL);
+	bool PickPlace(float pos,bool datum = false,float*rp=NULL);
 public:
 	Clamp_classdef();
 	// 发送电机数�?�?
@@ -92,7 +95,7 @@ public:
 	uint8_t Pick_Flag;
 	uint8_t Place_Point_Flag;
 	uint8_t Place_Flag;
-	uint8_t TakeOut_Flag;
+	
 	uint8_t Homeing_Flag;
 	uint8_t Ctrl_Flag;
 	uint8_t Should_Init_Flag = 1;
