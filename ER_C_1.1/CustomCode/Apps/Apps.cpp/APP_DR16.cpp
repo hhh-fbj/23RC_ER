@@ -179,9 +179,10 @@ void CTRL_DR16_classdef::LeverMode_Update(void)
         case Lever_MID:  // --- 左中 ----------------------------------------------
         {
             //底盘
-            Gimbal.Mode = Gimbal_LockMode;
-            Shoot.Shoot_Mode = Shoot_LockMode;
-            Shoot.Pull_Mode_Set(Pull_LockMode);
+            // Gimbal.Mode = Gimbal_LockMode;
+            // Shoot.Shoot_Mode = Shoot_LockMode;//Shoot_AutoMode;
+            // Shoot.Pull_Mode_Set(Pull_LockMode);
+            // Clamp.setMode(Clamp_LockMode);
             switch((uint8_t)DR16.Get_S2_R())
             {
                 case Lever_UP:/* 左中-右上 START ------------------------------------------*/ 
@@ -191,24 +192,54 @@ void CTRL_DR16_classdef::LeverMode_Update(void)
 
                 case Lever_MID:/* 左中-右中 START ------------------------------------------*/ 
                 {
+                    Gimbal.Mode = Gimbal_LockMode;
+                    Shoot.Shoot_Mode = Shoot_NewAutoMode;
+                    Shoot.Pull_Mode_Set(Pull_DebugMode);//Pull_LockMode
+                    Clamp.setMode(Clamp_AutoMode);
+
+
+                    if(DR16.Get_DW_Norm() >= 550)
+                    {
+                        Gimbal.Ding_TEXT_Flag = 1;
+                    }
+                    if(DR16.Get_DW_Norm() <= -550)
+                    {
+                        Gimbal.Ding_TEXT_Flag = 2;
+                    }
+                    
                 }
                 break;/* 左中-右中 END ------------------------------------------*/
 
                 case Lever_DOWN:/* 左中-右下 START ------------------------------------------*/ 
                 {
-                    Gimbal.Mode = Gimbal_DisableMode;
-                    Shoot.Shoot_Mode = Shoot_DisableMode;
-                    Shoot.Pull_Mode_Set(Pull_DisableMode);
-                    Clamp.setMode(Clamp_DisableMode);
+                    Gimbal.Mode = Gimbal_LockMode;
+                    Shoot.Shoot_Mode = Shoot_NewAutoMode;
+                    Shoot.Pull_Mode_Set(Pull_DebugMode);//Pull_LockMode
+                    Clamp.setMode(Clamp_AutoMode);
 
                     if(DR16.Get_DW_Norm() >= 550)
                     {
-                        HAL_GPIO_WritePin(GPIOE, GPIO_PIN_9, GPIO_PIN_SET);
+                        Gimbal.Ding_TEXT_Flag = 3;
                     }
                     if(DR16.Get_DW_Norm() <= -550)
                     {
-                        HAL_GPIO_WritePin(GPIOE, GPIO_PIN_9, GPIO_PIN_RESET);
+                        Gimbal.Ding_TEXT_Flag = 4;
                     }
+
+
+                    // Gimbal.Mode = Gimbal_DisableMode;
+                    // Shoot.Shoot_Mode = Shoot_DisableMode;
+                    // Shoot.Pull_Mode_Set(Pull_DisableMode);
+                    // Clamp.setMode(Clamp_DisableMode);
+
+                    // if(DR16.Get_DW_Norm() >= 550)
+                    // {
+                    //     HAL_GPIO_WritePin(GPIOE, GPIO_PIN_9, GPIO_PIN_SET);
+                    // }
+                    // if(DR16.Get_DW_Norm() <= -550)
+                    // {
+                    //     HAL_GPIO_WritePin(GPIOE, GPIO_PIN_9, GPIO_PIN_RESET);
+                    // }
                 }
                 break;/* 左中-右下 END ------------------------------------------*/
             }

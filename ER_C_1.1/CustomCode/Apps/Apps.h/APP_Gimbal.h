@@ -58,6 +58,10 @@ private:
 		float Yaw_Centre;
 		float Yaw_Min;
 		float Yaw_Speed;
+
+		float Angle_Big;
+		float Angle_small;
+		float Yaw_TurnAngle;
 	}Param;
 	
 	
@@ -75,6 +79,7 @@ public:
 	GPIO_PinState I6;
 	GPIO_PinState Last_I6;
 	uint8_t Midpoint_Flag;
+	uint8_t Ding_TEXT_Flag;//云台中间打四柱子的转动标识符
 	Gimbal_CtrlMode_e Mode; /*<! 云台运作模式 */
 	
 	Motor_GM6020 Yaw_Motor = Motor_GM6020(5);//6

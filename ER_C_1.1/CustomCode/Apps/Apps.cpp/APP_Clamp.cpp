@@ -12,6 +12,7 @@
 
 #include "System_DataPool.h"
 
+//小心在取环机构初始化时，取环夹子松了与发送盘发送接触
 
 Clamp_classdef::Clamp_classdef()
 {
@@ -33,16 +34,16 @@ Clamp_classdef::Clamp_classdef()
 	Param.Stretch_Speed = 400;
 	Param.Lift_Max = 770000;
 	Param.Lift_Speed = 660;
-	Param.PickPlace_Max = 5300000;
-	Param.PickPlace_Release = 300000;
-	Param.PickPlace_Loop = 460000;
+	Param.PickPlace_Max = 5480000;
+	Param.PickPlace_Release = 250000;
+	Param.PickPlace_Loop = 485000;
 	Param.PickPlace_Speed = 4000;
 
 	//推算参数
 	Param.Stretch_Max = Param.Stretch_Hold - 8848;
 	Param.Stretch_Take = Param.Stretch_Hold - 9048;
-	Param.Stretch_Shoot = Param.Stretch_Hold - 109981;
-	Param.Stretch_Min = Param.Stretch_Hold - 138052;
+	Param.Stretch_Shoot = Param.Stretch_Hold - 109981;//109981
+	Param.Stretch_Min = Param.Stretch_Hold - 128052;//138052
 	Param.PickPlace_Ready = Param.PickPlace_Max - 10 * Param.PickPlace_Loop;
 
 	//判断参数
@@ -50,9 +51,10 @@ Clamp_classdef::Clamp_classdef()
 	Param.Servo_TorqueCtrl = 64;
 	Param.Servo_PosCtrl = 116;
 	Param.Servo_InitPos = 2100;
-	Param.Servo_OverPos = 1579;
+	Param.Servo_OverPos = 1550;//1579
 	Param.Servo_ErrorPos = 20;
 	Param.Stretch_ErrorPos = 400;
+	Param.PickPlace_ErrorPos = 200;
 	Param.Lift_ErrorPos = 500;
 }
 
@@ -74,11 +76,11 @@ void Clamp_classdef::Control()
 	//问题检测
 	if(ProblemDetection()){return;}
 
-	//舵机控制
-	Servo_Control();
-
 	//目标更新
 	Tar_Update();
+
+	//舵机控制
+	Servo_Control();
 
 	//限位
 	AngleLimit();
@@ -120,6 +122,7 @@ uint8_t Clamp_classdef::ProblemDetection(void)
 		Motor[3].Out = 0;
 
 		Set_TurnPlacel(0,Param.Servo_InitPos);
+		TurnPlace_Servo.Torque_Flag = 0;
 		if(servo_time == 5)
 		{
 			TurnPlace_Servo.Torque(false);
@@ -262,6 +265,10 @@ void Clamp_classdef::Tar_Update(void)
 			Pick();
 			Place_Point();
 			Place();
+			if(abs((int)TurnPlace_Servo.Posotion - Param.Servo_InitPos) <= Param.Servo_ErrorPos && AddVar[2] > 0)
+			{
+				AddVar[1] = 0;
+			}
 			UseTarget[0] += AddVar[0];
 			UseTarget[1] += AddVar[1];
 			UseTarget[2] += AddVar[2];
@@ -496,6 +503,10 @@ void Clamp_classdef::Pick(void)
 			HAL_GPIO_WritePin(GPIOE, GPIO_PIN_9, GPIO_PIN_SET);
 		}
 	}
+	else
+	{
+		TakeOut_Flag = 0;
+	}
 }
 
 void Clamp_classdef::Place_Point(void)
@@ -554,27 +565,29 @@ void Clamp_classdef::Place(void)
 						UseTarget[2] = now_place-Param.PickPlace_Loop;
 						AddVar[1] = 0;
 						AddVar[2] = 0;
-						if(abs(PickPlace_Motor.get_totalencoder()-(now_place-Param.PickPlace_Loop)<Param.Stretch_ErrorPos))
+						if(abs(PickPlace_Motor.get_totalencoder()-(now_place-Param.PickPlace_Loop)<Param.PickPlace_ErrorPos))
 						{	
-//								AddVar[0] = 0;
-							AddVar[0] = Param.Stretch_Speed;
-							wait_flag = 1;
-//							Shoot.Set_Shoot(true);
-//							wait_flag = 2;
+							// AddVar[0] = Param.Stretch_Speed;
+							// wait_flag = 1;
+							AddVar[0] = 0;
+							Shoot.Set_Shoot(true);
+							wait_flag = 2;
 						}
 					}
 					else if(UseTarget[2] <= Top_PickPlace-Param.PickPlace_Max)
 					{
+						UseTarget[2] = Top_PickPlace-Param.PickPlace_Max;
 						AddVar[1] = 0;
 						AddVar[2] = 0;
-						if(abs(PickPlace_Motor.get_totalencoder()-(Top_PickPlace-Param.PickPlace_Max)<Param.Stretch_ErrorPos))
+						if(abs(PickPlace_Motor.get_totalencoder()-(Top_PickPlace-Param.PickPlace_Max)<Param.PickPlace_ErrorPos))
 						{	
-							UseTarget[2] = Top_PickPlace-Param.PickPlace_Max;
-//							AddVar[0] = 0;
-							AddVar[0] = Param.Stretch_Speed;
-							wait_flag = 1;
-//							Shoot.Set_Shoot(true);
-//							wait_flag = 2;
+							// UseTarget[2] = Top_PickPlace-Param.PickPlace_Max;
+							// AddVar[0] = Param.Stretch_Speed;
+							// wait_flag = 1;
+							
+							AddVar[0] = 0;
+							Shoot.Set_Shoot(true);
+							wait_flag = 2;
 						}
 					}
 				}
@@ -592,26 +605,27 @@ void Clamp_classdef::Place(void)
 				return;
 			}
 		}
-		//后退再发射
-		else if(UseTarget[0] >= Param.Stretch_Shoot && wait_flag == 1)
-		{
-			UseTarget[0] = Param.Stretch_Shoot;
-			AddVar[0] = 0;
-			AddVar[1] = 0;
-			AddVar[2] = 0;
-			if(abs(Stretch_Encider.getTotolAngle()-Param.Stretch_Shoot<Param.Stretch_ErrorPos))
-			{
-				Shoot.Set_Shoot(true);
-				//因为后退所以与最末端有一定距离
-				//故不会在wait_flag、Homeing_Flag为 0 时诱发放环条件
-				//但若改掉后退则需要注意
-				wait_flag = 0;
-			}
-		}
+		// //后退再发射
+		// else if(UseTarget[0] >= Param.Stretch_Shoot && wait_flag == 1)
+		// {
+		// 	UseTarget[0] = Param.Stretch_Shoot;
+		// 	AddVar[0] = 0;
+		// 	AddVar[1] = 0;
+		// 	AddVar[2] = 0;
+		// 	if(abs(Stretch_Encider.getTotolAngle()-Param.Stretch_Shoot<Param.Stretch_ErrorPos))
+		// 	{
+		// 		Shoot.Set_Shoot(true);
+		// 		//因为后退所以与最末端有一定距离
+		// 		//故不会在wait_flag、Homeing_Flag为 0 时诱发放环条件
+		// 		//但若改掉后退则需要注意
+		// 		wait_flag = 0;
+		// 	}
+		// }
 
 		if(Homeing_Flag == 1)
 		{
 			AddVar[0] = -Param.Stretch_Speed;
+			wait_flag = 0;
 		}
 		else
 		{
@@ -623,6 +637,9 @@ void Clamp_classdef::Place(void)
 	}
 	else
 	{
+		wait_flag = 0;
+		Homeing_Flag = 0;
+		Place_Flag = 0;
 		now_place = UseTarget[2];
 	}
 }

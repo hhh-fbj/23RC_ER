@@ -28,8 +28,6 @@
 #define turnangle 0
 #define turnAngle 1
 
-#define TURN_GROY 455.11111111111111111111111111111
-
 extKalman_t Kalman_PitSpeed;
 /**
  * @brief      初始化
@@ -45,8 +43,8 @@ Gimbal_classdef::Gimbal_classdef()
     //--- kp,ki,kd,ki_max,out_max,dt
 
     /* Yaw 电机角度 */
-    UsePID[Yaw][PID_Outer].SetPIDParam(18.0f, 0.0, 0.0f, 8000, 80000, 0.002f);//
-	UsePID[Yaw][PID_Inner].SetPIDParam(4.0f, 1.2, 0.0f, 10000, 30000, 0.002f);//
+    UsePID[Yaw][PID_Outer].SetPIDParam(15.0f, 0.0, 0.0f, 8000, 80000, 0.002f);//
+	UsePID[Yaw][PID_Inner].SetPIDParam(3.8f, 1.2, 0.0f, 10000, 30000, 0.002f);//
 	UsePID[Yaw][PID_Inner].I_SeparThresh = 2000;
 	
 	/*--- Angle Init -------------------------------------------------------------------------*/
@@ -55,7 +53,10 @@ Gimbal_classdef::Gimbal_classdef()
 	Param.Yaw_Max = 583025;
 	Param.Yaw_Centre = 540889;
 	Param.Yaw_Min = 507715;
-	Param.Yaw_Speed = 20;
+	Param.Yaw_Speed = 40;
+	Param.Angle_Big = 22.109448343751673;
+	Param.Angle_small = 67.890551656248330;
+	Param.Yaw_TurnAngle = 455.11111111111111111111111111111;
 }
 
 
@@ -190,7 +191,7 @@ void Gimbal_classdef::TargetAngle_Update(void)
 		case Gimbal_PCMode:
 			if(Vision.Use_Flag)
 			{
-				UseTarget[Yaw] -= (Vision.Use_Yaw*TURN_GROY);
+				UseTarget[Yaw] -= (Vision.Use_Yaw*Param.Yaw_TurnAngle);
 				Vision.Use_Flag = 0;
 			}
 			else if(Vision.aim == 0)
@@ -220,6 +221,90 @@ void Gimbal_classdef::TargetAngle_Update(void)
 			{
 				UseTarget[Yaw] -= 0;
 			}
+			
+			switch(Ding_TEXT_Flag)
+			{
+				//最左
+				case 1:
+					if(UseTarget[Yaw] > Param.Yaw_Centre+Param.Angle_Big*Param.Yaw_TurnAngle + Param.Yaw_Speed)
+					{
+						UseTarget[Yaw] -= Param.Yaw_Speed;
+					}
+					else if(UseTarget[Yaw] < Param.Yaw_Centre+Param.Angle_Big*Param.Yaw_TurnAngle - Param.Yaw_Speed)
+					{
+						UseTarget[Yaw] += Param.Yaw_Speed;
+					}
+					else
+					{
+						UseTarget[Yaw] = Param.Yaw_Centre+Param.Angle_Big*Param.Yaw_TurnAngle;
+					}
+				break;
+
+				//左
+				case 2:
+					if(UseTarget[Yaw] > Param.Yaw_Centre+Param.Angle_small*Param.Yaw_TurnAngle + Param.Yaw_Speed)
+					{
+						UseTarget[Yaw] -= Param.Yaw_Speed;
+					}
+					else if(UseTarget[Yaw] < Param.Yaw_Centre+Param.Angle_small*Param.Yaw_TurnAngle - Param.Yaw_Speed)
+					{
+						UseTarget[Yaw] += Param.Yaw_Speed;
+					}
+					else
+					{
+						UseTarget[Yaw] = Param.Yaw_Centre+Param.Angle_small*Param.Yaw_TurnAngle;
+					}
+				break;
+
+				//右
+				case 3:
+					if(UseTarget[Yaw] > Param.Yaw_Centre-Param.Angle_Big*Param.Yaw_TurnAngle + Param.Yaw_Speed)
+					{
+						UseTarget[Yaw] -= Param.Yaw_Speed;
+					}
+					else if(UseTarget[Yaw] < Param.Yaw_Centre-Param.Angle_Big*Param.Yaw_TurnAngle - Param.Yaw_Speed)
+					{
+						UseTarget[Yaw] += Param.Yaw_Speed;
+					}
+					else
+					{
+						UseTarget[Yaw] = Param.Yaw_Centre-Param.Angle_Big*Param.Yaw_TurnAngle;
+					}
+				break;
+
+				//最右
+				case 4:
+					if(UseTarget[Yaw] > Param.Yaw_Centre-Param.Angle_small*Param.Yaw_TurnAngle + Param.Yaw_Speed)
+					{
+						UseTarget[Yaw] -= Param.Yaw_Speed;
+					}
+					else if(UseTarget[Yaw] < Param.Yaw_Centre-Param.Angle_small*Param.Yaw_TurnAngle - Param.Yaw_Speed)
+					{
+						UseTarget[Yaw] += Param.Yaw_Speed;
+					}
+					else
+					{
+						UseTarget[Yaw] = Param.Yaw_Centre-Param.Angle_small*Param.Yaw_TurnAngle;
+					}
+				break;
+
+				//中间
+				case 0:
+					if(UseTarget[Yaw] > Param.Yaw_Centre + Param.Yaw_Speed)
+					{
+						UseTarget[Yaw] -= Param.Yaw_Speed;
+					}
+					else if(UseTarget[Yaw] < Param.Yaw_Centre - Param.Yaw_Speed)
+					{
+						UseTarget[Yaw] += Param.Yaw_Speed;
+					}
+					else
+					{
+						UseTarget[Yaw] = Param.Yaw_Centre;
+					}
+				break;
+
+			}
 		break;
 
 		case Gimbal_HalfAutoMode:
@@ -228,7 +313,7 @@ void Gimbal_classdef::TargetAngle_Update(void)
 			{
 				if(once == 0)
 				{
-					UseTarget[Yaw] -= (Vision.Use_Yaw*TURN_GROY);
+					UseTarget[Yaw] -= (Vision.Use_Yaw*Param.Yaw_TurnAngle);
 					once = 1;
 				}
 				if(abs(Yaw_Encider.getTotolAngle() - UseTarget[Yaw]) < 800)
@@ -261,8 +346,6 @@ void Gimbal_classdef::TargetAngle_Update(void)
 					UseTarget[Yaw] -= CTRL_DR16.Get_RX();
 				}
 			}
-			
-
 			last_I6 = I6;
 		break;
 	}
@@ -294,7 +377,7 @@ void Gimbal_classdef::Motor_PIDCalc()
 	UsePID[Yaw][PID_Outer].Current = Yaw_Encider.getTotolAngle();
 		
 		
-	UsePID[Yaw][PID_Inner].Target = UseIMU.Gyro[0] * TURN_GROY;
+	UsePID[Yaw][PID_Inner].Target = UseIMU.Gyro[0] * Param.Yaw_TurnAngle; //Yaw_Motor.getSpeed()*60;
     UsePID[Yaw][PID_Inner].Current = UsePID[Yaw][PID_Outer].Cal();
     
 	Yaw_Motor.Out = UsePID[Yaw][PID_Inner].Cal();

@@ -60,6 +60,7 @@ private:
 		float Servo_OverPos;//舵机：发射位置
 		float Servo_ErrorPos;//舵机：判断条件的范围
 		float Stretch_ErrorPos;//伸出：判断条件的范围
+		float PickPlace_ErrorPos;//放环：判断条件的范围
 		float Lift_ErrorPos;//抬伸：判断条件的范围
 	}Param;
 
