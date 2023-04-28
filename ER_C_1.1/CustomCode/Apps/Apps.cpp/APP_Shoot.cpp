@@ -231,30 +231,30 @@ void Shoot_classdef::PullTar_Update(void)
 			else{RightPull_TarAngle += Param.Pull_InitSpeed;}
 			if(Top_LeftPull_Flag && Top_RightPull_Flag)
 			{
-				if(LeftPull_TarAngle > Top_LeftPull + clamp_pos_L + Param.Pull_InitSpeed)
+				if(LeftPull_TarAngle > Top_LeftPull + clamp_pos_L + (-Param.Pull_InitSpeed))
 				{
-					LeftPull_TarAngle -= Param.Pull_InitSpeed;
+					LeftPull_TarAngle -= (-Param.Pull_InitSpeed);
 				}
-				else if(LeftPull_TarAngle < Top_LeftPull + clamp_pos_L + Param.Pull_InitSpeed)
+				else if(LeftPull_TarAngle < Top_LeftPull + clamp_pos_L - (-Param.Pull_InitSpeed))
 				{
-					LeftPull_TarAngle += Param.Pull_InitSpeed;
+					LeftPull_TarAngle += (-Param.Pull_InitSpeed);
 				}
 				else
 				{
-					LeftPull_TarAngle = Top_LeftPull + clamp_pos_L + Param.Pull_InitSpeed;
+					LeftPull_TarAngle = Top_LeftPull + clamp_pos_L;
 				}
 
-				if(RightPull_TarAngle > Top_RightPull + clamp_pos_R + Param.Pull_InitSpeed)
+				if(RightPull_TarAngle > Top_RightPull + clamp_pos_R + (-Param.Pull_InitSpeed))
 				{
-					RightPull_TarAngle -= Param.Pull_InitSpeed;
+					RightPull_TarAngle -= (-Param.Pull_InitSpeed);
 				}
-				else if(RightPull_TarAngle < Top_RightPull + clamp_pos_R + Param.Pull_InitSpeed)
+				else if(RightPull_TarAngle < Top_RightPull + clamp_pos_R - (-Param.Pull_InitSpeed))
 				{
-					RightPull_TarAngle += Param.Pull_InitSpeed;
+					RightPull_TarAngle += (-Param.Pull_InitSpeed);
 				}
 				else
 				{
-					RightPull_TarAngle = Top_RightPull + clamp_pos_R + Param.Pull_InitSpeed;
+					RightPull_TarAngle = Top_RightPull + clamp_pos_R;
 				}
 			}
 		break;

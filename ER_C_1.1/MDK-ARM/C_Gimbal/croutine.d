@@ -1,8 +1,8 @@
 c_gimbal/croutine.o: \
   ..\Middlewares\Third_Party\FreeRTOS\Source\croutine.c \
   ..\Middlewares\Third_Party\FreeRTOS\Source\include\FreeRTOS.h \
-  C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\stddef.h \
-  C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\stdint.h \
+  C:\Users\chenzijian\Pad\App\keil5\ARM\ARMCLANG\Bin\..\include\stddef.h \
+  C:\Users\chenzijian\Pad\App\keil5\ARM\ARMCLANG\Bin\..\include\stdint.h \
   ..\Core\Inc\FreeRTOSConfig.h \
   ..\Middlewares\Third_Party\FreeRTOS\Source\include\projdefs.h \
   ..\Middlewares\Third_Party\FreeRTOS\Source\include\portable.h \

@@ -130,9 +130,9 @@ void CTRL_DR16_classdef::LeverMode_Update(void)
                     // }
                     
                     
-                  Gimbal.Mode = Gimbal_HalfAutoMode;
+                  Gimbal.Mode = Gimbal_MoveMode;//Gimbal_HalfAutoMode;
                   Shoot.Shoot_Mode = Shoot_NewAutoMode;
-                  Shoot.Pull_Mode_Set(Pull_DebugMode);//Pull_LockMode
+                  Shoot.Pull_Mode_Set(Pull_NewDebugMode);//(Pull_DebugMode);//Pull_LockMode
                   Clamp.setMode(Clamp_AutoMode);
 
                 

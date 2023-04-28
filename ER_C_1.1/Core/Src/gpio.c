@@ -149,7 +149,7 @@ void MX_GPIO_Init_USER(void)//�Զ���
   //取放
 	GPIO_InitStruct.Pin = GPIO_PIN_7;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-  GPIO_InitStruct.Pull = GPIO_PULLUP;
+  GPIO_InitStruct.Pull = GPIO_PULLDOWN;
   HAL_GPIO_Init(GPIOI, &GPIO_InitStruct);
 	
 	/*Configure GPIO pin : PtPin */

@@ -1,6 +1,6 @@
 c_gimbal/ins_task.o: ..\CustomCode\Devices\BMI088\INS_task.c \
   ..\CustomCode\Devices\BMI088\INS_task.h \
-  C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\stdint.h \
+  C:\Users\chenzijian\Pad\App\keil5\ARM\ARMCLANG\Bin\..\include\stdint.h \
   ..\Core\Inc\main.h ..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal.h \
   ..\Core\Inc\stm32f4xx_hal_conf.h \
   ..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_rcc.h \
@@ -11,12 +11,12 @@ c_gimbal/ins_task.o: ..\CustomCode\Devices\BMI088\INS_task.c \
   ..\Drivers\CMSIS\Include\cmsis_version.h \
   ..\Drivers\CMSIS\Include\cmsis_compiler.h \
   ..\Drivers\CMSIS\Include\cmsis_armclang.h \
-  C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\arm_compat.h \
-  C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\arm_acle.h \
+  C:\Users\chenzijian\Pad\App\keil5\ARM\ARMCLANG\Bin\..\include\arm_compat.h \
+  C:\Users\chenzijian\Pad\App\keil5\ARM\ARMCLANG\Bin\..\include\arm_acle.h \
   ..\Drivers\CMSIS\Include\mpu_armv7.h \
   ..\Drivers\CMSIS\Device\ST\STM32F4xx\Include\system_stm32f4xx.h \
   ..\Drivers\STM32F4xx_HAL_Driver\Inc\Legacy\stm32_hal_legacy.h \
-  C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\stddef.h \
+  C:\Users\chenzijian\Pad\App\keil5\ARM\ARMCLANG\Bin\..\include\stddef.h \
   ..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_rcc_ex.h \
   ..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_gpio.h \
   ..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_gpio_ex.h \
@@ -57,14 +57,14 @@ c_gimbal/ins_task.o: ..\CustomCode\Devices\BMI088\INS_task.c \
   ..\CustomCode\Devices\BMI088\bmi088driver.h \
   ..\CustomCode\Devices\BMI088\ist8310driver.h \
   ..\CustomCode\Devices\BMI088\MahonyAHRS.h \
-  C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\math.h \
+  C:\Users\chenzijian\Pad\App\keil5\ARM\ARMCLANG\Bin\..\include\math.h \
   ..\CustomCode\Devices\BMI088\calibrate_task.h \
   ..\CustomCode\Devices\BMI088\delay.h ..\Core\Inc\tim.h \
   ..\Drivers\CMSIS\DSP\Include\arm_math.h \
   ..\Drivers\CMSIS\DSP\Include\arm_math_types.h \
-  C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\string.h \
-  C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\float.h \
-  C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\limits.h \
+  C:\Users\chenzijian\Pad\App\keil5\ARM\ARMCLANG\Bin\..\include\string.h \
+  C:\Users\chenzijian\Pad\App\keil5\ARM\ARMCLANG\Bin\..\include\float.h \
+  C:\Users\chenzijian\Pad\App\keil5\ARM\ARMCLANG\Bin\..\include\limits.h \
   ..\Drivers\CMSIS\DSP\Include\arm_math_memory.h \
   ..\Drivers\CMSIS\DSP\Include\dsp\none.h \
   ..\Drivers\CMSIS\DSP\Include\dsp\utils.h \

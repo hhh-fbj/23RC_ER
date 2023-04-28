@@ -21,7 +21,7 @@ private:
 	Clamp_CtrlMode_e Clamp_Mode;
 	Clamp_CtrlMode_e Clamp_Next_Mode;
 
-	GPIO_PinState last_I7 = GPIO_PIN_RESET;
+	GPIO_PinState last_I7 = GPIO_PIN_SET;
 	GPIO_PinState last_E14 = GPIO_PIN_SET;
 
 	uint8_t Top_Lift_Flag;
@@ -69,7 +69,7 @@ private:
 	void AngleLimit(void);
 	void Motor_PIDCalc(void);
 
-	bool Set_TurnPlacel(uint8_t mode,float position);
+	bool Set_TurnPlacel(int mode,int position);
 	bool Lift(float pos,bool datum = false,float*rp=NULL);
 	bool Stretch(float pos,bool datum = false,float*rp=NULL);
 	bool PickPlace(float pos,bool datum = false,float*rp=NULL);

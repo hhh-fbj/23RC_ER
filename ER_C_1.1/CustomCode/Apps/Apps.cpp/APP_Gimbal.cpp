@@ -456,7 +456,7 @@ bool Gimbal_classdef::TarPos_Move(int angle)
 		break;
 	}
 	
-	if(abs(Yaw_Motor.get_totalencoder()-(Param.Yaw_Centre+clamp_angle)) <= 100)
+	if(abs(Yaw_Encider.getTotolAngle()-(Param.Yaw_Centre+clamp_angle)) <= 500)
 	{
 		return true;
 	}
