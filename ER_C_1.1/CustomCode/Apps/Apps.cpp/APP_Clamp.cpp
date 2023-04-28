@@ -352,7 +352,6 @@ void Clamp_classdef::AngleLimit(void)
 	// }
 }
 
-
 void Clamp_classdef::Motor_PIDCalc(void)
 {
 	Stretch_PID[PID_Outer].Target = Stretch_Encider.getTotolAngle();
@@ -389,20 +388,17 @@ void Clamp_classdef::setMode(Clamp_CtrlMode_e mode)
 	}
 }
 
+
 void Clamp_classdef::Init(void)
 {
 	if(Init_Flag)
 	{
 		if(Lift(Lift_Motor.get_totalencoder(),true))
 		{
-			if(Gimbal.Midpoint_Flag == 0)
-			{
-				Gimbal.Midpoint_Flag = 1;
-			}
 			if(Stretch(Param.Stretch_Max,true) &&\
 			PickPlace(PickPlace_Motor.get_totalencoder(),true) &&\
 			Set_TurnPlacel(Param.Servo_PosCtrl, Param.Servo_InitPos) &&\
-			Gimbal.Midpoint_Flag == 2)
+			Gimbal.TarPos_Move(0))
 			{
 				Gimbal.Midpoint_Flag = 0;
 				Init_Flag = 0;
@@ -448,14 +444,10 @@ void Clamp_classdef::Pick(void)
 			case 0:
 				if(Lift(Lift_Motor.get_totalencoder(),true))
 				{
-					if(Gimbal.Midpoint_Flag == 0)
-					{
-						Gimbal.Midpoint_Flag = 1;
-					}
 					if(Stretch(Param.Stretch_Max,true) &&\
 					PickPlace(PickPlace_Motor.get_totalencoder(),true) &&\
 					Set_TurnPlacel(Param.Servo_PosCtrl, Param.Servo_InitPos) &&\
-					Gimbal.Midpoint_Flag == 2)
+					Gimbal.TarPos_Move(0))
 					{
 						step = 1;
 					}
@@ -501,14 +493,10 @@ void Clamp_classdef::Place_Point(void)
 			case 0:
 				if(Lift(Lift_Motor.get_totalencoder(),true))
 				{
-					if(Gimbal.Midpoint_Flag == 0)
-					{
-						Gimbal.Midpoint_Flag = 1;
-					}
 					if(Stretch(Param.Stretch_Max,true) &&\
 					PickPlace(Top_PickPlace-Param.PickPlace_Release) &&\
 					Set_TurnPlacel(Param.Servo_PosCtrl, Param.Servo_InitPos) &&\
-					Gimbal.Midpoint_Flag == 2)
+					Gimbal.TarPos_Move(0))
 					{
 						step = 1;
 					}
@@ -552,11 +540,14 @@ void Clamp_classdef::Place(void)
 			break;
 
 			case 1:
-				if(Shoot.Shoot_Place_Flag == 0)
-				{
-					Shoot.Shoot_Place_Flag = 1;
-				}
-				if(Shoot.Shoot_Place_Flag==2)
+				// if(Shoot.Shoot_Place_Flag == 0)
+				// {
+				// 	Shoot.Shoot_Place_Flag = 1;
+				// }
+				// if(Shoot.Shoot_Place_Flag==2)
+				// {
+				// }
+				if(Gimbal.TarPos_Move(0))
 				{
 					if(PickPlace(now_place-Param.PickPlace_Loop))
 					{
@@ -564,6 +555,7 @@ void Clamp_classdef::Place(void)
 						step = 2;
 					}
 				}
+				
 			break;
 
 			case 2:
@@ -587,7 +579,6 @@ void Clamp_classdef::Place(void)
 		now_place = UseTarget[2];
 	}
 }
-
 
 
 
@@ -686,6 +677,7 @@ bool Clamp_classdef::PickPlace(float pos,bool datum,float*rp)
 {
 	if(datum)
 	{
+		
 		if(I7 == GPIO_PIN_SET)
 		{
 			AddVar[2] = Param.PickPlace_Speed;

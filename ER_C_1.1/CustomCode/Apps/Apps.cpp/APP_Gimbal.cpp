@@ -226,11 +226,11 @@ void Gimbal_classdef::TargetAngle_Update(void)
 			{
 				//×î×ó
 				case 1:
-					if(UseTarget[Yaw] > Param.Yaw_Centre+Param.Angle_Big*Param.Yaw_TurnAngle + Param.Yaw_Speed)
+					if(UseTarget[Yaw] > Param.Yaw_Centre + Param.Angle_Big*Param.Yaw_TurnAngle + Param.Yaw_Speed)
 					{
 						UseTarget[Yaw] -= Param.Yaw_Speed;
 					}
-					else if(UseTarget[Yaw] < Param.Yaw_Centre+Param.Angle_Big*Param.Yaw_TurnAngle - Param.Yaw_Speed)
+					else if(UseTarget[Yaw] < Param.Yaw_Centre + Param.Angle_Big*Param.Yaw_TurnAngle - Param.Yaw_Speed)
 					{
 						UseTarget[Yaw] += Param.Yaw_Speed;
 					}
@@ -303,7 +303,6 @@ void Gimbal_classdef::TargetAngle_Update(void)
 						UseTarget[Yaw] = Param.Yaw_Centre;
 					}
 				break;
-
 			}
 		break;
 
@@ -341,12 +340,28 @@ void Gimbal_classdef::TargetAngle_Update(void)
 						Midpoint_Flag = 2;
 					}
 				}
+				
 				else
 				{
 					UseTarget[Yaw] -= CTRL_DR16.Get_RX();
 				}
 			}
 			last_I6 = I6;
+		break;
+
+		case Gimbal_MoveMode:
+			if(UseTarget[Yaw] > Param.Yaw_Centre+clamp_angle*Param.Yaw_TurnAngle + Param.Yaw_Speed)
+			{
+				UseTarget[Yaw] -= Param.Yaw_Speed;
+			}
+			else if(UseTarget[Yaw] < Param.Yaw_Centre+clamp_angle*Param.Yaw_TurnAngle - Param.Yaw_Speed)
+			{
+				UseTarget[Yaw] += Param.Yaw_Speed;
+			}
+			else
+			{
+				UseTarget[Yaw] = Param.Yaw_Centre+clamp_angle*Param.Yaw_TurnAngle;
+			}
 		break;
 	}
 }
@@ -420,7 +435,33 @@ float *Gimbal_classdef::Get_TargetAngle(Gimbal_type_e type)
     return return_angle[type];
 }
 
-
+bool Gimbal_classdef::TarPos_Move(int angle)
+{	
+	switch(angle)
+	{
+		case 0:
+			clamp_angle = 0;
+		break;
+		case 1:
+			clamp_angle = 0;
+		break;
+		case 2:
+			clamp_angle = 0;
+		break;
+		case -1:
+			clamp_angle = 0;
+		break;
+		case -2:
+			clamp_angle = 0;
+		break;
+	}
+	
+	if(abs(Yaw_Motor.get_totalencoder()-(Param.Yaw_Centre+clamp_angle)) <= 100)
+	{
+		return true;
+	}
+	return false;
+}
 
 
 

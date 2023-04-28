@@ -23,6 +23,7 @@ enum Pull_CtrlMode_e
 	Pull_DebugMode,
 	Pull_LockMode,
 	Pull_TransiMode,
+	Pull_NewDebugMode,
 	Pull_GearSetMode,
 };
 
@@ -53,6 +54,9 @@ private:
 	float Top_LeftPull_Flag = 0;
 	float Top_RightPull = 0;
 	float Top_RightPull_Flag = 0;
+
+	float clamp_pos_R;
+	float clamp_pos_L;
 
 	struct{
 		float Shoot_Circle;
@@ -116,5 +120,6 @@ public:
 	bool Get_ShootCon(void){return Shoot_Continue;}; 
 	void Shoot_Mode_Set(Shoot_CtrlMode_e mode);
 	void Pull_Mode_Set(Pull_CtrlMode_e mode);
+	bool Pull_Move(int pos);
 };
 #endif

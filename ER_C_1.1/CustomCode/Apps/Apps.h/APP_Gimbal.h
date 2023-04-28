@@ -20,7 +20,7 @@ enum Gimbal_CtrlMode_e
 	Gimbal_NormalMode,	// 普通运转模式
 	Gimbal_PCMode,       // PC控制(自瞄)
 	Gimbal_LockMode,
-
+	Gimbal_MoveMode,
 	Gimbal_HalfAutoMode,
 };
 
@@ -52,6 +52,8 @@ private:
 	uint8_t init_cnt;	
 	float UseTarget[3];
 
+	float clamp_angle;
+
 	struct APP_Gimbal
 	{
 		float Yaw_Max;
@@ -74,6 +76,7 @@ private:
 	float Imu_Det(float eup);
 	void Set_InitAngle();	   /*<! 设置初始角度 */
 	float *Get_TargetAngle(Gimbal_type_e type); /*<! 获取用于计算的目标参数 */
+	
 public:
 	Gimbal_classdef();
 	GPIO_PinState I6;
@@ -91,6 +94,8 @@ public:
 	IMU_Data_t UseIMU;  /*<! A or C 板陀螺仪 */
 
 	void Control();
+
+	bool TarPos_Move(int angle);
 };
 #endif
 

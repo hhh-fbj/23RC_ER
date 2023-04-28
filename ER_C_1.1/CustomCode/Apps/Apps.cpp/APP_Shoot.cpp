@@ -224,6 +224,41 @@ void Shoot_classdef::PullTar_Update(void)
 			}			
 		break;
 
+		case Pull_NewDebugMode:
+			if(Top_LeftPull_Flag){;}
+			else{LeftPull_TarAngle += Param.Pull_InitSpeed;}
+			if(Top_RightPull_Flag){;}
+			else{RightPull_TarAngle += Param.Pull_InitSpeed;}
+			if(Top_LeftPull_Flag && Top_RightPull_Flag)
+			{
+				if(LeftPull_TarAngle > Top_LeftPull + clamp_pos_L + Param.Pull_InitSpeed)
+				{
+					LeftPull_TarAngle -= Param.Pull_InitSpeed;
+				}
+				else if(LeftPull_TarAngle < Top_LeftPull + clamp_pos_L + Param.Pull_InitSpeed)
+				{
+					LeftPull_TarAngle += Param.Pull_InitSpeed;
+				}
+				else
+				{
+					LeftPull_TarAngle = Top_LeftPull + clamp_pos_L + Param.Pull_InitSpeed;
+				}
+
+				if(RightPull_TarAngle > Top_RightPull + clamp_pos_R + Param.Pull_InitSpeed)
+				{
+					RightPull_TarAngle -= Param.Pull_InitSpeed;
+				}
+				else if(RightPull_TarAngle < Top_RightPull + clamp_pos_R + Param.Pull_InitSpeed)
+				{
+					RightPull_TarAngle += Param.Pull_InitSpeed;
+				}
+				else
+				{
+					RightPull_TarAngle = Top_RightPull + clamp_pos_R + Param.Pull_InitSpeed;
+				}
+			}
+		break;
+
 		case Pull_GearSetMode:
 			if(Top_LeftPull_Flag){;}
 			else{LeftPull_TarAngle += Param.Pull_InitSpeed;}
@@ -509,3 +544,38 @@ void Shoot_classdef::Pull_Mode_Set(Pull_CtrlMode_e mode)
 		Pull_Next_Mode = mode;
 	}
 }
+
+bool Shoot_classdef::Pull_Move(int pos)
+{
+	switch(pos)
+	{
+		case 0:
+			clamp_pos_L = 0;
+			clamp_pos_R = 0;
+		break;
+		case 1:
+			clamp_pos_L = 0;
+			clamp_pos_R = 0;
+		break;
+		case 2:
+			clamp_pos_L = 0;
+			clamp_pos_R = 0;
+		break;
+		case -1:
+			clamp_pos_L = 0;
+			clamp_pos_R = 0;
+		break;
+		case -2:
+			clamp_pos_L = 0;
+			clamp_pos_R = 0;
+		break;
+	}
+	if(abs(LeftPull_Motor.get_totalencoder()-(Top_LeftPull+clamp_pos_L)) <= 100 && \
+		abs(RightPull_Motor.get_totalencoder()-(Top_RightPull+clamp_pos_R)) <= 100)
+	{
+		return true;
+	}
+	return false;
+}
+
+
