@@ -162,7 +162,6 @@ void CTRL_DR16_classdef::LeverMode_Update(void)
                   else if(DR16.Get_DW_Norm() <= -110 && DW_Zero)
                   {
                       init_pick = 1;
-                      Clamp.Should_Init_Flag = 2;
                       Clamp.Init_Flag = 1;
                       Clamp.Pick_Flag = 0;
                       Clamp.Place_Point_Flag = 0;
@@ -187,6 +186,10 @@ void CTRL_DR16_classdef::LeverMode_Update(void)
             {
                 case Lever_UP:/* 左中-右上 START ------------------------------------------*/ 
                 {
+									 Gimbal.Mode = Gimbal_LockMode;
+									Shoot.Shoot_Mode = Shoot_LockMode;
+									Shoot.Pull_Mode_Set(Pull_NewDebugMode);//(Pull_DebugMode);
+									Clamp.setMode(Clamp_LockMode);
                 }
                 break;/* 左中-右上 END ------------------------------------------*/
 

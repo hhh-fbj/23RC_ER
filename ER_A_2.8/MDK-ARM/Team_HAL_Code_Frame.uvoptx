@@ -226,7 +226,7 @@
         <Ww>
           <count>7</count>
           <WinNumber>1</WinNumber>
-          <ItemText>Auto,0x10</ItemText>
+          <ItemText>Auto,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>8</count>
@@ -242,6 +242,11 @@
           <count>10</count>
           <WinNumber>1</WinNumber>
           <ItemText>uchCRCLo</ItemText>
+        </Ww>
+        <Ww>
+          <count>11</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>\\Team_HAL_Code_Frame\../CustomCode/Devices/Devices.cpp/DEV_Analog.cpp\uchCRCLo</ItemText>
         </Ww>
       </WatchWindow1>
       <WatchWindow2>

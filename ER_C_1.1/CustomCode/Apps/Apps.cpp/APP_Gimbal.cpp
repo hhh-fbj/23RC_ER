@@ -54,8 +54,8 @@ Gimbal_classdef::Gimbal_classdef()
 	Param.Yaw_Centre = 540889;
 	Param.Yaw_Min = 507715;
 	Param.Yaw_Speed = 40;
-	Param.Angle_Big = 22.109448343751673;
-	Param.Angle_small = 67.890551656248330;
+	Param.Angle_Big = 22.109448343751673f;
+	Param.Angle_small = 67.890551656248330f;
 	Param.Yaw_TurnAngle = 455.11111111111111111111111111111;
 }
 
@@ -442,21 +442,21 @@ bool Gimbal_classdef::TarPos_Move(int angle)
 		case 0:
 			clamp_angle = 0;
 		break;
-		case 1:
-			clamp_angle = 0;
-		break;
 		case 2:
-			clamp_angle = 0;
+			clamp_angle = 67.890551656248330f;
 		break;
-		case -1:
-			clamp_angle = 0;
+		case 3:
+			clamp_angle = 22.109448343751673f;
 		break;
-		case -2:
-			clamp_angle = 0;
+		case 4:
+			clamp_angle = -22.109448343751673f;
+		break;
+		case 5:
+			clamp_angle = -67.890551656248330f;
 		break;
 	}
 	
-	if(abs(Yaw_Encider.getTotolAngle()-(Param.Yaw_Centre+clamp_angle)) <= 500)
+	if(abs(Yaw_Encider.getTotolAngle()-(Param.Yaw_Centre+clamp_angle*Param.Yaw_TurnAngle)) <= 500)
 	{
 		return true;
 	}

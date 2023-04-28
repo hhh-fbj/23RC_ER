@@ -32,10 +32,10 @@ Clamp_classdef::Clamp_classdef()
 	//测量参数
 	Param.Stretch_Hold = 1360000;
 	Param.Stretch_Speed = 400;
-	Param.Lift_Max = 766000;//770000;
+	Param.Lift_Max = 770000;//770000;
 	Param.Lift_Speed = 660;
 	Param.PickPlace_Max = 5300000;//5480000;
-	Param.PickPlace_Release = 260000;//250000;
+	Param.PickPlace_Release = 200000;//250000;
 	Param.PickPlace_Loop = 460000;//485000;
 	Param.PickPlace_Speed = 4000;
 
@@ -89,6 +89,9 @@ void Clamp_classdef::Control()
 	Motor_PIDCalc();
 }
 
+
+int I6_SetTime,I6_FwdNum;
+uint8_t step;
 uint8_t Clamp_classdef::ProblemDetection(void)
 {
 	if(Clamp_Mode == Clamp_DisableMode ||\
@@ -120,6 +123,10 @@ uint8_t Clamp_classdef::ProblemDetection(void)
 		Motor[1].Out = 0;
 		Motor[2].Out = 0;
 		Motor[3].Out = 0;
+		
+		I6_SetTime = 0;
+		I6_FwdNum = 0;
+		step = 0;
 
 		Set_TurnPlacel(0,Param.Servo_InitPos);
 		TurnPlace_Servo.Torque_Flag = 0;
@@ -128,8 +135,6 @@ uint8_t Clamp_classdef::ProblemDetection(void)
 			TurnPlace_Servo.Torque(false);
 		}
 
-		Should_Init_Flag = 1;
-		Should_Place_Flag = 0;
 		return 1;
 	}
 	else
@@ -221,7 +226,7 @@ void Clamp_classdef::Tar_Update(void)
 				}
 				else
 				{
-					UseTarget[0] += 0;
+					UseTarget[2] += 0;
 				}
 			}
 			else
@@ -236,37 +241,71 @@ void Clamp_classdef::Tar_Update(void)
 			{
 				Set_TurnPlacel(Param.Servo_TorqueCtrl, Param.Servo_InitPos);
 			}
+			
 			//与底盘联系进行自瞄发送与跑点
+			
 			if (Gimbal.I6 == GPIO_PIN_SET &&\
-			 Gimbal.Last_I6 == GPIO_PIN_RESET)
+			Gimbal.Last_I6 == GPIO_PIN_RESET &&\
+			(I6_SetTime == 0))
 			{
-				if(Should_Init_Flag==1)
-				{
-					Should_Place_Flag = 0;
-					Init_Flag = 1;
-				}
-				else if(Auto_Aim_Flag)
-				{
-					if(Should_Place_Flag && Vision.aim==0)
-					{
-						Vision.aim=1;
-					}
-				}
-				else if(Should_Place_Flag)
-				{
-					Place_Flag = 1;
-				}
+				I6_SetTime++;
 			}
+			if(Gimbal.I6 == GPIO_PIN_SET && I6_SetTime)
+			{
+				I6_SetTime++;
+			}
+			else
+			{
+				I6_SetTime = 0;
+			}
+			
+			
+			if(I6_SetTime > 5)
+			{
+				I6_FwdNum++;
+				switch(I6_FwdNum)
+				{
+					case 1:
+						Pick_Flag = 1;
+					break;
+					
+					case 2:
+					case 3:
+					case 4:
+					case 5:
+						if(Auto_Aim_Flag)
+						{
+							if(Vision.aim==0)
+							{
+								Vision.aim=1;
+							}
+						}
+						else
+						{
+							Place_Flag = 1;
+						}
+					break;
+				}
+				I6_SetTime=0;
+			}
+			
+			
+				
+			
 			Init();
 			Pick();
 			Place_Point();
 			Place();
 
+			//叠加限制
 			//舵机摆正测才能往下走
-			if(abs((int)TurnPlace_Servo.Posotion - Param.Servo_InitPos) <= Param.Servo_ErrorPos && AddVar[2] > 0)
+			if(abs((int)TurnPlace_Servo.Posotion - Param.Servo_InitPos) > Param.Servo_ErrorPos && AddVar[1] >= 0)
 			{
 				AddVar[1] = 0;
+				UseTarget[1] = Lift_Motor.get_totalencoder();
+				
 			}
+			
 			UseTarget[0] += AddVar[0];
 			UseTarget[1] += AddVar[1];
 			UseTarget[2] += AddVar[2];
@@ -286,6 +325,8 @@ void Clamp_classdef::Tar_Update(void)
 
 }
 
+
+//目标限制
 void Clamp_classdef::AngleLimit(void)
 {
 	//定点限位
@@ -402,27 +443,12 @@ void Clamp_classdef::Init(void)
 			Gimbal.Midpoint_Flag = 0;
 			Init_Flag = 0;
 
-			if(Should_Init_Flag==1)
-			{
-				Pick_Flag = 1;
-				Should_Place_Flag = 1;
-			}
-			
-			if(Should_Init_Flag==2)
-			{
-				Should_Init_Flag = 1;
-			}
-			else
-			{
-				Should_Init_Flag = 0;
-			}
 		}
-		HAL_GPIO_WritePin(GPIOE, GPIO_PIN_9, GPIO_PIN_RESET);
+		HAL_GPIO_WritePin(GPIOE, GPIO_PIN_9, GPIO_PIN_RESET);//默认
 	}
-	else if(Should_Init_Flag == 1)
+	else
 	{
 		Gimbal.Midpoint_Flag = 0;
-		Should_Place_Flag = 0;
 	}
 }
 
@@ -432,7 +458,7 @@ void Clamp_classdef::Init(void)
 //放环位置
 //放环
 //
-uint8_t step;
+
 void Clamp_classdef::Pick(void)
 {
 	if(Pick_Flag)
@@ -464,7 +490,7 @@ void Clamp_classdef::Pick(void)
 					step = 0;
 					Pick_Flag =0;
 					Place_Point_Flag = 1;
-					HAL_GPIO_WritePin(GPIOE, GPIO_PIN_9, GPIO_PIN_SET);
+					HAL_GPIO_WritePin(GPIOE, GPIO_PIN_9, GPIO_PIN_SET);// 第一次转正，底盘去中间
 				}
 			break;
 		
@@ -481,7 +507,6 @@ void Clamp_classdef::Place_Point(void)
 {
 	if(Place_Point_Flag)
 	{
-
 		switch (step)
 		{
 			case 0:
@@ -502,7 +527,7 @@ void Clamp_classdef::Place_Point(void)
 				{
 					step = 0;
 					Place_Point_Flag = 0;
-					HAL_GPIO_WritePin(GPIOE, GPIO_PIN_9, GPIO_PIN_RESET);
+					HAL_GPIO_WritePin(GPIOE, GPIO_PIN_9, GPIO_PIN_RESET);//恢复准备下一次转正
 				}
 			break;
 
@@ -527,6 +552,7 @@ void Clamp_classdef::Place(void)
 						now_place = UseTarget[2];
 						step = 1;
 					}
+					HAL_GPIO_WritePin(GPIOE, GPIO_PIN_9, GPIO_PIN_RESET);
 			break;
 
 			case 1:
@@ -534,14 +560,18 @@ void Clamp_classdef::Place(void)
 				{
 					Shoot.Shoot_Place_Flag = 1;
 				}
+//				if(((Shoot.Shoot_Place_Flag==2) & \
+//				Gimbal.TarPos_Move(I6_FwdNum)   & \
+//				Shoot.Pull_Move(I6_FwdNum)) && \
+//				PickPlace(now_place-Param.PickPlace_Loop))
 				if(((Shoot.Shoot_Place_Flag==2) & \
-					Gimbal.TarPos_Move(0)) &&\
-					PickPlace(now_place-Param.PickPlace_Loop))
+				Gimbal.TarPos_Move(I6_FwdNum)) && \
+				PickPlace(now_place-Param.PickPlace_Loop))
 				{
 					Shoot.Set_Shoot(true);
 					step = 2;
 				}
-				
+				HAL_GPIO_WritePin(GPIOE, GPIO_PIN_9, GPIO_PIN_RESET);
 			break;
 
 			case 2:
@@ -550,6 +580,7 @@ void Clamp_classdef::Place(void)
 					step = 0;
 					Homeing_Flag = 0;
 					Place_Flag = 0;
+					now_place = UseTarget[2];
 					HAL_GPIO_WritePin(GPIOE, GPIO_PIN_9, GPIO_PIN_SET);
 				}
 			break;
@@ -724,3 +755,5 @@ bool Clamp_classdef::Set_TurnPlacel(int mode,int position)
 		return false;
 	}
 }
+
+

@@ -42,15 +42,15 @@ Shoot_classdef::Shoot_classdef()
 	// Pre_Tar[0] = -80;
 	// Pre_Tar[1] = -100;
 
-	Param.Shoot_Hold = 520000;//560000
+	Param.Shoot_Hold = 560000;//520000
 	Param.Shoot_Speed = 880;
 	Param.Shoot_Circle = 848380;
 	Param.Pull_Max = 13100000;
 
-	Param.Shoot_StopTime = 15;
+	Param.Shoot_StopTime = 10;
 	Param.Shoot_LowSpeed = -1500;
 	Param.Shoot_HightSpeed = -8000;
-	Param.Pull_InitSpeed = -8000;
+	Param.Pull_InitSpeed = -80;
 	Param.Pull_LeftFirst = 741510;
 	Param.Pull_RightFirst = 789561;
 	Param.Pull_LeftSecond = 11082351;
@@ -81,9 +81,9 @@ void Shoot_classdef::Control()
 
     //改拉�?+发射 �?
     PullTar_Update();
-	ShootSpe_Update();
+		ShootSpe_Update();
 
-	AngleLimit();
+		AngleLimit();
 
     //PID计算
     PullMotor_PIDCalc();
@@ -428,11 +428,13 @@ void Shoot_classdef::ShootSpe_Update(void)
 
 uint8_t Shoot_classdef::ProblemDetection(void)
 {
+//    if(CTRL_DR16.start == 0 ||\
+//	DevicesMonitor.Get_State(LEFTPULL_MOTOR_MONITOR) == Off_line ||\
+//	DevicesMonitor.Get_State(RIGHTPULL_MOTOR_MONITOR) == Off_line ||\
+//	DevicesMonitor.Get_State(SHOOT_MOTOR_MONITOR) == Off_line)
     if(CTRL_DR16.start == 0 ||\
-	DevicesMonitor.Get_State(LEFTPULL_MOTOR_MONITOR) == Off_line ||\
-	DevicesMonitor.Get_State(RIGHTPULL_MOTOR_MONITOR) == Off_line ||\
-	DevicesMonitor.Get_State(SHOOT_MOTOR_MONITOR) == Off_line)
-    {
+		DevicesMonitor.Get_State(SHOOT_MOTOR_MONITOR) == Off_line)
+		{
 		LeftPull_PID[PID_Outer].Reset();
 		LeftPull_PID[PID_Inner].Reset();
 
@@ -550,24 +552,24 @@ bool Shoot_classdef::Pull_Move(int pos)
 	switch(pos)
 	{
 		case 0:
-			clamp_pos_L = 0;
-			clamp_pos_R = 0;
-		break;
-		case 1:
-			clamp_pos_L = 0;
+			clamp_pos_L = 4;
 			clamp_pos_R = 0;
 		break;
 		case 2:
+			clamp_pos_L = 40000;
+			clamp_pos_R = 40000;
+		break;
+		case 3:
 			clamp_pos_L = 0;
 			clamp_pos_R = 0;
 		break;
-		case -1:
+		case 4:
 			clamp_pos_L = 0;
 			clamp_pos_R = 0;
 		break;
-		case -2:
-			clamp_pos_L = 0;
-			clamp_pos_R = 0;
+		case 5:
+			clamp_pos_L = 40000;
+			clamp_pos_R = 40000;
 		break;
 	}
 	if(abs(LeftPull_Motor.get_totalencoder()-(Top_LeftPull+clamp_pos_L)) <= 100 && \

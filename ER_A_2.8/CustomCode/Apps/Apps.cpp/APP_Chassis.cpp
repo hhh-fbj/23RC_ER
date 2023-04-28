@@ -122,6 +122,7 @@ void Chassis_classdef::Sensor(void)
     EdgeDete[4] = HAL_GPIO_ReadPin(GPIOI, GPIO_PIN_5);//右
     EdgeDete[5] = HAL_GPIO_ReadPin(GPIOI, GPIO_PIN_6);//左	
 
+		Last_Ready_Flag = Ready_Flag;
     Ready_Flag = HAL_GPIO_ReadPin(GPIOI, GPIO_PIN_2);
 }
 
@@ -138,7 +139,7 @@ uint8_t Chassis_classdef::ProblemDetection(void)
             Buzzer.error = 1;
         }
         Send_Data();
-        HAL_GPIO_WritePin(GPIOI, GPIO_PIN_7, GPIO_PIN_RESET);
+        HAL_GPIO_WritePin(GPIOI, GPIO_PIN_7, GPIO_PIN_RESET);//默认
         return 1;
     }
     else if(DevicesMonitor.Get_State(CHAS_RUD1_MONITOR) == Off_line || \
@@ -159,7 +160,7 @@ uint8_t Chassis_classdef::ProblemDetection(void)
             Buzzer.error = 1;
         }
         Send_Data();
-        HAL_GPIO_WritePin(GPIOI, GPIO_PIN_7, GPIO_PIN_RESET);
+        HAL_GPIO_WritePin(GPIOI, GPIO_PIN_7, GPIO_PIN_RESET);//默认
         return 1;
     }
     else
@@ -297,7 +298,7 @@ void Chassis_classdef::ChassisTar_Update()
                 RUD_Motor[j].Out = 0;  
                 Cal_Speed[j] = 0;
             }
-			HAL_GPIO_WritePin(GPIOI, GPIO_PIN_7, GPIO_PIN_RESET);
+			HAL_GPIO_WritePin(GPIOI, GPIO_PIN_7, GPIO_PIN_RESET);//默认
             Last_Mode = CHAS_DisableMode;
         break;
     }

@@ -722,14 +722,14 @@
               <FilePath>..\CustomCode\Algorithm\Algorithm.cpp\ALGO_Ramp.cpp</FilePath>
             </File>
             <File>
-              <FileName>ALGO_Kalman.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\CustomCode\Algorithm\Algorithm.cpp\ALGO_Kalman.cpp</FilePath>
-            </File>
-            <File>
               <FileName>ALGO_Math.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\CustomCode\Algorithm\ALGO_Math.h</FilePath>
+            </File>
+            <File>
+              <FileName>ALGO_Kalman.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\CustomCode\Algorithm\Algorithm.cpp\ALGO_Kalman.cpp</FilePath>
             </File>
           </Files>
         </Group>

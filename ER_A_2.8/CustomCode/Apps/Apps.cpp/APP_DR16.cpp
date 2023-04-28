@@ -108,11 +108,11 @@ void CTRL_DR16_classdef::LeverMode_Update(void)
                     Chassis.Set_Mode(CHAS_LockMode);//CHAS_LockMode; CHAS_LaserMode
                     if(DR16.Get_DW_Norm() >= 550)
                     {
-                        HAL_GPIO_WritePin(GPIOI, GPIO_PIN_7, GPIO_PIN_SET);
+                        HAL_GPIO_WritePin(GPIOI, GPIO_PIN_7, GPIO_PIN_SET);//正转
                     }
                     if(DR16.Get_DW_Norm() <= -550)
                     {
-                        HAL_GPIO_WritePin(GPIOI, GPIO_PIN_7, GPIO_PIN_RESET);
+                        HAL_GPIO_WritePin(GPIOI, GPIO_PIN_7, GPIO_PIN_RESET);//默认
                     }
                     // Chassis.Set_Mode(CHAS_PostureMode);
                 }
@@ -133,7 +133,7 @@ void CTRL_DR16_classdef::LeverMode_Update(void)
 
 						
             Chassis.Set_Mode(CHAS_DisableMode);
-			HAL_GPIO_WritePin(GPIOI, GPIO_PIN_7, GPIO_PIN_RESET);
+						HAL_GPIO_WritePin(GPIOI, GPIO_PIN_7, GPIO_PIN_RESET);//默认
             // Robot Reset
             if(DR16.Get_DW_Norm() <= -550)
             {

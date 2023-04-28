@@ -39,6 +39,7 @@ void Auto_classdef::Text_Step(void)
 {
 	switch(text_step)
 	{
+		//取环前方
 		case 0:
 			if(startFlag == 1 && overFlag == 0)
 			{
@@ -59,34 +60,27 @@ void Auto_classdef::Text_Step(void)
 				Chassis.POS_PID[Posture_Y][PID_Outer].Target = Posture.POS_Y();
 				Chassis.POS_PID[Posture_W][PID_Outer].Target = Posture.POS_W();
 			}
-			HAL_GPIO_WritePin(GPIOI, GPIO_PIN_7, GPIO_PIN_RESET);
+			HAL_GPIO_WritePin(GPIOI, GPIO_PIN_7, GPIO_PIN_RESET);//默认
 		break;
 
+		//后退取环
 		case 1:
 			Left_PickIdea();
-			HAL_GPIO_WritePin(GPIOI, GPIO_PIN_7, GPIO_PIN_RESET);
+			HAL_GPIO_WritePin(GPIOI, GPIO_PIN_7, GPIO_PIN_RESET);//默认
 		break;
-			
+		
+		//取环
 		case 2:
 			startFlag = 0;
 			Chassis.NO_PostureMode = 2;
-			HAL_GPIO_WritePin(GPIOI, GPIO_PIN_7, GPIO_PIN_SET);
-			if(Chassis.Ready_Flag == GPIO_PIN_SET)
+			if(IO_RTX(20,10))
 			{
-				two_time_sum++;
-			}
-			else
-			{
-				two_time_sum = 0;
-			}
-
-			if(two_time_sum>30)
-			{
-				startFlag = 0;
-				text_step = 0;
+				startFlag = 1;
+				text_step = 3;
 			}
 		break;
-
+		
+		//定点前
 		case 3:
 			if(startFlag == 1 && overFlag == 0)
 			{
@@ -107,19 +101,18 @@ void Auto_classdef::Text_Step(void)
 				Chassis.POS_PID[Posture_Y][PID_Outer].Target = Posture.POS_Y();
 				Chassis.POS_PID[Posture_W][PID_Outer].Target = Posture.POS_W();
 			}
-			HAL_GPIO_WritePin(GPIOI, GPIO_PIN_7, GPIO_PIN_RESET);
 		break;
 		
+		//前定射环
 		case 4:
 			Front_PlaceIdea();
-			HAL_GPIO_WritePin(GPIOI, GPIO_PIN_7, GPIO_PIN_RESET);
 		break;
-
+		
+		//射环1
 		case 5:
 			startFlag = 0;
 			Chassis.NO_PostureMode = 2;
-			HAL_GPIO_WritePin(GPIOI, GPIO_PIN_7, GPIO_PIN_SET);
-			if(Chassis.Ready_Flag == GPIO_PIN_SET)
+			if(IO_RTX(20,30))
 			{
 				startFlag = 1;
 				text_step = 6;
@@ -129,7 +122,34 @@ void Auto_classdef::Text_Step(void)
 		case 6:
 			startFlag = 0;
 			Chassis.NO_PostureMode = 2;
+			if(IO_RTX(20,30))
+			{
+				startFlag = 1;
+				text_step = 7;
+			}
 		break;
+			
+		case 7:
+			startFlag = 0;
+			Chassis.NO_PostureMode = 2;
+			if(IO_RTX(20,30))
+			{
+				startFlag = 1;
+				text_step = 8;
+			}
+		break;
+			
+		case 8:
+			startFlag = 0;
+			Chassis.NO_PostureMode = 2;
+			if(IO_RTX(20,30))
+			{
+				startFlag = 1;
+				text_step = 9;
+			}
+		break;
+			
+		
 	}
 }
 
@@ -557,4 +577,45 @@ void Auto_classdef::Front_PlaceIdea(void)
 		overFlag = 0;
 	}
 }
+
+int IO_S_time;
+int IO_R_time;
+bool Auto_classdef::IO_RTX(int io_s,int is_t)
+{
+	
+	if(IO_S_time >= io_s)
+	{
+		IO_R_time++;
+		HAL_GPIO_WritePin(GPIOI, GPIO_PIN_7, GPIO_PIN_RESET);//反转
+		if(IO_R_time >= is_t)
+		{
+			IO_R_time = 0;
+			IO_S_time = 0;
+			return 1;
+		}
+	}
+	else
+	{
+		HAL_GPIO_WritePin(GPIOI, GPIO_PIN_7, GPIO_PIN_SET);//正转
+	}
+	
+	if(Chassis.Ready_Flag == GPIO_PIN_SET && Chassis.Last_Ready_Flag == GPIO_PIN_RESET && IO_S_time==0)
+	{
+		IO_S_time++;
+	}
+	if(Chassis.Ready_Flag == GPIO_PIN_SET && IO_S_time>0)
+	{
+		IO_S_time++;
+	}
+	else
+	{
+		IO_S_time = 0;
+	}
+	
+	
+	
+	return 0;
+	
+}
+
 
