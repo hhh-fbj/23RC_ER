@@ -55,7 +55,7 @@ Gimbal_classdef::Gimbal_classdef()
 	Param.Yaw_Min = 507715;
 	Param.Yaw_Speed = 40;
 	Param.Angle_Big = 22.109448343751673f;
-	Param.Angle_small = 67.890551656248330f;
+	Param.Angle_small = 67.890551656248330f;//
 	Param.Yaw_TurnAngle = 455.11111111111111111111111111111;
 }
 
@@ -443,16 +443,16 @@ bool Gimbal_classdef::TarPos_Move(int angle)
 			clamp_angle = 0;
 		break;
 		case 2:
-			clamp_angle = 67.890551656248330f;
+			clamp_angle = 67.11341748046875f;
 		break;
 		case 3:
-			clamp_angle = 22.109448343751673f;
+			clamp_angle = 21.93983349609375f;
 		break;
 		case 4:
-			clamp_angle = -22.109448343751673f;
+			clamp_angle = -21.91099658203125f;
 		break;
 		case 5:
-			clamp_angle = -67.890551656248330f;
+			clamp_angle = -66.982201171875f;
 		break;
 	}
 	

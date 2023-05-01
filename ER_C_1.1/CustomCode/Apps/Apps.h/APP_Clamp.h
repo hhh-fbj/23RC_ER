@@ -21,7 +21,7 @@ private:
 	Clamp_CtrlMode_e Clamp_Mode;
 	Clamp_CtrlMode_e Clamp_Next_Mode;
 
-	GPIO_PinState last_I7 = GPIO_PIN_SET;
+	GPIO_PinState last_I7 = GPIO_PIN_RESET;
 	GPIO_PinState last_E14 = GPIO_PIN_SET;
 
 	uint8_t Top_Lift_Flag;
@@ -40,11 +40,14 @@ private:
 		float Stretch_Hold;//伸出：实际最远位置
 		float Stretch_Speed;//伸出：每次控制位置环目标的运动距离
 		float Lift_Max;//抬伸：软件限制最大范围
+		float Lift_Hold;//抬伸：取环前的抬伸位置
 		float Lift_Speed;//抬伸：每次控制位置环目标的运动距离
+		float Lift_PickWaitTime;//抬伸：取环抬伸到底时等待的时间
 		float PickPlace_Max;//放环：软件限制最大范围
 		float PickPlace_Release;//放环：取环时与最高点的距离
 		float PickPlace_Loop;//放环：放下一个环的距离
 		float PickPlace_Speed;//放环：每次控制位置环目标的运动距离
+		float Shoot_WaitTime;//发射：发射时等待环掉落后稳定需要的时间
 
 		float Stretch_Max;//伸出：软件限制最远位置
 		float Stretch_Take;//伸出：要取环时，伸出的最近位置

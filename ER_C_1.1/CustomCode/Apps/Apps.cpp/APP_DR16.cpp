@@ -76,40 +76,63 @@ void CTRL_DR16_classdef::LeverMode_Update(void)
                 {
                     // 正常发射
                     Gimbal.Mode = Gimbal_NormalMode;
-                    Shoot.Shoot_Mode = Shoot_NewAutoMode;//Shoot_AutoMode;
-                    Shoot.Pull_Mode_Set(Pull_GearSetMode);
-                    Clamp.setMode(Clamp_LockMode);
-                    if(DR16.Get_DW_Norm() == 0)
-                    {
-                        DW_Zero = true;
-                    }
-                    if(DR16.Get_DW_Norm() >= 110 && DW_Zero)
-                    {
-                        Shoot.Shoot_Speed_BL = 1;
-                        Shoot.Set_Shoot(true);
-                        DW_Zero = false;
-                    }
-                    if(DR16.Get_DW_Norm() <= -110 && DW_Zero)
-                    {
-                        Shoot.Shoot_Speed_BL = 2.5;
-                        Shoot.Set_Shoot(true);
-                        DW_Zero = false;
-                    }
+										Shoot.Shoot_Mode = Shoot_NewAutoMode;
+                    Shoot.Pull_Mode_Set(Pull_DebugMode);
+										Clamp.setMode(Clamp_AutoMode);
+//                    if(DR16.Get_DW_Norm() == 0)
+//                    {
+//                        DW_Zero = true;
+//                    }
+//                    if(DR16.Get_DW_Norm() >= 110 && DW_Zero)
+//                    {
+//                        Shoot.Shoot_Speed_BL = 1;
+//                        Shoot.Set_Shoot(true);
+//                        DW_Zero = false;
+//                    }
+//                    if(DR16.Get_DW_Norm() <= -110 && DW_Zero)
+//                    {
+//                        Shoot.Shoot_Speed_BL = 2.5;
+//                        Shoot.Set_Shoot(true);
+//                        DW_Zero = false;
+//                    }
 
-                    if(DR16.Get_LY_Norm() == 0)
-                    {
-                        LY_Zero = true;
-                    }
-                    else if(DR16.Get_LY_Norm() >= 550 && LY_Zero)
-                    {
-                        Shoot.Turn_Pull_Flag = 1;
-                        LY_Zero = false;
-                    }
-                    else if(DR16.Get_LY_Norm() <= -550 && LY_Zero)
-                    {
-                        Shoot.Turn_Pull_Flag = 2;
-                        LY_Zero = false;
-                    }
+//                    if(DR16.Get_LY_Norm() == 0)
+//                    {
+//                        LY_Zero = true;
+//                    }
+//                    else if(DR16.Get_LY_Norm() >= 550 && LY_Zero)
+//                    {
+//                        Shoot.Turn_Pull_Flag = 1;
+//                        LY_Zero = false;
+//                    }
+//                    else if(DR16.Get_LY_Norm() <= -550 && LY_Zero)
+//                    {
+//                        Shoot.Turn_Pull_Flag = 2;
+//                        LY_Zero = false;
+//                    }
+
+									if(DR16.Get_DW_Norm() == 0)
+                  {
+                    DW_Zero = true;
+                  }
+                  if(DR16.Get_DW_Norm() >= 110 && DW_Zero)
+                  {
+                      if(Clamp.Init_Flag || Clamp.Pick_Flag ||\
+                       Clamp.Place_Point_Flag || Clamp.Place_Flag){}
+                       else
+                       {
+													Clamp.Place_Flag = 1;
+                       }
+                       DW_Zero = false;
+                  }
+                  else if(DR16.Get_DW_Norm() <= -110 && DW_Zero)
+                  {
+                      Clamp.Init_Flag = 1;
+                      Clamp.Pick_Flag = 0;
+                      Clamp.Place_Point_Flag = 0;
+                      Clamp.Place_Flag = 0;
+                      DW_Zero = false;
+                  }
                 }
                 break;  /* 左上-右中 END ------------------------------------------*/
 

@@ -88,7 +88,10 @@ void Auto_classdef::Text_Step(void)
 				Chassis.POS_PID[Posture_X][PID_Outer].Target = Spots[1][0];
 				Chassis.POS_PID[Posture_Y][PID_Outer].Target = Spots[1][1];
 				Chassis.POS_PID[Posture_W][PID_Outer].Target = Spots[1][2];
-				if(Detection_Point(Spots[1])){overFlag = 0;startFlag = 1;Vx=Vy=Vw=0;text_step = 4;}
+				if(Detection_Point(Spots[1]) ||\
+				(Chassis.EdgeDete[4] == GPIO_PIN_RESET &&\
+				Chassis.EdgeDete[5] == GPIO_PIN_RESET && Detection_Point(Spots[1])))
+				{overFlag = 0;startFlag = 1;Vx=Vy=Vw=0;text_step = 4;}
 			}
 			else if(startFlag == 0 &&overFlag == 1)
 			{

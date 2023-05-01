@@ -50,7 +50,7 @@ Shoot_classdef::Shoot_classdef()
 	Param.Shoot_StopTime = 10;
 	Param.Shoot_LowSpeed = -1500;
 	Param.Shoot_HightSpeed = -8000;
-	Param.Pull_InitSpeed = -80;
+	Param.Pull_InitSpeed = -8000;
 	Param.Pull_LeftFirst = 741510;
 	Param.Pull_RightFirst = 789561;
 	Param.Pull_LeftSecond = 11082351;
@@ -556,24 +556,24 @@ bool Shoot_classdef::Pull_Move(int pos)
 			clamp_pos_R = 0;
 		break;
 		case 2:
-			clamp_pos_L = 40000;
-			clamp_pos_R = 40000;
+			clamp_pos_L = 449967.5;
+			clamp_pos_R = 457606.5;
 		break;
 		case 3:
-			clamp_pos_L = 0;
-			clamp_pos_R = 0;
+			clamp_pos_L = 1375434;
+			clamp_pos_R = 1383363;
 		break;
 		case 4:
-			clamp_pos_L = 0;
-			clamp_pos_R = 0;
+			clamp_pos_L = 1375434;
+			clamp_pos_R = 1383363;
 		break;
 		case 5:
-			clamp_pos_L = 40000;
-			clamp_pos_R = 40000;
+			clamp_pos_L = 449967.5;
+			clamp_pos_R = 457606.5;
 		break;
 	}
-	if(abs(LeftPull_Motor.get_totalencoder()-(Top_LeftPull+clamp_pos_L)) <= 100 && \
-		abs(RightPull_Motor.get_totalencoder()-(Top_RightPull+clamp_pos_R)) <= 100)
+	if(abs(LeftPull_Motor.get_totalencoder()-(Top_LeftPull+clamp_pos_L)) <= 500 && \
+		abs(RightPull_Motor.get_totalencoder()-(Top_RightPull+clamp_pos_R)) <= 500)
 	{
 		return true;
 	}
