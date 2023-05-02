@@ -47,7 +47,10 @@ void Auto_classdef::Text_Step(void)
 				Chassis.POS_PID[Posture_X][PID_Outer].Target = Spots[0][0];
 				Chassis.POS_PID[Posture_Y][PID_Outer].Target = Spots[0][1];
 				Chassis.POS_PID[Posture_W][PID_Outer].Target = Spots[0][2];
-				if(Detection_Point_text(Spots[0])){overFlag = 0;startFlag = 1;Vx=Vy=Vw=0;text_step = 1;}
+				if(Detection_Point_text(Spots[0]) || \
+				(Chassis.EdgeDete[4] == GPIO_PIN_RESET &&\
+				Chassis.EdgeDete[5] == GPIO_PIN_RESET))
+				{overFlag = 0;startFlag = 1;Vx=Vy=Vw=0;text_step = 1;}
 			}
 			else if(startFlag == 0 &&overFlag == 1)
 			{
@@ -88,9 +91,7 @@ void Auto_classdef::Text_Step(void)
 				Chassis.POS_PID[Posture_X][PID_Outer].Target = Spots[1][0];
 				Chassis.POS_PID[Posture_Y][PID_Outer].Target = Spots[1][1];
 				Chassis.POS_PID[Posture_W][PID_Outer].Target = Spots[1][2];
-				if(Detection_Point(Spots[1]) ||\
-				(Chassis.EdgeDete[4] == GPIO_PIN_RESET &&\
-				Chassis.EdgeDete[5] == GPIO_PIN_RESET && Detection_Point(Spots[1])))
+				if(Detection_Point(Spots[1]))
 				{overFlag = 0;startFlag = 1;Vx=Vy=Vw=0;text_step = 4;}
 			}
 			else if(startFlag == 0 &&overFlag == 1)
@@ -149,6 +150,26 @@ void Auto_classdef::Text_Step(void)
 			{
 				startFlag = 1;
 				text_step = 9;
+			}
+		break;
+
+		case 9:
+			startFlag = 0;
+			Chassis.NO_PostureMode = 2;
+			if(IO_RTX(20,30))
+			{
+				startFlag = 1;
+				text_step = 10;
+			}
+		break;
+
+		case 10:
+			startFlag = 0;
+			Chassis.NO_PostureMode = 2;
+			if(IO_RTX(20,30))
+			{
+				startFlag = 1;
+				text_step = 11;
 			}
 		break;
 			
@@ -489,7 +510,6 @@ void Auto_classdef::Left_PickIdea(void)
 			}
 			else if(WallFlag)
 			{
-				
 				if(Analog.LaserRanging[9]<35000 && Analog.LaserRanging[9]>30000 &&\
 				Analog.LaserRanging[8]<35000 && Analog.LaserRanging[8]>30000)
 				{

@@ -14,13 +14,14 @@ void Posture_Classdef::getMessage(uint8_t *PostureBuf)
 	static float TF_data[2];
 	if(Recv_Msg.Pack.HeadFrame[0]==0x0D && Recv_Msg.Pack.HeadFrame[1]==0x0A &&\
 		Recv_Msg.Pack.TailFrame[0]==0x0A && Recv_Msg.Pack.TailFrame[1]==0x0D)
-	{   					//将PostureBuf[2]往后24字节复制给data
+	{   //将PostureBuf[2]往后24字节复制给data
 		RAM_Angle[Posture_Z] = Recv_Msg.Pack.ActVal[0];
 		RAM_Angle[Posture_X] = Recv_Msg.Pack.ActVal[1];
 		RAM_Angle[Posture_Y] = Recv_Msg.Pack.ActVal[2];
 		RAM_Value[Posture_X] = Recv_Msg.Pack.ActVal[3];
 		RAM_Value[Posture_Y] = Recv_Msg.Pack.ActVal[4];
 		RAM_Value[Posture_W] = Recv_Msg.Pack.ActVal[5];
+		DevicesMonitor.Update(Frame_CHAS_POSTURE);
 	}
 	else return;
 	//过零处理
@@ -70,6 +71,7 @@ void Posture_Classdef::Devices_Posture_Reset(void)
 	sendData[1] =	'C';
 	sendData[2] =	'T';
 	sendData[3] =	'0';
+	// HAL_UART_Transmit_DMA(&huart6, sendData, 4);
 	HAL_UART_Transmit(&huart6, sendData, 4, 0xffff);
 }
 

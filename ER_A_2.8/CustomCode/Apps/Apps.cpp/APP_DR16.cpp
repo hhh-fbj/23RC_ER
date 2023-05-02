@@ -51,6 +51,7 @@ CTRL_DR16_classdef::CTRL_DR16_classdef()
 /*------------------------------------------------------------ RC遥控器控�? ------------------------------------------------------------*/
 //拨杆模式更新
 uint16_t Reset_cnt;
+int Posture_ResTime;
 void CTRL_DR16_classdef::LeverMode_Update(void)
 {
     switch((uint8_t)DR16.Get_S1_L())
@@ -123,17 +124,19 @@ void CTRL_DR16_classdef::LeverMode_Update(void)
 
         case Lever_DOWN: // --- 左下 ----------------------------------------------
         {
-            if(Auto.Posture_ResFlag<3)
+            Posture_ResTime++;
+            if(Auto.Posture_ResFlag<3 && DevicesMonitor.Get_State(CHAS_POSTURE_MONITOR) && Posture_ResTime>20)
             {
-                Auto.Posture.Devices_Posture_Reset();
+                Posture_ResTime=0;
                 Auto.Posture_ResFlag++;
+                Auto.Posture.Devices_Posture_Reset();
                 Auto.startFlag=0;
                 Auto.text_step = 0;	
             }
 
 						
             Chassis.Set_Mode(CHAS_DisableMode);
-						HAL_GPIO_WritePin(GPIOI, GPIO_PIN_7, GPIO_PIN_RESET);//默认
+            HAL_GPIO_WritePin(GPIOI, GPIO_PIN_7, GPIO_PIN_RESET);//默认
             // Robot Reset
             if(DR16.Get_DW_Norm() <= -550)
             {
