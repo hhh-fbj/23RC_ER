@@ -64,7 +64,7 @@ Chassis_classdef::Chassis_classdef()
     POS_PID[Posture_X][PID_Outer].a_p = 4;POS_PID[Posture_X][PID_Outer].b_p = 11;POS_PID[Posture_X][PID_Outer].c_p = 0.0002;
     POS_PID[Posture_Y][PID_Outer].SetPIDParam(2.5f, 0.0f, 0.0f, 4000, 15000, 0.002f);POS_PID[Posture_Y][PID_Outer].DeadZone = 1;//3.5		6 0.003	
     POS_PID[Posture_Y][PID_Outer].a_p = 3.5;POS_PID[Posture_Y][PID_Outer].b_p = 6;POS_PID[Posture_Y][PID_Outer].c_p = 0.0003;
-    POS_PID[Posture_Z][PID_Outer].SetPIDParam(90.0f, 0.0f, 0.0f, 2000, 10000, 0.002f);POS_PID[Posture_Z][PID_Outer].DeadZone = 0.5;
+    POS_PID[Posture_Z][PID_Outer].SetPIDParam(100.0f, 0.0f, 0.0f, 2000, 15000, 0.002f);POS_PID[Posture_Z][PID_Outer].DeadZone = 0.5;
     /*--- 内环 速度 PID 没用 -------------------------------------------------------------------------*/
     POS_PID[Posture_X][PID_Inner].SetPIDParam(0.0f, 0.0f, 0.0f, 1000, 10000, 0.002f);
     POS_PID[Posture_Y][PID_Inner].SetPIDParam(0.0f, 0.0f, 0.0f, 1000, 10000, 0.002f);

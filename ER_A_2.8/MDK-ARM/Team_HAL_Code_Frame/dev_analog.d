@@ -1,7 +1,7 @@
 team_hal_code_frame/dev_analog.o: \
   ..\CustomCode\Devices\Devices.cpp\DEV_Analog.cpp \
-  ..\CustomCode\Apps\Apps.h\DEV_Analog.h ..\CustomCode\Unify\include.h \
-  ..\CustomCode\Unify\confing.h \
+  ..\CustomCode\Devices\Devices.h\DEV_Analog.h \
+  ..\CustomCode\Unify\include.h ..\CustomCode\Unify\confing.h \
   ..\CustomCode\Devices\Devices.h\DEV_DR16.h \
   C:\Users\chenzijian\Pad\App\keil5\ARM\ARMCLANG\Bin\..\include\libcxx\stdint.h \
   C:\Users\chenzijian\Pad\App\keil5\ARM\ARMCLANG\Bin\..\include\libcxx\__config \
@@ -637,7 +637,7 @@ team_hal_code_frame/dev_analog.o: \
   ..\Middlewares\Third_Party\FreeRTOS\Source\include\event_groups.h \
   ..\Inc\usart.h ..\Inc\main.h ..\CustomCode\Unify\Wolf_Infantry.h \
   ..\CustomCode\Apps\Apps.h\APP_DR16.h \
-  ..\CustomCode\Devices\Devices.h\APP_Devices.h \
+  ..\CustomCode\Apps\Apps.h\APP_Devices.h \
   ..\CustomCode\Apps\Apps.h\APP_Chassis.h \
   ..\CustomCode\Devices\Devices.h\DEV_BrtEncoder.h \
   ..\CustomCode\Devices\Devices.h\DEV_Bldc.h \

@@ -39,6 +39,10 @@ void Task_DevicesMonitor(void *argument)
             {
                 Buzzer.error = 0;//1
             }
+						if(DevicesMonitor.Get_State(CHAS_POSTURE_MONITOR) == Off_line)
+						{
+							Buzzer.error = 1;//1
+						}
             else
             {
                 Buzzer.error = 0;

@@ -49,7 +49,7 @@ team_hal_code_frame/task_check.o: \
   ..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_uart.h \
   ..\CustomCode\Devices\Devices.h\DEV_UpComputer.h \
   ..\CustomCode\Devices\Devices.h\DEV_OLED.h ..\Inc\spi.h \
-  ..\CustomCode\Devices\Devices.h\APP_Devices.h \
+  ..\CustomCode\Apps\Apps.h\APP_Devices.h \
   ..\CustomCode\Unify\Universe.h\System_DataPool.h \
   C:\Users\chenzijian\Pad\App\keil5\ARM\ARMCLANG\Bin\..\include\libcxx\string.h \
   C:\Users\chenzijian\Pad\App\keil5\ARM\ARMCLANG\Bin\..\include\string.h \
@@ -646,7 +646,7 @@ team_hal_code_frame/task_check.o: \
   ..\CustomCode\Devices\Devices.h\DEV_MX106.h \
   ..\CustomCode\Apps\Apps.h\APP_Auto.h \
   ..\CustomCode\Devices\Devices.h\DEV_Posture.h \
-  ..\CustomCode\Apps\Apps.h\DEV_Analog.h \
+  ..\CustomCode\Devices\Devices.h\DEV_Analog.h \
   ..\CustomCode\Devices\Devices.h\DEV_AIMU.h \
   ..\CustomCode\Devices\Devices.h\DEV_CIMU.h \
   ..\CustomCode\Devices\Devices.h\DEV_Buzzer.h \

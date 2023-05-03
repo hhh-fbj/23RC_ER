@@ -32,15 +32,15 @@ Clamp_classdef::Clamp_classdef()
 	//测量参数
 	Param.Stretch_Hold = 1360000;
 	Param.Stretch_Speed = 400;
-	Param.Lift_Max = 812000;//770000;
+	Param.Lift_Max = 820000;//770000;
 	Param.Lift_Hold = 500000;//770000;
-	Param.Lift_Speed = 660;
-	Param.Lift_PickWaitTime = 50;
+	Param.Lift_Speed = 1100;
+	Param.Lift_PickWaitTime = 100;
 	Param.PickPlace_Max = 5300000;//5480000;
 	Param.PickPlace_Release = 200000;//250000;
 	Param.PickPlace_Loop = 455000;//485000;
 	Param.PickPlace_Speed = 4000;
-	Param.Shoot_WaitTime = 50;
+	Param.Shoot_WaitTime = 80;
 
 	//推算参数
 	Param.Stretch_Max = Param.Stretch_Hold - 8848;
@@ -55,9 +55,9 @@ Clamp_classdef::Clamp_classdef()
 	Param.Servo_PosCtrl = 116;
 	Param.Servo_InitPos = 1898;
 	Param.Servo_OverPos = 2444;//1579
-	Param.Servo_ErrorPos = 20;
+	Param.Servo_ErrorPos = 25;
 	Param.Stretch_ErrorPos = 400;
-	Param.PickPlace_ErrorPos = 200;
+	Param.PickPlace_ErrorPos = 500;
 	Param.Lift_ErrorPos = 500;
 }
 
@@ -454,7 +454,7 @@ void Clamp_classdef::Init(void)
 		switch (step)
 		{
 			case 0:
-			if((Lift(Lift_Motor.get_totalencoder(),true) & Gimbal.TarPos_Move(0)) &&\
+			if((Lift(Lift_Motor.get_totalencoder(),true) && Gimbal.TarPos_Move(0)) &&\
 			Stretch(Param.Stretch_Max,true) &&\
 			Set_TurnPlacel(Param.Servo_PosCtrl, Param.Servo_InitPos) &&\
 		 (PickPlace(PickPlace_Motor.get_totalencoder(),true)&&\
@@ -523,6 +523,9 @@ void Clamp_classdef::Pick(void)
 					step = 0;
 					Pick_Flag =0;
 					Place_Point_Flag = 1;
+				}
+				if(Lift_Motor.get_totalencoder() < Top_Lift+770000)
+				{
 					HAL_GPIO_WritePin(GPIOE, GPIO_PIN_9, GPIO_PIN_SET);// 第一次转正，底盘去中间
 				}
 			break;

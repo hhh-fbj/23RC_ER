@@ -1,6 +1,6 @@
 team_hal_code_frame/app_devices.o: \
   ..\CustomCode\Apps\Apps.cpp\APP_Devices.cpp \
-  ..\CustomCode\Devices\Devices.h\APP_Devices.h \
+  ..\CustomCode\Apps\Apps.h\APP_Devices.h \
   C:\Users\chenzijian\Pad\App\keil5\ARM\ARMCLANG\Bin\..\include\libcxx\stdint.h \
   C:\Users\chenzijian\Pad\App\keil5\ARM\ARMCLANG\Bin\..\include\libcxx\__config \
   C:\Users\chenzijian\Pad\App\keil5\ARM\ARMCLANG\Bin\..\include\stdint.h \

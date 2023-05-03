@@ -91,7 +91,7 @@ void Shoot_classdef::Control()
 }
 
 
-
+int shoot_ready_time;
 void Shoot_classdef::Shoot_Sensor(GPIO_PinState io_pin)
 {
 	if(first == 0)//�?一次情况—先到了再�?�其他情�?
@@ -128,7 +128,12 @@ void Shoot_classdef::Shoot_Sensor(GPIO_PinState io_pin)
 			{
 				Shoot_TarAngle = stop_shoot-Param.Shoot_Hold;
 				AddAngle = 0;
-				Shoot_Place_Flag = 2;
+				shoot_ready_time++;
+				if(shoot_ready_time > 50)
+				{
+					shoot_ready_time = 0;
+					Shoot_Place_Flag = 2;
+				}
 			}
 		}
 
@@ -137,8 +142,7 @@ void Shoot_classdef::Shoot_Sensor(GPIO_PinState io_pin)
 		{
 			shoot_time++;
 			//消抖
-			if((io_pin == GPIO_PIN_SET &&\
-			Shoot_Motor.get_totalencoder()<(stop_shoot-Param.Shoot_Circle/2)) ||\
+			if(io_pin == GPIO_PIN_SET  ||\
 			Shoot_Motor.get_totalencoder()<(stop_shoot-Param.Shoot_Circle-500))
 			{
 				stop_time++;

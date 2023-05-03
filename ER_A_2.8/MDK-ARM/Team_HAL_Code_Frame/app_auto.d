@@ -618,7 +618,7 @@ team_hal_code_frame/app_auto.o: ..\CustomCode\Apps\Apps.cpp\APP_Auto.cpp \
   ..\Drivers\CMSIS\DSP\Include\dsp\quaternion_math_functions.h \
   ..\CustomCode\Algorithm\Algorithm.h\ALGO_Kalman.h \
   ..\CustomCode\Devices\Devices.h\DEV_Posture.h \
-  ..\CustomCode\Apps\Apps.h\DEV_Analog.h \
+  ..\CustomCode\Devices\Devices.h\DEV_Analog.h \
   ..\CustomCode\Unify\Universe.h\System_DataPool.h \
   C:\Users\chenzijian\Pad\App\keil5\ARM\ARMCLANG\Bin\..\include\libcxx\stdbool.h \
   C:\Users\chenzijian\Pad\App\keil5\ARM\ARMCLANG\Bin\..\include\stdbool.h \
@@ -638,7 +638,7 @@ team_hal_code_frame/app_auto.o: ..\CustomCode\Apps\Apps.cpp\APP_Auto.cpp \
   ..\Middlewares\Third_Party\FreeRTOS\Source\include\event_groups.h \
   ..\Inc\usart.h ..\Inc\main.h ..\CustomCode\Unify\Wolf_Infantry.h \
   ..\CustomCode\Apps\Apps.h\APP_DR16.h \
-  ..\CustomCode\Devices\Devices.h\APP_Devices.h \
+  ..\CustomCode\Apps\Apps.h\APP_Devices.h \
   ..\CustomCode\Apps\Apps.h\APP_Chassis.h \
   ..\CustomCode\Devices\Devices.h\DEV_BrtEncoder.h \
   ..\CustomCode\Devices\Devices.h\DEV_Bldc.h \

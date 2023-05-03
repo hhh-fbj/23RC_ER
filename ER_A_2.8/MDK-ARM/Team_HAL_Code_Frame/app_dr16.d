@@ -635,14 +635,14 @@ team_hal_code_frame/app_dr16.o: ..\CustomCode\Apps\Apps.cpp\APP_DR16.cpp \
   ..\Middlewares\Third_Party\FreeRTOS\Source\CMSIS_RTOS\cmsis_os.h \
   ..\Middlewares\Third_Party\FreeRTOS\Source\include\event_groups.h \
   ..\Inc\usart.h ..\Inc\main.h ..\CustomCode\Unify\Wolf_Infantry.h \
-  ..\CustomCode\Devices\Devices.h\APP_Devices.h \
+  ..\CustomCode\Apps\Apps.h\APP_Devices.h \
   ..\CustomCode\Apps\Apps.h\APP_Chassis.h \
   ..\CustomCode\Devices\Devices.h\DEV_BrtEncoder.h \
   ..\CustomCode\Devices\Devices.h\DEV_Bldc.h \
   ..\CustomCode\Devices\Devices.h\DEV_MX106.h \
   ..\CustomCode\Apps\Apps.h\APP_Auto.h \
   ..\CustomCode\Devices\Devices.h\DEV_Posture.h \
-  ..\CustomCode\Apps\Apps.h\DEV_Analog.h \
+  ..\CustomCode\Devices\Devices.h\DEV_Analog.h \
   ..\CustomCode\Devices\Devices.h\DEV_AIMU.h \
   ..\CustomCode\Devices\Devices.h\DEV_CIMU.h \
   ..\CustomCode\Devices\Devices.h\DEV_Buzzer.h \

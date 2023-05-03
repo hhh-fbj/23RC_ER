@@ -125,7 +125,9 @@ void CTRL_DR16_classdef::LeverMode_Update(void)
         case Lever_DOWN: // --- 左下 ----------------------------------------------
         {
             Posture_ResTime++;
-            if(Auto.Posture_ResFlag<3 && DevicesMonitor.Get_State(CHAS_POSTURE_MONITOR) && Posture_ResTime>20)
+            if(Auto.Posture_ResFlag<5 &&\
+						DevicesMonitor.Get_State(CHAS_POSTURE_MONITOR)==On_line &&\
+						Posture_ResTime>30)
             {
                 Posture_ResTime=0;
                 Auto.Posture_ResFlag++;

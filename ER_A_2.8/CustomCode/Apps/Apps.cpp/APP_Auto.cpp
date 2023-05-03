@@ -510,8 +510,9 @@ void Auto_classdef::Left_PickIdea(void)
 			}
 			else if(WallFlag)
 			{
-				if(Analog.LaserRanging[9]<35000 && Analog.LaserRanging[9]>30000 &&\
-				Analog.LaserRanging[8]<35000 && Analog.LaserRanging[8]>30000)
+				//右后先测作判定更优
+				if(Analog.LaserRanging[8]<35000 && Analog.LaserRanging[8]>30000 &&\
+				Analog.LaserRanging[9]<35000 && Analog.LaserRanging[9]>30000)
 				{
 						Chassis.Laser_PID[0].Target = 33505+33505;
 						Chassis.Laser_PID[0].Current = Analog.LaserRanging[9]+Analog.LaserRanging[8];

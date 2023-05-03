@@ -622,7 +622,7 @@ team_hal_code_frame/app_chassis.o: \
   ..\CustomCode\Devices\Devices.h\DEV_BrtEncoder.h \
   ..\CustomCode\Devices\Devices.h\DEV_Bldc.h \
   ..\CustomCode\Devices\Devices.h\DEV_MX106.h \
-  ..\CustomCode\Devices\Devices.h\APP_Devices.h \
+  ..\CustomCode\Apps\Apps.h\APP_Devices.h \
   ..\CustomCode\Devices\Devices.h\DEV_AIMU.h \
   ..\CustomCode\Unify\Universe.h\System_DataPool.h \
   C:\Users\chenzijian\Pad\App\keil5\ARM\ARMCLANG\Bin\..\include\libcxx\stdbool.h \
@@ -644,7 +644,7 @@ team_hal_code_frame/app_chassis.o: \
   ..\Inc\usart.h ..\Inc\main.h ..\CustomCode\Unify\Wolf_Infantry.h \
   ..\CustomCode\Apps\Apps.h\APP_Auto.h \
   ..\CustomCode\Devices\Devices.h\DEV_Posture.h \
-  ..\CustomCode\Apps\Apps.h\DEV_Analog.h \
+  ..\CustomCode\Devices\Devices.h\DEV_Analog.h \
   ..\CustomCode\Devices\Devices.h\DEV_CIMU.h \
   ..\CustomCode\Devices\Devices.h\DEV_Buzzer.h \
   ..\CustomCode\Devices\Devices.h\DEV_UpComputer.h \

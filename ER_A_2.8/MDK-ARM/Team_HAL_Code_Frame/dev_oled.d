@@ -639,14 +639,14 @@ team_hal_code_frame/dev_oled.o: \
   ..\CustomCode\Algorithm\Algorithm.h\ALGO_Kalman.h ..\Inc\usart.h \
   ..\CustomCode\Unify\Wolf_Infantry.h \
   ..\CustomCode\Apps\Apps.h\APP_DR16.h \
-  ..\CustomCode\Devices\Devices.h\APP_Devices.h \
+  ..\CustomCode\Apps\Apps.h\APP_Devices.h \
   ..\CustomCode\Apps\Apps.h\APP_Chassis.h \
   ..\CustomCode\Devices\Devices.h\DEV_BrtEncoder.h \
   ..\CustomCode\Devices\Devices.h\DEV_Bldc.h \
   ..\CustomCode\Devices\Devices.h\DEV_MX106.h \
   ..\CustomCode\Apps\Apps.h\APP_Auto.h \
   ..\CustomCode\Devices\Devices.h\DEV_Posture.h \
-  ..\CustomCode\Apps\Apps.h\DEV_Analog.h \
+  ..\CustomCode\Devices\Devices.h\DEV_Analog.h \
   ..\CustomCode\Devices\Devices.h\DEV_AIMU.h \
   ..\CustomCode\Devices\Devices.h\DEV_CIMU.h \
   ..\CustomCode\Devices\Devices.h\DEV_Buzzer.h \

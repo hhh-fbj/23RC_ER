@@ -175,7 +175,7 @@ team_hal_code_frame/dev_mx106.o: \
   ..\Drivers\CMSIS\DSP\Include\dsp\transform_functions.h \
   ..\Drivers\CMSIS\DSP\Include\dsp\filtering_functions.h \
   ..\Drivers\CMSIS\DSP\Include\dsp\quaternion_math_functions.h \
-  ..\CustomCode\Devices\Devices.h\APP_Devices.h \
+  ..\CustomCode\Apps\Apps.h\APP_Devices.h \
   ..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal.h \
   ..\Inc\stm32f4xx_hal_conf.h \
   ..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_rcc.h \
@@ -644,7 +644,7 @@ team_hal_code_frame/dev_mx106.o: \
   ..\CustomCode\Devices\Devices.h\DEV_Bldc.h \
   ..\CustomCode\Apps\Apps.h\APP_Auto.h \
   ..\CustomCode\Devices\Devices.h\DEV_Posture.h \
-  ..\CustomCode\Apps\Apps.h\DEV_Analog.h \
+  ..\CustomCode\Devices\Devices.h\DEV_Analog.h \
   ..\CustomCode\Devices\Devices.h\DEV_AIMU.h \
   ..\CustomCode\Devices\Devices.h\DEV_CIMU.h \
   ..\CustomCode\Devices\Devices.h\DEV_Buzzer.h \
