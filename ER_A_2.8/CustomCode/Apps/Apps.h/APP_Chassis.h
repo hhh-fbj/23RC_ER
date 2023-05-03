@@ -18,32 +18,32 @@
 #define IMU_RecvCan_SIZE 8
 
 
-//ËÄÂÖ
-//ÓÒÉÏ ÄæÊ±ÕëĞı×ª
-/* --- µ×ÅÌÇı¶¯µç»ú ID --------------------------------------------------------*/
+//å››è½®
+//å³ä¸Š é€†æ—¶é’ˆæ—‹è½¬
+/* --- åº•ç›˜é©±åŠ¨ç”µæœº ID --------------------------------------------------------*/
 enum CHAS_DrvMotorID_e
 {
     RF_Drv = 0,LF_Drv = 1,LB_Drv = 2,RB_Drv = 3
 };
-/* --- µ×ÅÌ×ªÏòµç»ú ID --------------------------------------------------------*/
+/* --- åº•ç›˜è½¬å‘ç”µæœº ID --------------------------------------------------------*/
 enum CHAS_RudMororID_e
 {
     RF_Rud = 0,LF_Rud = 1,LB_Rud = 2,RB_Rud = 3
 };
 
-/* --- µ×ÅÌ¿ØÖÆÄ£Ê½ ------------------------------------------------------------*/
+/* --- åº•ç›˜æ§åˆ¶æ¨¡å¼ ------------------------------------------------------------*/
 enum CHAS_CtrlMode_e
 {
-	CHAS_DisableMode = 0,	    // Ê§ÄÜÄ£Ê½
-    CHAS_LockMode,		    // Ëø×¡µ×ÅÌ
-	CHAS_MoveMode,          // µ×ÅÌÔË¶¯Ä£Ê½
+	CHAS_DisableMode = 0,	    // å¤±èƒ½æ¨¡å¼
+    CHAS_LockMode,		    // é”ä½åº•ç›˜
+	CHAS_MoveMode,          // åº•ç›˜è¿åŠ¨æ¨¡å¼
 	CHAS_ControlMode,
     CHAS_IMUMode,
     CHAS_LaserMode,
     CHAS_AutoMode, 
     CHAS_TransiMode,
     CHAS_PostureMode,       //
-	CHAS_InitMode,          // ³õÊ¼»¯½×¶Î
+	CHAS_InitMode,          // åˆå§‹åŒ–é˜¶æ®µ
 };
 
 
@@ -66,9 +66,9 @@ typedef union
 	uint8_t data[8];
 }SendSpeed_u;
 
-/* --- ×ªÏòÂÖµç»úÏà¹Ø²ÎÊı -------------------------------------------------------*/
+/* --- è½¬å‘è½®ç”µæœºç›¸å…³å‚æ•° -------------------------------------------------------*/
 
-/* ÂË²¨ºóµÄÄ¿±êÖµ */
+/* æ»¤æ³¢åçš„ç›®æ ‡å€¼ */
 typedef struct 
 {
     float Vx;
@@ -83,19 +83,17 @@ typedef struct
 class Chassis_classdef : public CTRL_DR16_classdef
 {
 private:
-    static float const Ltheta,Rtheta;//ÈıÂÖºó
-    static float const Ftheta;//ËÄÂÖ
-    float FRONT[4], XYZ_Angle[4], XYZ_PreTar_Angle[4];/*<! ¶æÏòÂÖ */
-    float falsh[4];//Çı¶¯ÂÖ·½Ïò
+    static float const Ltheta,Rtheta;//ä¸‰è½®å
+    static float const Ftheta;//å››è½®
+    float FRONT[4], XYZ_Angle[4], XYZ_PreTar_Angle[4];/*<! èˆµå‘è½® */
+    float falsh[4];//é©±åŠ¨è½®æ–¹å‘
     float Three_Speed[4];//32767
-    float Radius = 1.0f;  // Ô²ĞÄ¾à
+    float Radius = 1.0f;  // åœ†å¿ƒè·
     SendSpeed_u SS1,SS2;
-    
-    uint8_t two_count;
-    int clamp_time = 0;
-    int clamp_init = 0;
-    float Pos_Target[3];
+    float AF_WtoXY,AF_WtoXY_Stand;//æ ¹æ®yawè½´é™xyè½´é€Ÿåº¦å‚æ•°
 
+    bool two_count;
+    float Pos_Target[3];
 
     float Ramp_Vy, Ramp_Vx, Ramp_Vw;
     float ACCCCC_VAL = 20.0f, DECCCCC_VAL = 40.0f;
@@ -111,9 +109,9 @@ private:
     void Sensor(void);
     uint8_t ProblemDetection(void);
     void ChassisTar_Update(void);
-    void Process(float Vx, float Vy, float Vw);             /*<! µ×ÅÌÊı¾İ´¦Àí */
+    void Process(float Vx, float Vy, float Vw);             /*<! åº•ç›˜æ•°æ®å¤„ç† */
     void Send_Data();
-    void Drv_Slow(float *rec , float target , float slow_Inc, float Accval, float DecVal); /*<! µ×ÅÌËÙ¶ÈĞ±ÆÂ */
+    void Drv_Slow(float *rec , float target , float slow_Inc, float Accval, float DecVal); /*<! åº•ç›˜é€Ÿåº¦æ–œå¡ */
     void Rudder_Solve(float Vx, float Vy, float Vw, float *cal_speed);
     void RUD_PIDCalc(uint8_t motor);
     void RudAngle_Calc(float Vx, float Vy, float Vw);
@@ -123,26 +121,25 @@ private:
 public:
     Chassis_classdef(); 
     
-    float Cal_Speed[4];//ËÙ¶È
+    float Cal_Speed[4];//é€Ÿåº¦
     GPIO_PinState EdgeDete[6];
-    uint8_t over_init;//µ×ÅÌ³õÊ¼»¯±ê¼Ç
+    uint8_t over_init;//åº•ç›˜åˆå§‹åŒ–æ ‡è®°
     uint8_t NO_PostureMode = 0;
-    float try_bl;
     GPIO_PinState Ready_Flag = GPIO_PIN_RESET;
     GPIO_PinState Last_Ready_Flag = GPIO_PIN_RESET;
     
     PositionPID POS_PID[3][2];
     PositionPID Laser_PID[2];
 		
-    //µç»úÇı¶¯+±àÂëÆ÷
-    Motor_M2006 RUD_Motor[4] = {Motor_M2006(1), Motor_M2006(2), Motor_M2006(3), Motor_M2006(4)}; /*<! ×ªÏòÂÖ 2006µç»ú */
-    Encider_Brt RUD_Encider[4] = {Encider_Brt(1), Encider_Brt(2), Encider_Brt(3), Encider_Brt(4)}; /*<! ×ªÏòÂÖ¾ø¶ÔÊ½±àÂëÆ÷ */	
+    //ç”µæœºé©±åŠ¨+ç¼–ç å™¨
+    Motor_M2006 RUD_Motor[4] = {Motor_M2006(1), Motor_M2006(2), Motor_M2006(3), Motor_M2006(4)}; /*<! ×ªï¿½ï¿½ï¿½ï¿½ 2006ï¿½ï¿½ï¿½ */
+    Encider_Brt RUD_Encider[4] = {Encider_Brt(1), Encider_Brt(2), Encider_Brt(3), Encider_Brt(4)}; /*<! ×ªï¿½ï¿½ï¿½Ö¾ï¿½ï¿½ï¿½Ê½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ */	
 
     IMURecvCanMsg_u RecvCan_Msg; 
 
-    IIRLowPassFilter Vx_LPF = IIRLowPassFilter(1.0f); /*<! µÍÍ¨ÂË²¨ */
-    IIRLowPassFilter Vy_LPF = IIRLowPassFilter(1.0f); /*<! µÍÍ¨ÂË²¨ */
-    IIRLowPassFilter Vw_LPF = IIRLowPassFilter(1.0f); /*<! µÍÍ¨ÂË²¨ */
+    IIRLowPassFilter Vx_LPF = IIRLowPassFilter(1.0f); /*<! ä½é€šæ»¤æ³¢ */
+    IIRLowPassFilter Vy_LPF = IIRLowPassFilter(1.0f); /*<! ä½é€šæ»¤æ³¢ */
+    IIRLowPassFilter Vw_LPF = IIRLowPassFilter(1.0f); /*<! ä½é€šæ»¤æ³¢ */
 
     void Control();
 

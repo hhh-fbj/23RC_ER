@@ -1,12 +1,23 @@
-//¶«´óÈ«³¡¶¨Î»
+//ä¸œå¤§å…¨åœºå®šä½
 #include "DEV_Posture.h"
 #include "System_DataPool.h"
 
-/**
+#define SPEED_LIMIT 4000 //å•ä½ï¼šrpm
+#define WHEEL_R 106 //å•ä½ï¼šmm
+#define DATA_RATE 200 //å•ä½ï¼šå¸§/s
+
+
+Posture_Classdef::Posture_Classdef()
+{
+	Vary_Limit = SPEED_LIMIT/60 * WHEEL_R / DATA_RATE;
+	// VaryAngle_Limit = SPEED_LIMIT/60 * WHEEL_R / DATA_RATE
+}
+
+/**  
 * @Data    
-* @brief	È«³¡¶¨Î»Êý¾Ý½âÂë
-* @param   PostureBuf : usart6´®¿ÚËùÊ¹ÓÃDMA½ÓÊÜµ½µÄÊý¾Ý
-						AV_Data £º ActVal_Data_t
+* @brief	å…¨åœºå®šä½æ•°æ®è§£ç 
+* @param   PostureBuf : usart6ä¸²å£æ‰€ä½¿ç”¨DMAæŽ¥å—åˆ°çš„æ•°æ®
+						AV_Data ï¼š ActVal_Data_t
 * @retval  void
 */
 void Posture_Classdef::getMessage(uint8_t *PostureBuf)
@@ -14,7 +25,7 @@ void Posture_Classdef::getMessage(uint8_t *PostureBuf)
 	static float TF_data[2];
 	if(Recv_Msg.Pack.HeadFrame[0]==0x0D && Recv_Msg.Pack.HeadFrame[1]==0x0A &&\
 		Recv_Msg.Pack.TailFrame[0]==0x0A && Recv_Msg.Pack.TailFrame[1]==0x0D)
-	{   //½«PostureBuf[2]Íùºó24×Ö½Ú¸´ÖÆ¸ødata
+	{   //å°†PostureBuf[2]å¾€åŽ24å­—èŠ‚å¤åˆ¶ç»™data
 		RAM_Angle[Posture_Z] = Recv_Msg.Pack.ActVal[0];
 		RAM_Angle[Posture_X] = Recv_Msg.Pack.ActVal[1];
 		RAM_Angle[Posture_Y] = Recv_Msg.Pack.ActVal[2];
@@ -24,7 +35,7 @@ void Posture_Classdef::getMessage(uint8_t *PostureBuf)
 		DevicesMonitor.Update(Frame_CHAS_POSTURE);
 	}
 	else return;
-	//¹ýÁã´¦Àí
+	//è¿‡é›¶å¤„ç†
 	if(RAM_Angle[Posture_Z] - Z_LastAngle > 90.0f)
 	{
 		Z_count--;
@@ -35,31 +46,47 @@ void Posture_Classdef::getMessage(uint8_t *PostureBuf)
 	}
 	Z_LastAngle = -RAM_Angle[Posture_Z];
 	
-	//×îÖÕÊý¾ÝÉÏ´Î
+	//æœ€ç»ˆæ•°æ®ä¸Šæ¬¡
 	Last_POS[0] = Final_Value[Posture_X];
 	Last_POS[1] = Final_Value[Posture_Y];
 	Last_POS[2] = Final_ANGLE;
-	//×îÖÕÊý¾Ý
+	//æœ€ç»ˆæ•°æ®
 	Final_ANGLE = -(RAM_Angle[Posture_Z] + (360.0 * Z_count));
 	Final_Value[Posture_X] = - RAM_Value[Posture_X];
 	Final_Value[Posture_Y] = -RAM_Value[Posture_Y];
 	
-	// Êý¾Ý±ä»¯¼ì²â
+	// æ•°æ®å˜åŒ–æ£€æµ‹
+	if(abs(Final_Value[Posture_X] - Last_POS[0]) > Vary_Limit)
+	{
+		error = true;
+	}
+	else if(abs(Final_Value[Posture_Y] - Last_POS[1]) > Vary_Limit)
+	{
+		error = true;
+	}
+	else
+	{
+		error = false;
+	}
+	// if(Final_ANGLE - Last_POS[2] > Vary_Limit)
+	// {
+		
+	// }
 
-	//tf×ø±êÏµ±ä»»
+	//tfåæ ‡ç³»å˜æ¢
 	TF_ANGLE = Final_ANGLE;
 //	AV_Data.TF_DATA.X_value = cos(radians(AV_Data.RAM_DATA.ZAngle)) 	* AV_Data.Final_data.X_value	\
 //														-sin(radians(AV_Data.RAM_DATA.ZAngle)) 	* AV_Data.Final_data.Y_value;
 //	AV_Data.TF_DATA.Y_value = sin(radians(AV_Data.RAM_DATA.ZAngle)) 	* AV_Data.Final_data.X_value	\
 //														+cos(radians(AV_Data.RAM_DATA.ZAngle)) 	* AV_Data.Final_data.Y_value;
 	
-	//TF×ø±ê±ä»»
+	//TFåæ ‡å˜æ¢
 	POS_TF_Change(Final_Value[Posture_X], Final_Value[Posture_Y], RAM_Angle[Posture_Z],&TF_Value[Posture_X], &TF_Value[Posture_Y]);
 	
 }
 
 /**
-  * @brief   È«³¡¶¨Î»¸´Î»
+  * @brief   å…¨åœºå®šä½å¤ä½
   * @param   void
   * @retval  void
  */
@@ -77,7 +104,7 @@ void Posture_Classdef::Devices_Posture_Reset(void)
 
 
 
-//Ô­×ø±êÏµ
+//åŽŸåæ ‡ç³»
 // #define TF_POS
 float Posture_Classdef::POS_X(void)
 {
@@ -100,7 +127,7 @@ float Posture_Classdef::POS_W(void)
 	// return RAM_Angle[Posture_W];
 	return Final_ANGLE;
 }
-//tf×ø±êÏµ±ä»»
+//tfåæ ‡ç³»å˜æ¢
 float Posture_Classdef::POS_TF_X(void)
 {
 	return TF_Value[Posture_X];
@@ -148,7 +175,7 @@ void Posture_Classdef::TF_Change(float X,float Y,float angle,float *tf_X,float *
 
 }
 
-//×ø±êÏµ±ä»»
+//åæ ‡ç³»å˜æ¢
 void Posture_Classdef::POS_TF_Change(float RAM_X,float RAM_Y,float RAM_ANGLE,float *TF_X,float *TF_Y)
 {
 	if(RAM_ANGLE >= 0.0f && RAM_ANGLE < 90.0f)

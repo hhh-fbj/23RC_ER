@@ -5,8 +5,9 @@
 
 void Auto_classdef::Process(void)
 {
-	if(DevicesMonitor.Get_State(CHAS_POSTURE_MONITOR) == Off_line &&\
-	DevicesMonitor.Get_State(CHAS_ANALOG_MONITOR) == Off_line)
+	if(DevicesMonitor.Get_State(CHAS_POSTURE_MONITOR) == Off_line ||\
+	DevicesMonitor.Get_State(CHAS_ANALOG_MONITOR) == Off_line ||\
+	Posture.error)
 	{
 		Chassis.NO_PostureMode = 99;
 		return;
@@ -39,7 +40,7 @@ void Auto_classdef::Text_Step(void)
 {
 	switch(text_step)
 	{
-		//È¡»·Ç°·½
+		//È¡ï¿½ï¿½Ç°ï¿½ï¿½
 		case 0:
 			if(startFlag == 1 && overFlag == 0)
 			{
@@ -63,16 +64,16 @@ void Auto_classdef::Text_Step(void)
 				Chassis.POS_PID[Posture_Y][PID_Outer].Target = Posture.POS_Y();
 				Chassis.POS_PID[Posture_W][PID_Outer].Target = Posture.POS_W();
 			}
-			HAL_GPIO_WritePin(GPIOI, GPIO_PIN_7, GPIO_PIN_RESET);//Ä¬ÈÏ
+			HAL_GPIO_WritePin(GPIOI, GPIO_PIN_7, GPIO_PIN_RESET);//Ä¬ï¿½ï¿½
 		break;
 
-		//ºóÍËÈ¡»·
+		//ï¿½ï¿½ï¿½ï¿½È¡ï¿½ï¿½
 		case 1:
 			Left_PickIdea();
-			HAL_GPIO_WritePin(GPIOI, GPIO_PIN_7, GPIO_PIN_RESET);//Ä¬ÈÏ
+			HAL_GPIO_WritePin(GPIOI, GPIO_PIN_7, GPIO_PIN_RESET);//Ä¬ï¿½ï¿½
 		break;
 		
-		//È¡»·
+		//È¡ï¿½ï¿½
 		case 2:
 			startFlag = 0;
 			Chassis.NO_PostureMode = 2;
@@ -83,7 +84,7 @@ void Auto_classdef::Text_Step(void)
 			}
 		break;
 		
-		//¶¨µãÇ°
+		//ï¿½ï¿½ï¿½ï¿½Ç°
 		case 3:
 			if(startFlag == 1 && overFlag == 0)
 			{
@@ -107,12 +108,12 @@ void Auto_classdef::Text_Step(void)
 			}
 		break;
 		
-		//Ç°¶¨Éä»·
+		//Ç°ï¿½ï¿½ï¿½ä»·
 		case 4:
 			Front_PlaceIdea();
 		break;
 		
-		//Éä»·1
+		//ï¿½ä»·1
 		case 5:
 			startFlag = 0;
 			Chassis.NO_PostureMode = 2;
@@ -224,48 +225,48 @@ void Auto_classdef::Game_Step(void)
 
         case AUTO_TakeRing_PointOne:
 			Point_Run(Loop_Point_One, AUTO_TakeRing_PointTwo);
-		break;//ĞèÒª¹ı¶ÉÇø
+		break;//ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 					
         case AUTO_TakeRing_PointTwo:
 			MicroWall(-1, AUTO_TakeRing);
 		break;
 
         case AUTO_TakeRing:
-			//È¡»·
+			//È¡ï¿½ï¿½
 		break;
 
         case AUTO_ShootRing_PointOne:
 			Point_Run(Batting_Point_One, AUTO_Aim_One);
-		break;//ĞèÒª¹ı¶ÉÇø
+		break;//ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
         case AUTO_Aim_One:
 			MicroWall(0, AUTO_Shoot_One);
 		break;
         case AUTO_Revise_One:
-			//ĞŞÕı£¨Î»ÖÃ»òÀ­Á¦£©
+			//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î»ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		break;
         case AUTO_Shoot_One:
-			//Ãé×¼+·¢Éä
+			//ï¿½ï¿½×¼+ï¿½ï¿½ï¿½ï¿½
 			Chassis.NO_PostureMode = 2;
 		break;
         case AUTO_ShootRing_PointTwo:
 			Point_Run(Batting_Point_Two, AUTO_Aim_Two);
-		break;//ĞèÒª¹ı¶ÉÇø
+		break;//ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         case AUTO_Aim_Two:
 			MicroWall(0, AUTO_Shoot_Two);
 		break;
         case AUTO_Revise_Two:
-			//ĞŞÕı£¨Î»ÖÃ»òÀ­Á¦£©
+			//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î»ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		break;
 
         case AUTO_Shoot_Two:
-			//·¢Éä
+			//ï¿½ï¿½ï¿½ï¿½
 			Chassis.NO_PostureMode = 2;
 		break;
 
         case AUTO_ShootRing_PointThree:
 			Point_Run(Batting_Point_Three, AUTO_Aim_Three);
-		break;//ĞèÒª¹ı¶ÉÇø
+		break;//ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
         case AUTO_Aim_Three:
 			MicroWall(0, AUTO_Shoot_Three);
@@ -273,13 +274,13 @@ void Auto_classdef::Game_Step(void)
         case AUTO_Revise_Three:
 		break;
         case AUTO_Shoot_Three:
-			//·¢Éä
+			//ï¿½ï¿½ï¿½ï¿½
 			Chassis.NO_PostureMode = 2;
 		break;
 		
         case AUTO_ShootRing_PointFour:
 			Point_Run(Batting_Point_Four, AUTO_Aim_Four);
-		break;//ĞèÒª¹ı¶ÉÇø
+		break;//ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
         case AUTO_Aim_Four:
 			MicroWall(0, AUTO_Shoot_Three);
@@ -287,13 +288,13 @@ void Auto_classdef::Game_Step(void)
         case AUTO_Revise_Four:
 		break;
         case AUTO_Shoot_Four:
-			//·¢Éä
+			//ï¿½ï¿½ï¿½ï¿½
 			Chassis.NO_PostureMode = 2;
 		break;
 
         case AUTO_ShootRing_PointFive:
 			Point_Run(Batting_Point_Five, AUTO_Aim_Five);
-		break;//ĞèÒª¹ı¶ÉÇø
+		break;//ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
         case AUTO_Aim_Five:
 			MicroWall(0, AUTO_Shoot_Five);
@@ -303,7 +304,7 @@ void Auto_classdef::Game_Step(void)
 		break;
 
         case AUTO_Shoot_Five:
-			//·¢Éä
+			//ï¿½ï¿½ï¿½ï¿½
 			Chassis.NO_PostureMode = 2;
         break;
 				
@@ -381,11 +382,11 @@ void Auto_classdef::MicroWall(int dir,AUTO_Step_e AUTO_step)
 					else{WallFlag = 1;}
 				}
 			}
-			else if(Chassis.EdgeDete[dir*(-2)+2] == GPIO_PIN_SET)//×óÉÏ
+			else if(Chassis.EdgeDete[dir*(-2)+2] == GPIO_PIN_SET)//ï¿½ï¿½ï¿½ï¿½
 			{
 				Vx = dir*440;Vy = 0;Vw = (-1)^dir*220;
 			}
-			else if(Chassis.EdgeDete[dir*(-2)+3] == GPIO_PIN_SET)//×óÏÂ
+			else if(Chassis.EdgeDete[dir*(-2)+3] == GPIO_PIN_SET)//ï¿½ï¿½ï¿½ï¿½
 			{
 				Vx = dir*440;Vy = 0;Vw = 1^dir*220;
 			}
@@ -478,12 +479,12 @@ uint8_t Auto_classdef::Detection_Point(int *spots)
 
 void Auto_classdef::Left_PickIdea(void)
 {
-	//µã¡ª¡ªÇ½¸½¼ş
-	//ÌùÇ½
-	//ºóÍË¡ª¡ª¼¤¹â²â¾à
-	//Í£¡ª¡ªÈ¡»·
+	//ç‚¹â€”â€”å¢™é™„ä»¶
+	//è´´å¢™
+	//åé€€â€”â€”æ¿€å…‰æµ‹è·
+	//åœâ€”â€”å–ç¯
 	
-	//×ó×ß
+	//å·¦èµ°
 	if(startFlag == 1 && overFlag == 0)
 	{
 		Chassis.NO_PostureMode = 3;
@@ -500,17 +501,17 @@ void Auto_classdef::Left_PickIdea(void)
 				else if(Vx>20){Vx -= 10;}
 				else{WallFlag = 1;}
 			}
-			else if(Chassis.EdgeDete[4] == GPIO_PIN_SET)//×óÉÏ
+			else if(Chassis.EdgeDete[4] == GPIO_PIN_SET)//ï¿½ï¿½ï¿½ï¿½
 			{
 				Vx = -1100;Vy = 0;Vw = -660;
 			}
-			else if(Chassis.EdgeDete[5] == GPIO_PIN_SET)//×óÏÂ
+			else if(Chassis.EdgeDete[5] == GPIO_PIN_SET)//ï¿½ï¿½ï¿½ï¿½
 			{
 				Vx = -1100;Vy = 0;Vw = 660;
 			}
 			else if(WallFlag)
 			{
-				//ÓÒºóÏÈ²â×÷ÅĞ¶¨¸üÓÅ
+				//ä»¥å³ä¸ºå‡†ï¼Œå³æ¿€å…‰ç¨³ä¸€å®š
 				if(Analog.LaserRanging[8]<35000 && Analog.LaserRanging[8]>30000 &&\
 				Analog.LaserRanging[9]<35000 && Analog.LaserRanging[9]>30000)
 				{
@@ -519,7 +520,6 @@ void Auto_classdef::Left_PickIdea(void)
 						Vy = Chassis.Laser_PID[0].Cal();
 						Vx = -33;
 						Vw = 0;
-						Chassis.try_bl = 1.5;
 						// Vy = 0;
 						// L_L = Analog.LaserRanging[9];
 						// R_L = Analog.LaserRanging[8];
@@ -528,7 +528,6 @@ void Auto_classdef::Left_PickIdea(void)
 				else
 				{
 					Vx = -33;Vy = -660;Vw=0;
-					Chassis.try_bl = 1.5;
 				}
 				
 				if(abs(33505+33505-(Analog.LaserRanging[9]+Analog.LaserRanging[8])) < 120)
@@ -541,7 +540,7 @@ void Auto_classdef::Left_PickIdea(void)
 				}
 				// if(Vy == 0)
 				if(LR_time > 5|| (LR_out_time > 800 && abs(33505+33505-(Analog.LaserRanging[9]+Analog.LaserRanging[8]))<500))
-				{LR_out_time=0;Chassis.try_bl=0;overFlag = 0;startFlag = 1;\
+				{LR_out_time=0;overFlag = 0;startFlag = 1;\
 				Vx=Vy=Vw=0;WallFlag=WallTime=0;\
 				text_step = 2;}
 			}
@@ -555,11 +554,11 @@ void Auto_classdef::Left_PickIdea(void)
 
 void Auto_classdef::Front_PlaceIdea(void)
 {
-	//µã¡ª¡ªÇ½¸½¼ş
-	//ÌùÇ½
-	//½»¸øÔÆÌ¨
+	//ç‚¹â€”â€”å¢™é™„ä»¶
+	//è´´å¢™
+	//äº¤ç»™äº‘å°
 	
-	//Ç°×ß
+	//å‰èµ°
 	if(startFlag == 1 && overFlag == 0)
 	{
 		Chassis.NO_PostureMode = 3;
@@ -576,11 +575,11 @@ void Auto_classdef::Front_PlaceIdea(void)
 				else if(Vy>10){Vy -= 1;}
 				else{WallFlag = 1;}
 			}
-			else if(Chassis.EdgeDete[2] == GPIO_PIN_SET)//×óÉÏ
+			else if(Chassis.EdgeDete[2] == GPIO_PIN_SET)//ï¿½ï¿½ï¿½ï¿½
 			{
 				Vx = 0;Vy = 0;Vw = -220;
 			}
-			else if(Chassis.EdgeDete[3] == GPIO_PIN_SET)//×óÏÂ
+			else if(Chassis.EdgeDete[3] == GPIO_PIN_SET)//ï¿½ï¿½ï¿½ï¿½
 			{
 				Vx = 0;Vy = 0;Vw = 220;
 			}
@@ -610,7 +609,7 @@ bool Auto_classdef::IO_RTX(int io_s,int is_t)
 	if(IO_S_time >= io_s)
 	{
 		IO_R_time++;
-		HAL_GPIO_WritePin(GPIOI, GPIO_PIN_7, GPIO_PIN_RESET);//·´×ª
+		HAL_GPIO_WritePin(GPIOI, GPIO_PIN_7, GPIO_PIN_RESET);//ï¿½ï¿½×ª
 		if(IO_R_time >= is_t)
 		{
 			IO_R_time = 0;
@@ -620,7 +619,7 @@ bool Auto_classdef::IO_RTX(int io_s,int is_t)
 	}
 	else
 	{
-		HAL_GPIO_WritePin(GPIOI, GPIO_PIN_7, GPIO_PIN_SET);//Õı×ª
+		HAL_GPIO_WritePin(GPIOI, GPIO_PIN_7, GPIO_PIN_SET);//ï¿½ï¿½×ª
 	}
 	
 	if(Chassis.Ready_Flag == GPIO_PIN_SET && Chassis.Last_Ready_Flag == GPIO_PIN_RESET && IO_S_time==0)

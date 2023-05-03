@@ -39,7 +39,7 @@ private:
     float TF_Value[3], TF_ANGLE;
     float Z_LastAngle;
     int32_t Z_count;  //圈数
-
+    float Vary_Limit;
     //原坐标系
 //    float POS_X(void);
 //    float POS_Y(void);
@@ -50,6 +50,8 @@ private:
     void POS_TF_Change(float RAM_X,float RAM_Y,float RAM_ANGLE,float *TF_X,float *TF_Y);
     void TF_Change(float X,float Y,float angle,float *tf_X,float *tf_Y);
 public: 
+    Posture_Classdef();
+    bool error;
     float Last_POS[3];
     PostureRecvMsg_u Recv_Msg;
     void getMessage(uint8_t *PostureBuf);

@@ -39,9 +39,12 @@ private:
 	struct{
 		float Stretch_Hold;//伸出：实际最远位置
 		float Stretch_Speed;//伸出：每次控制位置环目标的运动距离
+		float Stretch_Speed_Ramp;
 		float Lift_Max;//抬伸：软件限制最大范围
 		float Lift_Hold;//抬伸：取环前的抬伸位置
-		float Lift_Speed;//抬伸：每次控制位置环目标的运动距离
+		float Lift_Max_Speed;//抬伸：每次控制位置环目标的最大运动距离
+		float Lift_Min_Speed;//抬伸：每次控制位置环目标的最小运动距离
+		float Lift_Speed_Ramp;//抬伸：每次控制位置环目标的运动距离的叠加距离
 		float Lift_PickWaitTime;//抬伸：取环抬伸到底时等待的时间
 		float PickPlace_Max;//放环：软件限制最大范围
 		float PickPlace_Release;//放环：取环时与最高点的距离

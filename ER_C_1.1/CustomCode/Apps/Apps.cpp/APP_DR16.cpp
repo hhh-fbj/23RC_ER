@@ -202,7 +202,7 @@ void CTRL_DR16_classdef::LeverMode_Update(void)
         {
             //底盘
             // Gimbal.Mode = Gimbal_LockMode;
-            // Shoot.Shoot_Mode = Shoot_LockMode;//Shoot_AutoMode;
+            // Shoot.Shoot_Mode = Shoot_LockMode;
             // Shoot.Pull_Mode_Set(Pull_LockMode);
             // Clamp.setMode(Clamp_LockMode);
             switch((uint8_t)DR16.Get_S2_R())

@@ -3,7 +3,7 @@
 <title>Static Call Graph - [C_Gimbal\C_Gimbal.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image C_Gimbal\C_Gimbal.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 6190004: Last Updated: Wed May  3 22:12:59 2023
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 6190004: Last Updated: Thu May  4 02:46:38 2023
 <BR><P>
 <H3>Maximum Stack Usage =        344 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -588,10 +588,10 @@ Global Symbols
 <P><STRONG><a name="[140]"></a>__aeabi_memcpy</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, rt_memcpy_v6.o(.text))
 <BR><BR>[Called By]<UL><LI><a href="#[198]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;xQueueReceive
 <LI><a href="#[1a3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;xQueueGenericSendFromISR
-<LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_GLOBAL__sub_I_System_DataPool.cpp
 <LI><a href="#[19a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DR16_Classdef::DataCapture(DR16_DataPack_Typedef*)
 <LI><a href="#[1e7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;flash_read
 <LI><a href="#[13f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IMU_Cali
+<LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_GLOBAL__sub_I_System_DataPool.cpp
 </UL>
 
 <P><STRONG><a name="[b1]"></a>__rt_memcpy</STRONG> (Thumb, 138 bytes, Stack size 0 bytes, rt_memcpy_v6.o(.text), UNUSED)
@@ -1854,9 +1854,9 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[13c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_DMA_Start_IT
 </UL>
-<BR>[Called By]<UL><LI><a href="#[1c1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MX106_classdef::Position_Control(unsigned int)
+<BR>[Called By]<UL><LI><a href="#[1c2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MX106_classdef::Position_Control(unsigned int)
 <LI><a href="#[1be]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MX106_classdef::Torque(unsigned char)
-<LI><a href="#[1c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MX106_classdef::ReadPosition()
+<LI><a href="#[1c1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MX106_classdef::ReadPosition()
 <LI><a href="#[1a4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Vision_classdef::SendToPC(VisionSendMsg_u*)
 </UL>
 
@@ -2572,7 +2572,7 @@ Global Symbols
 </UL>
 <BR>[Called By]<UL><LI><a href="#[1bb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Clamp_classdef::Motor_PIDCalc()
 <LI><a href="#[1c7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Shoot_classdef::PullMotor_PIDCalc()
-<LI><a href="#[1c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Shoot_classdef::ShootSpe_Update()
+<LI><a href="#[1c5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Shoot_classdef::ShootSpe_Update()
 <LI><a href="#[194]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Shoot_classdef::Control()
 <LI><a href="#[193]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Gimbal_classdef::Control()
 </UL>
@@ -2667,7 +2667,7 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[1a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PositionPID::Cal()
 </UL>
 
-<P><STRONG><a name="[1c2]"></a>Clamp_classdef::AngleLimit()</STRONG> (Thumb, 246 bytes, Stack size 0 bytes, app_clamp.o(.text._ZN14Clamp_classdef10AngleLimitEv))
+<P><STRONG><a name="[1c3]"></a>Clamp_classdef::AngleLimit()</STRONG> (Thumb, 246 bytes, Stack size 0 bytes, app_clamp.o(.text._ZN14Clamp_classdef10AngleLimitEv))
 <BR><BR>[Called By]<UL><LI><a href="#[195]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Clamp_classdef::Control()
 </UL>
 
@@ -2686,7 +2686,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[195]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Clamp_classdef::Control()
 </UL>
 
-<P><STRONG><a name="[1b8]"></a>Clamp_classdef::Place_Point()</STRONG> (Thumb, 804 bytes, Stack size 24 bytes, app_clamp.o(.text._ZN14Clamp_classdef11Place_PointEv))
+<P><STRONG><a name="[1b8]"></a>Clamp_classdef::Place_Point()</STRONG> (Thumb, 918 bytes, Stack size 24 bytes, app_clamp.o(.text._ZN14Clamp_classdef11Place_PointEv))
 <BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = Clamp_classdef::Place_Point() &rArr; Gimbal_classdef::TarPos_Move(int)
 </UL>
 <BR>[Calls]<UL><LI><a href="#[c8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
@@ -2716,7 +2716,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[195]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Clamp_classdef::Control()
 </UL>
 
-<P><STRONG><a name="[1b6]"></a>Clamp_classdef::Init()</STRONG> (Thumb, 480 bytes, Stack size 16 bytes, app_clamp.o(.text._ZN14Clamp_classdef4InitEv))
+<P><STRONG><a name="[1b6]"></a>Clamp_classdef::Init()</STRONG> (Thumb, 594 bytes, Stack size 16 bytes, app_clamp.o(.text._ZN14Clamp_classdef4InitEv))
 <BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = Clamp_classdef::Init() &rArr; Gimbal_classdef::TarPos_Move(int)
 </UL>
 <BR>[Calls]<UL><LI><a href="#[c8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
@@ -2726,7 +2726,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[1b1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Clamp_classdef::Tar_Update()
 </UL>
 
-<P><STRONG><a name="[1b7]"></a>Clamp_classdef::Pick()</STRONG> (Thumb, 800 bytes, Stack size 16 bytes, app_clamp.o(.text._ZN14Clamp_classdef4PickEv))
+<P><STRONG><a name="[1b7]"></a>Clamp_classdef::Pick()</STRONG> (Thumb, 924 bytes, Stack size 16 bytes, app_clamp.o(.text._ZN14Clamp_classdef4PickEv))
 <BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = Clamp_classdef::Pick() &rArr; Gimbal_classdef::TarPos_Move(int)
 </UL>
 <BR>[Calls]<UL><LI><a href="#[c8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
@@ -2736,11 +2736,12 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[1b1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Clamp_classdef::Tar_Update()
 </UL>
 
-<P><STRONG><a name="[1b9]"></a>Clamp_classdef::Place()</STRONG> (Thumb, 960 bytes, Stack size 40 bytes, app_clamp.o(.text._ZN14Clamp_classdef5PlaceEv))
+<P><STRONG><a name="[1b9]"></a>Clamp_classdef::Place()</STRONG> (Thumb, 1034 bytes, Stack size 40 bytes, app_clamp.o(.text._ZN14Clamp_classdef5PlaceEv))
 <BR><BR>[Stack]<UL><LI>Max Depth = 48<LI>Call Chain = Clamp_classdef::Place() &rArr; Gimbal_classdef::TarPos_Move(int)
 </UL>
 <BR>[Calls]<UL><LI><a href="#[c8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
-<LI><a href="#[1bf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Shoot_classdef::Pull_Move(int)
+<LI><a href="#[1bf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Shoot_classdef::Set_Shoot(bool)
+<LI><a href="#[1c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Shoot_classdef::Pull_Move(int)
 <LI><a href="#[1ba]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Gimbal_classdef::TarPos_Move(int)
 <LI><a href="#[1b2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Encider_Brt::getTotolAngle()
 </UL>
@@ -2752,12 +2753,12 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[143]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_ReadPin
 <LI><a href="#[1bb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Clamp_classdef::Motor_PIDCalc()
-<LI><a href="#[1c2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Clamp_classdef::AngleLimit()
-<LI><a href="#[1c1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MX106_classdef::Position_Control(unsigned int)
+<LI><a href="#[1c3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Clamp_classdef::AngleLimit()
+<LI><a href="#[1c2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MX106_classdef::Position_Control(unsigned int)
 <LI><a href="#[1be]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MX106_classdef::Torque(unsigned char)
 <LI><a href="#[1b1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Clamp_classdef::Tar_Update()
 <LI><a href="#[1bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Clamp_classdef::ProblemDetection()
-<LI><a href="#[1c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MX106_classdef::ReadPosition()
+<LI><a href="#[1c1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MX106_classdef::ReadPosition()
 </UL>
 <BR>[Called By]<UL><LI><a href="#[67]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Task_Control(void*)
 </UL>
@@ -2766,17 +2767,17 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[19b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CTRL_DR16_classdef::LeverMode_Update()
 </UL>
 
-<P><STRONG><a name="[18b]"></a>Clamp_classdef::Clamp_classdef()</STRONG> (Thumb, 1204 bytes, Stack size 32 bytes, app_clamp.o(.text._ZN14Clamp_classdefC2Ev))
-<BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = Clamp_classdef::Clamp_classdef()
+<P><STRONG><a name="[18b]"></a>Clamp_classdef::Clamp_classdef()</STRONG> (Thumb, 1224 bytes, Stack size 40 bytes, app_clamp.o(.text._ZN14Clamp_classdefC2Ev))
+<BR><BR>[Stack]<UL><LI>Max Depth = 40<LI>Call Chain = Clamp_classdef::Clamp_classdef()
 </UL>
 <BR>[Calls]<UL><LI><a href="#[1b2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Encider_Brt::getTotolAngle()
 </UL>
 <BR>[Called By]<UL><LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_GLOBAL__sub_I_System_DataPool.cpp
 </UL>
 
-<P><STRONG><a name="[28e]"></a>Clamp_classdef::Clamp_classdef__sub_object()</STRONG> (Thumb, 1204 bytes, Stack size 32 bytes, app_clamp.o(.text._ZN14Clamp_classdefC2Ev), UNUSED)
+<P><STRONG><a name="[28e]"></a>Clamp_classdef::Clamp_classdef__sub_object()</STRONG> (Thumb, 1224 bytes, Stack size 40 bytes, app_clamp.o(.text._ZN14Clamp_classdefC2Ev), UNUSED)
 
-<P><STRONG><a name="[1c0]"></a>MX106_classdef::ReadPosition()</STRONG> (Thumb, 128 bytes, Stack size 24 bytes, dev_mx106.o(.text._ZN14MX106_classdef12ReadPositionEv))
+<P><STRONG><a name="[1c1]"></a>MX106_classdef::ReadPosition()</STRONG> (Thumb, 128 bytes, Stack size 24 bytes, dev_mx106.o(.text._ZN14MX106_classdef12ReadPositionEv))
 <BR><BR>[Stack]<UL><LI>Max Depth = 56<LI>Call Chain = MX106_classdef::ReadPosition() &rArr; HAL_UART_Transmit_DMA &rArr; HAL_DMA_Start_IT
 </UL>
 <BR>[Calls]<UL><LI><a href="#[13b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Transmit_DMA
@@ -2784,7 +2785,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[195]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Clamp_classdef::Control()
 </UL>
 
-<P><STRONG><a name="[1c1]"></a>MX106_classdef::Position_Control(unsigned int)</STRONG> (Thumb, 130 bytes, Stack size 24 bytes, dev_mx106.o(.text._ZN14MX106_classdef16Position_ControlEj))
+<P><STRONG><a name="[1c2]"></a>MX106_classdef::Position_Control(unsigned int)</STRONG> (Thumb, 130 bytes, Stack size 24 bytes, dev_mx106.o(.text._ZN14MX106_classdef16Position_ControlEj))
 <BR><BR>[Stack]<UL><LI>Max Depth = 56<LI>Call Chain = MX106_classdef::Position_Control(unsigned int) &rArr; HAL_UART_Transmit_DMA &rArr; HAL_DMA_Start_IT
 </UL>
 <BR>[Calls]<UL><LI><a href="#[13b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Transmit_DMA
@@ -2811,17 +2812,11 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[194]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Shoot_classdef::Control()
 </UL>
 
-<P><STRONG><a name="[1c5]"></a>Shoot_classdef::Shoot_Sensor(GPIO_PinState)</STRONG> (Thumb, 368 bytes, Stack size 8 bytes, app_shoot.o(.text._ZN14Shoot_classdef12Shoot_SensorE13GPIO_PinState))
-<BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = Shoot_classdef::Shoot_Sensor(GPIO_PinState)
-</UL>
-<BR>[Called By]<UL><LI><a href="#[1c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Shoot_classdef::ShootSpe_Update()
-</UL>
-
 <P><STRONG><a name="[1da]"></a>Shoot_classdef::Pull_Mode_Set(Pull_CtrlMode_e)</STRONG> (Thumb, 20 bytes, Stack size 0 bytes, app_shoot.o(.text._ZN14Shoot_classdef13Pull_Mode_SetE15Pull_CtrlMode_e))
 <BR><BR>[Called By]<UL><LI><a href="#[19b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CTRL_DR16_classdef::LeverMode_Update()
 </UL>
 
-<P><STRONG><a name="[1c3]"></a>Shoot_classdef::PullTar_Update()</STRONG> (Thumb, 1012 bytes, Stack size 8 bytes, app_shoot.o(.text._ZN14Shoot_classdef14PullTar_UpdateEv))
+<P><STRONG><a name="[1c4]"></a>Shoot_classdef::PullTar_Update()</STRONG> (Thumb, 1012 bytes, Stack size 8 bytes, app_shoot.o(.text._ZN14Shoot_classdef14PullTar_UpdateEv))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = Shoot_classdef::PullTar_Update()
 </UL>
 <BR>[Calls]<UL><LI><a href="#[1b3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CTRL_DR16_classdef::Get_LY()
@@ -2829,11 +2824,10 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[194]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Shoot_classdef::Control()
 </UL>
 
-<P><STRONG><a name="[1c4]"></a>Shoot_classdef::ShootSpe_Update()</STRONG> (Thumb, 248 bytes, Stack size 8 bytes, app_shoot.o(.text._ZN14Shoot_classdef15ShootSpe_UpdateEv))
+<P><STRONG><a name="[1c5]"></a>Shoot_classdef::ShootSpe_Update()</STRONG> (Thumb, 296 bytes, Stack size 8 bytes, app_shoot.o(.text._ZN14Shoot_classdef15ShootSpe_UpdateEv))
 <BR><BR>[Stack]<UL><LI>Max Depth = 96<LI>Call Chain = Shoot_classdef::ShootSpe_Update() &rArr; PositionPID::Cal() &rArr; __hardfp_expf &rArr; __set_errno
 </UL>
-<BR>[Calls]<UL><LI><a href="#[1c5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Shoot_classdef::Shoot_Sensor(GPIO_PinState)
-<LI><a href="#[1b5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CTRL_DR16_classdef::Get_DW()
+<BR>[Calls]<UL><LI><a href="#[1b5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CTRL_DR16_classdef::Get_DW()
 <LI><a href="#[1a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PositionPID::Cal()
 </UL>
 <BR>[Called By]<UL><LI><a href="#[194]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Shoot_classdef::Control()
@@ -2863,8 +2857,8 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[143]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_ReadPin
 <LI><a href="#[1c7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Shoot_classdef::PullMotor_PIDCalc()
 <LI><a href="#[1c8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Shoot_classdef::AngleLimit()
-<LI><a href="#[1c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Shoot_classdef::ShootSpe_Update()
-<LI><a href="#[1c3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Shoot_classdef::PullTar_Update()
+<LI><a href="#[1c5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Shoot_classdef::ShootSpe_Update()
+<LI><a href="#[1c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Shoot_classdef::PullTar_Update()
 <LI><a href="#[1c6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Shoot_classdef::ProblemDetection()
 <LI><a href="#[1bd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PositionPID::Reset()
 <LI><a href="#[1a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PositionPID::Cal()
@@ -2872,17 +2866,21 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[67]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Task_Control(void*)
 </UL>
 
-<P><STRONG><a name="[1bf]"></a>Shoot_classdef::Pull_Move(int)</STRONG> (Thumb, 176 bytes, Stack size 0 bytes, app_shoot.o(.text._ZN14Shoot_classdef9Pull_MoveEi))
+<P><STRONG><a name="[1c0]"></a>Shoot_classdef::Pull_Move(int)</STRONG> (Thumb, 176 bytes, Stack size 0 bytes, app_shoot.o(.text._ZN14Shoot_classdef9Pull_MoveEi))
 <BR><BR>[Called By]<UL><LI><a href="#[1b9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Clamp_classdef::Place()
 </UL>
 
-<P><STRONG><a name="[18a]"></a>Shoot_classdef::Shoot_classdef()</STRONG> (Thumb, 1060 bytes, Stack size 24 bytes, app_shoot.o(.text._ZN14Shoot_classdefC2Ev))
+<P><STRONG><a name="[1bf]"></a>Shoot_classdef::Set_Shoot(bool)</STRONG> (Thumb, 212 bytes, Stack size 0 bytes, app_shoot.o(.text._ZN14Shoot_classdef9Set_ShootEb))
+<BR><BR>[Called By]<UL><LI><a href="#[1b9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Clamp_classdef::Place()
+</UL>
+
+<P><STRONG><a name="[18a]"></a>Shoot_classdef::Shoot_classdef()</STRONG> (Thumb, 1068 bytes, Stack size 24 bytes, app_shoot.o(.text._ZN14Shoot_classdefC2Ev))
 <BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = Shoot_classdef::Shoot_classdef()
 </UL>
 <BR>[Called By]<UL><LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_GLOBAL__sub_I_System_DataPool.cpp
 </UL>
 
-<P><STRONG><a name="[28f]"></a>Shoot_classdef::Shoot_classdef__sub_object()</STRONG> (Thumb, 1060 bytes, Stack size 24 bytes, app_shoot.o(.text._ZN14Shoot_classdefC2Ev), UNUSED)
+<P><STRONG><a name="[28f]"></a>Shoot_classdef::Shoot_classdef__sub_object()</STRONG> (Thumb, 1068 bytes, Stack size 24 bytes, app_shoot.o(.text._ZN14Shoot_classdefC2Ev), UNUSED)
 
 <P><STRONG><a name="[19d]"></a>Buzzer_Classdef::Set_RingType(signed char)</STRONG> (Thumb, 4 bytes, Stack size 0 bytes, dev_buzzer.o(.text._ZN15Buzzer_Classdef12Set_RingTypeEa))
 <BR><BR>[Called By]<UL><LI><a href="#[65]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Task_DevicesMonitor(void*)
@@ -3016,7 +3014,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[19b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CTRL_DR16_classdef::LeverMode_Update()
 </UL>
 
-<P><STRONG><a name="[19b]"></a>CTRL_DR16_classdef::LeverMode_Update()</STRONG> (Thumb, 1012 bytes, Stack size 16 bytes, app_dr16.o(.text._ZN18CTRL_DR16_classdef16LeverMode_UpdateEv))
+<P><STRONG><a name="[19b]"></a>CTRL_DR16_classdef::LeverMode_Update()</STRONG> (Thumb, 1020 bytes, Stack size 16 bytes, app_dr16.o(.text._ZN18CTRL_DR16_classdef16LeverMode_UpdateEv))
 <BR><BR>[Stack]<UL><LI>Max Depth = 80<LI>Call Chain = CTRL_DR16_classdef::LeverMode_Update() &rArr; CTRL_DR16_classdef::RCCtrl_Update() &rArr; __aeabi_dmul
 </UL>
 <BR>[Calls]<UL><LI><a href="#[114]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_NVIC_SystemReset
@@ -3032,7 +3030,7 @@ Global Symbols
 
 <P><STRONG><a name="[1b5]"></a>CTRL_DR16_classdef::Get_DW()</STRONG> (Thumb, 6 bytes, Stack size 0 bytes, app_dr16.o(.text._ZN18CTRL_DR16_classdef6Get_DWEv))
 <BR><BR>[Called By]<UL><LI><a href="#[1b1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Clamp_classdef::Tar_Update()
-<LI><a href="#[1c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Shoot_classdef::ShootSpe_Update()
+<LI><a href="#[1c5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Shoot_classdef::ShootSpe_Update()
 </UL>
 
 <P><STRONG><a name="[1b4]"></a>CTRL_DR16_classdef::Get_LX()</STRONG> (Thumb, 6 bytes, Stack size 0 bytes, app_dr16.o(.text._ZN18CTRL_DR16_classdef6Get_LXEv))
@@ -3041,7 +3039,7 @@ Global Symbols
 
 <P><STRONG><a name="[1b3]"></a>CTRL_DR16_classdef::Get_LY()</STRONG> (Thumb, 6 bytes, Stack size 0 bytes, app_dr16.o(.text._ZN18CTRL_DR16_classdef6Get_LYEv))
 <BR><BR>[Called By]<UL><LI><a href="#[1b1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Clamp_classdef::Tar_Update()
-<LI><a href="#[1c3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Shoot_classdef::PullTar_Update()
+<LI><a href="#[1c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Shoot_classdef::PullTar_Update()
 </UL>
 
 <P><STRONG><a name="[1cd]"></a>CTRL_DR16_classdef::Get_RX()</STRONG> (Thumb, 6 bytes, Stack size 0 bytes, app_dr16.o(.text._ZN18CTRL_DR16_classdef6Get_RXEv))
@@ -4457,7 +4455,7 @@ Local Symbols
 </UL>
 
 <P><STRONG><a name="[9c]"></a>_GLOBAL__sub_I_System_DataPool.cpp</STRONG> (Thumb, 168 bytes, Stack size 8 bytes, system_datapool.o(.text._GLOBAL__sub_I_System_DataPool.cpp))
-<BR><BR>[Stack]<UL><LI>Max Depth = 40<LI>Call Chain = _GLOBAL__sub_I_System_DataPool.cpp &rArr; Clamp_classdef::Clamp_classdef()
+<BR><BR>[Stack]<UL><LI>Max Depth = 48<LI>Call Chain = _GLOBAL__sub_I_System_DataPool.cpp &rArr; Clamp_classdef::Clamp_classdef()
 </UL>
 <BR>[Calls]<UL><LI><a href="#[18e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LED_classdef::LED_classdef()
 <LI><a href="#[187]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DR16_Classdef::DR16_Classdef()

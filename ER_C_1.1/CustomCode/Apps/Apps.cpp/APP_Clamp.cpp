@@ -12,7 +12,7 @@
 
 #include "System_DataPool.h"
 
-//Ğ¡ĞÄÔÚÈ¡»·»ú¹¹³õÊ¼»¯Ê±£¬È¡»·¼Ğ×ÓËÉÁËÓë·¢ËÍÅÌ·¢ËÍ½Ó´¥
+//å°å¿ƒåœ¨å–ç¯æœºæ„åˆå§‹åŒ–æ—¶ï¼Œå–ç¯å¤¹å­æ¾äº†ä¸å‘é€ç›˜å‘é€æ¥è§¦
 
 Clamp_classdef::Clamp_classdef()
 {
@@ -29,12 +29,14 @@ Clamp_classdef::Clamp_classdef()
 	UseTarget[1] = Lift_Motor.get_totalencoder();
 	UseTarget[2] = PickPlace_Motor.get_totalencoder();
 	
-	//²âÁ¿²ÎÊı
+	//æµ‹é‡å‚æ•°
 	Param.Stretch_Hold = 1360000;
 	Param.Stretch_Speed = 400;
 	Param.Lift_Max = 820000;//770000;
 	Param.Lift_Hold = 500000;//770000;
-	Param.Lift_Speed = 1100;
+	Param.Lift_Max_Speed = 6600;
+	Param.Lift_Min_Speed = 1100;
+	Param.Lift_Speed_Ramp = 10;
 	Param.Lift_PickWaitTime = 100;
 	Param.PickPlace_Max = 5300000;//5480000;
 	Param.PickPlace_Release = 200000;//250000;
@@ -42,14 +44,14 @@ Clamp_classdef::Clamp_classdef()
 	Param.PickPlace_Speed = 4000;
 	Param.Shoot_WaitTime = 80;
 
-	//ÍÆËã²ÎÊı
+	//æ¨ç®—å‚æ•°
 	Param.Stretch_Max = Param.Stretch_Hold - 8848;
 	Param.Stretch_Take = Param.Stretch_Hold - 9048;
 	Param.Stretch_Shoot = Param.Stretch_Hold - 109981;//109981
 	Param.Stretch_Min = Param.Stretch_Hold - 128052;//138052
 	Param.PickPlace_Ready = Param.PickPlace_Max - 9 * Param.PickPlace_Loop;
 
-	//ÅĞ¶Ï²ÎÊı
+	//åˆ¤æ–­å‚æ•°
 	Param.Servo_CtrlTime = 10;
 	Param.Servo_TorqueCtrl = 64;
 	Param.Servo_PosCtrl = 116;
@@ -64,11 +66,11 @@ Clamp_classdef::Clamp_classdef()
 
 void Clamp_classdef::Control()
 {
-	//´«¸ĞÆ÷¼ì²â½á¹û»ñÈ¡
+	//ä¼ æ„Ÿå™¨æ£€æµ‹ç»“æœè·å–
 	I7 = HAL_GPIO_ReadPin(GPIOI, GPIO_PIN_7);
 	E14 = HAL_GPIO_ReadPin(GPIOE, GPIO_PIN_14);
 
-	//¶æ»ú¶ÁÖµ¡ª¡ªÓë¶æ»ú¿ØÖÆ½»´í½øĞĞ
+	//èˆµæœºè¯»å€¼â€”â€”ä¸èˆµæœºæ§åˆ¶äº¤é”™è¿›è¡Œ
 	servo_time++;
 	if(servo_time >= Param.Servo_CtrlTime)
 	{
@@ -76,19 +78,19 @@ void Clamp_classdef::Control()
 		servo_time = 0;
 	}
 
-	//ÎÊÌâ¼ì²â
+	//é—®é¢˜æ£€æµ‹
 	if(ProblemDetection()){return;}
 
-	//Ä¿±ê¸üĞÂ
+	//ç›®æ ‡æ›´æ–°
 	Tar_Update();
 
-	//¶æ»ú¿ØÖÆ
+	//èˆµæœºæ§åˆ¶
 	Servo_Control();
 
-	//ÏŞÎ»
+	//é™ä½
 	AngleLimit();
 
-	//PID¼ÆËã
+	//PIDè®¡ç®—
 	Motor_PIDCalc();
 }
 
@@ -106,7 +108,7 @@ uint8_t Clamp_classdef::ProblemDetection(void)
 	DevicesMonitor.Get_State(TURNPLACE_SERVO_MONITOR)  == Off_line)
 	{
 		//set init angle...
-		//ÊıÖµÇåÁã
+		//æ•°å€¼æ¸…é›¶
 		UseTarget[0] = Stretch_Encider.getTotolAngle();
 		UseTarget[1] = Lift_Motor.get_totalencoder();
 		UseTarget[2] = PickPlace_Motor.get_totalencoder();
@@ -190,7 +192,7 @@ void Clamp_classdef::Tar_Update(void)
 		
 		case Clamp_DebugMode:
 			
-			//ÔÚÉì³öÔÊĞí·¶Î§ÄÚ²Å¿ÉÒÔÏÂµ÷Ì§Éì¡ª¡ªÏÂ
+			//åœ¨ä¼¸å‡ºå…è®¸èŒƒå›´å†…æ‰å¯ä»¥ä¸‹è°ƒæŠ¬ä¼¸â€”â€”ä¸‹
 			if(CTRL_DR16.Get_LY()<0)
 			{
 				if(UseTarget[0] <= Param.Stretch_Max &&\
@@ -217,7 +219,7 @@ void Clamp_classdef::Tar_Update(void)
 				UseTarget[1] += (-CTRL_DR16.Get_LY());
 			}
 
-			//ÄÚ
+			//å†…
 			if(CTRL_DR16.Get_LX() > 0)
 			{
 				if(E14 == GPIO_PIN_RESET)
@@ -252,13 +254,13 @@ void Clamp_classdef::Tar_Update(void)
 		break;
 		
 		case Clamp_AutoMode:
-			//¶æ»úÊ¹ÄÜ
+			//èˆµæœºä½¿èƒ½
 			if(TurnPlace_Servo.Torque_Flag == 0)
 			{
 				Set_TurnPlacel(Param.Servo_TorqueCtrl, Param.Servo_InitPos);
 			}
 			
-			//Óëµ×ÅÌÁªÏµ½øĞĞ×ÔÃé·¢ËÍÓëÅÜµã
+			//ä¸åº•ç›˜è”ç³»è¿›è¡Œè‡ªç„å‘é€ä¸è·‘ç‚¹
 			
 			if (Gimbal.I6 == GPIO_PIN_SET &&\
 			Gimbal.Last_I6 == GPIO_PIN_RESET &&\
@@ -313,8 +315,8 @@ void Clamp_classdef::Tar_Update(void)
 			Place_Point();
 			Place();
 
-			//µş¼ÓÏŞÖÆ
-			//¶æ»ú°ÚÕı²â²ÅÄÜÍùÏÂ×ß
+			//å åŠ é™åˆ¶
+			//èˆµæœºæ‘†æ­£æµ‹æ‰èƒ½å¾€ä¸‹èµ°
 			if(abs((int)TurnPlace_Servo.Posotion - Param.Servo_InitPos) > Param.Servo_ErrorPos && AddVar[1] >= 0)
 			{
 				AddVar[1] = 0;
@@ -326,8 +328,8 @@ void Clamp_classdef::Tar_Update(void)
 			UseTarget[0] += AddVar[0];
 			UseTarget[1] += AddVar[1];
 			UseTarget[2] += AddVar[2];
-			//E14¡ª¡ªLift_Motor
-			//I7¡ª¡ªPickPlace_Motor
+			//E14â€”â€”Lift_Motor
+			//I7â€”â€”PickPlace_Motor
 		break;
 		
 		case Clamp_LockMode:
@@ -343,10 +345,10 @@ void Clamp_classdef::Tar_Update(void)
 }
 
 
-//Ä¿±êÏŞÖÆ
+//ç›®æ ‡é™åˆ¶
 void Clamp_classdef::AngleLimit(void)
 {
-	//¶¨µãÏŞÎ»
+	//å®šç‚¹é™ä½
 	if(E14 == GPIO_PIN_RESET)
 	{
 		if(last_E14 != E14)
@@ -368,7 +370,7 @@ void Clamp_classdef::AngleLimit(void)
 	}
 	last_E14 = E14;
 	
-	//È¡·ÅÏŞÎ»
+	//å–æ”¾é™ä½
 	if(I7 == GPIO_PIN_SET)
 	{
 		if(last_I7 !=  I7)
@@ -393,7 +395,7 @@ void Clamp_classdef::AngleLimit(void)
 
 	//1351152
 	//1180019_1146801
-	//Éì³öÏŞÎ»
+	//ä¼¸å‡ºé™ä½
 	if(UseTarget[0] >= Param.Stretch_Max)
 	{
 		UseTarget[0] = Param.Stretch_Max;
@@ -403,7 +405,7 @@ void Clamp_classdef::AngleLimit(void)
 		UseTarget[0] = Param.Stretch_Min;
 	}
 
-	//ÏŞËÀÉì³ö
+	//é™æ­»ä¼¸å‡º
 	// if(E14 != GPIO_PIN_RESET)
 	// {
 	// 	UseTarget[0] = Stretch_Encider.getTotolAngle();
@@ -475,7 +477,7 @@ void Clamp_classdef::Init(void)
 				}
 			break;
 		}
-		HAL_GPIO_WritePin(GPIOE, GPIO_PIN_9, GPIO_PIN_RESET);//Ä¬ÈÏ
+		HAL_GPIO_WritePin(GPIOE, GPIO_PIN_9, GPIO_PIN_RESET);//é»˜è®¤
 	}
 	else
 	{
@@ -484,10 +486,10 @@ void Clamp_classdef::Init(void)
 }
 
 
-//Èı¸öµã
-//È¡»·
-//·Å»·Î»ÖÃ
-//·Å»·
+//ä¸‰ä¸ªç‚¹
+//å–ç¯
+//æ”¾ç¯ä½ç½®
+//æ”¾ç¯
 //
 int pick_wait_time;
 void Clamp_classdef::Pick(void)
@@ -526,7 +528,7 @@ void Clamp_classdef::Pick(void)
 				}
 				if(Lift_Motor.get_totalencoder() < Top_Lift+770000)
 				{
-					HAL_GPIO_WritePin(GPIOE, GPIO_PIN_9, GPIO_PIN_SET);// µÚÒ»´Î×ªÕı£¬µ×ÅÌÈ¥ÖĞ¼ä
+					HAL_GPIO_WritePin(GPIOE, GPIO_PIN_9, GPIO_PIN_SET);// ç¬¬ä¸€æ¬¡è½¬æ­£ï¼Œåº•ç›˜å»ä¸­é—´
 				}
 			break;
 		
@@ -546,14 +548,14 @@ void Clamp_classdef::Place_Point(void)
 		switch (step)
 		{
 			case 0:
-					if((Lift(Lift_Motor.get_totalencoder(),true) | Gimbal.TarPos_Move(0)) &&\
-					(Stretch(Param.Stretch_Max,true) &\
-					PickPlace(Top_PickPlace-Param.PickPlace_Release)) &&\
-					(Set_TurnPlacel(Param.Servo_PosCtrl, Param.Servo_InitPos) &\
-					Gimbal.TarPos_Move(0)))
-					{
-						step = 1;
-					}
+				if((Lift(Lift_Motor.get_totalencoder(),true) | Gimbal.TarPos_Move(0)) &&\
+				(Stretch(Param.Stretch_Max,true) &\
+				PickPlace(Top_PickPlace-Param.PickPlace_Release)) &&\
+				(Set_TurnPlacel(Param.Servo_PosCtrl, Param.Servo_InitPos) &\
+				Gimbal.TarPos_Move(0)))
+				{
+					step = 1;
+				}
 			break;
 
 			case 1:
@@ -563,7 +565,7 @@ void Clamp_classdef::Place_Point(void)
 				{
 					step = 0;
 					Place_Point_Flag = 0;
-					HAL_GPIO_WritePin(GPIOE, GPIO_PIN_9, GPIO_PIN_RESET);//»Ö¸´×¼±¸ÏÂÒ»´Î×ªÕı
+					HAL_GPIO_WritePin(GPIOE, GPIO_PIN_9, GPIO_PIN_RESET);//æ¢å¤å‡†å¤‡ä¸‹ä¸€æ¬¡è½¬æ­£
 				}
 			break;
 
@@ -581,53 +583,46 @@ void Clamp_classdef::Place(void)
 		switch (step)
 		{
 			case 0:
-					if(Lift(Lift_Motor.get_totalencoder(),true) &&\
-					(Stretch(Param.Stretch_Min) &\
-					PickPlace(now_place)) &&\
-					Set_TurnPlacel(Param.Servo_PosCtrl, Param.Servo_OverPos))
-					{
-						now_place = UseTarget[2];
-						step = 1;
-						if(Shoot.Shoot_Place_Flag!=0){Shoot.Shoot_Place_Flag=0;}
-					}
-					HAL_GPIO_WritePin(GPIOE, GPIO_PIN_9, GPIO_PIN_RESET);
+				if(Lift(Lift_Motor.get_totalencoder(),true) &&\
+				(Stretch(Param.Stretch_Min) &\
+				PickPlace(now_place)) &&\
+				Set_TurnPlacel(Param.Servo_PosCtrl, Param.Servo_OverPos))
+				{
+					now_place = UseTarget[2];
+					step = 1;
+				}
+				HAL_GPIO_WritePin(GPIOE, GPIO_PIN_9, GPIO_PIN_RESET);
 			break;
 
 			case 1:
-				if(Shoot.Shoot_Place_Flag == 0)
-				{
-					Shoot.Shoot_Place_Flag = 1;
-				}
-				if((((Shoot.Shoot_Place_Flag==2) & \
+				if(((Shoot.Set_Shoot(false) & \
 				Gimbal.TarPos_Move(I6_FwdNum))   & \
 				Shoot.Pull_Move(I6_FwdNum)) && \
 				PickPlace(now_place-Param.PickPlace_Loop))
 				
-//				if(((Shoot.Shoot_Place_Flag==2) & \
+//				if(((Shoot.Set_Shoot(false) & \
 //				Gimbal.TarPos_Move(I6_FwdNum)) && \
 //				PickPlace(now_place-Param.PickPlace_Loop))
 				
-//				if((Shoot.Shoot_Place_Flag==2) && \
+//				if((Shoot.Set_Shoot(false) && \
 //				PickPlace(now_place-Param.PickPlace_Loop))
 				{
 					shoot_wait_time++;
 					if(shoot_wait_time>Param.Shoot_WaitTime && Shoot.Pull_Move(I6_FwdNum))
 					{
 						shoot_wait_time=0;
-						Shoot.Set_Shoot(true);
 						step = 2;
 					}
 				}
 				else if(UseTarget[2]<=Top_PickPlace-Param.PickPlace_Max)
 				{
-					if((Shoot.Shoot_Place_Flag==2) && \
+					if(Shoot.Set_Shoot(false) && \
 					PickPlace(Top_PickPlace-Param.PickPlace_Max))
 					{
 						shoot_wait_time++;
 						if(shoot_wait_time>Param.Shoot_WaitTime)
 						{
 							shoot_wait_time=0;
-							Shoot.Set_Shoot(true);
 							step = 2;
 						}
 					}
@@ -636,10 +631,9 @@ void Clamp_classdef::Place(void)
 			break;
 
 			case 2:
-				if(Homeing_Flag)
+				if(Shoot.Set_Shoot(true))
 				{
 					step = 0;
-					Homeing_Flag = 0;
 					Place_Flag = 0;
 					now_place = UseTarget[2];
 					HAL_GPIO_WritePin(GPIOE, GPIO_PIN_9, GPIO_PIN_SET);
@@ -665,7 +659,8 @@ bool Clamp_classdef::Stretch(float pos,bool datum,float*rp)
 {
 	if(datum)
 	{
-		AddVar[0] = Param.Stretch_Speed;
+		AddVar[0] += Param.Stretch_Speed_Ramp;
+		if(AddVar[0] > Param.Stretch_Speed){AddVar[0]=Param.Stretch_Speed;}
 		if(UseTarget[0] >= Param.Stretch_Max && \
 		abs(Stretch_Encider.getTotolAngle() - Param.Stretch_Max) <= \
 		Param.Lift_ErrorPos )
@@ -680,12 +675,14 @@ bool Clamp_classdef::Stretch(float pos,bool datum,float*rp)
 	{
 		if(UseTarget[0] <= pos-Param.Stretch_Speed)
 		{
-			AddVar[0] = Param.Stretch_Speed;
+			AddVar[0] += Param.Stretch_Speed_Ramp;
+			if(AddVar[0] >= Param.Stretch_Speed){AddVar[0]=Param.Stretch_Speed;}
 			return false;
 		}
 		else if(UseTarget[0] >= pos+Param.Stretch_Speed)
 		{
-			AddVar[0] = -Param.Stretch_Speed;
+			AddVar[0] -= Param.Stretch_Speed_Ramp;
+			if(AddVar[0] <= -Param.Stretch_Speed){AddVar[0]=-Param.Stretch_Speed;}
 			return false;
 		}
 		else
@@ -712,7 +709,9 @@ bool Clamp_classdef::Lift(float pos,bool datum,float*rp)
 	{
 		if(E14 != GPIO_PIN_RESET)
 		{
-			AddVar[1] = -Param.Lift_Speed;
+			//ä¸Šå‡
+			AddVar[1] -= Param.Lift_Speed_Ramp;
+			if(AddVar[1] <= -Param.Lift_Max_Speed){AddVar[1] = -Param.Lift_Max_Speed;}
 			return false;
 		}
 		else 
@@ -724,14 +723,17 @@ bool Clamp_classdef::Lift(float pos,bool datum,float*rp)
 	}
 	else
 	{
-		if(UseTarget[1] <= pos-Param.Lift_Speed)
+		if(UseTarget[1] <= pos-Param.Lift_Min_Speed)
 		{
-			AddVar[1] = Param.Lift_Speed;
+			AddVar[1] += Param.Lift_Speed_Ramp;
+			if(AddVar[1] >= Param.Lift_Min_Speed){AddVar[1] = Param.Lift_Min_Speed;}
 			return false;
 		}
-		else if(UseTarget[1] >= pos+Param.Lift_Speed)
+		else if(UseTarget[1] >= pos+Param.Lift_Max_Speed)
 		{
-			AddVar[1] = -Param.Lift_Speed;
+			//ä¸Šå‡
+			AddVar[1] -= Param.Lift_Speed_Ramp;
+			if(AddVar[1] <= -Param.Lift_Max_Speed){AddVar[1] = -Param.Lift_Max_Speed;}
 			return false;
 		}
 		else

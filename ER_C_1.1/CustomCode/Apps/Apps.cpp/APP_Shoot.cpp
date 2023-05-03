@@ -45,6 +45,7 @@ Shoot_classdef::Shoot_classdef()
 	Param.Shoot_Hold = 560000;//520000
 	Param.Shoot_Speed = 880;
 	Param.Shoot_Circle = 848380;
+	Param.Shoot_ErrorPos = 500;
 	Param.Pull_Max = 13100000;
 
 	Param.Shoot_StopTime = 10;
@@ -70,20 +71,20 @@ Shoot_classdef::Shoot_classdef()
 
 void Shoot_classdef::Control()
 {
-		//�?动开关与光电传感�?
-		//发射的光电传感器
-		C6 = HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_6);
-		E13 = HAL_GPIO_ReadPin(GPIOE, GPIO_PIN_13);
-		E11 = HAL_GPIO_ReadPin(GPIOE, GPIO_PIN_11);
+	//�?动开关与光电传感�?
+	//发射的光电传感器
+	C6 = HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_6);
+	E13 = HAL_GPIO_ReadPin(GPIOE, GPIO_PIN_13);
+	E11 = HAL_GPIO_ReadPin(GPIOE, GPIO_PIN_11);
 
-		//�?题�?��?
-		if(ProblemDetection()){return;}
+	//�?题�?��?
+	if(ProblemDetection()){return;}
 
     //改拉�?+发射 �?
     PullTar_Update();
-		ShootSpe_Update();
+	ShootSpe_Update();
 
-		AngleLimit();
+	AngleLimit();
 
     //PID计算
     PullMotor_PIDCalc();
@@ -94,7 +95,7 @@ void Shoot_classdef::Control()
 int shoot_ready_time;
 void Shoot_classdef::Shoot_Sensor(GPIO_PinState io_pin)
 {
-	if(first == 0)//�?一次情况—先到了再�?�其他情�?
+	if(first == 0)//初始化的打一次情况—先到了再考虑其他情况
 	{
 		if(io_pin == GPIO_PIN_SET)
 		{
@@ -110,63 +111,11 @@ void Shoot_classdef::Shoot_Sensor(GPIO_PinState io_pin)
 			first = 1;
 			stop_time = 0;
 			AddAngle = 0;
-			Shoot_Continue = 0;
-			Launch_Switch = 0;
 			stop_shoot = Shoot_TarAngle = Shoot_Motor.get_totalencoder();
 		}
 		else
 		{
 			AddAngle = -Param.Shoot_Speed;
-		}
-	}
-	else
-	{
-		if(Shoot_Place_Flag == 1 && Clamp.E14 == GPIO_PIN_RESET)
-		{
-			AddAngle = -Param.Shoot_Speed;
-			if(Shoot_TarAngle <= stop_shoot-Param.Shoot_Hold)
-			{
-				Shoot_TarAngle = stop_shoot-Param.Shoot_Hold;
-				AddAngle = 0;
-				shoot_ready_time++;
-				if(shoot_ready_time > 50)
-				{
-					shoot_ready_time = 0;
-					Shoot_Place_Flag = 2;
-				}
-			}
-		}
-
-		//多�?�情�?
-		if(Launch_Switch)
-		{
-			shoot_time++;
-			//消抖
-			if(io_pin == GPIO_PIN_SET  ||\
-			Shoot_Motor.get_totalencoder()<(stop_shoot-Param.Shoot_Circle-500))
-			{
-				stop_time++;
-			}
-			else
-			{
-				stop_time = 0;
-			}
-			AddAngle = -Param.Shoot_Speed;
-			
-			if(stop_time>Param.Shoot_StopTime)
-			{
-				stop_shoot = Shoot_TarAngle = Shoot_Motor.get_totalencoder();
-				shoot_time = 0;
-				stop_time = 0;
-				AddAngle = 0;
-				Launch_Switch = 0;
-				Shoot_Place_Flag = 0;
-
-				if(Clamp.Place_Flag == 1)
-				{
-					Clamp.Homeing_Flag = 1;
-				}
-			}
 		}
 	}
 }
@@ -391,17 +340,11 @@ void Shoot_classdef::ShootSpe_Update(void)
 		case Shoot_TransiMode:
 			Shoot_TarAngle = Shoot_Motor.get_totalencoder();
 			Pull_Mode = Pull_Next_Mode;
-		break;
-			
-		case Shoot_AutoMode:
-			Shoot_Sensor(C6);
-			Shoot_PID[PID_Inner].Target = \
-			Param.Shoot_LowSpeed * Shoot_Flag * Shoot_Speed_BL;
+			AddAngle = 0;
 		break;
 			
 		case Shoot_NewAutoMode:
 			Shoot_Sensor(C6);
-
 			Shoot_TarAngle += AddAngle;
 			Shoot_PID[PID_Outer].Target = Shoot_TarAngle;
 			Shoot_PID[PID_Outer].Current = Shoot_Motor.get_totalencoder();
@@ -584,4 +527,59 @@ bool Shoot_classdef::Pull_Move(int pos)
 	return false;
 }
 
+//当发射时不可与其他一起并用使发射完成后需要等待，会影响stop_time，
+//以上bug暂未处理
+bool Shoot_classdef::Set_Shoot(bool shoot)
+{
+	if(first)
+	{
+		if(shoot)
+		{
+			AddAngle = -Param.Shoot_Speed;
+			//消抖
+			if(C6 == GPIO_PIN_SET  ||\
+			Shoot_Motor.get_totalencoder()<(stop_shoot-Param.Shoot_Circle-500))
+			{
+				stop_time++;
+			}
+			{
+				stop_time = 0;
+				return false;
+			}
+			
+			if(stop_time>Param.Shoot_StopTime)
+			{
+				stop_shoot = Shoot_TarAngle = Shoot_Motor.get_totalencoder();
+				stop_time = 0;
+				AddAngle = 0;
+				return true;
+			}
+			return false;
+		}
+		else
+		{
+			if(Shoot_TarAngle <= stop_shoot-Param.Shoot_Hold-Param.Shoot_Speed)
+			{
+				AddAngle = Param.Shoot_Speed;
+				return false;
+			}
+			else if(Shoot_TarAngle >= stop_shoot-Param.Shoot_Hold+Param.Shoot_Speed)
+			{
+				AddAngle = -Param.Shoot_Speed;
+				return false;
+			}
+			else
+			{
+				AddAngle = 0;
+				Shoot_TarAngle = stop_shoot-Param.Shoot_Hold;
 
+				if(abs(Shoot_Motor.get_totalencoder() - (stop_shoot-Param.Shoot_Hold)) < Param.Shoot_ErrorPos)
+				{
+					return true;
+				}
+				return false;
+			}
+		}
+	}
+	return false;
+}

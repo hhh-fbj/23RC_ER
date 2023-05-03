@@ -9,7 +9,6 @@
 enum Shoot_CtrlMode_e
 {
 	Shoot_DisableMode,	// 失能
-	Shoot_AutoMode,
 	Shoot_ManualMode,
 	Shoot_LockMode,
 	Shoot_TransiMode,
@@ -38,7 +37,6 @@ private:
 	GPIO_PinState last_E11 = GPIO_PIN_SET;
 
 	bool Launch_Switch = false;
-	bool Shoot_Continue;
 
 	uint8_t first;
 
@@ -62,6 +60,7 @@ private:
 		float Shoot_Circle;
 		float Shoot_Hold;
 		float Shoot_Speed;
+		float Shoot_ErrorPos;
 		float Pull_Max;
 
 		float Shoot_StopTime;
@@ -90,9 +89,7 @@ public:
 
 	// BsqJnP2_Classdef BsqJnP2;
 
-	uint8_t Shoot_Place_Flag=0;
 	uint8_t Turn_Pull_Flag;
-	float Shoot_Speed_BL;
 	float LeftPull_TarAngle, RightPull_TarAngle;
 	float Manual_Flag;
 	float Shoot_C6;
@@ -116,8 +113,7 @@ public:
 	
   void Control();          /*<! 发射控制 */
 
-	void Set_Shoot(bool sta){Launch_Switch = sta;}; 
-	bool Get_ShootCon(void){return Shoot_Continue;}; 
+	bool Set_Shoot(bool shoot); 
 	void Shoot_Mode_Set(Shoot_CtrlMode_e mode);
 	void Pull_Mode_Set(Pull_CtrlMode_e mode);
 	bool Pull_Move(int pos);

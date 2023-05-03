@@ -91,6 +91,8 @@ Chassis_classdef::Chassis_classdef()
     Pos_Target[0] = 0;
     Pos_Target[1] = 0;
     Pos_Target[2] = 0;
+
+    AF_WtoXY_Stand = 5;
 }
 
 
@@ -122,13 +124,13 @@ void Chassis_classdef::Sensor(void)
     EdgeDete[4] = HAL_GPIO_ReadPin(GPIOI, GPIO_PIN_5);//右
     EdgeDete[5] = HAL_GPIO_ReadPin(GPIOI, GPIO_PIN_6);//左	
 
-		Last_Ready_Flag = Ready_Flag;
+    Last_Ready_Flag = Ready_Flag;
     Ready_Flag = HAL_GPIO_ReadPin(GPIOI, GPIO_PIN_2);
 }
 
 uint8_t Chassis_classdef::ProblemDetection(void)
 {
-    if(DevicesMonitor.Get_State(DR16_MONITOR) == Off_line &&  Buzzer.error == 1)
+    if(DevicesMonitor.Get_State(DR16_MONITOR) == Off_line)
     {
         for(uint8_t i = 0 ; i < 4 ; i++)
         {
@@ -136,7 +138,7 @@ uint8_t Chassis_classdef::ProblemDetection(void)
             RUD_PID[i][PID_Outer].Reset();
             RUD_PID[i][PID_Inner].Reset();
             Cal_Speed[i] = 0;
-            Buzzer.error = 1;
+            Buzzer.error = 0;
         }
         Send_Data();
         HAL_GPIO_WritePin(GPIOI, GPIO_PIN_7, GPIO_PIN_RESET);//默认
@@ -157,7 +159,7 @@ uint8_t Chassis_classdef::ProblemDetection(void)
             RUD_PID[i][PID_Outer].Reset();
             RUD_PID[i][PID_Inner].Reset();
             Cal_Speed[i] = 0;
-            Buzzer.error = 1;
+            Buzzer.error = 0;
         }
         Send_Data();
         HAL_GPIO_WritePin(GPIOI, GPIO_PIN_7, GPIO_PIN_RESET);//默认
@@ -179,14 +181,13 @@ void Chassis_classdef::ChassisTar_Update()
             Pos_Target[2] = POS_PID[Posture_W][PID_Outer].Target = Auto.Posture.POS_W();//Auto.Posture.POS_W();
             Auto.Vx = Auto.Vy = Auto.Vw = 0;
             Mode = Next_Mode;
-						for(uint8_t i = 0 ; i < 4 ; i++)
-						{
-								RUD_Motor[i].	Out = 0;
-								RUD_PID[i][PID_Outer].Reset();
-								RUD_PID[i][PID_Inner].Reset();
-								Cal_Speed[i] = 0;
-								Buzzer.error = 1;
-						}
+            for(uint8_t i = 0 ; i < 4 ; i++)
+            {
+                RUD_Motor[i].Out = 0;
+                RUD_PID[i][PID_Outer].Reset();
+                RUD_PID[i][PID_Inner].Reset();
+                Cal_Speed[i] = 0;
+            }
             Last_Mode = CHAS_TransiMode;
         break;
 
@@ -209,7 +210,7 @@ void Chassis_classdef::ChassisTar_Update()
             Auto.Process();
             switch(NO_PostureMode)
             {
-                case 0:
+                case 0://取环去中间
                     POS_PID[Posture_X][PID_Outer].Current = Auto.Posture.POS_X();//Auto.Posture.POS_W();
                     POS_PID[Posture_Y][PID_Outer].Current = Auto.Posture.POS_Y();//Auto.Posture.POS_W();
                     POS_PID[Posture_W][PID_Outer].Current = Auto.Posture.POS_W();//Auto.Posture.POS_W();
@@ -229,12 +230,14 @@ void Chassis_classdef::ChassisTar_Update()
                     Process(Auto.Vx, Auto.Vy, Auto.Vw);
                 break;
 
-                case 66:
+                case 66://初始去取环
                     POS_PID[Posture_X][PID_Outer].Current = Auto.Posture.POS_X();//Auto.Posture.POS_W();
                     POS_PID[Posture_Y][PID_Outer].Current = Auto.Posture.POS_Y();//Auto.Posture.POS_W();
                     POS_PID[Posture_W][PID_Outer].Current = Auto.Posture.POS_W();//Auto.Posture.POS_W();
-
-                    Process(POS_PID[Posture_X][PID_Outer].Cal()-880, POS_PID[Posture_Y][PID_Outer].Cal(), POS_PID[Posture_W][PID_Outer].Cal());
+                    //根据yaw轴限xy轴速度
+                    AF_WtoXY = AF_WtoXY_Stand/abs(POS_PID[Posture_W][PID_Outer].Target - POS_PID[Posture_W][PID_Outer].Current);
+                    if(AF_WtoXY>=1){AF_WtoXY = 1;}
+                    Process((AF_WtoXY*POS_PID[Posture_X][PID_Outer].Cal()-880), AF_WtoXY*POS_PID[Posture_Y][PID_Outer].Cal(), POS_PID[Posture_W][PID_Outer].Cal());
                 break;
                 
                 case 99:
@@ -540,15 +543,15 @@ void Chassis_classdef::CAN_Send(void)
 {
     if(Mode != CHAS_DisableMode &&  Buzzer.error != 1)
     {
-        if(two_count == 1)
+        if(two_count == true)
         {
             CANx_SendData(&hcan1, 0x341, SS1.data, 8);
-            two_count = 0;
+            two_count = false;
         }
         else
         {
             CANx_SendData(&hcan1, 0x342, SS2.data, 8);
-            two_count = 1;
+            two_count = true;
         }
         
         
