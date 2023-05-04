@@ -236,8 +236,8 @@ void Chassis_classdef::ChassisTar_Update()
                     POS_PID[Posture_W][PID_Outer].Current = Auto.Posture.POS_W();//Auto.Posture.POS_W();
                     //根据yaw轴限xy轴速度
                     AF_WtoXY = AF_WtoXY_Stand/abs(POS_PID[Posture_W][PID_Outer].Target - POS_PID[Posture_W][PID_Outer].Current);
-                    if(AF_WtoXY>=1){AF_WtoXY = 1;}
-                    Process((AF_WtoXY*POS_PID[Posture_X][PID_Outer].Cal()-880), AF_WtoXY*POS_PID[Posture_Y][PID_Outer].Cal(), POS_PID[Posture_W][PID_Outer].Cal());
+                    if(abs(AF_WtoXY)>=1){AF_WtoXY = 1;}
+                    Process((AF_WtoXY*AF_WtoXY*POS_PID[Posture_X][PID_Outer].Cal()-880), AF_WtoXY*AF_WtoXY*POS_PID[Posture_Y][PID_Outer].Cal(), POS_PID[Posture_W][PID_Outer].Cal());
                 break;
                 
                 case 99:

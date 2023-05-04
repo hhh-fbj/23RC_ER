@@ -131,6 +131,7 @@ void CTRL_DR16_classdef::LeverMode_Update(void)
                       Clamp.Pick_Flag = 0;
                       Clamp.Place_Point_Flag = 0;
                       Clamp.Place_Flag = 0;
+											Clamp.step = 0;
                       DW_Zero = false;
                   }
                 }

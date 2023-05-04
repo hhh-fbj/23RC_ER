@@ -44,7 +44,7 @@ void Posture_Classdef::getMessage(uint8_t *PostureBuf)
 	{
 		Z_count++;
 	}
-	Z_LastAngle = -RAM_Angle[Posture_Z];
+	Z_LastAngle = RAM_Angle[Posture_Z];
 	
 	//最终数据上次
 	Last_POS[0] = Final_Value[Posture_X];
@@ -100,6 +100,7 @@ void Posture_Classdef::Devices_Posture_Reset(void)
 	sendData[3] =	'0';
 	// HAL_UART_Transmit_DMA(&huart6, sendData, 4);
 	HAL_UART_Transmit(&huart6, sendData, 4, 0xffff);
+	Z_count = 0;
 }
 
 

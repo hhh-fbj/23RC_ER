@@ -619,6 +619,7 @@ bool Auto_classdef::IO_RTX(int io_s,int is_t)
 	}
 	else
 	{
+//		HAL_GPIO_WritePin(GPIOI, GPIO_PIN_7, GPIO_PIN_RESET);//��ת
 		HAL_GPIO_WritePin(GPIOI, GPIO_PIN_7, GPIO_PIN_SET);//��ת
 	}
 	

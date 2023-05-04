@@ -542,6 +542,7 @@ bool Shoot_classdef::Set_Shoot(bool shoot)
 			{
 				stop_time++;
 			}
+			else
 			{
 				stop_time = 0;
 				return false;

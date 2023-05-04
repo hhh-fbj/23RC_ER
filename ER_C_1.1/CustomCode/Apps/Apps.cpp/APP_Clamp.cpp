@@ -12,6 +12,8 @@
 
 #include "System_DataPool.h"
 
+#define LIFT_INIT_SPEED 440
+
 //小心在取环机构初始化时，取环夹子松了与发送盘发送接触
 
 Clamp_classdef::Clamp_classdef()
@@ -31,16 +33,20 @@ Clamp_classdef::Clamp_classdef()
 	
 	//测量参数
 	Param.Stretch_Hold = 1360000;
-	Param.Stretch_Speed = 400;
+	Param.Stretch_Speed = 800;
+	Param.Stretch_Speed_Ramp = 10;
 	Param.Lift_Max = 820000;//770000;
 	Param.Lift_Hold = 500000;//770000;
-	Param.Lift_Max_Speed = 6600;
+	Param.Lift_Max_Speed = 3300;
 	Param.Lift_Min_Speed = 1100;
-	Param.Lift_Speed_Ramp = 10;
-	Param.Lift_PickWaitTime = 100;
+	Param.Lift_addSpeed_Ramp = 10;
+	Param.Lift_subSpeed_Ramp = 100;
+	Param.Lift_Sub_SPortion = 120000;
+	Param.Lift_Sub_XPortion = 180000;
+	Param.Lift_PickWaitTime = 50;
 	Param.PickPlace_Max = 5300000;//5480000;
 	Param.PickPlace_Release = 200000;//250000;
-	Param.PickPlace_Loop = 455000;//485000;
+	Param.PickPlace_Loop = 452000;//485000;
 	Param.PickPlace_Speed = 4000;
 	Param.Shoot_WaitTime = 80;
 
@@ -96,7 +102,6 @@ void Clamp_classdef::Control()
 
 
 int I6_SetTime,I6_FwdNum;
-uint8_t step;
 uint8_t Clamp_classdef::ProblemDetection(void)
 {
 	if(Clamp_Mode == Clamp_DisableMode ||\
@@ -353,6 +358,7 @@ void Clamp_classdef::AngleLimit(void)
 	{
 		if(last_E14 != E14)
 		{
+			AddVar[1]=0;
 			Top_Lift = Lift_Motor.get_totalencoder();
 			Top_Lift_Flag = 1;
 		}
@@ -375,6 +381,7 @@ void Clamp_classdef::AngleLimit(void)
 	{
 		if(last_I7 !=  I7)
 		{
+			AddVar[2]=0;
 			Top_PickPlace = PickPlace_Motor.get_totalencoder();
 			Top_PickPlace_Flag = 1;
 		}
@@ -456,19 +463,36 @@ void Clamp_classdef::Init(void)
 		switch (step)
 		{
 			case 0:
-			if((Lift(Lift_Motor.get_totalencoder(),true) && Gimbal.TarPos_Move(0)) &&\
-			Stretch(Param.Stretch_Max,true) &&\
-			Set_TurnPlacel(Param.Servo_PosCtrl, Param.Servo_InitPos) &&\
-		 (PickPlace(PickPlace_Motor.get_totalencoder(),true)&&\
-			Gimbal.TarPos_Move(0)))
+			if(Gimbal.TarPos_Move(0) || 1)
 			{
-//				Gimbal.Midpoint_Flag = 0;
-//				Init_Flag = 0;
 				step=1;
 			}
 			break;
 			
 			case 1:
+			if(Lift(Lift_Motor.get_totalencoder(),true))
+			{
+				step=2;
+			}
+			break;
+			
+			case 2:
+				if(Stretch(Param.Stretch_Max,true)){step=3;}
+			break;
+			
+			case 3:
+				if(Set_TurnPlacel(Param.Servo_PosCtrl, Param.Servo_InitPos)){step=4;}
+			break;
+			
+			case 4:
+				if(PickPlace(PickPlace_Motor.get_totalencoder(),true)){step=5;}
+			break;
+			
+			case 5:
+				if(Gimbal.TarPos_Move(0)){step=6;}
+			break;
+			
+			case 6:
 				if(Lift(Top_Lift+Param.Lift_Hold))
 				{
 					Gimbal.Midpoint_Flag = 0;
@@ -500,26 +524,38 @@ void Clamp_classdef::Pick(void)
 		{
 			case 0:
 					//(Lift(Lift_Motor.get_totalencoder(),true) |
-					if(Gimbal.TarPos_Move(0) &&\
-					Stretch(Param.Stretch_Max,true) &&\
-					Set_TurnPlacel(Param.Servo_PosCtrl, Param.Servo_InitPos) &&\
-					(PickPlace(PickPlace_Motor.get_totalencoder(),true) &\
-					Gimbal.TarPos_Move(0)))
-					{
-						step = 1;
-					}
+					if(Gimbal.TarPos_Move(0) || 1){step = 1;}
+			break;
+					
+			case 1:
+				if(Stretch(Param.Stretch_Max,true)){step = 2;}
+			break;
+			
+			case 2:
+				if(Set_TurnPlacel(Param.Servo_PosCtrl, Param.Servo_InitPos)){step = 3;}
+			break;
+			
+			case 3:
+				if(PickPlace(PickPlace_Motor.get_totalencoder(),true)){step = 4;}
+			break;
+			
+			case 4:
+				if(Gimbal.TarPos_Move(0)){step = 5;}
 			break;
 
-			case 1:
-				if(PickPlace(Top_PickPlace-Param.PickPlace_Release) && \
-				Lift(Param.Lift_Max+Top_Lift))
+			case 5:
+				if(PickPlace(Top_PickPlace-Param.PickPlace_Release)){step = 6;}
+			break;
+				
+			case 6:
+				if(Lift(Param.Lift_Max+Top_Lift))
 				{
 					pick_wait_time++;
-					if(pick_wait_time>Param.Lift_PickWaitTime){pick_wait_time=0;step = 2;}
+					if(pick_wait_time>Param.Lift_PickWaitTime){pick_wait_time=0;step = 7;}
 				}
 			break;
 
-			case 2:
+			case 7:
 				if(Lift(Top_Lift, true) & PickPlace(Top_PickPlace-Param.PickPlace_Release))
 				{
 					step = 0;
@@ -548,20 +584,39 @@ void Clamp_classdef::Place_Point(void)
 		switch (step)
 		{
 			case 0:
-				if((Lift(Lift_Motor.get_totalencoder(),true) | Gimbal.TarPos_Move(0)) &&\
-				(Stretch(Param.Stretch_Max,true) &\
-				PickPlace(Top_PickPlace-Param.PickPlace_Release)) &&\
-				(Set_TurnPlacel(Param.Servo_PosCtrl, Param.Servo_InitPos) &\
-				Gimbal.TarPos_Move(0)))
-				{
-					step = 1;
-				}
+				if(Gimbal.TarPos_Move(0) || 1){step = 1;}
+			break;
+				
+			case 1:
+				if(Lift(Lift_Motor.get_totalencoder(),true)){step = 2;}
+			break;
+				
+			case 2:
+				if(Stretch(Param.Stretch_Max,true)){step = 3;}
+			break;
+			
+			case 3:
+				if(PickPlace(Top_PickPlace-Param.PickPlace_Release)){step = 4;}
+			break;
+			
+			case 4:
+				if(Set_TurnPlacel(Param.Servo_PosCtrl, Param.Servo_InitPos)){step = 5;}
+			break;
+			
+			case 5:
+				if(Gimbal.TarPos_Move(0)){step = 6;}
 			break;
 
-			case 1:
-				if(PickPlace(Top_PickPlace-Param.PickPlace_Ready) && \
-				Set_TurnPlacel(Param.Servo_PosCtrl, Param.Servo_OverPos)&& \
-				Stretch(Param.Stretch_Min))
+			case 6:
+				if(PickPlace(Top_PickPlace-Param.PickPlace_Ready)){step = 7;}
+			break;
+			
+			case 7:
+				if(Set_TurnPlacel(Param.Servo_PosCtrl, Param.Servo_OverPos)){step = 8;}
+			break;
+			
+			case 8:
+				if(Stretch(Param.Stretch_Min))
 				{
 					step = 0;
 					Place_Point_Flag = 0;
@@ -583,54 +638,36 @@ void Clamp_classdef::Place(void)
 		switch (step)
 		{
 			case 0:
-				if(Lift(Lift_Motor.get_totalencoder(),true) &&\
-				(Stretch(Param.Stretch_Min) &\
-				PickPlace(now_place)) &&\
-				Set_TurnPlacel(Param.Servo_PosCtrl, Param.Servo_OverPos))
-				{
-					now_place = UseTarget[2];
-					step = 1;
-				}
 				HAL_GPIO_WritePin(GPIOE, GPIO_PIN_9, GPIO_PIN_RESET);
+				if(Lift(Lift_Motor.get_totalencoder(),true)){step = 1;}
 			break;
-
+			
 			case 1:
-				if(((Shoot.Set_Shoot(false) & \
-				Gimbal.TarPos_Move(I6_FwdNum))   & \
-				Shoot.Pull_Move(I6_FwdNum)) && \
-				PickPlace(now_place-Param.PickPlace_Loop))
-				
-//				if(((Shoot.Set_Shoot(false) & \
-//				Gimbal.TarPos_Move(I6_FwdNum)) && \
-//				PickPlace(now_place-Param.PickPlace_Loop))
-				
-//				if((Shoot.Set_Shoot(false) && \
-//				PickPlace(now_place-Param.PickPlace_Loop))
+				if(Stretch(Param.Stretch_Min) & PickPlace(now_place)){step = 2;}
+			break;
+			
+			case 2:
+				if(Set_TurnPlacel(Param.Servo_PosCtrl, Param.Servo_OverPos)){step = 3;}
+			break;
+			
+			case 3:
+				if(Shoot.Set_Shoot(false) & Gimbal.TarPos_Move(I6_FwdNum) & Shoot.Pull_Move(I6_FwdNum)){step = 4;}
+			break;
+			
+			case 4:
+				HAL_GPIO_WritePin(GPIOE, GPIO_PIN_9, GPIO_PIN_RESET);
+				if(PickPlace(now_place-Param.PickPlace_Loop))
 				{
 					shoot_wait_time++;
 					if(shoot_wait_time>Param.Shoot_WaitTime && Shoot.Pull_Move(I6_FwdNum))
 					{
 						shoot_wait_time=0;
-						step = 2;
+						step = 5;
 					}
 				}
-				else if(UseTarget[2]<=Top_PickPlace-Param.PickPlace_Max)
-				{
-					if(Shoot.Set_Shoot(false) && \
-					PickPlace(Top_PickPlace-Param.PickPlace_Max))
-					{
-						shoot_wait_time++;
-						if(shoot_wait_time>Param.Shoot_WaitTime)
-						{
-							shoot_wait_time=0;
-							step = 2;
-						}
-					}
-				}
-				HAL_GPIO_WritePin(GPIOE, GPIO_PIN_9, GPIO_PIN_RESET);
 			break;
 
-			case 2:
+			case 5:
 				if(Shoot.Set_Shoot(true))
 				{
 					step = 0;
@@ -649,6 +686,7 @@ void Clamp_classdef::Place(void)
 		shoot_wait_time=0;
 		Homeing_Flag = 0;
 		Place_Flag = 0;
+//		now_place = PickPlace_Motor.get_totalencoder();
 		now_place = UseTarget[2];
 	}
 }
@@ -661,9 +699,10 @@ bool Clamp_classdef::Stretch(float pos,bool datum,float*rp)
 	{
 		AddVar[0] += Param.Stretch_Speed_Ramp;
 		if(AddVar[0] > Param.Stretch_Speed){AddVar[0]=Param.Stretch_Speed;}
+		
 		if(UseTarget[0] >= Param.Stretch_Max && \
-		abs(Stretch_Encider.getTotolAngle() - Param.Stretch_Max) <= \
-		Param.Lift_ErrorPos )
+		abs(Stretch_Encider.getTotolAngle() - Param.Stretch_Max) <=\
+		Param.Lift_ErrorPos)
 		{
 			AddVar[0] = 0;
 			UseTarget[0] = Param.Stretch_Max;
@@ -710,8 +749,26 @@ bool Clamp_classdef::Lift(float pos,bool datum,float*rp)
 		if(E14 != GPIO_PIN_RESET)
 		{
 			//上升
-			AddVar[1] -= Param.Lift_Speed_Ramp;
-			if(AddVar[1] <= -Param.Lift_Max_Speed){AddVar[1] = -Param.Lift_Max_Speed;}
+			if(Top_Lift_Flag)
+			{
+				//上升快到时进行减速——减速段
+				if(UseTarget[1]-Param.Lift_Max_Speed < Top_Lift+Param.Lift_Sub_SPortion)
+				{
+					AddVar[1] += Param.Lift_subSpeed_Ramp;
+					if(AddVar[1] >= -220){AddVar[1] = -220;}
+				}
+				else//起步累叠加
+				{
+					AddVar[1] -= Param.Lift_addSpeed_Ramp;
+					if(AddVar[1] <= -Param.Lift_Max_Speed){AddVar[1] = -Param.Lift_Max_Speed;}
+				}
+			}
+			else
+			{
+				//慢速进行第一次初始化
+				AddVar[1] = -LIFT_INIT_SPEED;
+			}
+				
 			return false;
 		}
 		else 
@@ -723,16 +780,26 @@ bool Clamp_classdef::Lift(float pos,bool datum,float*rp)
 	}
 	else
 	{
-		if(UseTarget[1] <= pos-Param.Lift_Min_Speed)
+		if(UseTarget[1] <= pos-Param.Lift_Min_Speed)//下降
 		{
-			AddVar[1] += Param.Lift_Speed_Ramp;
-			if(AddVar[1] >= Param.Lift_Min_Speed){AddVar[1] = Param.Lift_Min_Speed;}
+			//下降快到时进行减速
+			if(UseTarget[1]+Param.Lift_Min_Speed > Top_Lift+Param.Lift_Max-Param.Lift_Sub_XPortion)
+			{
+				AddVar[1] -= Param.Lift_subSpeed_Ramp;
+				if(AddVar[1] <= LIFT_INIT_SPEED){AddVar[1] = LIFT_INIT_SPEED;}
+			}
+			else//起步累叠加
+			{
+				AddVar[1] += Param.Lift_addSpeed_Ramp;
+				if(AddVar[1] >= Param.Lift_Min_Speed){AddVar[1] = Param.Lift_Min_Speed;}
+			}
 			return false;
 		}
-		else if(UseTarget[1] >= pos+Param.Lift_Max_Speed)
+		else if(UseTarget[1] >= pos+Param.Lift_Max_Speed)//上升
 		{
-			//上升
-			AddVar[1] -= Param.Lift_Speed_Ramp;
+			//没写是因为其实目前没有一个步骤需要用到这个上升到非初始化位置的
+			//只有起步用的累叠加
+			AddVar[1] -= Param.Lift_addSpeed_Ramp;
 			if(AddVar[1] <= -Param.Lift_Max_Speed){AddVar[1] = -Param.Lift_Max_Speed;}
 			return false;
 		}
