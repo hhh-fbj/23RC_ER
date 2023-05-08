@@ -368,7 +368,6 @@ void Gimbal_classdef::TargetAngle_Update(void)
 
 void Gimbal_classdef::AngleLimit(void)
 {
-	
 	if(UseTarget[Yaw] >= Param.Yaw_Max)
 	{
 		UseTarget[Yaw] = Param.Yaw_Max;
@@ -456,7 +455,7 @@ bool Gimbal_classdef::TarPos_Move(int angle)
 		break;
 	}
 	
-	if(abs(Yaw_Encider.getTotolAngle()-(Param.Yaw_Centre+clamp_angle*Param.Yaw_TurnAngle)) <= 500)
+	if(abs(Yaw_Encider.getTotolAngle()-(Param.Yaw_Centre+clamp_angle*Param.Yaw_TurnAngle)) <= 1000)
 	{
 		return true;
 	}

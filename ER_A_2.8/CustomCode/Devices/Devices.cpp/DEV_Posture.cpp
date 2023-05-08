@@ -2,14 +2,15 @@
 #include "DEV_Posture.h"
 #include "System_DataPool.h"
 
-#define SPEED_LIMIT 4000 //单位：rpm
-#define WHEEL_R 106 //单位：mm
-#define DATA_RATE 200 //单位：帧/s
+#define SPEED_LIMIT 13000 //轮子电转速 单位：ERPM
+#define POLE_PAIRS 20//极对数
+#define WHEEL_2R 106 //轮子直径 单位：mm
+#define DATA_RATE 200 //数据刷新帧数 单位：帧/s
 
 
 Posture_Classdef::Posture_Classdef()
 {
-	Vary_Limit = SPEED_LIMIT/60 * WHEEL_R / DATA_RATE;
+	Vary_Limit = (SPEED_LIMIT/POLE_PAIRS/60) * (WHEEL_2R * PI) / DATA_RATE;
 	// VaryAngle_Limit = SPEED_LIMIT/60 * WHEEL_R / DATA_RATE
 }
 
@@ -64,10 +65,10 @@ void Posture_Classdef::getMessage(uint8_t *PostureBuf)
 	{
 		error = true;
 	}
-	else
-	{
-		error = false;
-	}
+//	else
+//	{
+//		error = false;
+//	}
 	// if(Final_ANGLE - Last_POS[2] > Vary_Limit)
 	// {
 		

@@ -138,6 +138,7 @@ void CTRL_DR16_classdef::LeverMode_Update(void)
 
 						
             Chassis.Set_Mode(CHAS_DisableMode);
+						Auto.Posture.error = false;
             HAL_GPIO_WritePin(GPIOI, GPIO_PIN_7, GPIO_PIN_RESET);//默认
             // Robot Reset
             if(DR16.Get_DW_Norm() <= -550)

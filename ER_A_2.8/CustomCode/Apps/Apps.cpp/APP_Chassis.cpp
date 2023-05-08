@@ -32,7 +32,7 @@
 #define VALUE_CIRCLE 98304
 #define DEGREE_TURN_CIRCLE 273.06666666666666666666666666667
 
-#define CHASSIS_MAX_SPEED 4000  // 底盘驱动轮最大速度
+#define CHASSIS_MAX_SPEED 8000  // 底盘驱动轮最大速度
 #define CHASSIS_MAX_VW    0.8*CHASSIS_MAX_SPEED  // 底盘旋转最大速度
 
 
@@ -64,7 +64,7 @@ Chassis_classdef::Chassis_classdef()
     POS_PID[Posture_X][PID_Outer].a_p = 4;POS_PID[Posture_X][PID_Outer].b_p = 11;POS_PID[Posture_X][PID_Outer].c_p = 0.0002;
     POS_PID[Posture_Y][PID_Outer].SetPIDParam(2.5f, 0.0f, 0.0f, 4000, 15000, 0.002f);POS_PID[Posture_Y][PID_Outer].DeadZone = 1;//3.5		6 0.003	
     POS_PID[Posture_Y][PID_Outer].a_p = 3.5;POS_PID[Posture_Y][PID_Outer].b_p = 6;POS_PID[Posture_Y][PID_Outer].c_p = 0.0003;
-    POS_PID[Posture_Z][PID_Outer].SetPIDParam(100.0f, 0.0f, 0.0f, 2000, 15000, 0.002f);POS_PID[Posture_Z][PID_Outer].DeadZone = 0.5;
+    POS_PID[Posture_Z][PID_Outer].SetPIDParam(150.0f, 0.0f, 0.0f, 2000, 15000, 0.002f);POS_PID[Posture_Z][PID_Outer].DeadZone = 0.5;
     /*--- 内环 速度 PID 没用 -------------------------------------------------------------------------*/
     POS_PID[Posture_X][PID_Inner].SetPIDParam(0.0f, 0.0f, 0.0f, 1000, 10000, 0.002f);
     POS_PID[Posture_Y][PID_Inner].SetPIDParam(0.0f, 0.0f, 0.0f, 1000, 10000, 0.002f);
@@ -80,7 +80,9 @@ Chassis_classdef::Chassis_classdef()
     Laser_PID[0].SetPIDParam(0.48, 0.012f, 0.0f, 200, 660, 0.002f);Laser_PID[0].DeadZone = 10;
     Laser_PID[1].SetPIDParam(0.5f, 0.0f, 0.0f, 4000, 10000, 0.002f);Laser_PID[1].DeadZone = 30;
 
-
+		//全场定位 new idea
+		POS_X_PID.SetPIDParam(5.0f, 0.0f, 0.0f, 4000, 15000, 0.002f);POS_X_PID.DeadZone = 1;//4 11 0.0003
+    POS_X_PID.a_p = 8;POS_X_PID.b_p = 14;POS_X_PID.c_p = 0.00001;
 
     for(int i=0;i<4;i++)
     {
@@ -92,7 +94,7 @@ Chassis_classdef::Chassis_classdef()
     Pos_Target[1] = 0;
     Pos_Target[2] = 0;
 
-    AF_WtoXY_Stand = 5;
+    AF_WtoXY_Stand = 3;
 }
 
 
@@ -171,6 +173,7 @@ uint8_t Chassis_classdef::ProblemDetection(void)
     }
 }
 
+	float P;
 void Chassis_classdef::ChassisTar_Update()
 {
     switch ((int)Mode)
@@ -229,6 +232,19 @@ void Chassis_classdef::ChassisTar_Update()
                 case 3:
                     Process(Auto.Vx, Auto.Vy, Auto.Vw);
                 break;
+								
+								case 55://新想法
+										P = atan2(POS_PID[Posture_Y][PID_Outer].Target-Auto.Posture.POS_Y(), POS_PID[Posture_X][PID_Outer].Target-Auto.Posture.POS_X());
+										POS_X_PID.Target = sqrt(pow((POS_PID[Posture_Y][PID_Outer].Target-Auto.Posture.POS_Y()),2)+pow((POS_PID[Posture_X][PID_Outer].Target-Auto.Posture.POS_X()),2));
+										POS_X_PID.Current = 0;
+								
+										POS_PID[Posture_W][PID_Outer].Current = Auto.Posture.POS_W();
+                    //根据yaw轴限xy轴速度
+                    AF_WtoXY = AF_WtoXY_Stand/abs(POS_PID[Posture_W][PID_Outer].Target - POS_PID[Posture_W][PID_Outer].Current);
+                    if(abs(AF_WtoXY)>=1){AF_WtoXY = 1;}
+                    Process(AF_WtoXY*(POS_X_PID.Cal()*arm_cos(P+Auto.Posture.POS_W()*0.01745329251994329576923690768489)-880), \
+										AF_WtoXY*POS_X_PID.Cal()*arm_sin(P+Auto.Posture.POS_W()*0.01745329251994329576923690768489), POS_PID[Posture_W][PID_Outer].Cal());
+								break;
 
                 case 66://初始去取环
                     POS_PID[Posture_X][PID_Outer].Current = Auto.Posture.POS_X();//Auto.Posture.POS_W();
@@ -237,7 +253,7 @@ void Chassis_classdef::ChassisTar_Update()
                     //根据yaw轴限xy轴速度
                     AF_WtoXY = AF_WtoXY_Stand/abs(POS_PID[Posture_W][PID_Outer].Target - POS_PID[Posture_W][PID_Outer].Current);
                     if(abs(AF_WtoXY)>=1){AF_WtoXY = 1;}
-                    Process((AF_WtoXY*AF_WtoXY*POS_PID[Posture_X][PID_Outer].Cal()-880), AF_WtoXY*AF_WtoXY*POS_PID[Posture_Y][PID_Outer].Cal(), POS_PID[Posture_W][PID_Outer].Cal());
+                    Process(AF_WtoXY*AF_WtoXY*POS_PID[Posture_X][PID_Outer].Cal()-880, AF_WtoXY*AF_WtoXY*POS_PID[Posture_Y][PID_Outer].Cal(), POS_PID[Posture_W][PID_Outer].Cal());
                 break;
                 
                 case 99:
@@ -290,7 +306,7 @@ void Chassis_classdef::ChassisTar_Update()
 
             Last_Mode = CHAS_PostureMode;
         break;
-
+				
         case CHAS_DisableMode:
             for(uint8_t j = 0 ; j < 4 ; j++)
             {

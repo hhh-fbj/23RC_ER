@@ -93,12 +93,16 @@ void Vision_classdef::RecvFromPC(uint8_t *data, uint16_t ReceiveLen)
 		else
 		{
 			//根据距离过滤一些其他柱子物的误识别
-			if(Recv_Msg.Pack.Depth < 1.6)
+			if(Recv_Msg.Pack.Depth < 4)
 			{
 				Yaw_Reserve[Reserve_Num] = Recv_Msg.Pack.Yaw;
 				Depth_Reserve[Reserve_Num] = Recv_Msg.Pack.Depth;
 				Reserve_Num++;
 			}
+//			Yaw_Reserve[Reserve_Num] = Recv_Msg.Pack.Yaw;
+//				Depth_Reserve[Reserve_Num] = Recv_Msg.Pack.Depth;
+//				Reserve_Num++;
+			
 			//对视觉数据进行处理
 			if(Reserve_Num==5)
 			{

@@ -118,7 +118,8 @@ public:
 	void Init(void);
 	void Pick(void);
 	void Place_Point(void);
-	void Place(void);
+	void Place_Auto(void);
+	void Place_Manual(void);
 	void setMode(Clamp_CtrlMode_e mode);
 };
 #endif

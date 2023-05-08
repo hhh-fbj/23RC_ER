@@ -6,7 +6,7 @@
 
 
 #define Post_Buffer_SIZE   28			//数组长度
-#define	POS_TF_DATA				168.92f			//全场定位到中心点距离，单位mm 
+#define	POS_TF_DATA				0.0f//168.92f			//全场定位到中心点距离，单位mm 
 
 
 enum XYZ_Posture

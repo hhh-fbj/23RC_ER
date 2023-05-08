@@ -44,7 +44,7 @@ void Auto_classdef::Text_Step(void)
 		case 0:
 			if(startFlag == 1 && overFlag == 0)
 			{
-				Chassis.NO_PostureMode = 66;
+				Chassis.NO_PostureMode = 55;
 				Chassis.POS_PID[Posture_X][PID_Outer].Target = Spots[0][0];
 				Chassis.POS_PID[Posture_Y][PID_Outer].Target = Spots[0][1];
 				Chassis.POS_PID[Posture_W][PID_Outer].Target = Spots[0][2];
@@ -88,7 +88,8 @@ void Auto_classdef::Text_Step(void)
 		case 3:
 			if(startFlag == 1 && overFlag == 0)
 			{
-				Chassis.NO_PostureMode = 0;
+//				Chassis.NO_PostureMode = 0;
+				Chassis.NO_PostureMode = 55;
 				Chassis.POS_PID[Posture_X][PID_Outer].Target = Spots[1][0];
 				Chassis.POS_PID[Posture_Y][PID_Outer].Target = Spots[1][1];
 				Chassis.POS_PID[Posture_W][PID_Outer].Target = Spots[1][2];
@@ -431,51 +432,100 @@ uint8_t Auto_classdef::Detection_Point_text(int *Spots)
 uint8_t Auto_classdef::Detection_Point(int *spots)
 {
 	if(abs(Posture.POS_X() - spots[0]) < 100 &&\
-    abs(Posture.POS_Y() - spots[1]) < 100 &&\
-    abs(Posture.POS_W() - spots[2]) < 5 )
-    {
-		if(abs(Posture.POS_X() - spots[0]) < 10 &&\
-		abs(Posture.POS_Y() - spots[1]) < 10 &&\
-		abs(Posture.POS_W() - spots[2]) < 1 )
-		{
-			point_time++;
-			if(point_time > 150)
+	abs(Posture.POS_Y() - spots[1]) < 100 &&\
+	abs(Posture.POS_W() - spots[2]) < 5 )
+	{
+			if(abs(Posture.POS_X() - spots[0]) < 10 &&\
+			abs(Posture.POS_Y() - spots[1]) < 10 &&\
+			abs(Posture.POS_W() - spots[2]) < 1 )
 			{
-				point_time = 0;
-				return 1;
+				point_time++;
+				if(point_time > 150)
+				{
+					point_time = 0;
+					return 1;
+				}
+				else
+				{
+					return 0;
+				}
 			}
-			else
+			else if(abs(Posture.POS_X() - Posture.Last_POS[0]) < 1 &&\
+			abs(Posture.POS_Y() - Posture.Last_POS[1]) < 1 &&\
+			abs(Posture.POS_W() - Posture.Last_POS[2]) < 1 )
 			{
+				point_time++;
+				if(point_time > 150)
+				{
+					point_time = 0;
+					return 1;
+				}
+				else
+				{
+					return 0;
+				}
+			}
+			else 
+			{
+				point_time=0;
 				return 0;
 			}
-		}
-		else if(abs(Posture.POS_X() - Posture.Last_POS[0]) < 1 &&\
-		abs(Posture.POS_Y() - Posture.Last_POS[1]) < 1 &&\
-		abs(Posture.POS_W() - Posture.Last_POS[2]) < 1 )
-		{
-			point_time++;
-			if(point_time > 150)
-			{
-				point_time = 0;
-				return 1;
-			}
-			else
-			{
-				return 0;
-			}
-		}
-		else 
-		{
-			point_time=0;
-			return 0;
-		}
-    }
+	}
 	else 
 	{
 		point_time=0;
 		return 0;
 	}
 }
+
+//uint8_t Auto_classdef::Detection_XPoint(int *spots)
+//{
+//	if(abs(Posture.POS_X() - spots[0]) < 100 &&\
+//	abs(Posture.POS_Y() - spots[1]) < 100 &&\
+//	abs(Posture.POS_W() - spots[2]) < 5 )
+//	{
+//			if(abs(Posture.POS_X() - spots[0]) < 10 &&\
+//			abs(Posture.POS_Y() - spots[1]) < 10 &&\
+//			abs(Posture.POS_W() - spots[2]) < 1 )
+//			{
+//				point_time++;
+//				if(point_time > 150)
+//				{
+//					point_time = 0;
+//					return 1;
+//				}
+//				else
+//				{
+//					return 0;
+//				}
+//			}
+//			else if(abs(Posture.POS_X() - Posture.Last_POS[0]) < 1 &&\
+//			abs(Posture.POS_Y() - Posture.Last_POS[1]) < 1 &&\
+//			abs(Posture.POS_W() - Posture.Last_POS[2]) < 1 )
+//			{
+//				point_time++;
+//				if(point_time > 150)
+//				{
+//					point_time = 0;
+//					return 1;
+//				}
+//				else
+//				{
+//					return 0;
+//				}
+//			}
+//			else 
+//			{
+//				point_time=0;
+//				return 0;
+//			}
+//	}
+//	else 
+//	{
+//		point_time=0;
+//		return 0;
+//	}
+//}
 
 void Auto_classdef::Left_PickIdea(void)
 {

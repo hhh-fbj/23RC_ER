@@ -130,6 +130,7 @@ public:
     
     PositionPID POS_PID[3][2];
     PositionPID Laser_PID[2];
+		PositionPID POS_X_PID;
 		
     //电机驱动+编码器
     Motor_M2006 RUD_Motor[4] = {Motor_M2006(1), Motor_M2006(2), Motor_M2006(3), Motor_M2006(4)}; /*<! ת���� 2006��� */

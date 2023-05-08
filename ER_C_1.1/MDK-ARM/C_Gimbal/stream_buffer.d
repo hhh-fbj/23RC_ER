@@ -1,9 +1,9 @@
 c_gimbal/stream_buffer.o: \
   ..\Middlewares\Third_Party\FreeRTOS\Source\stream_buffer.c \
-  C:\Users\chenzijian\Pad\App\keil5\ARM\ARMCLANG\Bin\..\include\stdint.h \
-  C:\Users\chenzijian\Pad\App\keil5\ARM\ARMCLANG\Bin\..\include\string.h \
+  C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\stdint.h \
+  C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\string.h \
   ..\Middlewares\Third_Party\FreeRTOS\Source\include\FreeRTOS.h \
-  C:\Users\chenzijian\Pad\App\keil5\ARM\ARMCLANG\Bin\..\include\stddef.h \
+  C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\stddef.h \
   ..\Core\Inc\FreeRTOSConfig.h \
   ..\Middlewares\Third_Party\FreeRTOS\Source\include\projdefs.h \
   ..\Middlewares\Third_Party\FreeRTOS\Source\include\portable.h \

@@ -1,8 +1,8 @@
 c_gimbal/timers.o: ..\Middlewares\Third_Party\FreeRTOS\Source\timers.c \
-  C:\Users\chenzijian\Pad\App\keil5\ARM\ARMCLANG\Bin\..\include\stdlib.h \
+  C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\stdlib.h \
   ..\Middlewares\Third_Party\FreeRTOS\Source\include\FreeRTOS.h \
-  C:\Users\chenzijian\Pad\App\keil5\ARM\ARMCLANG\Bin\..\include\stddef.h \
-  C:\Users\chenzijian\Pad\App\keil5\ARM\ARMCLANG\Bin\..\include\stdint.h \
+  C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\stddef.h \
+  C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\stdint.h \
   ..\Core\Inc\FreeRTOSConfig.h \
   ..\Middlewares\Third_Party\FreeRTOS\Source\include\projdefs.h \
   ..\Middlewares\Third_Party\FreeRTOS\Source\include\portable.h \

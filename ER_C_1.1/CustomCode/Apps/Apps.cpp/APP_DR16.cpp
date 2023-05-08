@@ -239,21 +239,28 @@ void CTRL_DR16_classdef::LeverMode_Update(void)
 
                 case Lever_DOWN:/* 左中-右下 START ------------------------------------------*/ 
                 {
-                    Gimbal.Mode = Gimbal_LockMode;
-                    Shoot.Shoot_Mode = Shoot_NewAutoMode;
-                    Shoot.Pull_Mode_Set(Pull_DebugMode);//Pull_LockMode
-                    Clamp.setMode(Clamp_AutoMode);
+//                    Gimbal.Mode = Gimbal_LockMode;
+//                    Shoot.Shoot_Mode = Shoot_NewAutoMode;
+//                    Shoot.Pull_Mode_Set(Pull_DebugMode);//Pull_LockMode
+//                    Clamp.setMode(Clamp_AutoMode);
 
-                    if(DR16.Get_DW_Norm() >= 550)
-                    {
-                        Gimbal.Ding_TEXT_Flag = 3;
-                    }
-                    if(DR16.Get_DW_Norm() <= -550)
-                    {
-                        Gimbal.Ding_TEXT_Flag = 4;
-                    }
-
-
+//                    if(DR16.Get_DW_Norm() >= 550)
+//                    {
+//                        Gimbal.Ding_TEXT_Flag = 3;
+//                    }
+//                    if(DR16.Get_DW_Norm() <= -550)
+//                    {
+//                        Gimbal.Ding_TEXT_Flag = 4;
+//                    }
+										
+										Gimbal.Mode = Gimbal_PCMode;
+                    Shoot.Shoot_Mode = Shoot_LockMode;
+                    Shoot.Pull_Mode_Set(Pull_LockMode);//Pull_LockMode
+                    Clamp.setMode(Clamp_LockMode);
+										if(DR16.Get_DW_Norm() >= 550)
+										{
+											Vision.aim = 1;
+										}
                     // Gimbal.Mode = Gimbal_DisableMode;
                     // Shoot.Shoot_Mode = Shoot_DisableMode;
                     // Shoot.Pull_Mode_Set(Pull_DisableMode);

@@ -45,7 +45,7 @@ Shoot_classdef::Shoot_classdef()
 	Param.Shoot_Hold = 560000;//520000
 	Param.Shoot_Speed = 880;
 	Param.Shoot_Circle = 848380;
-	Param.Shoot_ErrorPos = 500;
+	Param.Shoot_ErrorPos = 1000;
 	Param.Pull_Max = 13100000;
 
 	Param.Shoot_StopTime = 10;
@@ -82,9 +82,9 @@ void Shoot_classdef::Control()
 
     //改拉�?+发射 �?
     PullTar_Update();
-	ShootSpe_Update();
+		ShootSpe_Update();
 
-	AngleLimit();
+		AngleLimit();
 
     //PID计算
     PullMotor_PIDCalc();
@@ -519,8 +519,8 @@ bool Shoot_classdef::Pull_Move(int pos)
 			clamp_pos_R = 457606.5;
 		break;
 	}
-	if(abs(LeftPull_Motor.get_totalencoder()-(Top_LeftPull+clamp_pos_L)) <= 500 && \
-		abs(RightPull_Motor.get_totalencoder()-(Top_RightPull+clamp_pos_R)) <= 500)
+	if(abs(LeftPull_Motor.get_totalencoder()-(Top_LeftPull+clamp_pos_L)) <= 800 && \
+		abs(RightPull_Motor.get_totalencoder()-(Top_RightPull+clamp_pos_R)) <= 800)
 	{
 		return true;
 	}

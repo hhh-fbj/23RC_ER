@@ -37,16 +37,16 @@ Clamp_classdef::Clamp_classdef()
 	Param.Stretch_Speed_Ramp = 10;
 	Param.Lift_Max = 820000;//770000;
 	Param.Lift_Hold = 500000;//770000;
-	Param.Lift_Max_Speed = 3300;
-	Param.Lift_Min_Speed = 1100;
+	Param.Lift_Max_Speed = 3600;
+	Param.Lift_Min_Speed = 1200;
 	Param.Lift_addSpeed_Ramp = 10;
-	Param.Lift_subSpeed_Ramp = 100;
-	Param.Lift_Sub_SPortion = 120000;
-	Param.Lift_Sub_XPortion = 180000;
+	Param.Lift_subSpeed_Ramp = 18;
+	Param.Lift_Sub_SPortion = 360000;
+	Param.Lift_Sub_XPortion = 80000;
 	Param.Lift_PickWaitTime = 50;
-	Param.PickPlace_Max = 5300000;//5480000;
-	Param.PickPlace_Release = 200000;//250000;
-	Param.PickPlace_Loop = 452000;//485000;
+	Param.PickPlace_Max = 5320000;//5480000;
+	Param.PickPlace_Release = 500000;//250000;
+	Param.PickPlace_Loop = 450000;//485000;
 	Param.PickPlace_Speed = 4000;
 	Param.Shoot_WaitTime = 80;
 
@@ -266,7 +266,6 @@ void Clamp_classdef::Tar_Update(void)
 			}
 			
 			//与底盘联系进行自瞄发送与跑点
-			
 			if (Gimbal.I6 == GPIO_PIN_SET &&\
 			Gimbal.Last_I6 == GPIO_PIN_RESET &&\
 			(I6_SetTime == 0))
@@ -282,7 +281,7 @@ void Clamp_classdef::Tar_Update(void)
 				I6_SetTime = 0;
 			}
 			
-			
+			//计数进行步骤
 			if(I6_SetTime > 5)
 			{
 				I6_FwdNum++;
@@ -312,13 +311,18 @@ void Clamp_classdef::Tar_Update(void)
 				I6_SetTime=0;
 			}
 			
-			
-				
-			
 			Init();
 			Pick();
 			Place_Point();
-			Place();
+			if((uint8_t)DR16.Get_S2_R()==Lever_MID)
+			{
+				Place_Manual();
+			}
+			else
+			{
+				Place_Auto();
+			}
+			
 
 			//叠加限制
 			//舵机摆正测才能往下走
@@ -493,11 +497,13 @@ void Clamp_classdef::Init(void)
 			break;
 			
 			case 6:
-				if(Lift(Top_Lift+Param.Lift_Hold))
+				if(Lift(Top_Lift+Param.Lift_Hold) && PickPlace(Top_PickPlace-Param.PickPlace_Release))
 				{
 					Gimbal.Midpoint_Flag = 0;
 					Init_Flag = 0;
 					step=0;
+					I6_SetTime = 0;
+					I6_FwdNum = 0;
 				}
 			break;
 		}
@@ -532,11 +538,11 @@ void Clamp_classdef::Pick(void)
 			break;
 			
 			case 2:
-				if(Set_TurnPlacel(Param.Servo_PosCtrl, Param.Servo_InitPos)){step = 3;}
+				if(Set_TurnPlacel(Param.Servo_PosCtrl, Param.Servo_InitPos)){step = 4;}
 			break;
 			
 			case 3:
-				if(PickPlace(PickPlace_Motor.get_totalencoder(),true)){step = 4;}
+//				if(PickPlace(PickPlace_Motor.get_totalencoder(),true)){step = 4;}
 			break;
 			
 			case 4:
@@ -562,7 +568,7 @@ void Clamp_classdef::Pick(void)
 					Pick_Flag =0;
 					Place_Point_Flag = 1;
 				}
-				if(Lift_Motor.get_totalencoder() < Top_Lift+770000)
+				if(Lift_Motor.get_totalencoder() < Top_Lift+800000)
 				{
 					HAL_GPIO_WritePin(GPIOE, GPIO_PIN_9, GPIO_PIN_SET);// 第一次转正，底盘去中间
 				}
@@ -604,7 +610,7 @@ void Clamp_classdef::Place_Point(void)
 			break;
 			
 			case 5:
-				if(Gimbal.TarPos_Move(0)){step = 6;}
+				if(Gimbal.TarPos_Move(0)){step = 8;}
 			break;
 
 			case 6:
@@ -616,7 +622,8 @@ void Clamp_classdef::Place_Point(void)
 			break;
 			
 			case 8:
-				if(Stretch(Param.Stretch_Min))
+//				if(Stretch(Param.Stretch_Min))
+				if(PickPlace(Top_PickPlace-Param.PickPlace_Ready) & Set_TurnPlacel(Param.Servo_PosCtrl, Param.Servo_OverPos) & Stretch(Param.Stretch_Min))
 				{
 					step = 0;
 					Place_Point_Flag = 0;
@@ -631,7 +638,7 @@ void Clamp_classdef::Place_Point(void)
 }
 
 int shoot_wait_time;
-void Clamp_classdef::Place(void)
+void Clamp_classdef::Place_Auto(void)
 {
 	if(Place_Flag)
 	{
@@ -640,6 +647,7 @@ void Clamp_classdef::Place(void)
 			case 0:
 				HAL_GPIO_WritePin(GPIOE, GPIO_PIN_9, GPIO_PIN_RESET);
 				if(Lift(Lift_Motor.get_totalencoder(),true)){step = 1;}
+//			if(Lift(Top_Lift,false)){step = 1;}//考虑到顶铝框的存在——效果不好
 			break;
 			
 			case 1:
@@ -655,7 +663,6 @@ void Clamp_classdef::Place(void)
 			break;
 			
 			case 4:
-				HAL_GPIO_WritePin(GPIOE, GPIO_PIN_9, GPIO_PIN_RESET);
 				if(PickPlace(now_place-Param.PickPlace_Loop))
 				{
 					shoot_wait_time++;
@@ -665,6 +672,68 @@ void Clamp_classdef::Place(void)
 						step = 5;
 					}
 				}
+				HAL_GPIO_WritePin(GPIOE, GPIO_PIN_9, GPIO_PIN_RESET);
+			break;
+
+			case 5:
+				if(Shoot.Set_Shoot(true))
+				{
+					step = 0;
+					Place_Flag = 0;
+					now_place = UseTarget[2];
+					HAL_GPIO_WritePin(GPIOE, GPIO_PIN_9, GPIO_PIN_SET);
+				}
+			break;
+
+			default:
+			break;
+		}
+	}
+	else
+	{
+		shoot_wait_time=0;
+		Homeing_Flag = 0;
+		Place_Flag = 0;
+//		now_place = PickPlace_Motor.get_totalencoder();
+		now_place = UseTarget[2];
+	}
+}
+
+void Clamp_classdef::Place_Manual(void)
+{
+	if(Place_Flag)
+	{
+		switch (step)
+		{
+			case 0:
+				HAL_GPIO_WritePin(GPIOE, GPIO_PIN_9, GPIO_PIN_RESET);
+				if(Lift(Lift_Motor.get_totalencoder(),true)){step = 1;}
+//			if(Lift(Top_Lift,false)){step = 1;}//考虑到顶铝框的存在——效果不好
+			break;
+			
+			case 1:
+				if(Stretch(Param.Stretch_Min) & PickPlace(now_place)){step = 2;}
+			break;
+			
+			case 2:
+				if(Set_TurnPlacel(Param.Servo_PosCtrl, Param.Servo_OverPos)){step = 3;}
+			break;
+			
+			case 3:
+				if(Shoot.Set_Shoot(false)){step = 4;}
+			break;
+			
+			case 4:
+				if(PickPlace(now_place-Param.PickPlace_Loop))
+				{
+					shoot_wait_time++;
+					if(shoot_wait_time>Param.Shoot_WaitTime)
+					{
+						shoot_wait_time=0;
+						step = 5;
+					}
+				}
+				HAL_GPIO_WritePin(GPIOE, GPIO_PIN_9, GPIO_PIN_RESET);
 			break;
 
 			case 5:
@@ -755,7 +824,7 @@ bool Clamp_classdef::Lift(float pos,bool datum,float*rp)
 				if(UseTarget[1]-Param.Lift_Max_Speed < Top_Lift+Param.Lift_Sub_SPortion)
 				{
 					AddVar[1] += Param.Lift_subSpeed_Ramp;
-					if(AddVar[1] >= -220){AddVar[1] = -220;}
+					if(AddVar[1] >= -LIFT_INIT_SPEED){AddVar[1] = -LIFT_INIT_SPEED;}
 				}
 				else//起步累叠加
 				{
@@ -799,8 +868,8 @@ bool Clamp_classdef::Lift(float pos,bool datum,float*rp)
 		{
 			//没写是因为其实目前没有一个步骤需要用到这个上升到非初始化位置的
 			//只有起步用的累叠加
-			AddVar[1] -= Param.Lift_addSpeed_Ramp;
-			if(AddVar[1] <= -Param.Lift_Max_Speed){AddVar[1] = -Param.Lift_Max_Speed;}
+			//现在用到了！！！但不用斜坡——效果不好
+			AddVar[1] -= LIFT_INIT_SPEED;
 			return false;
 		}
 		else
@@ -842,12 +911,10 @@ bool Clamp_classdef::PickPlace(float pos,bool datum,float*rp)
 		if(UseTarget[2] <= pos-Param.PickPlace_Speed)
 		{
 			AddVar[2] = Param.PickPlace_Speed;
-			return false;
 		}
 		else if(UseTarget[2] >= pos+Param.PickPlace_Speed)
 		{
 			AddVar[2] = -Param.PickPlace_Speed;
-			return false;
 		}
 		else
 		{
@@ -862,8 +929,16 @@ bool Clamp_classdef::PickPlace(float pos,bool datum,float*rp)
 			{
 				return true;
 			}
-			return false;
 		}
+		
+		if(UseTarget[2]+AddVar[2] < Top_PickPlace-Param.PickPlace_Max)
+		{
+			AddVar[2] = 0;
+			UseTarget[2] = Top_PickPlace-Param.PickPlace_Max;
+			return true;
+		}
+		
+		return false;
 	}
 }
 

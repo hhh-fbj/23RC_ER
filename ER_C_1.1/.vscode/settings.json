@@ -5,6 +5,7 @@
         "string_view": "cpp",
         "usart.h": "c",
         "algorithm": "cpp",
-        "tim.h": "c"
+        "tim.h": "c",
+        "cmath": "cpp"
     }
 }
