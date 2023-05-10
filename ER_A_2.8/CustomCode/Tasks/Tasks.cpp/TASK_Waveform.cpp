@@ -17,7 +17,7 @@ void Task_Debug(void *argument)
 
     for(;;)
     {
-			UpperComputer.ANO_DataShow((float)imu_Export.wxy_send[0],(float)imu_Export.wxy_send[1],(float)imu_Export.wxy_send[2],0);
+        // UpperComputer.ANO_DataShow((float)imu_Export.wxy_send[0],(float)imu_Export.wxy_send[1],(float)imu_Export.wxy_send[2],0);
         osDelay(1);
     }
 }

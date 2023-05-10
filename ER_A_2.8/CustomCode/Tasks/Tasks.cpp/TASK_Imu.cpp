@@ -22,10 +22,10 @@ void Task_DataSampling(void *argument)
 		BMQ_time++;
 		if(DevicesMonitor.Get_State(DR16_MONITOR) == Off_line)
 		{
-				for(uint8_t i = 0 ; i < 4 ; i++)
-				{
-					Chassis.Cal_Speed[i] = 0;
-				}
+			for(uint8_t i = 0 ; i < 4 ; i++)
+			{
+				Chassis.Cal_Speed[i] = 0;
+			}
 		}
 		else
 		{

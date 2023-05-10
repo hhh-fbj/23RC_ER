@@ -29,7 +29,7 @@
 /* Private define ------------------------------------------------------------*/
 #define USE_RUDDER_RESET 1
 #define REDUCTION_RATIOE 3//1:3
-#define VALUE_CIRCLE 98304
+#define VALUE_CIRCLE 98304//32,768
 #define DEGREE_TURN_CIRCLE 273.06666666666666666666666666667
 
 #define CHASSIS_MAX_SPEED 8000  // 底盘驱动轮最大速度
@@ -173,7 +173,7 @@ uint8_t Chassis_classdef::ProblemDetection(void)
     }
 }
 
-	float P;
+float P;
 void Chassis_classdef::ChassisTar_Update()
 {
     switch ((int)Mode)
@@ -225,7 +225,11 @@ void Chassis_classdef::ChassisTar_Update()
                     Process(CTRL_DR16.Get_ExptVx(), CTRL_DR16.Get_ExptVy(), CTRL_DR16.Get_ExptVw());
                 break;
                 
-                case 2:
+                case 2://会摆X
+                    Process(0, 0, 0);
+                break;
+								
+                case 4://不会摆X
                     Process(0, 0, 0);
                 break;
                     
@@ -233,18 +237,18 @@ void Chassis_classdef::ChassisTar_Update()
                     Process(Auto.Vx, Auto.Vy, Auto.Vw);
                 break;
 								
-								case 55://新想法
-										P = atan2(POS_PID[Posture_Y][PID_Outer].Target-Auto.Posture.POS_Y(), POS_PID[Posture_X][PID_Outer].Target-Auto.Posture.POS_X());
-										POS_X_PID.Target = sqrt(pow((POS_PID[Posture_Y][PID_Outer].Target-Auto.Posture.POS_Y()),2)+pow((POS_PID[Posture_X][PID_Outer].Target-Auto.Posture.POS_X()),2));
-										POS_X_PID.Current = 0;
-								
-										POS_PID[Posture_W][PID_Outer].Current = Auto.Posture.POS_W();
+                case 55://新想法
+                    P = atan2(POS_PID[Posture_Y][PID_Outer].Target-Auto.Posture.POS_Y(), POS_PID[Posture_X][PID_Outer].Target-Auto.Posture.POS_X());
+                    POS_X_PID.Target = sqrt(pow((POS_PID[Posture_Y][PID_Outer].Target-Auto.Posture.POS_Y()),2)+pow((POS_PID[Posture_X][PID_Outer].Target-Auto.Posture.POS_X()),2));
+                    POS_X_PID.Current = 0;
+            
+                    POS_PID[Posture_W][PID_Outer].Current = Auto.Posture.POS_W();
                     //根据yaw轴限xy轴速度
                     AF_WtoXY = AF_WtoXY_Stand/abs(POS_PID[Posture_W][PID_Outer].Target - POS_PID[Posture_W][PID_Outer].Current);
                     if(abs(AF_WtoXY)>=1){AF_WtoXY = 1;}
                     Process(AF_WtoXY*(POS_X_PID.Cal()*arm_cos(P+Auto.Posture.POS_W()*0.01745329251994329576923690768489)-880), \
-										AF_WtoXY*POS_X_PID.Cal()*arm_sin(P+Auto.Posture.POS_W()*0.01745329251994329576923690768489), POS_PID[Posture_W][PID_Outer].Cal());
-								break;
+                    AF_WtoXY*POS_X_PID.Cal()*arm_sin(P+Auto.Posture.POS_W()*0.01745329251994329576923690768489), POS_PID[Posture_W][PID_Outer].Cal());
+                break;
 
                 case 66://初始去取环
                     POS_PID[Posture_X][PID_Outer].Current = Auto.Posture.POS_X();//Auto.Posture.POS_W();
@@ -459,7 +463,7 @@ void Chassis_classdef::RudAngle_Calc(float Vx, float Vy, float Vw)
 
     if(Vx == 0 && Vy == 0 && Vw == 0)
     {
-        if(Mode == CHAS_LockMode || NO_PostureMode == 2)//轮子45度X型朝向
+        if(Mode == CHAS_LockMode ||  (Mode == CHAS_AutoMode && NO_PostureMode == 2))//轮子45度X型朝向 暂时不用
         {
             XYZ_Angle[0] = 45;
             XYZ_Angle[1] = 135;
@@ -517,38 +521,83 @@ void Chassis_classdef::Angle_Treatment(void)
     float Error;
     for(uint8_t i = 0 ; i < 4 ; i++)
     {
+			
         //转舵分辨率
-        XYZ_Angle[i] *= DEGREE_TURN_CIRCLE;
+        XYZ_Angle[i] *= DEGREE_TURN_CIRCLE;//角度对应的最小刻度
 				
-        XYZ_Angle[i] += (FRONT[i]-24576);
-        XYZ_Angle[i] = XYZ_Angle[i] - (floor(XYZ_Angle[i]/VALUE_CIRCLE)*VALUE_CIRCLE);
+        XYZ_Angle[i] += (FRONT[i]+24576);//-24576front朝向转为直角坐标系的90角位置的转换,+24576front朝向转为直角坐标系的180角位置的转换
+        XYZ_Angle[i] = XYZ_Angle[i] - (floor(XYZ_Angle[i]/VALUE_CIRCLE)*VALUE_CIRCLE);//过滤
+				
+				//目标
+				XYZ_Angle[i] = 393216+(XYZ_Angle[i]-49152);
+//				//误差
+				Error = XYZ_Angle[i]-RUD_Encider[i].getTotolAngle();
+				
+				falsh[i] = 1;
+//				//劣弧
+				if(Error > 49152)
+				{
+					XYZ_Angle[i] -= 49152;
+					falsh[i] *= -1;
+				}
+				else if(Error < -49152)
+				{
+					XYZ_Angle[i] += 49152;
+					falsh[i] *= -1;
+				}
+				else if(Error > 24576 && XYZ_Angle[i]+(Error-49152)>393216+(12000-49152))
+				{
+					XYZ_Angle[i] -= 49152;
+					falsh[i] *= -1;
+				}
+				else if(Error < -24576 && XYZ_Angle[i]+(Error+49152)<393216+(87000-49152))
+				{
+					XYZ_Angle[i] += 49152;
+					falsh[i] *= -1;
+				}
+				
+				if(XYZ_Angle[i]>=393216+(87000-49152))
+				{
+					falsh[i] *= -1;
+					XYZ_Angle[i] -= 49152;
+				}
+				else if(XYZ_Angle[i]<=393216+(12000-49152))
+				{
+					falsh[i] *= -1;
+					XYZ_Angle[i] += 49152;
+				}
+				Error = XYZ_Angle[i]-RUD_Encider[i].getTotolAngle();
 
-        //劣弧+反转判断
-        Error = XYZ_Angle[i] - (RUD_Encider[i].getTotolAngle()%VALUE_CIRCLE);//(RUD_Encider[i].getTotolAngle() - floor(RUD_Encider[i].getTotolAngle()/VALUE_CIRCLE) * VALUE_CIRCLE);
-        //
-        if (Error > 49152)
-        {
-            Error -= VALUE_CIRCLE;
-        }
-        else if (Error < -49152)
-        {
-            Error += VALUE_CIRCLE;
-        }
-				//
-        if(Error > 24576)
-        {
-            Error -= 49152;
-            falsh[i] = -1;
-        }
-        else if(Error <= -24576)
-        {
-            Error += 49152;
-            falsh[i] = -1;
-        }
-        else
-        {
-            falsh[i] = 1;
-        }
+				//差值
+//				Error = XYZ_Angle[i] - (RUD_Encider[i].getTotolAngle()%VALUE_CIRCLE);
+				
+//        //劣弧+反转判断
+//        Error = XYZ_Angle[i] - (RUD_Encider[i].getTotolAngle()%VALUE_CIRCLE);//(RUD_Encider[i].getTotolAngle() - floor(RUD_Encider[i].getTotolAngle()/VALUE_CIRCLE) * VALUE_CIRCLE);
+//        //
+				
+//        if (Error > 49152)
+//        {
+//            Error -= VALUE_CIRCLE;
+//        }
+//        else if (Error < -49152)
+//        {
+//            Error += VALUE_CIRCLE;
+//        }
+//				//
+//        if(Error > 24576)
+//        {
+//            Error -= 49152;
+//            falsh[i] = -1;
+//        }
+//        else if(Error <= -24576)
+//        {
+//            Error += 49152;
+//            falsh[i] = -1;
+//        }
+//        else
+//        {
+//            falsh[i] = 1;
+//        }
         RUD_PID[i][PID_Outer].Target = (int)Error;
     }
 }
@@ -569,8 +618,6 @@ void Chassis_classdef::CAN_Send(void)
             CANx_SendData(&hcan1, 0x342, SS2.data, 8);
             two_count = true;
         }
-        
-        
     }
 }
 void Chassis_classdef::CAN_Recvd(uint8_t can_rx_data[])
