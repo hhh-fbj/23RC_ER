@@ -57,10 +57,9 @@
 /* USER CODE END 0 */
 
 /* External variables --------------------------------------------------------*/
+extern DMA_HandleTypeDef hdma_adc1;
 extern CAN_HandleTypeDef hcan1;
 extern CAN_HandleTypeDef hcan2;
-extern DMA_HandleTypeDef hdma_sdio_tx;
-extern SD_HandleTypeDef hsd;
 extern TIM_HandleTypeDef htim2;
 extern TIM_HandleTypeDef htim4;
 extern DMA_HandleTypeDef hdma_uart7_rx;
@@ -303,20 +302,6 @@ void USART3_IRQHandler(void)
 }
 
 /**
-  * @brief This function handles SDIO global interrupt.
-  */
-void SDIO_IRQHandler(void)
-{
-  /* USER CODE BEGIN SDIO_IRQn 0 */
-
-  /* USER CODE END SDIO_IRQn 0 */
-  HAL_SD_IRQHandler(&hsd);
-  /* USER CODE BEGIN SDIO_IRQn 1 */
-
-  /* USER CODE END SDIO_IRQn 1 */
-}
-
-/**
   * @brief This function handles TIM6 global interrupt, DAC1 and DAC2 underrun error interrupts.
   */
 void TIM6_DAC_IRQHandler(void)
@@ -331,6 +316,20 @@ void TIM6_DAC_IRQHandler(void)
 }
 
 /**
+  * @brief This function handles DMA2 stream0 global interrupt.
+  */
+void DMA2_Stream0_IRQHandler(void)
+{
+  /* USER CODE BEGIN DMA2_Stream0_IRQn 0 */
+
+  /* USER CODE END DMA2_Stream0_IRQn 0 */
+  HAL_DMA_IRQHandler(&hdma_adc1);
+  /* USER CODE BEGIN DMA2_Stream0_IRQn 1 */
+
+  /* USER CODE END DMA2_Stream0_IRQn 1 */
+}
+
+/**
   * @brief This function handles DMA2 stream1 global interrupt.
   */
 void DMA2_Stream1_IRQHandler(void)
@@ -342,20 +341,6 @@ void DMA2_Stream1_IRQHandler(void)
   /* USER CODE BEGIN DMA2_Stream1_IRQn 1 */
 
   /* USER CODE END DMA2_Stream1_IRQn 1 */
-}
-
-/**
-  * @brief This function handles DMA2 stream3 global interrupt.
-  */
-void DMA2_Stream3_IRQHandler(void)
-{
-  /* USER CODE BEGIN DMA2_Stream3_IRQn 0 */
-
-  /* USER CODE END DMA2_Stream3_IRQn 0 */
-  HAL_DMA_IRQHandler(&hdma_sdio_tx);
-  /* USER CODE BEGIN DMA2_Stream3_IRQn 1 */
-
-  /* USER CODE END DMA2_Stream3_IRQn 1 */
 }
 
 /**

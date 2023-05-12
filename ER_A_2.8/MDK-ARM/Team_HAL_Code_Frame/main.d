@@ -36,8 +36,6 @@ team_hal_code_frame/main.o: ..\Src\main.c ..\Inc\main.h \
   ..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_rng.h \
   ..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_rtc.h \
   ..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_rtc_ex.h \
-  ..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_sd.h \
-  ..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_ll_sdmmc.h \
   ..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_spi.h \
   ..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_tim.h \
   ..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_tim_ex.h \
@@ -57,8 +55,8 @@ team_hal_code_frame/main.o: ..\Src\main.c ..\Inc\main.h \
   ..\Middlewares\Third_Party\FreeRTOS\Source\include\semphr.h \
   ..\Middlewares\Third_Party\FreeRTOS\Source\include\event_groups.h \
   ..\Inc\adc.h ..\Inc\can.h ..\Inc\dma.h ..\Inc\iwdg.h ..\Inc\rng.h \
-  ..\Inc\rtc.h ..\Inc\sdio.h ..\Inc\spi.h ..\Inc\tim.h ..\Inc\usart.h \
-  ..\Inc\gpio.h ..\CustomCode\Unify\Universe.h\System_Config.h \
+  ..\Inc\rtc.h ..\Inc\spi.h ..\Inc\tim.h ..\Inc\usart.h ..\Inc\gpio.h \
+  ..\CustomCode\Unify\Universe.h\System_Config.h \
   ..\CustomCode\Devices\Devices.h\DEV_AIMU.h \
   C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\stdio.h \
   C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\string.h \

@@ -646,4 +646,5 @@ c_gimbal/system_datapool.o: \
   ..\CustomCode\Devices\Devices.h\DEV_CIMU.h \
   ..\CustomCode\Devices\Devices.h\DEV_Buzzer.h \
   ..\CustomCode\Devices\Devices.h\DEV_LED.h \
+  ..\CustomCode\Devices\Devices.h\DEV_DRF1609H.h \
   ..\CustomCode\Devices\Devices.h\DEV_UpComputer.h

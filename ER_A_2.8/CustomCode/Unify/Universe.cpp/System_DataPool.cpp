@@ -28,6 +28,8 @@ CTRL_DR16_classdef CTRL_DR16;
 DevicesMonitor_classdef DevicesMonitor;
 Chassis_classdef Chassis;
 Auto_classdef Auto;
+DRF1609H_classdef DRF1609H;
 
 AIMU_Data_Classdef imu_Export;
 Buzzer_Classdef Buzzer;
+DT35_classdef DT35;

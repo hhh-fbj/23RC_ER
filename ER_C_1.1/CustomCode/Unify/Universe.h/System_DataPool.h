@@ -34,6 +34,7 @@
 #include "DEV_DR16.h"
 #include "DEV_Buzzer.h"
 #include "DEV_LED.h"
+#include "DEV_DRF1609H.h"
 #include "DEV_UpComputer.h"
 
 /* Macro Definitions ---------------------------------------------------------*/
@@ -106,6 +107,7 @@ extern DevicesMonitor_classdef DevicesMonitor;
 extern Gimbal_classdef Gimbal;
 extern Shoot_classdef Shoot; 
 extern Clamp_classdef Clamp;
+extern DRF1609H_classdef DRF1609H;
 extern Vision_classdef Vision;
 
 extern CIMU_Data_Classdef Cimu_Export;

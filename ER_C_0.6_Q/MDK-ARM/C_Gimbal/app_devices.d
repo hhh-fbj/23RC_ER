@@ -6,7 +6,6 @@ c_gimbal/app_devices.o: ..\CustomCode\Apps\Apps.cpp\APP_Devices.cpp \
   ..\Middlewares\Third_Party\FreeRTOS\Source\include\FreeRTOS.h \
   C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\libcxx\stddef.h \
   C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\stddef.h \
-  C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\libcxx\__nullptr \
   ..\Core\Inc\FreeRTOSConfig.h \
   ..\Middlewares\Third_Party\FreeRTOS\Source\include\projdefs.h \
   ..\Middlewares\Third_Party\FreeRTOS\Source\include\portable.h \

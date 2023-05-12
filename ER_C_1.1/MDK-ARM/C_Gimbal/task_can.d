@@ -646,4 +646,5 @@ c_gimbal/task_can.o: ..\CustomCode\Tasks\Tasks.cpp\TASK_Can.cpp \
   ..\CustomCode\Devices\Devices.h\DEV_CIMU.h \
   ..\CustomCode\Devices\Devices.h\DEV_Buzzer.h \
   ..\CustomCode\Devices\Devices.h\DEV_LED.h \
+  ..\CustomCode\Devices\Devices.h\DEV_DRF1609H.h \
   ..\CustomCode\Devices\Devices.h\DEV_UpComputer.h

@@ -36,15 +36,17 @@ void User_System_Init(void)
 	Uart_Init(&huart3,Uart3_Rx_Buff,USART3_RX_BUFFER_SIZE,DR16_Recv_Callback);
 	
 	//视觉
-	Uart_Init(&huart6,Vision.Recv_Msg.data,VISION_RX_SIZE,Vision_Recv_Callback);
+//	Uart_Init(&huart6,Vision.Recv_Msg.data,VISION_RX_SIZE,Vision_Recv_Callback);
 	
-	//
+
 	Uart_Init(&huart1,Clamp.TurnPlace_Servo.MX106_Data,MXDATASIZE,MX106_Recv_Callback);
 //	Uart_Init(&huart1, Shoot.BsqJnP2.RecData, 13, BsqJnP2_Recv_Callback);
 
 //	//上位机
 //	
-
+//	Uart_Init(&huart6, DRF1609H.TJC4827X343_Data, TJC4827X343_SIZE, DRF1609H_Recv_Callback);
+	HAL_UART_Receive_IT(&huart6, DRF1609H.TJC4827X343_Data, TJC4827X343_SIZE);
+	//
 	//CAN
 	CAN_Init(&hcan1,User_CAN1_RxCpltCallback);
 	CanFilter_Init(&hcan1);
@@ -104,7 +106,7 @@ void User_System_Init(void)
 	//	Chassis.RUD_Encider[1].SetInstruction_U8(&hcan2,0x0C,0X01);
 	//	Chassis.RUD_Encider[2].SetInstruction_U8(&hcan2,0x0C,0X01);
 	//	Chassis.RUD_Encider[3].SetInstruction_U8(&hcan2,0x0C,0X01);
-
+//	DRF1609H.TJCPrintf("\x00"); 
 	HAL_Delay(100);
 //	  
   // taskEXIT_CRITICAL();

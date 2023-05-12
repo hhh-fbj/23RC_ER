@@ -44,8 +44,6 @@ team_hal_code_frame/app_chassis.o: \
   ..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_rng.h \
   ..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_rtc.h \
   ..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_rtc_ex.h \
-  ..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_sd.h \
-  ..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_ll_sdmmc.h \
   ..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_spi.h \
   ..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_tim.h \
   ..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_tim_ex.h \
@@ -648,4 +646,6 @@ team_hal_code_frame/app_chassis.o: \
   ..\CustomCode\Devices\Devices.h\DEV_CIMU.h \
   ..\CustomCode\Devices\Devices.h\DEV_Buzzer.h \
   ..\CustomCode\Devices\Devices.h\DEV_UpComputer.h \
-  ..\CustomCode\Devices\Devices.h\DEV_SD.h
+  ..\CustomCode\Devices\Devices.h\DEV_SD.h \
+  ..\CustomCode\Devices\Devices.h\DEV_DT35.h \
+  ..\CustomCode\Devices\Devices.h\DEV_DRF1609H.h

@@ -72,8 +72,6 @@ void MX_FREERTOS_Init(void);
   * @brief  The application entry point.
   * @retval int
   */
-
-//
 int main(void)
 {
   /* USER CODE BEGIN 1 */
@@ -105,7 +103,7 @@ int main(void)
   MX_CAN2_Init();
   MX_I2C3_Init();
   MX_SPI1_Init();
-  // MX_TIM1_Init();
+  MX_TIM1_Init();
   MX_TIM4_Init();
   MX_TIM5_Init();
   MX_TIM10_Init();
@@ -115,6 +113,7 @@ int main(void)
   MX_USART6_UART_Init();
   MX_TIM2_Init();
   /* USER CODE BEGIN 2 */
+	MX_GPIO_Init_USER();
 	User_System_Init();
   /* USER CODE END 2 */
 
@@ -123,7 +122,6 @@ int main(void)
 
   /* Start scheduler */
   osKernelStart();
-
   /* We should never get here as control is now taken by the scheduler */
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */

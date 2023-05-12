@@ -647,5 +647,6 @@ c_gimbal/app_gimbal.o: ..\CustomCode\Apps\Apps.cpp\APP_Gimbal.cpp \
   ..\CustomCode\Devices\Devices.h\DEV_CIMU.h \
   ..\CustomCode\Devices\Devices.h\DEV_Buzzer.h \
   ..\CustomCode\Devices\Devices.h\DEV_LED.h \
+  ..\CustomCode\Devices\Devices.h\DEV_DRF1609H.h \
   ..\CustomCode\Devices\Devices.h\DEV_UpComputer.h \
   ..\CustomCode\Devices\BMI088\INS_task.h

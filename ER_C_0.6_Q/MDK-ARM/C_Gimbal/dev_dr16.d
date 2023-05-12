@@ -4,5 +4,4 @@ c_gimbal/dev_dr16.o: ..\CustomCode\Devices\Devices.cpp\DEV_DR16.cpp \
   C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\libcxx\__config \
   C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\stdint.h \
   C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\libcxx\stddef.h \
-  C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\stddef.h \
-  C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\libcxx\__nullptr
+  C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\stddef.h

@@ -162,10 +162,10 @@ uint32_t Uart6_Transmit(uint8_t* msg, uint16_t len)
  * @param   m_obj: serial port handle
  * @retval  None
  */
-uint32_t xxxxx;
+//uint32_t xxxxx;
 void Uart_Receive_Handler(usart_manage_t* m_obj)
 {	
-	xxxxx = __HAL_UART_GET_FLAG(m_obj->uart_x,UART_FLAG_IDLE);
+//	xxxxx = __HAL_UART_GET_FLAG(m_obj->uart_x,UART_FLAG_IDLE);
 	if(__HAL_UART_GET_FLAG(m_obj->uart_x,UART_FLAG_IDLE)!=RESET)
 	{
 		/* Check the parameters */

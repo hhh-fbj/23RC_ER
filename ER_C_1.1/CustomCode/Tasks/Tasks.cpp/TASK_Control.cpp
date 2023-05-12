@@ -24,6 +24,7 @@ void Task_Control(void *argument)
 		MotorMsgSend(&hcan2, Shoot.Motor); 
 		MotorMsgSend(&hcan1, Gimbal.Yaw_Motor);
 		MotorMsgSend(&hcan1, Clamp.Motor);
+		DRF1609H.communication();
 		vTaskDelayUntil(&xLastWakeTime, TimeIncrement);
   }
 }

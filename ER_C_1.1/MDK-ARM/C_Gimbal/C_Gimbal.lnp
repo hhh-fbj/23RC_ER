@@ -75,6 +75,7 @@
 "c_gimbal\dev_brtencoder.o"
 "c_gimbal\dev_bsqjnp2.o"
 "c_gimbal\dev_mx106.o"
+"c_gimbal\dev_drf1609h.o"
 "c_gimbal\task_can.o"
 "c_gimbal\task_check.o"
 "c_gimbal\task_control.o"

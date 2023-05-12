@@ -646,5 +646,6 @@ c_gimbal/task_waveform.o: ..\CustomCode\Tasks\Tasks.cpp\TASK_Waveform.cpp \
   ..\CustomCode\Devices\Devices.h\DEV_CIMU.h \
   ..\CustomCode\Devices\Devices.h\DEV_Buzzer.h \
   ..\CustomCode\Devices\Devices.h\DEV_LED.h \
+  ..\CustomCode\Devices\Devices.h\DEV_DRF1609H.h \
   ..\CustomCode\Devices\Devices.h\DEV_UpComputer.h \
   ..\CustomCode\Devices\Devices.h\DEV_Timer.h

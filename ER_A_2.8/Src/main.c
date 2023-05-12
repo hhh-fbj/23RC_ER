@@ -25,7 +25,6 @@
 #include "iwdg.h"
 #include "rng.h"
 #include "rtc.h"
-#include "sdio.h"
 #include "spi.h"
 #include "tim.h"
 #include "usart.h"
@@ -122,10 +121,9 @@ int main(void)
   MX_TIM9_Init();
   MX_TIM2_Init();
   MX_USART2_UART_Init();
-//  MX_SDIO_SD_Init();
   MX_RTC_Init();
   /* USER CODE BEGIN 2 */
-	
+	MX_GPIO_Init_USER();
 	User_System_Init();
 
   /* USER CODE END 2 */

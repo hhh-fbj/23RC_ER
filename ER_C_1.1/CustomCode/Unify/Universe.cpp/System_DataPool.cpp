@@ -28,6 +28,7 @@ DevicesMonitor_classdef DevicesMonitor;
 Gimbal_classdef Gimbal;
 Shoot_classdef Shoot;
 Clamp_classdef Clamp;
+DRF1609H_classdef DRF1609H;
 Vision_classdef Vision;
 
 CIMU_Data_Classdef Cimu_Export;

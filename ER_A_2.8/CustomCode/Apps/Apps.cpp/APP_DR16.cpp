@@ -2,7 +2,7 @@
  ------------------------------------------------------------------------------
  * @file    APP_DR16.cpp
  * @author  Shake
- * @brief   DR16 ç”¨æˆ·æŽ§åˆ¶
+ * @brief   DR16 ÓÃ»§¿ØÖÆ
  * @version V0.1
  * @date    2021-10-09
  * @copyright Copyright (c) 2021
@@ -16,8 +16,8 @@
 #include "System_DataPool.h"
 
 /* Private macros ------------------------------------------------------------*/
-#define LEVER_PERSONAL 1 // ï¿½?å·±ç”¨
-#define LEVER_STANDARD 2 // è§„èŒƒï¿½?
+#define LEVER_PERSONAL 1 // ??¼ºÓÃ
+#define LEVER_STANDARD 2 // ¹æ·¶??
 #define LEVER_MODE     1
 
 #define DR16DATA_NORMAL   0
@@ -30,7 +30,7 @@
 
 
 
-/*------------------------------------------------------------ åˆï¿½?ï¿½åŒ– ------------------------------------------------------------*/
+/*------------------------------------------------------------ ³õ???»¯ ------------------------------------------------------------*/
 /**
  * @brief      Initialize CTRL_DR16 Class
  * @param[in]  None
@@ -48,86 +48,86 @@ CTRL_DR16_classdef::CTRL_DR16_classdef()
     Coe.Pit_RC = -0.013f;
 }
 
-/*------------------------------------------------------------ RCé¥æŽ§å™¨æŽ§ï¿½? ------------------------------------------------------------*/
-//æ‹¨æ†æ¨¡å¼æ›´æ–°
+/*------------------------------------------------------------ RCÒ£¿ØÆ÷¿Ø?? ------------------------------------------------------------*/
+//²¦¸ËÄ£Ê½¸üÐÂ
 uint16_t Reset_cnt;
 int Posture_ResTime;
 void CTRL_DR16_classdef::LeverMode_Update(void)
 {
     switch((uint8_t)DR16.Get_S1_L())
     {
-        case Lever_UP:  // --- å·¦ä¸Š -----------------------------------------------
+        case Lever_UP:  // --- ×óÉÏ -----------------------------------------------
         {
             Auto.Posture_ResFlag = 0;
             // Chassis.Set_Mode(CHAS_LockMode);
             switch((uint8_t)DR16.Get_S2_R())
             {
-                // --- PCï¿½?æŽ§åˆ¶
-                case Lever_UP:/* å·¦ä¸Š-å³ä¸Š START ------------------------------------------*/ 
+                // --- PC??¿ØÖÆ
+                case Lever_UP:/* ×óÉÏ-ÓÒÉÏ START ------------------------------------------*/ 
                 {
                     Chassis.Set_Mode(CHAS_LockMode);
                 }
-                break;  /* å·¦ä¸Š-å³ä¸Š END ------------------------------------------*/
+                break;  /* ×óÉÏ-ÓÒÉÏ END ------------------------------------------*/
                 
-                case Lever_MID:/* å·¦ä¸Š-å³ä¸­ START ------------------------------------------*/ 
+                case Lever_MID:/* ×óÉÏ-ÓÒÖÐ START ------------------------------------------*/ 
                 {
                     Chassis.Set_Mode(CHAS_PostureMode);
                 }
-                break;  /* å·¦ä¸Š-å³ä¸­ END ------------------------------------------*/
+                break;  /* ×óÉÏ-ÓÒÖÐ END ------------------------------------------*/
 
-                case Lever_DOWN:/* å·¦ä¸Š-å³ä¸‹ START ------------------------------------------*/ 
+                case Lever_DOWN:/* ×óÉÏ-ÓÒÏÂ START ------------------------------------------*/ 
                 {
                     Chassis.Set_Mode(CHAS_LockMode);
                 }
-                break;  /* å·¦ä¸Š-å³ä¸‹ END ------------------------------------------*/
+                break;  /* ×óÉÏ-ÓÒÏÂ END ------------------------------------------*/
             }
         }
-        break;  // å·¦ä¸Š END ---------------------------------------------------
+        break;  // ×óÉÏ END ---------------------------------------------------
 
-        case Lever_MID:  // --- å·¦ä¸­ ----------------------------------------------
+        case Lever_MID:  // --- ×óÖÐ ----------------------------------------------
         {
             Auto.Posture_ResFlag = 0;
             switch((uint8_t)DR16.Get_S2_R())
             {
-                case Lever_UP:/* å·¦ä¸­-å³ä¸Š START ------------------------------------------*/ 
+                case Lever_UP:/* ×óÖÐ-ÓÒÉÏ START ------------------------------------------*/ 
                 {
                     Chassis.Set_Mode(CHAS_AutoMode);
                     if(DR16.Get_DW_Norm() >= 550 && Auto.overFlag == 0){Auto.startFlag=1;}
                     else if(DR16.Get_DW_Norm() <= -550 && Auto.SX == 0){Auto.SX=99;}
                     if(DR16.Get_DW_Norm()==0){Auto.SX=0;}
                 }
-                break;/* å·¦ä¸­-å³ä¸Š END ------------------------------------------*/
+                break;/* ×óÖÐ-ÓÒÉÏ END ------------------------------------------*/
 
-                case Lever_MID:/* å·¦ä¸­-å³ä¸­ START ------------------------------------------*/ 
+                case Lever_MID:/* ×óÖÐ-ÓÒÖÐ START ------------------------------------------*/ 
                 {
                     Chassis.Set_Mode(CHAS_MoveMode);
                 }
-                break;/* å·¦ä¸­-å³ä¸­ END ------------------------------------------*/
+                break;/* ×óÖÐ-ÓÒÖÐ END ------------------------------------------*/
 
-                case Lever_DOWN:/* å·¦ä¸­-å³ä¸‹ START ------------------------------------------*/ 
+                case Lever_DOWN:/* ×óÖÐ-ÓÒÏÂ START ------------------------------------------*/ 
                 {
                     Chassis.Set_Mode(CHAS_LockMode);//CHAS_LockMode; CHAS_LaserMode
                     if(DR16.Get_DW_Norm() >= 550)
                     {
-                        HAL_GPIO_WritePin(GPIOI, GPIO_PIN_7, GPIO_PIN_SET);//æ­£è½¬
+                        HAL_GPIO_WritePin(GPIOI, GPIO_PIN_7, GPIO_PIN_SET);//Õý×ª
                     }
                     if(DR16.Get_DW_Norm() <= -550)
                     {
-                        HAL_GPIO_WritePin(GPIOI, GPIO_PIN_7, GPIO_PIN_RESET);//é»˜è®¤
+                        HAL_GPIO_WritePin(GPIOI, GPIO_PIN_7, GPIO_PIN_RESET);//Ä¬ÈÏ
                     }
                     // Chassis.Set_Mode(CHAS_PostureMode);
                 }
-                break;/* å·¦ä¸­-å³ä¸‹ END ------------------------------------------*/
+                break;/* ×óÖÐ-ÓÒÏÂ END ------------------------------------------*/
             }
         }
-        break;  // å·¦ä¸­ END ---------------------------------------------------
+        break;  // ×óÖÐ END ---------------------------------------------------
 
-        case Lever_DOWN: // --- å·¦ä¸‹ ----------------------------------------------
+        case Lever_DOWN: // --- ×óÏÂ ----------------------------------------------
         {
             Posture_ResTime++;
-            if(Auto.Posture_ResFlag<5 &&\
-						DevicesMonitor.Get_State(CHAS_POSTURE_MONITOR)==On_line &&\
-						Posture_ResTime>50)
+            if(Auto.Posture_ResFlag<2 &&\
+            DevicesMonitor.Get_State(CHAS_POSTURE_MONITOR)==On_line &&\
+            Posture_ResTime>50)
             {
                 Posture_ResTime=0;
                 Auto.Posture_ResFlag++;
@@ -139,16 +139,16 @@ void CTRL_DR16_classdef::LeverMode_Update(void)
 						
             Chassis.Set_Mode(CHAS_DisableMode);
 						Auto.Posture.error = false;
-            HAL_GPIO_WritePin(GPIOI, GPIO_PIN_7, GPIO_PIN_RESET);//é»˜è®¤
+            HAL_GPIO_WritePin(GPIOI, GPIO_PIN_7, GPIO_PIN_RESET);//Ä¬ÈÏ
             // Robot Reset
             if(DR16.Get_DW_Norm() <= -550)
             {
                 Reset_cnt++;
-                if(Reset_cnt == 1500)//--- æ‹¨è½®æ‰“ä¸Š3sé‡å¯
+                if(Reset_cnt == 1500)//--- ²¦ÂÖ´òÉÏ3sÖØÆô
                 {
-                    //--- ï¿½?ç‰‡ï¿½?ï¿½ä½
-                    __set_FAULTMASK(1);    //å…³é—­æ‰€æœ‰ä¸­ï¿½?
-                    HAL_NVIC_SystemReset();//å¤ä½
+                    //--- ??Æ¬???Î»
+                    __set_FAULTMASK(1);    //¹Ø±ÕËùÓÐÖÐ??
+                    HAL_NVIC_SystemReset();//¸´Î»
                 } 
             }
             else
@@ -156,15 +156,15 @@ void CTRL_DR16_classdef::LeverMode_Update(void)
                 Reset_cnt = 0;
             }
         }
-        break;  // å·¦ä¸‹ END ---------------------------------------------------
+        break;  // ×óÏÂ END ---------------------------------------------------
 
         default:
         break;
     }
     RCCtrl_Update();
 }
-/*------------------------------------------------------------ æŽ§åˆ¶ï¿½? ------------------------------------------------------------*/
-//RCæŽ§åˆ¶æ¨¡å¼ - å¯¹ï¿½?ï¿½ï¿½?ï¿½ç½®ï¿½?æ ‡ï¿½?
+/*------------------------------------------------------------ ¿ØÖÆ?? ------------------------------------------------------------*/
+//RC¿ØÖÆÄ£Ê½ - ¶Ô??????ÖÃ??±ê??
 void CTRL_DR16_classdef::RCCtrl_Update(void)
 {
     Expt.Target_Vx = DR16.Get_LX_Norm()*20;//220
@@ -172,12 +172,12 @@ void CTRL_DR16_classdef::RCCtrl_Update(void)
     Expt.Target_Vw = DR16.Get_RX_Norm() * 10;
 }
 
-/*------------------------------------------------------------ å¤„ç† ------------------------------------------------------------*/
-//æ•°æ®ç›‘æµ‹ â€”â€”â€”ï¿½? - 0:Normal - 1:Abnormal
+/*------------------------------------------------------------ ´¦Àí ------------------------------------------------------------*/
+//Êý¾Ý¼à²â ¡ª¡ª¡ª?? - 0:Normal - 1:Abnormal
 int8_t CTRL_DR16_classdef::Data_Monitor(void)
 { 
-    if((DR16.Get_S1_L() != Lever_UP && DR16.Get_S1_L() != Lever_MID && DR16.Get_S1_L() != Lever_DOWN && DR16.Get_S1_L() != Lever_NONE) || /*<! å·¦æ‹¨ï¿½? */
-       (DR16.Get_S2_R() != Lever_UP && DR16.Get_S2_R() != Lever_MID && DR16.Get_S2_R() != Lever_DOWN && DR16.Get_S2_R() != Lever_NONE) || /*<! å³æ‹¨ï¿½? */
+    if((DR16.Get_S1_L() != Lever_UP && DR16.Get_S1_L() != Lever_MID && DR16.Get_S1_L() != Lever_DOWN && DR16.Get_S1_L() != Lever_NONE) || /*<! ×ó²¦?? */
+       (DR16.Get_S2_R() != Lever_UP && DR16.Get_S2_R() != Lever_MID && DR16.Get_S2_R() != Lever_DOWN && DR16.Get_S2_R() != Lever_NONE) || /*<! ÓÒ²¦?? */
        (DR16.Get_RX_Norm() > 660 || DR16.Get_RX_Norm() < -660) ||                                                                    /*<! CH0 */
        (DR16.Get_RY_Norm() > 660 || DR16.Get_RY_Norm() < -660) ||                                                                    /*<! CH1 */
        (DR16.Get_LX_Norm() > 660 || DR16.Get_LX_Norm() < -660) ||                                                                    /*<! CH2 */
@@ -194,8 +194,8 @@ int8_t CTRL_DR16_classdef::Data_Monitor(void)
 
 
 
-/*------------------------------------------------------------ è¾“å‡º ------------------------------------------------------------*/
-//è¾“å‡ºæ•°æ®é‡ç½®
+/*------------------------------------------------------------ Êä³ö ------------------------------------------------------------*/
+//Êä³öÊý¾ÝÖØÖÃ
 void CTRL_DR16_classdef::ExptData_Reset(void)
 {
     Expt.Target_Vx = 0;
@@ -205,7 +205,7 @@ void CTRL_DR16_classdef::ExptData_Reset(void)
     Expt.Target_Pit = 0;
 }
 
-//èŽ·å–å¯¹ï¿½?ï¿½è¾“å‡ºæ•°ï¿½? â€”â€”â€”ï¿½? - export data
+//»ñÈ¡¶Ô???Êä³öÊý?? ¡ª¡ª¡ª?? - export data
 float CTRL_DR16_classdef::Get_ExptVx()
 {
     return Expt.Target_Vx;

@@ -359,7 +359,7 @@
               <MiscControls></MiscControls>
               <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>..\Core\Inc</IncludePath>
+              <IncludePath>..\Core\Inc;../Core/Inc</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -865,6 +865,11 @@
               <FileName>DEV_Motor.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\CustomCode\Devices\DEV_Motor.h</FilePath>
+            </File>
+            <File>
+              <FileName>DEV_DRF1609H.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\CustomCode\Devices\Devices.cpp\DEV_DRF1609H.cpp</FilePath>
             </File>
           </Files>
         </Group>

@@ -31,7 +31,8 @@
 #include "DEV_Buzzer.h"
 #include "DEV_UpComputer.h"
 #include "DEV_SD.h"
-
+#include "DEV_DT35.h"
+#include "DEV_DRF1609H.h"
 
 /* Macro Definitions ---------------------------------------------------------*/
 #define TASK_STACK_SIZE_64    64
@@ -111,8 +112,10 @@ extern CTRL_DR16_classdef CTRL_DR16;
 extern DevicesMonitor_classdef DevicesMonitor;
 extern Chassis_classdef Chassis;
 extern Auto_classdef Auto;
+extern DRF1609H_classdef DRF1609H;
 
 extern AIMU_Data_Classdef imu_Export;
 extern Buzzer_Classdef Buzzer;
+extern DT35_classdef DT35;
 
 #endif

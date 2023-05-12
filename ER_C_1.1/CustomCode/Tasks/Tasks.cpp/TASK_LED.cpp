@@ -23,8 +23,9 @@ void Task_LED(void *argument)
             LED.BLN_Ctrl();
         }
         BMQ_time++;
-
-        if(BMQ_time % 25 == 0){Vision.SendToPC(&Vision.Send_Msg);}
+				
+				//ÊÓ¾õÍ¨Ñ¶
+//        if(BMQ_time % 25 == 0){Vision.SendToPC(&Vision.Send_Msg);}
 				
         if(DevicesMonitor.Get_State(YAW_ENCODER_MONITOR)  == Off_line && (BMQ_time % 50 == 0))
         {

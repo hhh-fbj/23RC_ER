@@ -647,5 +647,6 @@ c_gimbal/task_check.o: ..\CustomCode\Tasks\Tasks.cpp\TASK_Check.cpp \
   ..\CustomCode\Devices\Devices.h\DEV_CIMU.h \
   ..\CustomCode\Devices\Devices.h\DEV_Buzzer.h \
   ..\CustomCode\Devices\Devices.h\DEV_LED.h \
+  ..\CustomCode\Devices\Devices.h\DEV_DRF1609H.h \
   ..\CustomCode\Devices\BMI088\calibrate_task.h \
   ..\CustomCode\Devices\BMI088\delay.h

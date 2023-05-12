@@ -29,7 +29,6 @@
 /* Configure GPIO                                                             */
 /*----------------------------------------------------------------------------*/
 /* USER CODE BEGIN 1 */
-void MX_GPIO_Init_USER(void);
 /* USER CODE END 1 */
 
 /** Configure pins as
@@ -122,8 +121,6 @@ void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_PULLUP;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
   HAL_GPIO_Init(CS1_GYRO_GPIO_Port, &GPIO_InitStruct);
-	
-	MX_GPIO_Init_USER();
 
   /* EXTI interrupt init*/
   HAL_NVIC_SetPriority(EXTI0_IRQn, 6, 0);
@@ -153,7 +150,7 @@ void MX_GPIO_Init_USER(void)//�Զ���
   HAL_GPIO_Init(GPIOI, &GPIO_InitStruct);
 	
 	/*Configure GPIO pin : PtPin */
-  //A板
+  //A�?
   GPIO_InitStruct.Pin = GPIO_PIN_6;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
@@ -183,7 +180,7 @@ void MX_GPIO_Init_USER(void)//�Զ���
   GPIO_InitStruct.Pull = GPIO_PULLUP;
   HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
   
-  //发送底盘
+  //发�?�底�?
 	GPIO_InitStruct.Pin = GPIO_PIN_9;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;

@@ -18,8 +18,8 @@
 
 #include "System_DataPool.h"
 #include "include.h"
-RTC_TimeTypeDef  H_S_M_Time; // Ê±¼ä½á¹¹??
-RTC_DateTypeDef  Y_M_D_Data; // ÈÕÆÚ½á¹¹??
+RTC_TimeTypeDef  H_S_M_Time; // æ—¶é—´ç»“æ„??
+RTC_DateTypeDef  Y_M_D_Data; // æ—¥æœŸç»“æ„??
 
 
 
@@ -42,12 +42,14 @@ void User_System_Init(void)
 
 	/* PWR Init */
 //  	PVD_Config();
-	
+//	HAL_ADC_Start_DMA(&hadc1,(uint32_t *)DT35.adc_buf,DT35_DMA_SIZE);		//å¼€å¯ADC1çš„DMAä¼ è¾“	
+
     /* Drivers Init ---------------------*/
 //	DR16_USART_IT_Init();
 	Uart_Init(&huart1,Uart1_Rx_Buff,USART1_RX_BUFFER_SIZE,DR16_Recv_Callback);
 	Uart_Init(&huart6,Auto.Posture.Recv_Msg.data,Post_Buffer_SIZE,Posture_Recv_Callback);
 	Uart_Init(&huart7,Auto.Analog.ReceiveData, REC_DATA_NUM, Analog_Recv_Callback);
+//	Uart_Init(&huart7,DRF1609H.TJC4827X343_Data, TJC4827X343_SIZE, DRF1609H_Recv_Callback);
 
 	CAN_Init(&hcan1,User_CAN1_RxCpltCallback);
 	CanFilter_Init(&hcan1);
@@ -60,6 +62,7 @@ void User_System_Init(void)
 
 	Timer_Init(&htim4, USE_HAL_DELAY);
 	PIDTimer::getMicroTick_regist(Get_SystemTimer);
+
 	HAL_Delay(100);
 	Buzzer.All_LED(ON);
 	HAL_Delay(100);
@@ -131,26 +134,26 @@ void User_System_Init(void)
 }
 
 /**
-  * @brief      ´´½¨ÓÃ»§ÈÎÎñ
+  * @brief      åˆ›å»ºç”¨æˆ·ä»»åŠ¡
   * @param[in]  None
   * @return     None
   */
 void System_Tasks_Init(void)
 {
 
-	//--- CAN1 ½ÓÊÕÈÎÎñ
+	//--- CAN1 æ¥æ”¶ä»»åŠ¡
 	xTaskCreate(Task_CAN1_Receive, "CAN1_Receive", TASK_STACK_SIZE_256, NULL, PriorityHigh, NULL);
-	//--- CAN2 ½ÓÊÕÈÎÎñ
+	//--- CAN2 æ¥æ”¶ä»»åŠ¡
 	xTaskCreate(Task_CAN2_Receive, "CAN2_Receive", TASK_STACK_SIZE_256, NULL, PriorityHigh, NULL);
 
-	//--- Éè±ä¼ì²âÈÎÎñ
+	//--- è®¾å˜æ£€æµ‹ä»»åŠ¡
   	xTaskCreate(Task_DevicesMonitor, "DevicesMonitor", TASK_STACK_SIZE_128, NULL, PriorityAboveNormal, NULL);
-	//--- IMUÊı¾İ²ÉÑùÈÎÎñ
+	//--- IMUæ•°æ®é‡‡æ ·ä»»åŠ¡
 	xTaskCreate(Task_DataSampling, "IMUSampling", TASK_STACK_SIZE_256, NULL, PriorityHigh, NULL);
-	//--- ÉÏÎ»»úÈÎÎñ
+	//--- ä¸Šä½æœºä»»åŠ¡
 	// xTaskCreate(Task_Debug, "Debug", TASK_STACK_SIZE_128, NULL, PriorityNormal, NULL);
 
-	//--- ×Ü¿ØÖÆÈÎÎñ(·Å×îºó´´½¨)
+	//--- æ€»æ§åˆ¶ä»»åŠ¡(æ”¾æœ€ååˆ›å»º)
 	xTaskCreate(Task_Control, "Control", TASK_STACK_SIZE_512, NULL, PriorityNormal, NULL);
 	
   taskENTER_CRITICAL();
