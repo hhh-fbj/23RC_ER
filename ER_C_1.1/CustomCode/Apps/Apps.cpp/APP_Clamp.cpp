@@ -35,7 +35,7 @@ Clamp_classdef::Clamp_classdef()
 	Param.Stretch_Hold = 1360000;
 	Param.Stretch_Speed = 800;
 	Param.Stretch_Speed_Ramp = 10;
-	Param.Lift_Max = 820000;//770000;
+	Param.Lift_Max = 860000;//770000;
 	Param.Lift_Hold = 500000;//770000;
 	Param.Lift_Max_Speed = 3600;
 	Param.Lift_Min_Speed = 1200;
@@ -61,8 +61,8 @@ Clamp_classdef::Clamp_classdef()
 	Param.Servo_CtrlTime = 10;
 	Param.Servo_TorqueCtrl = 64;
 	Param.Servo_PosCtrl = 116;
-	Param.Servo_InitPos = 1898;
-	Param.Servo_OverPos = 2444;//1579
+	Param.Servo_InitPos = 840;//1898;//
+	Param.Servo_OverPos = 1386;//2444;//1579
 	Param.Servo_ErrorPos = 25;
 	Param.Stretch_ErrorPos = 400;
 	Param.PickPlace_ErrorPos = 500;
@@ -720,7 +720,7 @@ void Clamp_classdef::Place_Manual(void)
 			break;
 			
 			case 3:
-				if(Shoot.Set_Shoot(false)){step = 4;}
+				if(Shoot.Set_Shoot(false)){step = 5;}
 			break;
 			
 			case 4:

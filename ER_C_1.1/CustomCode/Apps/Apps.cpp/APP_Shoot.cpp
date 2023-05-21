@@ -43,7 +43,7 @@ Shoot_classdef::Shoot_classdef()
 	// Pre_Tar[1] = -100;
 
 	Param.Shoot_Hold = 560000;//520000
-	Param.Shoot_Speed = 880;
+	Param.Shoot_Speed = 1320;//880;
 	Param.Shoot_Circle = 848380;
 	Param.Shoot_ErrorPos = 1000;
 	Param.Pull_Max = 13100000;
@@ -573,12 +573,14 @@ bool Shoot_classdef::Set_Shoot(bool shoot)
 			{
 				AddAngle = 0;
 				Shoot_TarAngle = stop_shoot-Param.Shoot_Hold;
+				
+				return true;
 
-				if(abs(Shoot_Motor.get_totalencoder() - (stop_shoot-Param.Shoot_Hold)) < Param.Shoot_ErrorPos)
-				{
-					return true;
-				}
-				return false;
+//				if(abs(Shoot_Motor.get_totalencoder() - (stop_shoot-Param.Shoot_Hold)) < Param.Shoot_ErrorPos)
+//				{
+//					return true;
+//				}
+//				return false;
 			}
 		}
 	}
