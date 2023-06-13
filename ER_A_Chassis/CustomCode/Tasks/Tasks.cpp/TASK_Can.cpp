@@ -22,22 +22,31 @@ void Task_CAN1_Receive(void *argument)
 				//编码器
         switch(CAN1_Rx.Header.StdId)
         {
+					case 0x004://
+							Chassis.RUD_Encider[Left_Rud].getInfo(CAN1_Rx.Data);
+							DevicesMonitor.Update(Frame_CHAS_RUDEncider1);
+					break;			
+					case 0x002://
+                Chassis.RUD_Encider[Front_Rud].getInfo(CAN1_Rx.Data);
+								DevicesMonitor.Update(Frame_CHAS_RUDEncider2);
+            break;
+            case 0x003://
+                Chassis.RUD_Encider[Right_Rud].getInfo(CAN1_Rx.Data);
+								DevicesMonitor.Update(Frame_CHAS_RUDEncider3);
+            break;
+					
+            case 0x201:
+                Chassis.RUD_Motor[Front_Rud].update(CAN1_Rx.Data);
+								DevicesMonitor.Update(Frame_CHAS_RUD1);
+            break;
 						case 0x202:
-                Chassis.RUD_Motor[1].update(CAN1_Rx.Data);
+                Chassis.RUD_Motor[Left_Rud].update(CAN1_Rx.Data);
 								DevicesMonitor.Update(Frame_CHAS_RUD2);
             break;
             case 0x203:
-                Chassis.RUD_Motor[2].update(CAN1_Rx.Data);
+                Chassis.RUD_Motor[Right_Rud].update(CAN1_Rx.Data);
 								DevicesMonitor.Update(Frame_CHAS_RUD3);
             break;	
-            case 0x201:
-                Chassis.RUD_Motor[0].update(CAN1_Rx.Data);
-								DevicesMonitor.Update(Frame_CHAS_RUD1);
-            break;
-						case 0x204:
-                Chassis.RUD_Motor[3].update(CAN1_Rx.Data);
-								DevicesMonitor.Update(Frame_CHAS_RUD4);
-						break;
 						// case 0x342:
             //     Chassis.CAN_Recvd(CAN1_Rx.Data);
 						// 		DevicesMonitor.Update(Frame_CHAS_CUSARTA);
@@ -69,25 +78,23 @@ void Task_CAN2_Receive(void *argument)
         xQueueReceive(Can2Recv_QueueHandle, &CAN2_Rx, portMAX_DELAY);
 				//2006
         switch(CAN2_Rx.Header.StdId)
+        {}
+				
+				switch(CAN2_Rx.Header.ExtId & 0xFF)
         {
-					case 0x002://
-                Chassis.RUD_Encider[1].getInfo(CAN2_Rx.Data);
-				DevicesMonitor.Update(Frame_CHAS_RUDEncider2);
+            case 11://
+                Chassis.DRV_Motor[Front_Rud].State_getInfo(CAN2_Rx.Header.ExtId>>8, CAN2_Rx.Data);
+								DevicesMonitor.Update(Frame_CHAS_DRV1);
             break;
-            case 0x003://
-                Chassis.RUD_Encider[2].getInfo(CAN2_Rx.Data);
-				DevicesMonitor.Update(Frame_CHAS_RUDEncider3);
+						case 12://
+                Chassis.DRV_Motor[Left_Rud].State_getInfo(CAN2_Rx.Header.ExtId>>8, CAN2_Rx.Data);
+								DevicesMonitor.Update(Frame_CHAS_DRV2);
             break;
-						case 0x001://
-                Chassis.RUD_Encider[0].getInfo(CAN2_Rx.Data);
-				DevicesMonitor.Update(Frame_CHAS_RUDEncider1);
-            break;			
-						case 0x004://
-                Chassis.RUD_Encider[3].getInfo(CAN2_Rx.Data);
-				DevicesMonitor.Update(Frame_CHAS_RUDEncider4);
-            break;	
-            
-        }
+            case 13://
+                Chassis.DRV_Motor[Right_Rud].State_getInfo(CAN2_Rx.Header.ExtId>>8, CAN2_Rx.Data);
+								DevicesMonitor.Update(Frame_CHAS_DRV3);
+            break;
+				}
     }
 }
 

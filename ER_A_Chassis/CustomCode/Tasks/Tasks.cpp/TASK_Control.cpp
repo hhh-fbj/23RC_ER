@@ -13,12 +13,11 @@ void Task_Control(void *argument)
   xLastWakeTime = xTaskGetTickCount();
   const TickType_t TimeIncrement = pdMS_TO_TICKS(2);  // --- 2MS 
   static uint8_t led_cnt = 0;
+  
   for(;;)
   {
     led_cnt++;
 		Chassis.Control();
-		DRF1609H.communication();
-		DT35.DT35_GetDistance();
     if((led_cnt%=50) == 0)
     {   //--- 任务正常运行流水灯
         Buzzer.Waterfall_LED();

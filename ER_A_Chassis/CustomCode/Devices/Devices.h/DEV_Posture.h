@@ -52,6 +52,7 @@ private:
 public: 
     Posture_Classdef();
     bool error;
+		float time_long[2];
     float Last_POS[3];
     PostureRecvMsg_u Recv_Msg;
     void getMessage(uint8_t *PostureBuf);

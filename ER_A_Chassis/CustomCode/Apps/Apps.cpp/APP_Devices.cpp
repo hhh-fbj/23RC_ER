@@ -72,7 +72,7 @@ uint8_t DevicesMonitor_classdef::Frame_Detec(uint16_t counter, uint16_t critical
  */
 uint8_t DevicesMonitor_classdef::Get_State(uint32_t device)
 {
-    if(device == 0x3FFF)/* (device>(1<<(FrameCount_NUM-2))) */ //--- 检测指定设备以外的其他设备
+    if(device == 0x7FFF)/* (device>(1<<(FrameCount_NUM-2))) */ //--- 检测指定设备以外的其他设备
     { 
         return ((Devices_Frame&device)==device?0:1);
     }

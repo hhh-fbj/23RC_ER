@@ -117,6 +117,7 @@ private://can_status_msg
 	int32_t buffer_get_int32(const uint8_t *buffer, int32_t *index) ;
 public:
 	int32_t falsh = 1;
+	float Out;
 	BldcDrive_VESC(uint8_t id) : ID(id){};
 	void Set_current(CAN_HandleTypeDef* CAN_Num , float current);
 	void Set_duty(CAN_HandleTypeDef* CAN_Num , float duty);

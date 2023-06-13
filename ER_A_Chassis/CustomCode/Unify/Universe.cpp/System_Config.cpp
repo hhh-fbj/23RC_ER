@@ -18,8 +18,6 @@
 
 #include "System_DataPool.h"
 #include "include.h"
-
-#include "adc.h"
 RTC_TimeTypeDef  H_S_M_Time; // 时间结构??
 RTC_DateTypeDef  Y_M_D_Data; // 日期结构??
 
@@ -42,7 +40,6 @@ void User_System_Init(void)
 //	HAL_TIM_Base_Start_IT(&htim2);
 //	HAL_TIM_PWM_Start(&htim5, TIM_CHANNEL_3);
 
-//  HAL_ADC_Start_DMA(&hadc1, (uint32_t*)DT35.adc_buf, 3);
 	/* PWR Init */
 //  	PVD_Config();
 //	HAL_ADC_Start_DMA(&hadc1,(uint32_t *)DT35.adc_buf,DT35_DMA_SIZE);		//开启ADC1的DMA传输	
@@ -52,7 +49,7 @@ void User_System_Init(void)
 	Uart_Init(&huart1,Uart1_Rx_Buff,USART1_RX_BUFFER_SIZE,DR16_Recv_Callback);
 	Uart_Init(&huart6,Auto.Posture.Recv_Msg.data,Post_Buffer_SIZE,Posture_Recv_Callback);
 //	Uart_Init(&huart7,Auto.Analog.ReceiveData, REC_DATA_NUM, Analog_Recv_Callback);
-	Uart_Init(&huart8,DRF1609H.TJC4827X343_Data, TJC4827X343_SIZE, DRF1609H_Recv_Callback);
+//	Uart_Init(&huart7,DRF1609H.TJC4827X343_Data, TJC4827X343_SIZE, DRF1609H_Recv_Callback);
 
 	CAN_Init(&hcan1,User_CAN1_RxCpltCallback);
 	CanFilter_Init(&hcan1);
@@ -94,20 +91,20 @@ void User_System_Init(void)
 //	HAL_Delay(5);
 //	if(Chassis.RUD_Encider[3].ReadMode == 0x01){Chassis.RUD_Encider[3].SetInstruction_U8(&hcan2,0x04,0xAA);}
 	
-	Chassis.RUD_Encider[0].SetInstruction_U16(&hcan2,0x05,4000);
-	HAL_Delay(5);
-	Chassis.RUD_Encider[1].SetInstruction_U16(&hcan2,0x05,5000);
-	HAL_Delay(5);
-	Chassis.RUD_Encider[2].SetInstruction_U16(&hcan2,0x05,5500);
-	HAL_Delay(5);
-	Chassis.RUD_Encider[3].SetInstruction_U16(&hcan2,0x05,4500);
-	
-//		Chassis.RUD_Encider[0].SetInstruction_U8(&hcan2,0x02,0x03);
-//		HAL_Delay(5);
-//		Chassis.RUD_Encider[1].SetInstruction_U8(&hcan2,0x02,0x03);
-//		HAL_Delay(5);
-//		Chassis.RUD_Encider[2].SetInstruction_U8(&hcan2,0x02,0x03);
-//		HAL_Delay(5);
+	Chassis.RUD_Encider[0].SetInstruction_U16(&hcan1,0x05,4000);
+	HAL_Delay(500);
+	Chassis.RUD_Encider[1].SetInstruction_U16(&hcan1,0x05,5000);
+	HAL_Delay(500);
+	Chassis.RUD_Encider[2].SetInstruction_U16(&hcan1,0x05,5500);
+	HAL_Delay(500);
+//	Chassis.RUD_Encider[3].SetInstruction_U16(&hcan1,0x05,4500);
+//	HAL_Delay(500);
+//		Chassis.RUD_Encider[0].SetInstruction_U8(&hcan1,0x0C,0x01);
+//		HAL_Delay(500);
+//		Chassis.RUD_Encider[1].SetInstruction_U8(&hcan1,0x0C,0x01);
+//		HAL_Delay(500);
+//		Chassis.RUD_Encider[2].SetInstruction_U8(&hcan1,0x0C,0x01);
+//		HAL_Delay(500);
 //		Chassis.RUD_Encider[3].SetInstruction_U8(&hcan2,0x02,0x03);
 //		HAL_Delay(5);
 //		Chassis.RUD_Encider[2].SetInstruction_U8(&hcan2,0x04,0xAA);

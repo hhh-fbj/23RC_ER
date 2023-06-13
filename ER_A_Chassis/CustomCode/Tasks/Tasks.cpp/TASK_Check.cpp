@@ -18,12 +18,13 @@ void Task_DevicesMonitor(void *argument)
     xLastWakeTime = xTaskGetTickCount();
     const TickType_t TimeIncrement = pdMS_TO_TICKS(20);  
 
-    static uint8_t monitor_cnt = 0;
+    static int monitor_cnt = 0;
  
     static int16_t low_bat_voltage_cnt = 600;
 
     for(;;)
     {
+				
         if(((++monitor_cnt)%=10)==0 && Chassis.over_init == 1 && CTRL_DR16.start == 1)// --- 200MS 
         {
             DevicesMonitor.Devices_Detec();
@@ -34,14 +35,13 @@ void Task_DevicesMonitor(void *argument)
             }
             if(DevicesMonitor.Get_State(CHAS_RUDEncider1_MONITOR) == Off_line||
             DevicesMonitor.Get_State(CHAS_RUDEncider2_MONITOR) == Off_line||
-            DevicesMonitor.Get_State(CHAS_RUDEncider3_MONITOR) == Off_line||
-            DevicesMonitor.Get_State(CHAS_RUDEncider4_MONITOR) == Off_line)
+            DevicesMonitor.Get_State(CHAS_RUDEncider3_MONITOR) == Off_line)
             {
                 Buzzer.error = 0;//1
             }
             if(DevicesMonitor.Get_State(CHAS_POSTURE_MONITOR) == Off_line)
             {
-//                Buzzer.error = 1;//1
+                Buzzer.error = 1;
             }
             else
             {

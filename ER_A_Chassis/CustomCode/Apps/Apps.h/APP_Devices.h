@@ -11,14 +11,15 @@
 #define CHAS_RUD1_MONITOR		(1<<3) // 驱动轮电机 2006  
 #define CHAS_RUD2_MONITOR		(1<<4) // 驱动轮电机 2006  
 #define CHAS_RUD3_MONITOR		(1<<5) // 驱动轮电机 2006  
-#define CHAS_RUD4_MONITOR		(1<<6) // 驱动轮电机 2006  
-#define CHAS_RUDEncider1_MONITOR	(1<<7) // 驱动轮编码器 
-#define CHAS_RUDEncider2_MONITOR	(1<<8) // 驱动轮编码器  
-#define CHAS_RUDEncider3_MONITOR	(1<<9) // 驱动轮编码器  
-#define CHAS_RUDEncider4_MONITOR	(1<<10) // 驱动轮编码器  
-#define CHAS_CUSARTA_MONITOR	(1<<11) // 
-#define CHAS_POSTURE_MONITOR	(1<<12) // 
-#define CHAS_ANALOG_MONITOR		(1<<13) // 
+#define CHAS_RUDEncider1_MONITOR	(1<<6) // 驱动轮编码器 
+#define CHAS_RUDEncider2_MONITOR	(1<<7) // 驱动轮编码器  
+#define CHAS_RUDEncider3_MONITOR	(1<<8) // 驱动轮编码器  
+#define CHASSIS_DRV1_MONITOR	(1<<9) // 驱动轮编码器 
+#define CHASSIS_DRV2_MONITOR	(1<<10) // 驱动轮编码器  
+#define CHASSIS_DRV3_MONITOR	(1<<11) // 驱动轮编码器 
+#define CHAS_CUSARTA_MONITOR	(1<<12) // 
+#define CHAS_POSTURE_MONITOR	(1<<13) // 
+#define CHAS_ANALOG_MONITOR		(1<<14) // 
 
 
 #define On_line   0
@@ -30,24 +31,25 @@
   	1,1,1,1,\
 	1,1,1,1,\
 	1,1,1,1,\
-	1,1,\
+	1,1,1,\
 };
 
 
 /* Private type --------------------------------------------------------------*/
 enum FrameType_e
 {
-  	Frame_DR16,
+	Frame_DR16,
 	Frame_CAN1,
 	Frame_CAN2,
 	Frame_CHAS_RUD1,
 	Frame_CHAS_RUD2,
 	Frame_CHAS_RUD3,
-	Frame_CHAS_RUD4,
 	Frame_CHAS_RUDEncider1,
 	Frame_CHAS_RUDEncider2,
 	Frame_CHAS_RUDEncider3,
-	Frame_CHAS_RUDEncider4,
+	Frame_CHAS_DRV1,
+	Frame_CHAS_DRV2,
+	Frame_CHAS_DRV3,
 	Frame_CHAS_CUSARTA,
 	Frame_CHAS_POSTURE,
 	Frame_CHAS_ANALOG,

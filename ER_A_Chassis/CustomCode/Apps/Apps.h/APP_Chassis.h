@@ -23,12 +23,12 @@
 /* --- 底盘驱动电机 ID --------------------------------------------------------*/
 enum CHAS_DrvMotorID_e
 {
-    RF_Drv = 0,LF_Drv = 1,LB_Drv = 2,RB_Drv = 3
+    Front_Drv = 0,Left_Drv = 1,Right_Drv = 2
 };
 /* --- 底盘转向电机 ID --------------------------------------------------------*/
 enum CHAS_RudMororID_e
 {
-    RF_Rud = 0,LF_Rud = 1,LB_Rud = 2,RB_Rud = 3
+    Front_Rud = 0,Left_Rud = 1,Right_Rud = 2
 };
 
 /* --- 底盘控制模式 ------------------------------------------------------------*/
@@ -60,11 +60,7 @@ typedef union
 	uint8_t data[IMU_RecvCan_SIZE];
 }IMURecvCanMsg_u;
 
-typedef union
-{
-    float speed[2];
-	uint8_t data[8];
-}SendSpeed_u;
+
 
 /* --- 转向轮电机相关参数 -------------------------------------------------------*/
 
@@ -83,13 +79,10 @@ typedef struct
 class Chassis_classdef : public CTRL_DR16_classdef
 {
 private:
-    static float const Ltheta,Rtheta;//三轮后
-    static float const Ftheta;//四轮
-    float FRONT[4], XYZ_Angle[4], XYZ_PreTar_Angle[4];/*<! 舵向轮 */
-    float falsh[4];//驱动轮方向
-    float Three_Speed[4];//32767
+    float FRONT[3], XYZ_Angle[3], XYZ_PreTar_Angle[3];/*<! 舵向轮 */
+    float falsh[3];//驱动轮方向
+    float Three_Speed[3];//32767
     float Radius = 1.0f;  // 圆心距
-    SendSpeed_u SS1,SS2;
     float AF_WtoXY,AF_WtoXY_Stand;//根据yaw轴限xy轴速度参数
 
     bool two_count;
@@ -104,7 +97,8 @@ private:
 
     //PID
     PositionPID Repair_PID[2];
-    PositionPID RUD_PID[4][2];
+    PositionPID RUD_PID[3][2];
+    IncrementPID DRV_PID[3]; 
 
     void Sensor(void);
     uint8_t ProblemDetection(void);
@@ -122,7 +116,7 @@ public:
     Chassis_classdef(); 
     
     float Cal_Speed[4];//速度
-    GPIO_PinState EdgeDete[6];
+    GPIO_PinState EdgeDete[8];
     uint8_t over_init;//底盘初始化标记
     uint8_t NO_PostureMode = 0;
     GPIO_PinState Ready_Flag = GPIO_PIN_RESET;
@@ -133,9 +127,11 @@ public:
 		PositionPID POS_X_PID;
 		
     //电机驱动+编码器
-    Motor_M2006 RUD_Motor[4] = {Motor_M2006(1), Motor_M2006(2), Motor_M2006(3), Motor_M2006(4)}; /*<! ת���� 2006��� */
-    Encider_Brt RUD_Encider[4] = {Encider_Brt(1), Encider_Brt(2), Encider_Brt(3), Encider_Brt(4)}; /*<! ת���־���ʽ������ */	
-
+    Motor_M2006 RUD_Motor[3] = {Motor_M2006(1), Motor_M2006(2), Motor_M2006(3)}; /*<! ת���� 2006��� */
+    Encider_Brt RUD_Encider[3] = {Encider_Brt(2), Encider_Brt(4), Encider_Brt(3)}; /*<! ת���־���ʽ������ */	
+    //电机驱动
+    BldcDrive_VESC DRV_Motor[3] = {BldcDrive_VESC(11), BldcDrive_VESC(12), BldcDrive_VESC(13)};/*<! 驱动轮 本杰明电调  */
+	
     IMURecvCanMsg_u RecvCan_Msg; 
 
     IIRLowPassFilter Vx_LPF = IIRLowPassFilter(1.0f); /*<! 低通滤波 */

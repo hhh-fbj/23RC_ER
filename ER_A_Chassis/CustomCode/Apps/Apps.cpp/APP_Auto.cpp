@@ -5,9 +5,10 @@
 
 void Auto_classdef::Process(void)
 {
-	if(DevicesMonitor.Get_State(CHAS_POSTURE_MONITOR) == Off_line ||\
-	DevicesMonitor.Get_State(CHAS_ANALOG_MONITOR) == Off_line ||\
-	Posture.error)
+//	if(DevicesMonitor.Get_State(CHAS_POSTURE_MONITOR) == Off_line ||\
+//	DevicesMonitor.Get_State(CHAS_ANALOG_MONITOR) == Off_line ||\
+//	Posture.error)
+	if(DevicesMonitor.Get_State(CHAS_POSTURE_MONITOR) == Off_line || Posture.error)
 	{
 		Chassis.NO_PostureMode = 99;
 		return;
@@ -64,16 +65,16 @@ void Auto_classdef::Text_Step(void)
 				Chassis.POS_PID[Posture_Y][PID_Outer].Target = Posture.POS_Y();
 				Chassis.POS_PID[Posture_W][PID_Outer].Target = Posture.POS_W();
 			}
-			HAL_GPIO_WritePin(GPIOI, GPIO_PIN_7, GPIO_PIN_RESET);//Ĭ��
+			HAL_GPIO_WritePin(GPIOD, GPIO_PIN_12, GPIO_PIN_RESET);//Ĭ��
 		break;
 
 		//����ȡ��
 		case 1:
 			Left_PickIdea();
-			HAL_GPIO_WritePin(GPIOI, GPIO_PIN_7, GPIO_PIN_RESET);//Ĭ��
+			HAL_GPIO_WritePin(GPIOD, GPIO_PIN_12, GPIO_PIN_RESET);//Ĭ��
 		break;
 		
-		//ȡ��
+		//取环
 		case 2:
 			startFlag = 0;
 			Chassis.NO_PostureMode = 2;
@@ -109,12 +110,12 @@ void Auto_classdef::Text_Step(void)
 			}
 		break;
 		
-		//ǰ���价
+		//钱顶
 		case 4:
 			Front_PlaceIdea();
 		break;
 		
-		//�价1
+		//发射
 		case 5:
 			startFlag = 0;
 			Chassis.NO_PostureMode = 2;
@@ -531,7 +532,7 @@ void Auto_classdef::Left_PickIdea(void)
 {
 	//点——墙附件
 	//贴墙
-	//后退——激光测距
+	//后退——激光测距->微动
 	//停——取环
 	
 	//左走
@@ -562,34 +563,37 @@ void Auto_classdef::Left_PickIdea(void)
 			else if(WallFlag)
 			{
 				//以右为准，右激光稳一定
-				if(Analog.LaserRanging[8]<35000 && Analog.LaserRanging[8]>30000 &&\
-				Analog.LaserRanging[9]<35000 && Analog.LaserRanging[9]>30000)
+//				if(Analog.LaserRanging[8]<35000 && Analog.LaserRanging[8]>30000 &&\
+//				Analog.LaserRanging[9]<35000 && Analog.LaserRanging[9]>30000)
+				if(Chassis.EdgeDete[7] == GPIO_PIN_RESET)// && Chassis.EdgeDete[7] == GPIO_PIN_RESET)
 				{
-						Chassis.Laser_PID[0].Target = 33505+33505;
-						Chassis.Laser_PID[0].Current = Analog.LaserRanging[9]+Analog.LaserRanging[8];
-						Vy = Chassis.Laser_PID[0].Cal();
-						Vx = -33;
+//						Chassis.Laser_PID[0].Target = 33505+33505;
+//						Chassis.Laser_PID[0].Current = Analog.LaserRanging[9]+Analog.LaserRanging[8];
+//						Vy = Chassis.Laser_PID[0].Cal();
+						Vx = -110;
 						Vw = 0;
-						// Vy = 0;
+						Vy = -110;
 						// L_L = Analog.LaserRanging[9];
 						// R_L = Analog.LaserRanging[8];
 						LR_out_time++;
 				}
 				else
 				{
-					Vx = -33;Vy = -660;Vw=0;
+					Vx = -110;Vy = -880;Vw=0;
 				}
 				
-				if(abs(33505+33505-(Analog.LaserRanging[9]+Analog.LaserRanging[8])) < 120)
-				{
-					LR_time++;
-				}
-				else
-				{
-					LR_time=0;
-				}
+//				if(abs(33505+33505-(Analog.LaserRanging[9]+Analog.LaserRanging[8])) < 120)
+//				{
+//					LR_time++;
+//				}
+//				else
+//				{
+//					LR_time=0;
+//				}
+				
 				// if(Vy == 0)
-				if(LR_time > 5|| (LR_out_time > 800 && abs(33505+33505-(Analog.LaserRanging[9]+Analog.LaserRanging[8]))<500))
+//				if(LR_time > 5|| (LR_out_time > 800 && abs(33505+33505-(Analog.LaserRanging[9]+Analog.LaserRanging[8]))<500))
+				if(LR_out_time > 5)
 				{LR_out_time=0;overFlag = 0;startFlag = 1;\
 				Vx=Vy=Vw=0;WallFlag=WallTime=0;\
 				text_step = 2;}
@@ -659,7 +663,7 @@ bool Auto_classdef::IO_RTX(int io_s,int is_t)
 	if(IO_S_time >= io_s)
 	{
 		IO_R_time++;
-		HAL_GPIO_WritePin(GPIOI, GPIO_PIN_7, GPIO_PIN_RESET);//��ת
+		HAL_GPIO_WritePin(GPIOD, GPIO_PIN_12, GPIO_PIN_RESET);//��ת
 		if(IO_R_time >= is_t)
 		{
 			IO_R_time = 0;
@@ -669,8 +673,8 @@ bool Auto_classdef::IO_RTX(int io_s,int is_t)
 	}
 	else
 	{
-//		HAL_GPIO_WritePin(GPIOI, GPIO_PIN_7, GPIO_PIN_RESET);//��ת
-		HAL_GPIO_WritePin(GPIOI, GPIO_PIN_7, GPIO_PIN_SET);//��ת
+//		HAL_GPIO_WritePin(GPIOD, GPIO_PIN_12, GPIO_PIN_RESET);//��ת
+		HAL_GPIO_WritePin(GPIOD, GPIO_PIN_12, GPIO_PIN_SET);//��ת
 	}
 	
 	if(Chassis.Ready_Flag == GPIO_PIN_SET && Chassis.Last_Ready_Flag == GPIO_PIN_RESET && IO_S_time==0)

@@ -1,0 +1,25 @@
+{
+    "files.associations": {
+        "dji_aimu.h": "c",
+        "imu_compensate.h": "c",
+        "task_check.h": "c",
+        "dji_c_imu.h": "c",
+        "array": "cpp",
+        "compare": "cpp",
+        "functional": "cpp",
+        "tuple": "cpp",
+        "type_traits": "cpp",
+        "utility": "cpp",
+        "cmath": "cpp",
+        "random": "cpp",
+        "string_view": "cpp",
+        "initializer_list": "cpp",
+        "string": "cpp",
+        "istream": "cpp",
+        "new": "cpp",
+        "ostream": "cpp",
+        "sstream": "cpp",
+        "typeinfo": "cpp",
+        "bsp_can.h": "c"
+    }
+}

@@ -19,63 +19,50 @@ void Task_DataSampling(void *argument)
 
     for(;;)
     {
-		BMQ_time++;
-		if(DevicesMonitor.Get_State(DR16_MONITOR) == Off_line)
-		{
-			for(uint8_t i = 0 ; i < 4 ; i++)
+			if(Chassis.over_init == 1 && CTRL_DR16.start == 1)
 			{
-				Chassis.Cal_Speed[i] = 0;
+				switch(BMQ_time)
+				{
+					case 0:
+						if(DevicesMonitor.Get_State(CHAS_RUDEncider1_MONITOR) && Chassis.RUD_Encider[0].ReadMode != 0x02)
+						{
+							Chassis.RUD_Encider[0].ReadMode = 0x02;
+							Chassis.RUD_Encider[0].SetInstruction_U8(&hcan2,0x01,0x00);
+						}
+						else if(Chassis.RUD_Encider[0].ReadMode == 0x02)
+						{
+							Chassis.RUD_Encider[0].SetInstruction_U8(&hcan2,0x01,0x00);
+						}
+						BMQ_time++;
+					break;
+					
+					case 1:
+						if(DevicesMonitor.Get_State(CHAS_RUDEncider2_MONITOR) && Chassis.RUD_Encider[1].ReadMode != 0x02)
+						{
+							Chassis.RUD_Encider[1].ReadMode = 0x02;
+							Chassis.RUD_Encider[1].SetInstruction_U8(&hcan2,0x01,0x00);
+						}
+						else if(Chassis.RUD_Encider[1].ReadMode == 0x02)
+						{
+							Chassis.RUD_Encider[1].SetInstruction_U8(&hcan2,0x01,0x00);
+						}
+						BMQ_time++;
+					break;
+						
+					case 2:
+						if(DevicesMonitor.Get_State(CHAS_RUDEncider3_MONITOR) && Chassis.RUD_Encider[2].ReadMode != 0x02)
+						{
+							Chassis.RUD_Encider[2].ReadMode = 0x02;
+							Chassis.RUD_Encider[2].SetInstruction_U8(&hcan2,0x01,0x00);
+						}
+						else if(Chassis.RUD_Encider[2].ReadMode == 0x02)
+						{
+							Chassis.RUD_Encider[2].SetInstruction_U8(&hcan2,0x01,0x00);
+						}
+						BMQ_time=0;
+					break;
+				}
 			}
-		}
-		else
-		{
-			Chassis.CAN_Send();
-		}
-
-		if(Chassis.over_init == 1 && CTRL_DR16.start == 1)
-		{
-			if(DevicesMonitor.Get_State(CHAS_RUDEncider1_MONITOR) && BMQ_time%2==0 && Chassis.RUD_Encider[0].ReadMode != 0x02)
-			{
-				Chassis.RUD_Encider[0].ReadMode = 0x02;
-				Chassis.RUD_Encider[0].SetInstruction_U8(&hcan2,0x01,0x00);
-			}
-			else if(Chassis.RUD_Encider[0].ReadMode == 0x02 && BMQ_time%6==0)
-			{
-				Chassis.RUD_Encider[0].SetInstruction_U8(&hcan2,0x01,0x00);
-			}
-			
-			if(DevicesMonitor.Get_State(CHAS_RUDEncider2_MONITOR) && BMQ_time%3==0 && Chassis.RUD_Encider[1].ReadMode != 0x02)
-			{
-				Chassis.RUD_Encider[1].ReadMode = 0x02;
-				Chassis.RUD_Encider[1].SetInstruction_U8(&hcan2,0x01,0x00);
-			}
-			else if(Chassis.RUD_Encider[1].ReadMode == 0x02 && BMQ_time%7==0)
-			{
-				Chassis.RUD_Encider[1].SetInstruction_U8(&hcan2,0x01,0x00);
-			}
-			
-			if(DevicesMonitor.Get_State(CHAS_RUDEncider3_MONITOR) && BMQ_time%5==0 && Chassis.RUD_Encider[2].ReadMode != 0x02)
-			{
-				Chassis.RUD_Encider[2].ReadMode = 0x02;
-				Chassis.RUD_Encider[2].SetInstruction_U8(&hcan2,0x01,0x00);
-			}
-			else if(Chassis.RUD_Encider[2].ReadMode == 0x02 && BMQ_time%8==0)
-			{
-				Chassis.RUD_Encider[2].SetInstruction_U8(&hcan2,0x01,0x00);
-			}
-			
-			if(DevicesMonitor.Get_State(CHAS_RUDEncider4_MONITOR) && BMQ_time%7==0 && Chassis.RUD_Encider[3].ReadMode != 0x02)
-			{
-				Chassis.RUD_Encider[3].ReadMode = 0x02;
-				Chassis.RUD_Encider[3].SetInstruction_U8(&hcan2,0x01,0x00);
-			}
-			else if(Chassis.RUD_Encider[3].ReadMode == 0x02 && BMQ_time%5==0)
-			{
-				Chassis.RUD_Encider[3].SetInstruction_U8(&hcan2,0x01,0x00);
-			}
-		}
-
-				
-        vTaskDelayUntil(&xLastWakeTime, TimeIncrement);
+			vTaskDelayUntil(&xLastWakeTime, TimeIncrement);
     }
 }

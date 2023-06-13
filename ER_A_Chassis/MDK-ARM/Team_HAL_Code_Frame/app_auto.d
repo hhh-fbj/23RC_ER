@@ -641,6 +641,7 @@ team_hal_code_frame/app_auto.o: ..\CustomCode\Apps\Apps.cpp\APP_Auto.cpp \
   ..\CustomCode\Devices\Devices.h\DEV_BrtEncoder.h \
   ..\CustomCode\Devices\Devices.h\DEV_Bldc.h \
   ..\CustomCode\Devices\Devices.h\DEV_MX106.h \
+  ..\CustomCode\Devices\Devices.h\DEV_Timer.h \
   ..\CustomCode\Devices\Devices.h\DEV_AIMU.h \
   ..\CustomCode\Devices\Devices.h\DEV_CIMU.h \
   ..\CustomCode\Devices\Devices.h\DEV_Buzzer.h \

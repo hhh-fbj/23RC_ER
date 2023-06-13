@@ -15,6 +15,8 @@
 
 #include "System_DataPool.h"
 
+#include "DEV_Timer.h"
+
 /* Private macros ------------------------------------------------------------*/
 #define LEVER_PERSONAL 1 // ??己用
 #define LEVER_STANDARD 2 // 规范??
@@ -71,7 +73,7 @@ void CTRL_DR16_classdef::LeverMode_Update(void)
                 
                 case Lever_MID:/* 左上-右中 START ------------------------------------------*/ 
                 {
-                    Chassis.Set_Mode(CHAS_PostureMode);
+                    Chassis.Set_Mode(CHAS_LockMode);
                 }
                 break;  /* 左上-右中 END ------------------------------------------*/
 
@@ -107,14 +109,14 @@ void CTRL_DR16_classdef::LeverMode_Update(void)
                 case Lever_DOWN:/* 左中-右下 START ------------------------------------------*/ 
                 {
                     Chassis.Set_Mode(CHAS_LockMode);//CHAS_LockMode; CHAS_LaserMode
-                    if(DR16.Get_DW_Norm() >= 550)
-                    {
-                        HAL_GPIO_WritePin(GPIOI, GPIO_PIN_7, GPIO_PIN_SET);//正转
-                    }
-                    if(DR16.Get_DW_Norm() <= -550)
-                    {
-                        HAL_GPIO_WritePin(GPIOI, GPIO_PIN_7, GPIO_PIN_RESET);//默认
-                    }
+//                    if(DR16.Get_DW_Norm() >= 550)
+//                    {
+//                        HAL_GPIO_WritePin(GPIOD, GPIO_PIN_12, GPIO_PIN_SET);//正转
+//                    }
+//                    if(DR16.Get_DW_Norm() <= -550)
+//                    {
+//                        HAL_GPIO_WritePin(GPIOD, GPIO_PIN_12, GPIO_PIN_RESET);//默认
+//                    }
                     // Chassis.Set_Mode(CHAS_PostureMode);
                 }
                 break;/* 左中-右下 END ------------------------------------------*/
@@ -130,6 +132,7 @@ void CTRL_DR16_classdef::LeverMode_Update(void)
             Posture_ResTime>50)
             {
                 Posture_ResTime=0;
+//								if(Auto.Posture_ResFlag==0){Auto.Posture.time_long[0] = Get_SystemTimer();}
                 Auto.Posture_ResFlag++;
                 Auto.Posture.Devices_Posture_Reset();
                 Auto.startFlag=0;
@@ -139,7 +142,7 @@ void CTRL_DR16_classdef::LeverMode_Update(void)
 						
             Chassis.Set_Mode(CHAS_DisableMode);
 						Auto.Posture.error = false;
-            HAL_GPIO_WritePin(GPIOI, GPIO_PIN_7, GPIO_PIN_RESET);//默认
+            HAL_GPIO_WritePin(GPIOD, GPIO_PIN_12, GPIO_PIN_RESET);//默认
             // Robot Reset
             if(DR16.Get_DW_Norm() <= -550)
             {

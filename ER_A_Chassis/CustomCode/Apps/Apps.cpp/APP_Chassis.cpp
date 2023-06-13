@@ -37,26 +37,20 @@
 
 
 /*------------------------------------------------------------ 初始化 ------------------------------------------------------------*/
-float const Chassis_classdef::Ltheta = acos(-0.5);
-float const Chassis_classdef::Rtheta = acos(0.5);//三轮后
-float const Chassis_classdef::Ftheta = atan(1.0);//四轮
 Chassis_classdef::Chassis_classdef()
 {
 	//转向轮 2006
 	/*--- 外环 位置 PID -------------------------------------------------------------------------*/
-    RUD_PID[RF_Rud][PID_Outer].SetPIDParam(2.0, 0.0, 0.0, 5000, 16000, 0.002f);
-    RUD_PID[LF_Rud][PID_Outer].SetPIDParam(2.0, 0.0, 0.0, 5000, 16000, 0.002f);
-    RUD_PID[LB_Rud][PID_Outer].SetPIDParam(2.0, 0.0, 0.0, 5000, 16000, 0.002f);
-    RUD_PID[RB_Rud][PID_Outer].SetPIDParam(2.0, 0.0, 0.0, 5000, 16000, 0.002f);
+    RUD_PID[Front_Rud][PID_Outer].SetPIDParam(2.0, 0.0, 0.0, 5000, 16000, 0.002f);
+    RUD_PID[Left_Rud][PID_Outer].SetPIDParam(2.0, 0.0, 0.0, 5000, 16000, 0.002f);
+    RUD_PID[Right_Rud][PID_Outer].SetPIDParam(2.0, 0.0, 0.0, 5000, 16000, 0.002f);
 //    /*--- 内环 速度 PID -------------------------------------------------------------------------*/
-    RUD_PID[RF_Rud][PID_Inner].SetPIDParam(5.0f, 3.0, 0.0f, 5000, 16000, 0.002f);
-    RUD_PID[RF_Rud][PID_Inner].I_SeparThresh = 800;
-    RUD_PID[LF_Rud][PID_Inner].SetPIDParam(5.0f, 3.0, 0.0f, 5000, 16000, 0.002f);
-    RUD_PID[RF_Rud][PID_Inner].I_SeparThresh = 800;
-    RUD_PID[LB_Rud][PID_Inner].SetPIDParam(5.0f, 3.0, 0.0f, 5000, 16000, 0.002f);
-    RUD_PID[RF_Rud][PID_Inner].I_SeparThresh = 800;
-    RUD_PID[RB_Rud][PID_Inner].SetPIDParam(5.0f, 3.0, 0.0f, 5000, 16000, 0.002f);
-    RUD_PID[RF_Rud][PID_Inner].I_SeparThresh = 800;
+    RUD_PID[Front_Rud][PID_Inner].SetPIDParam(5.0f, 3.0, 0.0f, 5000, 16000, 0.002f);
+    RUD_PID[Front_Rud][PID_Inner].I_SeparThresh = 800;
+    RUD_PID[Left_Rud][PID_Inner].SetPIDParam(5.0f, 3.0, 0.0f, 5000, 16000, 0.002f);
+    RUD_PID[Left_Rud][PID_Inner].I_SeparThresh = 800;
+    RUD_PID[Right_Rud][PID_Inner].SetPIDParam(5.0f, 3.0, 0.0f, 5000, 16000, 0.002f);
+    RUD_PID[Right_Rud][PID_Inner].I_SeparThresh = 800;
 	
 	//全场定位
 	/*--- 外环 位置 PID -------------------------------------------------------------------------*/
@@ -84,7 +78,7 @@ Chassis_classdef::Chassis_classdef()
 		POS_X_PID.SetPIDParam(5.0f, 0.0f, 0.0f, 4000, 15000, 0.002f);POS_X_PID.DeadZone = 1;//4 11 0.0003
     POS_X_PID.a_p = 8;POS_X_PID.b_p = 14;POS_X_PID.c_p = 0.00001;
 
-    for(int i=0;i<4;i++)
+    for(int i=0;i<3;i++)
     {
         FRONT[i] = 0;//为0时，轮子朝前
         XYZ_PreTar_Angle[i] = 90;//默认指向为XYZ_PreTar_Angle设定值
@@ -100,8 +94,14 @@ Chassis_classdef::Chassis_classdef()
 
 /*------------------------------------------------------------ 控制 ------------------------------------------------------------*/
 //底盘总控制函数
+float P_pid[3];
+float I_MAX_CS;
 void Chassis_classdef::Control()
 {
+//		DRV_PID[0].SetPIDParam(P_pid[0], P_pid[1], P_pid[2], I_MAX_CS, 10000, 0.002f);
+//		DRV_PID[1].SetPIDParam(P_pid[0], P_pid[1], P_pid[2], I_MAX_CS, 10000, 0.002f);
+//		DRV_PID[2].SetPIDParam(P_pid[0], P_pid[1], P_pid[2], I_MAX_CS, 10000, 0.002f);
+	
     //微动开关检测
     Sensor();
 	
@@ -124,47 +124,55 @@ void Chassis_classdef::Sensor(void)
     EdgeDete[3] = HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_3);//左
     //左
     EdgeDete[4] = HAL_GPIO_ReadPin(GPIOI, GPIO_PIN_5);//右
-    EdgeDete[5] = HAL_GPIO_ReadPin(GPIOI, GPIO_PIN_6);//左	
+    EdgeDete[5] = HAL_GPIO_ReadPin(GPIOI, GPIO_PIN_6);//左
+		//后	
+    EdgeDete[6] = HAL_GPIO_ReadPin(GPIOI, GPIO_PIN_7);//右
+    EdgeDete[7] = HAL_GPIO_ReadPin(GPIOI, GPIO_PIN_2);//左
 
     Last_Ready_Flag = Ready_Flag;
-    Ready_Flag = HAL_GPIO_ReadPin(GPIOI, GPIO_PIN_2);
+    Ready_Flag = HAL_GPIO_ReadPin(GPIOD, GPIO_PIN_13);
 }
 
 uint8_t Chassis_classdef::ProblemDetection(void)
 {
     if(DevicesMonitor.Get_State(DR16_MONITOR) == Off_line)
     {
-        for(uint8_t i = 0 ; i < 4 ; i++)
+        for(uint8_t i = 0 ; i < 3 ; i++)
         {
             RUD_Motor[i].Out = 0;
             RUD_PID[i][PID_Outer].Reset();
             RUD_PID[i][PID_Inner].Reset();
+						DRV_PID[i].Reset();
+						DRV_Motor[i].Out = 0;
             Cal_Speed[i] = 0;
             Buzzer.error = 0;
         }
         Send_Data();
-        HAL_GPIO_WritePin(GPIOI, GPIO_PIN_7, GPIO_PIN_RESET);//默认
+        HAL_GPIO_WritePin(GPIOD, GPIO_PIN_12, GPIO_PIN_RESET);//默认
         return 1;
     }
     else if(DevicesMonitor.Get_State(CHAS_RUD1_MONITOR) == Off_line || \
         DevicesMonitor.Get_State(CHAS_RUD2_MONITOR) == Off_line || \
         DevicesMonitor.Get_State(CHAS_RUD3_MONITOR) == Off_line || \
-        DevicesMonitor.Get_State(CHAS_RUD4_MONITOR) == Off_line || \
         DevicesMonitor.Get_State(CHAS_RUDEncider1_MONITOR) == Off_line || \
         DevicesMonitor.Get_State(CHAS_RUDEncider2_MONITOR) == Off_line || \
         DevicesMonitor.Get_State(CHAS_RUDEncider3_MONITOR) == Off_line || \
-        DevicesMonitor.Get_State(CHAS_RUDEncider4_MONITOR) == Off_line)
+				DevicesMonitor.Get_State(CHASSIS_DRV1_MONITOR) || \
+        DevicesMonitor.Get_State(CHASSIS_DRV2_MONITOR) || \
+        DevicesMonitor.Get_State(CHASSIS_DRV3_MONITOR))
     {
-        for(uint8_t i = 0 ; i < 4 ; i++)
+        for(uint8_t i = 0 ; i < 3 ; i++)
         {
             RUD_Motor[i].	Out = 0;
             RUD_PID[i][PID_Outer].Reset();
             RUD_PID[i][PID_Inner].Reset();
+						DRV_PID[i].Reset();
+						DRV_Motor[i].Out = 0;
             Cal_Speed[i] = 0;
             Buzzer.error = 0;
         }
         Send_Data();
-        HAL_GPIO_WritePin(GPIOI, GPIO_PIN_7, GPIO_PIN_RESET);//默认
+        HAL_GPIO_WritePin(GPIOD, GPIO_PIN_12, GPIO_PIN_RESET);//默认
         return 1;
     }
     else
@@ -184,12 +192,14 @@ void Chassis_classdef::ChassisTar_Update()
             Pos_Target[2] = POS_PID[Posture_W][PID_Outer].Target = Auto.Posture.POS_W();//Auto.Posture.POS_W();
             Auto.Vx = Auto.Vy = Auto.Vw = 0;
             Mode = Next_Mode;
-            for(uint8_t i = 0 ; i < 4 ; i++)
+            for(uint8_t i = 0 ; i < 3 ; i++)
             {
                 RUD_Motor[i].Out = 0;
                 RUD_PID[i][PID_Outer].Reset();
                 RUD_PID[i][PID_Inner].Reset();
                 Cal_Speed[i] = 0;
+								DRV_PID[i].Reset();
+								DRV_Motor[i].Out = 0;
             }
             Last_Mode = CHAS_TransiMode;
         break;
@@ -312,16 +322,18 @@ void Chassis_classdef::ChassisTar_Update()
         break;
 				
         case CHAS_DisableMode:
-            for(uint8_t j = 0 ; j < 4 ; j++)
+            for(uint8_t j = 0 ; j < 3 ; j++)
             {
                 RUD_PID[j][PID_Outer].Reset();
                 RUD_PID[j][PID_Inner].Reset();
+								DRV_PID[j].Reset();
+								DRV_Motor[j].Out = 0;
                 Cal_Speed[j] = 0;
 
                 RUD_Motor[j].Out = 0;  
                 Cal_Speed[j] = 0;
             }
-			HAL_GPIO_WritePin(GPIOI, GPIO_PIN_7, GPIO_PIN_RESET);//默认
+			HAL_GPIO_WritePin(GPIOD, GPIO_PIN_12, GPIO_PIN_RESET);//默认
             Last_Mode = CHAS_DisableMode;
         break;
     }
@@ -331,32 +343,28 @@ void Chassis_classdef::ChassisTar_Update()
 void Chassis_classdef::Process(float Vx, float Vy, float Vw)
 {		
     //--- 速度斜坡	作用?
-    Drv_Slow(&Ramp_Vx, Vx, 10.0f, ACCCCC_VAL, DECCCCC_VAL);//
-    Drv_Slow(&Ramp_Vy, Vy, 10.0f, ACCCCC_VAL, DECCCCC_VAL);
-    Drv_Slow(&Ramp_Vw, Vw*0.5, 6.0f, ACCCCC_VAL*0.6, DECCCCC_VAL*0.6);
-//    Ramp_Vx=Vx;Ramp_Vy=Vy;Ramp_Vw=Vw;
+//    Drv_Slow(&Ramp_Vx, Vx, 10.0f, ACCCCC_VAL, DECCCCC_VAL);//
+//    Drv_Slow(&Ramp_Vy, Vy, 10.0f, ACCCCC_VAL, DECCCCC_VAL);
+//    Drv_Slow(&Ramp_Vw, Vw*0.5, 6.0f, ACCCCC_VAL*0.6, DECCCCC_VAL*0.6);
+    Ramp_Vx=Vx;Ramp_Vy=Vy;Ramp_Vw=Vw;
 
     //运动解算
     Rudder_Solve(Ramp_Vx, Ramp_Vy, Ramp_Vw, Cal_Speed);
     
     //PID计算
-    for(uint8_t i = 0; i < 4; i++)
+    for(uint8_t i = 0; i < 3; i++)
     {
+			if(i == 1){DRV_Motor[i].Out = Cal_Speed[i] * falsh[i];}
+			else{DRV_Motor[i].Out = Cal_Speed[i] * falsh[i] * -1;}
+        
         RUD_PIDCalc(i);  
-        Three_Speed[i] = Cal_Speed[i] * falsh[i];
     }
-
-    SS1.speed[0] = Three_Speed[0];
-    SS1.speed[1] = Three_Speed[2];
-
-    SS2.speed[0] = Three_Speed[1];
-    SS2.speed[1] = Three_Speed[3];
 }
 
 void Chassis_classdef::Send_Data()
 {
     MotorMsgSend(&hcan1, RUD_Motor);
-    MotorMsgSend(&hcan2, RUD_Motor);
+		CAN_Send();
 }
 
 /**
@@ -403,13 +411,12 @@ void Chassis_classdef::Rudder_Solve(float Vx, float Vy, float Vw, float *cal_spe
     RudAngle_Calc(Vx, Vy, Vw);
     
     /* 驱动轮 速度解算 ---------------------------------------------------------------------------------*/
-    cal_speed[RF_Rud] =  sqrt(pow(Vx + Vw*arm_cos_f32(Ftheta),2) + pow(Vy - Vw*arm_sin_f32(Ftheta),2));
-    cal_speed[LF_Rud] =  sqrt(pow(Vx + Vw*arm_cos_f32(Ftheta),2) + pow(Vy + Vw*arm_sin_f32(Ftheta),2));
-    cal_speed[LB_Rud] =  sqrt(pow(Vx - Vw*arm_cos_f32(Ftheta),2) + pow(Vy + Vw*arm_sin_f32(Ftheta),2));
-    cal_speed[RB_Rud] =  sqrt(pow(Vx - Vw*arm_cos_f32(Ftheta),2) + pow(Vy - Vw*arm_sin_f32(Ftheta),2));
+    cal_speed[Front_Rud] = sqrt(pow(Vx + Vw,2) + pow(Vy,2));
+    cal_speed[Left_Rud] =  sqrt(pow(Vx - Vw*0.5,2) + pow(Vy + Vw*0.5,2));
+    cal_speed[Right_Rud] = sqrt(pow(Vx - Vw*0.5,2) + pow(Vy - Vw*0.5,2));
 
     // 寻找最大速度
-    for (uint8_t i = 0; i < 4; i++)
+    for (uint8_t i = 0; i < 3; i++)
     {
         //RUD_PID[i][PID_Outer].Current = Vw; 
         if(abs(cal_speed[i]) > MaxSpeed)
@@ -424,15 +431,14 @@ void Chassis_classdef::Rudder_Solve(float Vx, float Vy, float Vw, float *cal_spe
         Param = (float)CHASSIS_MAX_SPEED / MaxSpeed;
     }
 
-    if(abs(RUD_PID[RF_Rud][PID_Outer].Target) <= 1500 &&
-        abs(RUD_PID[LF_Rud][PID_Outer].Target) <= 1500 &&
-        abs(RUD_PID[LB_Rud][PID_Outer].Target) <= 1500 &&
-        abs(RUD_PID[RB_Rud][PID_Outer].Target) <= 1500)
+    if(abs(RUD_PID[Front_Rud][PID_Outer].Target) <= 1500 &&
+        abs(RUD_PID[Left_Rud][PID_Outer].Target) <= 1500 &&
+        abs(RUD_PID[Right_Rud][PID_Outer].Target) <= 1500)
     {
-        cal_speed[RF_Rud] *= Param;
-        cal_speed[LF_Rud] *= Param;
-        cal_speed[LB_Rud] *= Param;
-        cal_speed[RB_Rud] *= Param;
+        cal_speed[Front_Rud] *= Param;
+        cal_speed[Left_Rud] *= Param;
+        cal_speed[Right_Rud] *= Param;
+//        cal_speed[RB_Rud] *= Param;
     }
 }
 
@@ -449,6 +455,10 @@ void Chassis_classdef::RUD_PIDCalc(uint8_t motor)
 	RUD_PID[motor][PID_Inner].Target = RUD_PID[motor][PID_Outer].Cal();
 	RUD_PID[motor][PID_Inner].Current = RUD_Motor[motor].getSpeed();
 	RUD_Motor[motor].Out = RUD_PID[motor][PID_Inner].Cal();
+	
+//	DRV_PID[motor].Target = Three_Speed[motor];
+//	DRV_PID[motor].Current = DRV_Motor[motor].getRpm();
+//	DRV_Motor[motor].Out = DRV_PID[motor].Cal();
 }
 
 //三轴速度解算四轮舵轮 舵角度 (直角坐标系)
@@ -465,10 +475,9 @@ void Chassis_classdef::RudAngle_Calc(float Vx, float Vy, float Vw)
     {
         if(Mode == CHAS_LockMode ||  (Mode == CHAS_AutoMode && NO_PostureMode == 2))//轮子45度X型朝向 暂时不用
         {
-            XYZ_Angle[0] = 45;
-            XYZ_Angle[1] = 135;
-            XYZ_Angle[2] = 45;
-            XYZ_Angle[3] = 135;
+            XYZ_Angle[0] = 90;
+            XYZ_Angle[1] = 45;
+            XYZ_Angle[2] = 135;
         }
         else if(0)//轮子45度◇型朝向
         {
@@ -480,7 +489,7 @@ void Chassis_classdef::RudAngle_Calc(float Vx, float Vy, float Vw)
         else
         {
             //--- 目标角度为最后速度指向;
-            for(uint8_t i = 0 ; i < 4 ; i++)
+            for(uint8_t i = 0 ; i < 3 ; i++)
             {
                 XYZ_Angle[i] = XYZ_PreTar_Angle[i];
             }
@@ -489,13 +498,13 @@ void Chassis_classdef::RudAngle_Calc(float Vx, float Vy, float Vw)
     else
     {
         //--- 有目标速度的时候才进行舵轮解算的计算
-        XYZ_Angle[RF_Rud] = atan2(Vy - Vw*(Radius*arm_sin_f32(Ftheta)), Vx + Vw*(Radius*arm_cos_f32(Ftheta)))*(180/PI);
-        XYZ_Angle[LF_Rud] = atan2(Vy + Vw*(Radius*arm_sin_f32(Ftheta)), Vx + Vw*(Radius*arm_cos_f32(Ftheta)))*(180/PI);
-        XYZ_Angle[LB_Rud] = atan2(Vy + Vw*(Radius*arm_sin_f32(Ftheta)), Vx - Vw*(Radius*arm_cos_f32(Ftheta)))*(180/PI);
-        XYZ_Angle[RB_Rud] = atan2(Vy - Vw*(Radius*arm_sin_f32(Ftheta)), Vx - Vw*(Radius*arm_cos_f32(Ftheta)))*(180/PI);
+        XYZ_Angle[Front_Rud] = atan2(Vy, Vx + Vw*(Radius))*(180/PI);
+        XYZ_Angle[Left_Rud] = atan2(Vy + Vw*(Radius*0.5), Vx - Vw*(Radius*0.5))*(180/PI);
+        XYZ_Angle[Right_Rud] = atan2(Vy - Vw*(Radius*0.5), Vx - Vw*(Radius*0.5))*(180/PI);
+//        XYZ_Angle[RB_Rud] = atan2(Vy - Vw*(Radius*arm_sin_f32(Ftheta)), Vx - Vw*(Radius*arm_cos_f32(Ftheta)))*(180/PI);
         //--- 无目标速度的时候不使用上一次角度来保存是因为跟随模式下IMU静止的瞬间会产生轻微的Vw速度
 
-        for(uint8_t i = 0 ; i < 4 ; i++)
+        for(uint8_t i = 0 ; i < 3 ; i++)
         {
             XYZ_Angle[i] = XYZ_Angle[i]<0 ? (360+XYZ_Angle[i]) : abs(XYZ_Angle[i]);
         }
@@ -507,7 +516,7 @@ void Chassis_classdef::RudAngle_Calc(float Vx, float Vy, float Vw)
     //     XYZ_Angle[3] = 45;
 
     //--- 更改为保存经过劣弧处理的目标角度(现在暂时不用这个上一帧的角度)
-    for(uint8_t i = 0 ; i < 4 ; i++) 
+    for(uint8_t i = 0 ; i < 3 ; i++) 
     {
         XYZ_PreTar_Angle[i] = XYZ_Angle[i];
     }
@@ -519,7 +528,7 @@ void Chassis_classdef::RudAngle_Calc(float Vx, float Vy, float Vw)
 void Chassis_classdef::Angle_Treatment(void)
 {
     float Error;
-    for(uint8_t i = 0 ; i < 4 ; i++)
+    for(uint8_t i = 0 ; i < 3 ; i++)
     {
 			
         //转舵分辨率
@@ -606,19 +615,12 @@ void Chassis_classdef::Angle_Treatment(void)
 
 void Chassis_classdef::CAN_Send(void)
 {
-    if(Mode != CHAS_DisableMode &&  Buzzer.error != 1)
-    {
-        if(two_count == true)
-        {
-            CANx_SendData(&hcan1, 0x341, SS1.data, 8);
-            two_count = false;
-        }
-        else
-        {
-            CANx_SendData(&hcan1, 0x342, SS2.data, 8);
-            two_count = true;
-        }
-    }
+//		DRV_Motor[Front_Rud].Set_current(&hcan2, DRV_Motor[Front_Rud].Out);
+//		DRV_Motor[Left_Rud].Set_current(&hcan2, DRV_Motor[Left_Rud].Out);
+//		DRV_Motor[Right_Rud].Set_current(&hcan2, DRV_Motor[Right_Rud].Out);
+		DRV_Motor[Front_Rud].Set_rpm(&hcan2, DRV_Motor[Front_Rud].Out);
+		DRV_Motor[Left_Rud].Set_rpm(&hcan2, DRV_Motor[Left_Rud].Out);
+		DRV_Motor[Right_Rud].Set_rpm(&hcan2, DRV_Motor[Right_Rud].Out);
 }
 void Chassis_classdef::CAN_Recvd(uint8_t can_rx_data[])
 {

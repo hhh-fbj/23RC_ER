@@ -58,7 +58,7 @@ private:
 
     // AUTO_CtrlMode_e mode;
 
-    int Spots[3][3] = {-3150,  305, 0,\
+    int Spots[3][3] = {-2870,280, 0,\
                 -85, 415, 0,\
                 -0,-0, 0};
 		

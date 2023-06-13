@@ -647,16 +647,16 @@ team_hal_code_frame/system_config.o: \
   ..\CustomCode\Apps\Apps.h\APP_Auto.h \
   ..\CustomCode\Devices\Devices.h\DEV_Posture.h \
   ..\CustomCode\Devices\Devices.h\DEV_Analog.h \
+  ..\CustomCode\Devices\Devices.h\DEV_Timer.h \
   ..\CustomCode\Devices\Devices.h\DEV_CIMU.h \
   ..\CustomCode\Devices\Devices.h\DEV_Buzzer.h \
   ..\CustomCode\Devices\Devices.h\DEV_UpComputer.h \
   ..\CustomCode\Devices\Devices.h\DEV_SD.h \
   ..\CustomCode\Devices\Devices.h\DEV_DT35.h \
   ..\CustomCode\Devices\Devices.h\DEV_DRF1609H.h \
-  ..\CustomCode\Devices\Devices.h\DEV_Timer.h \
   ..\CustomCode\Devices\Devices.h\DEV_OLED.h ..\Inc\spi.h \
   ..\CustomCode\Tasks\Task_ALL.h ..\CustomCode\Tasks\Tasks.h\TASK_Can.h \
   ..\CustomCode\Tasks\Tasks.h\TASK_Check.h \
   ..\CustomCode\Tasks\Tasks.h\Task_Control.h \
   ..\CustomCode\Tasks\Tasks.h\TASK_Imu.h \
-  ..\CustomCode\Tasks\Tasks.h\TASK_UpComputer.h ..\Inc\adc.h
+  ..\CustomCode\Tasks\Tasks.h\TASK_UpComputer.h

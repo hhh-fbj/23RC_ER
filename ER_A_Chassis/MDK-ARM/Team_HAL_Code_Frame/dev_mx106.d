@@ -643,6 +643,7 @@ team_hal_code_frame/dev_mx106.o: \
   ..\CustomCode\Apps\Apps.h\APP_Auto.h \
   ..\CustomCode\Devices\Devices.h\DEV_Posture.h \
   ..\CustomCode\Devices\Devices.h\DEV_Analog.h \
+  ..\CustomCode\Devices\Devices.h\DEV_Timer.h \
   ..\CustomCode\Devices\Devices.h\DEV_AIMU.h \
   ..\CustomCode\Devices\Devices.h\DEV_CIMU.h \
   ..\CustomCode\Devices\Devices.h\DEV_Buzzer.h \

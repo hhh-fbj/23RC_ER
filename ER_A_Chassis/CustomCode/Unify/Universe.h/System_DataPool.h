@@ -26,6 +26,7 @@
 #include "APP_Chassis.h"
 #include "APP_Auto.h"
 
+#include "DEV_Timer.h"
 #include "DEV_AIMU.h"
 #include "DEV_CIMU.h"
 #include "DEV_Buzzer.h"

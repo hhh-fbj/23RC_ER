@@ -2,6 +2,8 @@
 #include "DEV_Posture.h"
 #include "System_DataPool.h"
 
+#include "DEV_Timer.h"
+
 #define SPEED_LIMIT 13000 //轮子电转速 单位：ERPM
 #define POLE_PAIRS 20//极对数
 #define WHEEL_2R 106 //轮子直径 单位：mm
@@ -33,6 +35,10 @@ void Posture_Classdef::getMessage(uint8_t *PostureBuf)
 		RAM_Value[Posture_X] = Recv_Msg.Pack.ActVal[3];
 		RAM_Value[Posture_Y] = Recv_Msg.Pack.ActVal[4];
 		RAM_Value[Posture_W] = Recv_Msg.Pack.ActVal[5];
+//		if(time_long[0] != 0 && time_long[1] == 0)
+//		{
+//				time_long[1] = Get_SystemTimer();
+//		}
 		DevicesMonitor.Update(Frame_CHAS_POSTURE);
 	}
 	else return;
@@ -101,6 +107,7 @@ void Posture_Classdef::Devices_Posture_Reset(void)
 	sendData[3] =	'0';
 	// HAL_UART_Transmit_DMA(&huart6, sendData, 4);
 	HAL_UART_Transmit(&huart6, sendData, 4, 0xffff);
+//	time_long[0] = Get_SystemTimer();
 	Z_count = 0;
 }
 
