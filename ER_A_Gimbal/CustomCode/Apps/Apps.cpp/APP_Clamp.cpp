@@ -57,12 +57,11 @@ Clamp_classdef::Clamp_classdef()
 //	Param.PickPlace_Ready = Param.PickPlace_Max - 9 * Param.PickPlace_Loop - 580000;
 	Param.PickPlace_Ready = Param.PickPlace_Max - (480000-5*Param.PickPlace_D+4320000);
 
-
 	//判断参数
 	Param.Servo_CtrlTime = 10;
 	Param.Servo_TorqueCtrl = 64;
 	Param.Servo_PosCtrl = 116;
-	Param.Servo_InitPos = 520;
+	Param.Servo_InitPos = 510;
 	Param.Servo_OverPos = 1060;
 	Param.Servo_ErrorPos = 25;
 	Param.Stretch_ErrorPos = 400;
@@ -77,7 +76,6 @@ void Clamp_classdef::Control()
 	A0 = HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_0);//抬伸
 	A1 = HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_1);//取环
 	
-
 	//舵机读值——与舵机控制交错进行
 	servo_time++;
 	if(servo_time >= Param.Servo_CtrlTime)
@@ -85,19 +83,19 @@ void Clamp_classdef::Control()
 		TurnPlace_Servo.ReadPosition();
 		servo_time = 0;
 	}
-
+	
 	//问题检测
 	if(ProblemDetection()){return;}
-
+	
 	//目标更新
 	Tar_Update();
 	
 	//舵机控制
 	Servo_Control();
-
+	
 	//限位
 	AngleLimit();
-
+	
 	//PID计算
 	Motor_PIDCalc();
 }
@@ -153,6 +151,7 @@ uint8_t Clamp_classdef::ProblemDetection(void)
 		}
 		Clamp_Mode = Clamp_DisableMode;
 		Clamp_Last_Mode = Clamp_DisableMode;
+		HAL_GPIO_WritePin(GPIOD, GPIO_PIN_13, GPIO_PIN_RESET);//默认
 		return 1;
 	}
 	else
@@ -184,6 +183,9 @@ void Clamp_classdef::Tar_Update(void)
 	switch((int)Clamp_Mode)
 	{
 		case Clamp_DisableMode:
+		{
+			
+		}
 		break;
 		
 		case Clamp_TransiMode:
@@ -279,6 +281,7 @@ void Clamp_classdef::Tar_Update(void)
 		
 		case Clamp_AutoMode:
 		{
+			
 			//与底盘联系进行自瞄发送与跑点
 			if (Gimbal.D12 == GPIO_PIN_SET &&\
 			Gimbal.Last_D12 == GPIO_PIN_RESET &&\
@@ -305,12 +308,14 @@ void Clamp_classdef::Tar_Update(void)
 						Pick_Flag = 1;
 					break;
 					
-					case 2:
-					case 3:
-					case 4:
-					case 5:
-					case 6:
-					case 7:
+					case 2://第1发
+					case 3://第2发
+					case 4://第3发
+					case 5://第4发
+					case 6://第5发
+					case 7://第6发
+					case 8://第7发
+					case 9://第8发
 						if(Auto_Aim_Flag)
 						{
 							if(Vision.aim==0)

@@ -99,7 +99,7 @@ public:
 	Shoot_classdef();
 	//发送发射电机数据用
 	Motor_M2006 Motor[4] =  {Motor_M2006(1), Motor_M2006(2), Motor_M2006(3), Motor_M2006(4)};  
-
+	
 	// BsqJnP2_Classdef BsqJnP2;
 
 	uint8_t Turn_Pull_Flag;
@@ -107,7 +107,8 @@ public:
 	float Manual_Flag;
 	float Shoot_C6;
 	uint8_t Ctrl_Flag;
-
+	uint8_t sj;
+	
 	//发射电机1
 	Motor_M3508 Shoot_Motor =  Motor_M3508(1);  
 	PositionPID Shoot_PID[2];   /*<! 发射电机 位置式PID */

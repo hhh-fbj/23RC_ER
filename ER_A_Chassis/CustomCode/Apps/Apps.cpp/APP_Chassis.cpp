@@ -147,6 +147,7 @@ uint8_t Chassis_classdef::ProblemDetection(void)
             Cal_Speed[i] = 0;
             Buzzer.error = 0;
         }
+				Auto.CH_F_X=1,Auto.CH_HL_X = 1,Auto.CH_HR_X = 1;
         Send_Data();
         HAL_GPIO_WritePin(GPIOD, GPIO_PIN_12, GPIO_PIN_RESET);//默认
         return 1;
@@ -170,6 +171,7 @@ uint8_t Chassis_classdef::ProblemDetection(void)
 						DRV_Motor[i].Out = 0;
             Cal_Speed[i] = 0;
             Buzzer.error = 0;
+						Auto.CH_F_X=1,Auto.CH_HL_X = 1,Auto.CH_HR_X = 1;
         }
         Send_Data();
         HAL_GPIO_WritePin(GPIOD, GPIO_PIN_12, GPIO_PIN_RESET);//默认
@@ -618,9 +620,9 @@ void Chassis_classdef::CAN_Send(void)
 //		DRV_Motor[Front_Rud].Set_current(&hcan2, DRV_Motor[Front_Rud].Out);
 //		DRV_Motor[Left_Rud].Set_current(&hcan2, DRV_Motor[Left_Rud].Out);
 //		DRV_Motor[Right_Rud].Set_current(&hcan2, DRV_Motor[Right_Rud].Out);
-		DRV_Motor[Front_Rud].Set_rpm(&hcan2, DRV_Motor[Front_Rud].Out);
-		DRV_Motor[Left_Rud].Set_rpm(&hcan2, DRV_Motor[Left_Rud].Out);
-		DRV_Motor[Right_Rud].Set_rpm(&hcan2, DRV_Motor[Right_Rud].Out);
+		DRV_Motor[Front_Rud].Set_rpm(&hcan2, DRV_Motor[Front_Rud].Out*Auto.CH_F_X);
+		DRV_Motor[Left_Rud].Set_rpm(&hcan2, DRV_Motor[Left_Rud].Out*Auto.CH_HL_X);
+		DRV_Motor[Right_Rud].Set_rpm(&hcan2, DRV_Motor[Right_Rud].Out*Auto.CH_HR_X);
 }
 void Chassis_classdef::CAN_Recvd(uint8_t can_rx_data[])
 {

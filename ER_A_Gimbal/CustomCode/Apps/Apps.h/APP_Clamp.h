@@ -14,7 +14,6 @@ enum Clamp_CtrlMode_e
 	Clamp_LockMode,
 };
 
-
 class Clamp_classdef
 {
 private:

@@ -36,7 +36,7 @@ void Auto_classdef::Process(void)
         break;
     }
 }
-
+int ttttt[2];
 void Auto_classdef::Text_Step(void)
 {
 	switch(text_step)
@@ -76,6 +76,10 @@ void Auto_classdef::Text_Step(void)
 		
 		//取环
 		case 2:
+		if(ttttt[0]==0)
+		{
+			ttttt[0] = Get_SystemTimer();
+		}
 			startFlag = 0;
 			Chassis.NO_PostureMode = 2;
 			if(IO_RTX(20,10))
@@ -87,6 +91,10 @@ void Auto_classdef::Text_Step(void)
 		
 		//����ǰ
 		case 3:
+			if(ttttt[1]==0)
+			{
+				ttttt[1] = Get_SystemTimer();
+			}
 			if(startFlag == 1 && overFlag == 0)
 			{
 //				Chassis.NO_PostureMode = 0;
@@ -116,7 +124,7 @@ void Auto_classdef::Text_Step(void)
 		break;
 		
 		//发射
-		case 5:
+		case 5://第1发
 			startFlag = 0;
 			Chassis.NO_PostureMode = 2;
 			if(IO_RTX(20,30))
@@ -126,7 +134,7 @@ void Auto_classdef::Text_Step(void)
 			}
 		break;
 
-		case 6:
+		case 6://第2发
 			startFlag = 0;
 			Chassis.NO_PostureMode = 2;
 			if(IO_RTX(20,30))
@@ -136,7 +144,7 @@ void Auto_classdef::Text_Step(void)
 			}
 		break;
 			
-		case 7:
+		case 7://第3发
 			startFlag = 0;
 			Chassis.NO_PostureMode = 2;
 			if(IO_RTX(20,30))
@@ -146,7 +154,7 @@ void Auto_classdef::Text_Step(void)
 			}
 		break;
 			
-		case 8:
+		case 8://第4发
 			startFlag = 0;
 			Chassis.NO_PostureMode = 2;
 			if(IO_RTX(20,30))
@@ -156,7 +164,7 @@ void Auto_classdef::Text_Step(void)
 			}
 		break;
 
-		case 9:
+		case 9://第5发
 			startFlag = 0;
 			Chassis.NO_PostureMode = 2;
 			if(IO_RTX(20,30))
@@ -166,13 +174,33 @@ void Auto_classdef::Text_Step(void)
 			}
 		break;
 
-		case 10:
+		case 10://第6发
 			startFlag = 0;
 			Chassis.NO_PostureMode = 2;
 			if(IO_RTX(20,30))
 			{
 				startFlag = 1;
 				text_step = 11;
+			}
+		break;
+			
+		case 11://第7发
+			startFlag = 0;
+			Chassis.NO_PostureMode = 2;
+			if(IO_RTX(20,30))
+			{
+				startFlag = 1;
+				text_step = 12;
+			}
+		break;
+			
+		case 12://第8发
+			startFlag = 0;
+			Chassis.NO_PostureMode = 2;
+			if(IO_RTX(20,30))
+			{
+				startFlag = 1;
+				text_step = 13;
 			}
 		break;
 			
@@ -554,17 +582,20 @@ void Auto_classdef::Left_PickIdea(void)
 			}
 			else if(Chassis.EdgeDete[4] == GPIO_PIN_SET)//����
 			{
-				Vx = -1100;Vy = 0;Vw = -660;
+				Vx = -1100;Vy = 0;Vw = 0;
+				CH_F_X = 2;CH_HL_X = 1;CH_HR_X = 1;
 			}
 			else if(Chassis.EdgeDete[5] == GPIO_PIN_SET)//����
 			{
-				Vx = -1100;Vy = 0;Vw = 660;
+				Vx = -1100;Vy = 0;Vw = 0;
+				CH_F_X = 1;CH_HL_X = 2;CH_HR_X = 2;
 			}
 			else if(WallFlag)
 			{
 				//以右为准，右激光稳一定
 //				if(Analog.LaserRanging[8]<35000 && Analog.LaserRanging[8]>30000 &&\
 //				Analog.LaserRanging[9]<35000 && Analog.LaserRanging[9]>30000)
+				CH_F_X = 1;CH_HL_X = 1;CH_HR_X = 1;
 				if(Chassis.EdgeDete[7] == GPIO_PIN_RESET)// && Chassis.EdgeDete[7] == GPIO_PIN_RESET)
 				{
 //						Chassis.Laser_PID[0].Target = 33505+33505;

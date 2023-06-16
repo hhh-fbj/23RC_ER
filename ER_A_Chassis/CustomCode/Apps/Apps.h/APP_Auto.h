@@ -58,8 +58,8 @@ private:
 
     // AUTO_CtrlMode_e mode;
 
-    int Spots[3][3] = {-2870,280, 0,\
-                -85, 415, 0,\
+    int Spots[3][3] = {-2750,280, 0,\
+                -85, 500, 0,\
                 -0,-0, 0};
 		
 		int Loop_Point_One[3]={-5881,608,0}, Loop_Point_Two[3], Loop_Point_Three[3], Loop_Point_Four[3];
@@ -86,6 +86,7 @@ public:
     Posture_Classdef Posture;
 		Analog_Classdef Analog = Analog_Classdef(1);
 
+		int CH_F_X=1,CH_HL_X = 1,CH_HR_X = 1;
 
     uint8_t startFlag;//Æô¶¯
     uint8_t overFlag;//´ïµ½

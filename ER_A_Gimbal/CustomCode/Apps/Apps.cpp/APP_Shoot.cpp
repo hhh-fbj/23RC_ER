@@ -101,7 +101,7 @@ void Shoot_classdef::Control()
 		
 		Servo_Control();
 	
-//		AngleLimit();
+		AngleLimit();
 
     //PID计算
     PullMotor_PIDCalc();
@@ -159,48 +159,62 @@ void Shoot_classdef::PullTar_Update(void)
 	Pull_Lock_Flag = 1;
 	switch((int)Pull_Mode)
 	{
-		case Pull_TransiMode:
+		case Pull_TransiMode://转换区
 			LeftPull_TarAngle = LeftPull_Motor.get_totalencoder();
 			RightPull_TarAngle = RightPull_Motor.get_totalencoder();
 			Pull_Mode = Pull_Next_Mode;
 		break;
 
-		case Pull_NewDebugMode:
+		case Pull_NewDebugMode://新测试模式，同步，会初始化需要传感器，一代的自动
+		{
 			if(Top_LeftPull_Flag){;}
 			else{LeftPull_TarAngle += Param.Pull_InitSpeed;}
 			if(Top_RightPull_Flag){;}
 			else{RightPull_TarAngle += Param.Pull_InitSpeed;}
 			if(Top_LeftPull_Flag && Top_RightPull_Flag)
 			{
-				if(LeftPull_TarAngle > Top_LeftPull + clamp_pos_L + (-Param.Pull_InitSpeed))
+				if(CTRL_DR16.Get_RY() != 0)
 				{
-					LeftPull_TarAngle -= (-Param.Pull_InitSpeed);
-				}
-				else if(LeftPull_TarAngle < Top_LeftPull + clamp_pos_L - (-Param.Pull_InitSpeed))
-				{
-					LeftPull_TarAngle += (-Param.Pull_InitSpeed);
+						LeftPull_TarAngle += (-CTRL_DR16.Get_RY());
+						RightPull_TarAngle += (-CTRL_DR16.Get_RY());
 				}
 				else
 				{
-					LeftPull_TarAngle = Top_LeftPull + clamp_pos_L;
+						LeftPull_TarAngle = LeftPull_Motor.get_totalencoder();
+						RightPull_TarAngle = RightPull_Motor.get_totalencoder();
 				}
+				
+//				if(LeftPull_TarAngle > Top_LeftPull + clamp_pos_L + (-Param.Pull_InitSpeed))
+//				{
+//					LeftPull_TarAngle -= (-Param.Pull_InitSpeed);
+//				}
+//				else if(LeftPull_TarAngle < Top_LeftPull + clamp_pos_L - (-Param.Pull_InitSpeed))
+//				{
+//					LeftPull_TarAngle += (-Param.Pull_InitSpeed);
+//				}
+//				else
+//				{
+//					LeftPull_TarAngle = Top_LeftPull + clamp_pos_L;
+//				}
 
-				if(RightPull_TarAngle > Top_RightPull + clamp_pos_R + (-Param.Pull_InitSpeed))
-				{
-					RightPull_TarAngle -= (-Param.Pull_InitSpeed);
-				}
-				else if(RightPull_TarAngle < Top_RightPull + clamp_pos_R - (-Param.Pull_InitSpeed))
-				{
-					RightPull_TarAngle += (-Param.Pull_InitSpeed);
-				}
-				else
-				{
-					RightPull_TarAngle = Top_RightPull + clamp_pos_R;
-				}
+//				if(RightPull_TarAngle > Top_RightPull + clamp_pos_R + (-Param.Pull_InitSpeed))
+//				{
+//					RightPull_TarAngle -= (-Param.Pull_InitSpeed);
+//				}
+//				else if(RightPull_TarAngle < Top_RightPull + clamp_pos_R - (-Param.Pull_InitSpeed))
+//				{
+//					RightPull_TarAngle += (-Param.Pull_InitSpeed);
+//				}
+//				else
+//				{
+//					RightPull_TarAngle = Top_RightPull + clamp_pos_R;
+//				}
 			}
+		}
 		break;
 
-		case Pull_GearSetMode:
+		case Pull_GearSetMode://旧旧模式
+		{
 			if(Top_LeftPull_Flag){;}
 			else{LeftPull_TarAngle += Param.Pull_InitSpeed;}
 			if(Top_RightPull_Flag){;}
@@ -256,9 +270,11 @@ void Shoot_classdef::PullTar_Update(void)
 					}
 				}
 			}
+		}
 		break;
 			
-		case Pull_DebugMode:
+		case Pull_DebugMode://旧测试模式，无初始化，手动控制
+		{
 			if(CTRL_DR16.Get_LY() != 0)
 			{
 					LeftPull_TarAngle += (-CTRL_DR16.Get_LY());
@@ -276,6 +292,7 @@ void Shoot_classdef::PullTar_Update(void)
 			{
 					RightPull_TarAngle = RightPull_Motor.get_totalencoder();
 			}
+		}
 		break;
 		
 		case Pull_LockMode:
@@ -369,7 +386,27 @@ void Shoot_classdef::ShootSpe_Update(void)
 		break;
 		
 		case Shoot_DebugMode:
-			Shoot_PID[PID_Inner].Target = CTRL_DR16.Get_DW();
+//			Shoot_PID[PID_Inner].Target = CTRL_DR16.Get_DW();
+			if(CTRL_DR16.Get_DW() > 110){sj=1;}
+			if(sj)
+			{
+				if(Shoot.Set_Shoot(true)){sj = 0;}
+			}
+			
+			Shoot_Sensor(A2);
+			Shoot_TarAngle += AddAngle;
+			Shoot_PID[PID_Outer].Target = Shoot_TarAngle;
+			Shoot_PID[PID_Outer].Current = Shoot_Motor.get_totalencoder();
+			Shoot_PID[PID_Inner].Target = Shoot_PID[PID_Outer].Cal();
+			if(CTRL_DR16.Get_LY() > 0)
+			{
+				Set_TurnPlacel(Param.Servo_PosCtrl,Param.Servo_OverPos);
+			}
+			if(CTRL_DR16.Get_LY() < 0)
+			{
+				Set_TurnPlacel(Param.Servo_PosCtrl,Param.Servo_InitPos);
+			}
+			
 		break;
 		
 		case Shoot_LockMode:
@@ -633,6 +670,11 @@ bool Shoot_classdef::Set_ShootServo(int sta)
 	switch(sta)
 	{
 		case 0:
+			if(Set_TurnPlacel(Param.Servo_PosCtrl,Param.Servo_InitPos)){return true;}
+			else{return false;}
+		break;
+			
+		case 1:
 			if(Set_TurnPlacel(Param.Servo_PosCtrl,Param.Servo_OverPos)){return true;}
 			else{return false;}
 		break;
@@ -666,6 +708,17 @@ bool Shoot_classdef::Set_ShootServo(int sta)
 			if(Set_TurnPlacel(Param.Servo_PosCtrl,Param.Servo_InitPos)){return true;}
 			else{return false;}
 		break;
+			
+		case 8:
+			if(Set_TurnPlacel(Param.Servo_PosCtrl,Param.Servo_InitPos)){return true;}
+			else{return false;}
+		break;
+			
+		case 9:
+			if(Set_TurnPlacel(Param.Servo_PosCtrl,Param.Servo_InitPos)){return true;}
+			else{return false;}
+		break;
+			
 			
 	}
 	if(Set_TurnPlacel(Param.Servo_PosCtrl,Param.Servo_InitPos)){return true;}

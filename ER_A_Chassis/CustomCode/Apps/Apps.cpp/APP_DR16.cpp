@@ -109,14 +109,14 @@ void CTRL_DR16_classdef::LeverMode_Update(void)
                 case Lever_DOWN:/* 左中-右下 START ------------------------------------------*/ 
                 {
                     Chassis.Set_Mode(CHAS_LockMode);//CHAS_LockMode; CHAS_LaserMode
-//                    if(DR16.Get_DW_Norm() >= 550)
-//                    {
-//                        HAL_GPIO_WritePin(GPIOD, GPIO_PIN_12, GPIO_PIN_SET);//正转
-//                    }
-//                    if(DR16.Get_DW_Norm() <= -550)
-//                    {
-//                        HAL_GPIO_WritePin(GPIOD, GPIO_PIN_12, GPIO_PIN_RESET);//默认
-//                    }
+                    if(DR16.Get_DW_Norm() >= 550)
+                    {
+                        HAL_GPIO_WritePin(GPIOD, GPIO_PIN_12, GPIO_PIN_SET);//正转
+                    }
+                    if(DR16.Get_DW_Norm() <= -550)
+                    {
+                        HAL_GPIO_WritePin(GPIOD, GPIO_PIN_12, GPIO_PIN_RESET);//默认
+                    }
                     // Chassis.Set_Mode(CHAS_PostureMode);
                 }
                 break;/* 左中-右下 END ------------------------------------------*/

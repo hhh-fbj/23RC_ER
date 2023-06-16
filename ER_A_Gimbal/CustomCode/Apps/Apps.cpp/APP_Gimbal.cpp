@@ -502,6 +502,14 @@ bool Gimbal_classdef::TarPos_Move(int angle)
 		case 7:
 			clamp_angle = 0.0f;
 		break;
+		
+		case 8:
+			clamp_angle = 17.0f;
+		break;
+		
+		case 9:
+			clamp_angle = -17.0f;
+		break;
 	}
 	
 	if(abs(Yaw_Encider.getTotolAngle()-(Param.Yaw_Centre+clamp_angle*Param.Yaw_TurnAngle)) <= 1000)

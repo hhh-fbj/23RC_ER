@@ -72,7 +72,7 @@ void CTRL_DR16_classdef::LeverMode_Update(void)
                   {
                     DW_Zero = true;
                   }
-                  if(DR16.Get_DW_Norm() >= 110 && DW_Zero)
+                  if(DR16.Get_DW_Norm() >= 330 && DW_Zero)
                   {
                       if(Clamp.Init_Flag || Clamp.Pick_Flag ||\
                        Clamp.Place_Point_Flag || Clamp.Place_Flag){}
@@ -91,7 +91,7 @@ void CTRL_DR16_classdef::LeverMode_Update(void)
                        }
                        DW_Zero = false;
                   }
-                  else if(DR16.Get_DW_Norm() <= -110 && DW_Zero)
+                  else if(DR16.Get_DW_Norm() <= -330 && DW_Zero)
                   {
                       init_pick = 1;
                       Clamp.Init_Flag = 1;
@@ -227,9 +227,9 @@ void CTRL_DR16_classdef::LeverMode_Update(void)
 //												 HAL_GPIO_WritePin(GPIOD, GPIO_PIN_13, GPIO_PIN_RESET);
 //										 }
 										
-									Gimbal.setMode(Gimbal_LockMode);
+									Gimbal.setMode(Gimbal_NormalMode);
 									Shoot.Shoot_Mode_Set(Shoot_DebugMode);
-									Shoot.Pull_Mode_Set(Pull_DebugMode);//(Pull_DebugMode);
+									Shoot.Pull_Mode_Set(Pull_NewDebugMode);//(Pull_DebugMode);
 									Clamp.setMode(Clamp_LockMode);
 									Mode = RCCtrl_Update_AllShootMode;
                 }
@@ -293,7 +293,7 @@ void CTRL_DR16_classdef::RCCtrl_Update(void)
         case RCCtrl_Update_AllShootMode:
             Expt.L_X = DR16.Get_LX_Norm() * 0;
             Expt.L_Y = DR16.Get_LY_Norm() * 15;
-            Expt.D_W = DR16.Get_DW_Norm() * 6;
+            Expt.D_W = DR16.Get_DW_Norm() * 1;
             Expt.R_X = abs(DR16.Get_RX_Norm()) * DR16.Get_RX_Norm() * sq(Yaw_Turn);
             Expt.R_Y = DR16.Get_RY_Norm() * 15;
         break;

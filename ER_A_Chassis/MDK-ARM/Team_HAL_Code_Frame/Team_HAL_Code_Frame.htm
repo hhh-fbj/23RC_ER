@@ -3,7 +3,7 @@
 <title>Static Call Graph - [Team_HAL_Code_Frame\Team_HAL_Code_Frame.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image Team_HAL_Code_Frame\Team_HAL_Code_Frame.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 6190004: Last Updated: Tue Jun 13 16:41:40 2023
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 6190004: Last Updated: Fri Jun 16 17:49:55 2023
 <BR><P>
 <H3>Maximum Stack Usage =       1048 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -1053,6 +1053,8 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[71]"></a>Get_SystemTimer</STRONG> (Thumb, 32 bytes, Stack size 0 bytes, dev_timer.o(.text.Get_SystemTimer))
+<BR><BR>[Called By]<UL><LI><a href="#[1c3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Auto_classdef::Text_Step()
+</UL>
 <BR>[Address Reference Count : 1]<UL><LI> system_config.o(.text.User_System_Init)
 </UL>
 <P><STRONG><a name="[14a]"></a>HAL_ADC_ConfigChannel</STRONG> (Thumb, 568 bytes, Stack size 20 bytes, stm32f4xx_hal_adc.o(.text.HAL_ADC_ConfigChannel))
@@ -2790,7 +2792,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[73]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Chassis_classdef::~Chassis_classdef__sub_object()
 </UL>
 
-<P><STRONG><a name="[1c7]"></a>Auto_classdef::Left_PickIdea()</STRONG> (Thumb, 552 bytes, Stack size 8 bytes, app_auto.o(.text._ZN13Auto_classdef13Left_PickIdeaEv))
+<P><STRONG><a name="[1c7]"></a>Auto_classdef::Left_PickIdea()</STRONG> (Thumb, 588 bytes, Stack size 8 bytes, app_auto.o(.text._ZN13Auto_classdef13Left_PickIdeaEv))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = Auto_classdef::Left_PickIdea()
 </UL>
 <BR>[Called By]<UL><LI><a href="#[1c3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Auto_classdef::Text_Step()
@@ -2866,13 +2868,14 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[1c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Auto_classdef::Game_Step()
 </UL>
 
-<P><STRONG><a name="[1c3]"></a>Auto_classdef::Text_Step()</STRONG> (Thumb, 1004 bytes, Stack size 48 bytes, app_auto.o(.text._ZN13Auto_classdef9Text_StepEv))
+<P><STRONG><a name="[1c3]"></a>Auto_classdef::Text_Step()</STRONG> (Thumb, 1172 bytes, Stack size 48 bytes, app_auto.o(.text._ZN13Auto_classdef9Text_StepEv))
 <BR><BR>[Stack]<UL><LI>Max Depth = 88<LI>Call Chain = Auto_classdef::Text_Step() &rArr; Auto_classdef::IO_RTX(int, int) &rArr; HAL_GPIO_WritePin
 </UL>
 <BR>[Calls]<UL><LI><a href="#[151]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
 <LI><a href="#[1c8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Auto_classdef::Front_PlaceIdea()
 <LI><a href="#[1bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Auto_classdef::Detection_Point(int*)
 <LI><a href="#[1c1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Auto_classdef::IO_RTX(int, int)
+<LI><a href="#[71]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Get_SystemTimer
 <LI><a href="#[1c7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Auto_classdef::Left_PickIdea()
 <LI><a href="#[1c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Auto_classdef::Detection_Point_text(int*)
 <LI><a href="#[1bf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Posture_Classdef::POS_W()
@@ -2882,7 +2885,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[1c2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Auto_classdef::Process()
 </UL>
 
-<P><STRONG><a name="[1c9]"></a>Auto_classdef::Auto_classdef__sub_object()</STRONG> (Thumb, 228 bytes, Stack size 32 bytes, system_datapool.o(.text._ZN13Auto_classdefC2Ev))
+<P><STRONG><a name="[1c9]"></a>Auto_classdef::Auto_classdef__sub_object()</STRONG> (Thumb, 242 bytes, Stack size 32 bytes, system_datapool.o(.text._ZN13Auto_classdefC2Ev))
 <BR><BR>[Stack]<UL><LI>Max Depth = 40<LI>Call Chain = Auto_classdef::Auto_classdef__sub_object() &rArr; Analog_Classdef::Analog_Classdef__sub_object(unsigned char)
 </UL>
 <BR>[Calls]<UL><LI><a href="#[1cb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Analog_Classdef::Analog_Classdef__sub_object(unsigned char)
@@ -3154,8 +3157,8 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[1dd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Chassis_classdef::RudAngle_Calc(float, float, float)
 </UL>
 
-<P><STRONG><a name="[1e5]"></a>Chassis_classdef::ProblemDetection()</STRONG> (Thumb, 606 bytes, Stack size 48 bytes, app_chassis.o(.text._ZN16Chassis_classdef16ProblemDetectionEv))
-<BR><BR>[Stack]<UL><LI>Max Depth = 232<LI>Call Chain = Chassis_classdef::ProblemDetection() &rArr; Chassis_classdef::Send_Data() &rArr; Chassis_classdef::CAN_Send() &rArr; BldcDrive_VESC::Set_rpm(__CAN_HandleTypeDef*, float) &rArr; BldcDrive_VESC::can_transmit(__CAN_HandleTypeDef*, unsigned int, unsigned char*, unsigned char) &rArr; CANx_SendData_EXT &rArr; HAL_CAN_AddTxMessage
+<P><STRONG><a name="[1e5]"></a>Chassis_classdef::ProblemDetection()</STRONG> (Thumb, 652 bytes, Stack size 56 bytes, app_chassis.o(.text._ZN16Chassis_classdef16ProblemDetectionEv))
+<BR><BR>[Stack]<UL><LI>Max Depth = 248<LI>Call Chain = Chassis_classdef::ProblemDetection() &rArr; Chassis_classdef::Send_Data() &rArr; Chassis_classdef::CAN_Send() &rArr; BldcDrive_VESC::Set_rpm(__CAN_HandleTypeDef*, float) &rArr; BldcDrive_VESC::can_transmit(__CAN_HandleTypeDef*, unsigned int, unsigned char*, unsigned char) &rArr; CANx_SendData_EXT &rArr; HAL_CAN_AddTxMessage
 </UL>
 <BR>[Calls]<UL><LI><a href="#[151]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
 <LI><a href="#[18c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DevicesMonitor_classdef::Get_State(unsigned int)
@@ -3223,8 +3226,8 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[1e9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Chassis_classdef::ChassisTar_Update()
 </UL>
 
-<P><STRONG><a name="[1f2]"></a>Chassis_classdef::CAN_Send()</STRONG> (Thumb, 74 bytes, Stack size 24 bytes, app_chassis.o(.text._ZN16Chassis_classdef8CAN_SendEv))
-<BR><BR>[Stack]<UL><LI>Max Depth = 168<LI>Call Chain = Chassis_classdef::CAN_Send() &rArr; BldcDrive_VESC::Set_rpm(__CAN_HandleTypeDef*, float) &rArr; BldcDrive_VESC::can_transmit(__CAN_HandleTypeDef*, unsigned int, unsigned char*, unsigned char) &rArr; CANx_SendData_EXT &rArr; HAL_CAN_AddTxMessage
+<P><STRONG><a name="[1f2]"></a>Chassis_classdef::CAN_Send()</STRONG> (Thumb, 124 bytes, Stack size 32 bytes, app_chassis.o(.text._ZN16Chassis_classdef8CAN_SendEv))
+<BR><BR>[Stack]<UL><LI>Max Depth = 176<LI>Call Chain = Chassis_classdef::CAN_Send() &rArr; BldcDrive_VESC::Set_rpm(__CAN_HandleTypeDef*, float) &rArr; BldcDrive_VESC::can_transmit(__CAN_HandleTypeDef*, unsigned int, unsigned char*, unsigned char) &rArr; CANx_SendData_EXT &rArr; HAL_CAN_AddTxMessage
 </UL>
 <BR>[Calls]<UL><LI><a href="#[1d5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BldcDrive_VESC::Set_rpm(__CAN_HandleTypeDef*, float)
 </UL>
@@ -3238,7 +3241,7 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[1e8]"></a>Chassis_classdef::Send_Data()</STRONG> (Thumb, 36 bytes, Stack size 16 bytes, app_chassis.o(.text._ZN16Chassis_classdef9Send_DataEv))
-<BR><BR>[Stack]<UL><LI>Max Depth = 184<LI>Call Chain = Chassis_classdef::Send_Data() &rArr; Chassis_classdef::CAN_Send() &rArr; BldcDrive_VESC::Set_rpm(__CAN_HandleTypeDef*, float) &rArr; BldcDrive_VESC::can_transmit(__CAN_HandleTypeDef*, unsigned int, unsigned char*, unsigned char) &rArr; CANx_SendData_EXT &rArr; HAL_CAN_AddTxMessage
+<BR><BR>[Stack]<UL><LI>Max Depth = 192<LI>Call Chain = Chassis_classdef::Send_Data() &rArr; Chassis_classdef::CAN_Send() &rArr; BldcDrive_VESC::Set_rpm(__CAN_HandleTypeDef*, float) &rArr; BldcDrive_VESC::can_transmit(__CAN_HandleTypeDef*, unsigned int, unsigned char*, unsigned char) &rArr; CANx_SendData_EXT &rArr; HAL_CAN_AddTxMessage
 </UL>
 <BR>[Calls]<UL><LI><a href="#[1f2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Chassis_classdef::CAN_Send()
 <LI><a href="#[182]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;void MotorMsgSend&lang;Motor_M2006, 3&rang;(__CAN_HandleTypeDef*, Motor_M2006 (&) [3])
@@ -3548,7 +3551,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[18f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CTRL_DR16_classdef::LeverMode_Update()
 </UL>
 
-<P><STRONG><a name="[18f]"></a>CTRL_DR16_classdef::LeverMode_Update()</STRONG> (Thumb, 692 bytes, Stack size 48 bytes, app_dr16.o(.text._ZN18CTRL_DR16_classdef16LeverMode_UpdateEv))
+<P><STRONG><a name="[18f]"></a>CTRL_DR16_classdef::LeverMode_Update()</STRONG> (Thumb, 788 bytes, Stack size 48 bytes, app_dr16.o(.text._ZN18CTRL_DR16_classdef16LeverMode_UpdateEv))
 <BR><BR>[Stack]<UL><LI>Max Depth = 160<LI>Call Chain = CTRL_DR16_classdef::LeverMode_Update() &rArr; Posture_Classdef::Devices_Posture_Reset() &rArr; HAL_UART_Transmit &rArr; UART_WaitOnFlagUntilTimeout
 </UL>
 <BR>[Calls]<UL><LI><a href="#[103]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_NVIC_SystemReset
@@ -3717,8 +3720,8 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 168 + Unknown Stack Size
 <LI>Call Chain = __cxxabiv1::__class_type_info::can_catch(__cxxabiv1::__shim_type_info const*, void*&) const &rArr; __dynamic_cast
 </UL>
-<BR>[Calls]<UL><LI><a href="#[114]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
-<LI><a href="#[217]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__dynamic_cast
+<BR>[Calls]<UL><LI><a href="#[217]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__dynamic_cast
+<LI><a href="#[114]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
 </UL>
 <BR>[Address Reference Count : 2]<UL><LI> private_typeinfo.cpp.o(.rodata._ZTVN10__cxxabiv117__class_type_infoE)
 <LI> private_typeinfo.cpp.o(.rodata._ZTVN10__cxxabiv120__si_class_type_infoE)
