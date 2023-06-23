@@ -4,6 +4,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "include.h"
 #include "APP_DR16.h"
+#include "APP_Clamp.h"
 #include "DEV_MX106.h"
 
 enum Shoot_CtrlMode_e
@@ -25,6 +26,7 @@ enum Pull_CtrlMode_e
 	Pull_TransiMode,
 	Pull_NewDebugMode,
 	Pull_GearSetMode,
+	Pull_AutoMode,
 };
 
 
@@ -132,9 +134,9 @@ public:
   void Control();          /*<! 发射控制 */
 
 	bool Set_Shoot(bool shoot); 
-	bool Set_ShootServo(int sta);
+	bool Set_ShootServo(Tar_Select_e sta);
 	void Shoot_Mode_Set(Shoot_CtrlMode_e mode);
 	void Pull_Mode_Set(Pull_CtrlMode_e mode);
-	bool Pull_Move(int pos);
+	bool Pull_Move(Tar_Select_e pos);
 };
 #endif

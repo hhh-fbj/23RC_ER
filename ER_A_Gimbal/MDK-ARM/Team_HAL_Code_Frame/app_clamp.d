@@ -648,4 +648,5 @@ team_hal_code_frame/app_clamp.o: \
   ..\CustomCode\Devices\Devices.h\DEV_Buzzer.h \
   ..\CustomCode\Devices\Devices.h\DEV_DRF1609H.h \
   ..\CustomCode\Devices\Devices.h\DEV_UpComputer.h \
-  ..\CustomCode\Devices\Devices.h\DEV_DT35.h
+  ..\CustomCode\Devices\Devices.h\DEV_DT35.h \
+  ..\CustomCode\Devices\Devices.h\DEV_Timer.h

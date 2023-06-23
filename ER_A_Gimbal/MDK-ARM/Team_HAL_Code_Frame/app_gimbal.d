@@ -622,8 +622,10 @@ team_hal_code_frame/app_gimbal.o: \
   ..\Drivers\CMSIS\DSP\Include\dsp\quaternion_math_functions.h \
   ..\CustomCode\Algorithm\Algorithm.h\ALGO_Kalman.h \
   ..\CustomCode\Apps\Apps.h\APP_DR16.h \
-  ..\CustomCode\Apps\Apps.h\APP_Vision.h \
+  ..\CustomCode\Apps\Apps.h\APP_Clamp.h \
+  ..\CustomCode\Devices\Devices.h\DEV_MX106.h \
   ..\CustomCode\Apps\Apps.h\APP_Devices.h \
+  ..\CustomCode\Apps\Apps.h\APP_Vision.h \
   ..\CustomCode\Unify\Universe.h\System_DataPool.h \
   ..\Middlewares\Third_Party\FreeRTOS\Source\include\FreeRTOS.h \
   ..\Inc\FreeRTOSConfig.h \
@@ -641,8 +643,6 @@ team_hal_code_frame/app_gimbal.o: \
   ..\Middlewares\Third_Party\FreeRTOS\Source\include\event_groups.h \
   ..\Inc\can.h ..\Inc\usart.h ..\CustomCode\Unify\Wolf_Infantry.h \
   ..\CustomCode\Apps\Apps.h\APP_Shoot.h \
-  ..\CustomCode\Devices\Devices.h\DEV_MX106.h \
-  ..\CustomCode\Apps\Apps.h\APP_Clamp.h \
   ..\CustomCode\Devices\Devices.h\DEV_AIMU.h \
   ..\CustomCode\Devices\Devices.h\DEV_CIMU.h \
   ..\CustomCode\Devices\Devices.h\DEV_Buzzer.h \

@@ -644,10 +644,10 @@ team_hal_code_frame/dev_aimu.o: \
   ..\CustomCode\Apps\Apps.h\APP_DR16.h \
   ..\CustomCode\Apps\Apps.h\APP_Devices.h \
   ..\CustomCode\Apps\Apps.h\APP_Gimbal.h \
+  ..\CustomCode\Apps\Apps.h\APP_Clamp.h \
+  ..\CustomCode\Devices\Devices.h\DEV_MX106.h \
   ..\CustomCode\Apps\Apps.h\APP_Vision.h \
   ..\CustomCode\Apps\Apps.h\APP_Shoot.h \
-  ..\CustomCode\Devices\Devices.h\DEV_MX106.h \
-  ..\CustomCode\Apps\Apps.h\APP_Clamp.h \
   ..\CustomCode\Devices\Devices.h\DEV_CIMU.h \
   ..\CustomCode\Devices\Devices.h\DEV_Buzzer.h \
   ..\CustomCode\Devices\Devices.h\DEV_DRF1609H.h \

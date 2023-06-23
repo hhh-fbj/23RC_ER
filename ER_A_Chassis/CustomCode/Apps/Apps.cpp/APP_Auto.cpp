@@ -573,7 +573,29 @@ void Auto_classdef::Left_PickIdea(void)
 		}
 		else
 		{
-			if(Chassis.EdgeDete[4] == GPIO_PIN_RESET &&\
+			if(WallFlag)
+			{
+				CH_F_X = 1;CH_HL_X = 1;CH_HR_X = 1;
+				if(Chassis.EdgeDete[7] == GPIO_PIN_RESET)// && Chassis.EdgeDete[7] == GPIO_PIN_RESET)
+				{
+						Vx = -110;
+						Vw = 0;
+						Vy = -110;
+						LR_out_time++;
+				}
+				else
+				{
+					Vx = -110;Vy = -880;Vw=0;
+				}
+				
+				// if(Vy == 0)
+//				if(LR_time > 5|| (LR_out_time > 800 && abs(33505+33505-(Analog.LaserRanging[9]+Analog.LaserRanging[8]))<500))
+				if(LR_out_time > 5)
+				{LR_out_time=0;overFlag = 0;startFlag = 1;\
+				Vx=Vy=Vw=0;WallFlag=WallTime=0;\
+				text_step = 2;}
+			}
+			else if(Chassis.EdgeDete[4] == GPIO_PIN_RESET &&\
 			Chassis.EdgeDete[5] == GPIO_PIN_RESET && WallFlag == 0)
 			{
 				if(Vx<-20){Vx += 10;}
@@ -590,45 +612,7 @@ void Auto_classdef::Left_PickIdea(void)
 				Vx = -1100;Vy = 0;Vw = 0;
 				CH_F_X = 1;CH_HL_X = 2;CH_HR_X = 2;
 			}
-			else if(WallFlag)
-			{
-				//以右为准，右激光稳一定
-//				if(Analog.LaserRanging[8]<35000 && Analog.LaserRanging[8]>30000 &&\
-//				Analog.LaserRanging[9]<35000 && Analog.LaserRanging[9]>30000)
-				CH_F_X = 1;CH_HL_X = 1;CH_HR_X = 1;
-				if(Chassis.EdgeDete[7] == GPIO_PIN_RESET)// && Chassis.EdgeDete[7] == GPIO_PIN_RESET)
-				{
-//						Chassis.Laser_PID[0].Target = 33505+33505;
-//						Chassis.Laser_PID[0].Current = Analog.LaserRanging[9]+Analog.LaserRanging[8];
-//						Vy = Chassis.Laser_PID[0].Cal();
-						Vx = -110;
-						Vw = 0;
-						Vy = -110;
-						// L_L = Analog.LaserRanging[9];
-						// R_L = Analog.LaserRanging[8];
-						LR_out_time++;
-				}
-				else
-				{
-					Vx = -110;Vy = -880;Vw=0;
-				}
-				
-//				if(abs(33505+33505-(Analog.LaserRanging[9]+Analog.LaserRanging[8])) < 120)
-//				{
-//					LR_time++;
-//				}
-//				else
-//				{
-//					LR_time=0;
-//				}
-				
-				// if(Vy == 0)
-//				if(LR_time > 5|| (LR_out_time > 800 && abs(33505+33505-(Analog.LaserRanging[9]+Analog.LaserRanging[8]))<500))
-				if(LR_out_time > 5)
-				{LR_out_time=0;overFlag = 0;startFlag = 1;\
-				Vx=Vy=Vw=0;WallFlag=WallTime=0;\
-				text_step = 2;}
-			}
+
 		}
 	}
 	else if(startFlag == 0 && overFlag == 1)

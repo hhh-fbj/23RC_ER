@@ -43,7 +43,7 @@ Shoot_classdef::Shoot_classdef()
 	// Pre_Tar[1] = -100;
 
 	Param.Shoot_Hold = 263138;//560000;//520000
-	Param.Shoot_Speed = 880;
+	Param.Shoot_Speed = 1320;
 	Param.Shoot_Circle = 677667;//848380;
 	Param.Shoot_ErrorPos = 1000;
 	Param.Pull_Max = 13100000;
@@ -183,32 +183,6 @@ void Shoot_classdef::PullTar_Update(void)
 						LeftPull_TarAngle = LeftPull_Motor.get_totalencoder();
 						RightPull_TarAngle = RightPull_Motor.get_totalencoder();
 				}
-				
-//				if(LeftPull_TarAngle > Top_LeftPull + clamp_pos_L + (-Param.Pull_InitSpeed))
-//				{
-//					LeftPull_TarAngle -= (-Param.Pull_InitSpeed);
-//				}
-//				else if(LeftPull_TarAngle < Top_LeftPull + clamp_pos_L - (-Param.Pull_InitSpeed))
-//				{
-//					LeftPull_TarAngle += (-Param.Pull_InitSpeed);
-//				}
-//				else
-//				{
-//					LeftPull_TarAngle = Top_LeftPull + clamp_pos_L;
-//				}
-
-//				if(RightPull_TarAngle > Top_RightPull + clamp_pos_R + (-Param.Pull_InitSpeed))
-//				{
-//					RightPull_TarAngle -= (-Param.Pull_InitSpeed);
-//				}
-//				else if(RightPull_TarAngle < Top_RightPull + clamp_pos_R - (-Param.Pull_InitSpeed))
-//				{
-//					RightPull_TarAngle += (-Param.Pull_InitSpeed);
-//				}
-//				else
-//				{
-//					RightPull_TarAngle = Top_RightPull + clamp_pos_R;
-//				}
 			}
 		}
 		break;
@@ -291,6 +265,43 @@ void Shoot_classdef::PullTar_Update(void)
 			else
 			{
 					RightPull_TarAngle = RightPull_Motor.get_totalencoder();
+			}
+		}
+		break;
+		
+		case Pull_AutoMode:
+		{
+			if(Top_LeftPull_Flag){;}
+			else{LeftPull_TarAngle += Param.Pull_InitSpeed;}
+			if(Top_RightPull_Flag){;}
+			else{RightPull_TarAngle += Param.Pull_InitSpeed;}
+			if(Top_LeftPull_Flag && Top_RightPull_Flag)
+			{
+				if(LeftPull_TarAngle > Top_LeftPull + clamp_pos_L + (-Param.Pull_InitSpeed))
+				{
+					LeftPull_TarAngle -= (-Param.Pull_InitSpeed);
+				}
+				else if(LeftPull_TarAngle < Top_LeftPull + clamp_pos_L - (-Param.Pull_InitSpeed))
+				{
+					LeftPull_TarAngle += (-Param.Pull_InitSpeed);
+				}
+				else
+				{
+					LeftPull_TarAngle = Top_LeftPull + clamp_pos_L;
+				}
+
+				if(RightPull_TarAngle > Top_RightPull + clamp_pos_R + (-Param.Pull_InitSpeed))
+				{
+					RightPull_TarAngle -= (-Param.Pull_InitSpeed);
+				}
+				else if(RightPull_TarAngle < Top_RightPull + clamp_pos_R - (-Param.Pull_InitSpeed))
+				{
+					RightPull_TarAngle += (-Param.Pull_InitSpeed);
+				}
+				else
+				{
+					RightPull_TarAngle = Top_RightPull + clamp_pos_R;
+				}
 			}
 		}
 		break;
@@ -553,37 +564,47 @@ void Shoot_classdef::Pull_Mode_Set(Pull_CtrlMode_e mode)
 	}
 }
 
-bool Shoot_classdef::Pull_Move(int pos)
+bool Shoot_classdef::Pull_Move(Tar_Select_e pos)
 {
-	switch(pos)
-	{
-		case 0:
-			clamp_pos_L = 4;
-			clamp_pos_R = 0;
-		break;
-		case 2:
-			clamp_pos_L = 449967.5;
-			clamp_pos_R = 457606.5;
-		break;
-		case 3:
-			clamp_pos_L = 1375434;
-			clamp_pos_R = 1383363;
-		break;
-		case 4:
-			clamp_pos_L = 1375434;
-			clamp_pos_R = 1383363;
-		break;
-		case 5:
-			clamp_pos_L = 449967.5;
-			clamp_pos_R = 457606.5;
-		break;
-	}
-	if(abs(LeftPull_Motor.get_totalencoder()-(Top_LeftPull+clamp_pos_L)) <= 800 && \
-		abs(RightPull_Motor.get_totalencoder()-(Top_RightPull+clamp_pos_R)) <= 800)
-	{
-		return true;
-	}
-	return false;
+		switch(pos)
+		{
+			case Tar_MTen:
+				clamp_pos_L = 3623722;
+				clamp_pos_R = 3630579;
+			break;
+			case Tar_MSeventy:
+				clamp_pos_L = 3622876;
+				clamp_pos_R = 3629733;
+			break;
+			
+			case Tar_LTen:
+			case Tar_RTen:
+				clamp_pos_L = 276038;
+				clamp_pos_R = 275043;
+			break;
+			
+			case Tar_LThirty:
+			case Tar_RThirty:
+				clamp_pos_L = 10976;
+				clamp_pos_R = 11915;
+			break;
+			
+			case Tar_DLThirty:
+				clamp_pos_L = 0;
+				clamp_pos_R = 0;
+			break;
+			
+			case Tar_DRThirty:
+				clamp_pos_L = 0;
+				clamp_pos_R = 0;
+			break;
+		}
+		if(abs(LeftPull_Motor.get_totalencoder()-(Top_LeftPull+clamp_pos_L)) <= 800 && \
+			abs(RightPull_Motor.get_totalencoder()-(Top_RightPull+clamp_pos_R)) <= 800)
+		{
+			return true;
+		}
+		return false;
 }
 
 //当发射时不可与其他一起并用使发射完成后需要等待，会影响stop_time，
@@ -665,61 +686,25 @@ bool Shoot_classdef::Set_TurnPlacel(int mode,int position)//位置设置
 	}
 }
 
-bool Shoot_classdef::Set_ShootServo(int sta)
+bool Shoot_classdef::Set_ShootServo(Tar_Select_e sta)
 {
 	switch(sta)
 	{
-		case 0:
-			if(Set_TurnPlacel(Param.Servo_PosCtrl,Param.Servo_InitPos)){return true;}
-			else{return false;}
-		break;
-			
-		case 1:
+		case Tar_MTen:
 			if(Set_TurnPlacel(Param.Servo_PosCtrl,Param.Servo_OverPos)){return true;}
 			else{return false;}
 		break;
 			
-		case 2:
-			if(Set_TurnPlacel(Param.Servo_PosCtrl,Param.Servo_OverPos)){return true;}
-			else{return false;}
-		break;
-			
-		case 3:
+		case Tar_LTen:
+		case Tar_RTen:
+		case Tar_LThirty:
+		case Tar_RThirty:
+		case Tar_MSeventy:
+		case Tar_DLThirty:
+		case Tar_DRThirty:
 			if(Set_TurnPlacel(Param.Servo_PosCtrl,Param.Servo_InitPos)){return true;}
 			else{return false;}
 		break;
-			
-		case 4:
-			if(Set_TurnPlacel(Param.Servo_PosCtrl,Param.Servo_InitPos)){return true;}
-			else{return false;}
-		break;
-			
-		case 5:
-			if(Set_TurnPlacel(Param.Servo_PosCtrl,Param.Servo_InitPos)){return true;}
-			else{return false;}
-		break;
-			
-		case 6:
-			if(Set_TurnPlacel(Param.Servo_PosCtrl,Param.Servo_InitPos)){return true;}
-			else{return false;}
-		break;
-			
-		case 7:
-			if(Set_TurnPlacel(Param.Servo_PosCtrl,Param.Servo_InitPos)){return true;}
-			else{return false;}
-		break;
-			
-		case 8:
-			if(Set_TurnPlacel(Param.Servo_PosCtrl,Param.Servo_InitPos)){return true;}
-			else{return false;}
-		break;
-			
-		case 9:
-			if(Set_TurnPlacel(Param.Servo_PosCtrl,Param.Servo_InitPos)){return true;}
-			else{return false;}
-		break;
-			
-			
 	}
 	if(Set_TurnPlacel(Param.Servo_PosCtrl,Param.Servo_InitPos)){return true;}
 	else{return false;}

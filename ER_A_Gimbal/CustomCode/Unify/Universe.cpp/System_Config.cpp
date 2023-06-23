@@ -44,8 +44,8 @@ void User_System_Init(void)
 
 //	//上位机
 //	
-//	Uart_Init(&huart6, DRF1609H.TJC4827X343_Data, TJC4827X343_SIZE, DRF1609H_Recv_Callback);
-//	HAL_UART_Receive_IT(&huart6, DRF1609H.TJC4827X343_Data, TJC4827X343_SIZE);
+//	Uart_Init(&huart6, DRF1609H.DRF_Data, TJC4827X343_SIZE, DRF1609H_Recv_Callback);
+//	HAL_UART_Receive_IT(&huart6, DRF1609H.DRF_Data, TJC4827X343_SIZE);
 	//
 	
 
@@ -139,6 +139,8 @@ void System_Tasks_Init(void)
 	//--- 上位机任务
 	// xTaskCreate(Task_Debug, "Debug", TASK_STACK_SIZE_128, NULL, PriorityAboveNormal, NULL);
 
+//	xTaskCreate(Task_Vision, "Vision", TASK_STACK_SIZE_128, NULL, PriorityAboveNormal, NULL);
+	
 	//--- 总控制任务(放最后创建)
 	xTaskCreate(Task_Control, "Control", TASK_STACK_SIZE_1024, NULL, PrioritySuperHigh, NULL);
 	

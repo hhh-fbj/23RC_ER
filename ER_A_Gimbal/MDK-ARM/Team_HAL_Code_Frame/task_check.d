@@ -640,10 +640,10 @@ team_hal_code_frame/task_check.o: \
   ..\Inc\usart.h ..\CustomCode\Unify\Wolf_Infantry.h \
   ..\CustomCode\Apps\Apps.h\APP_DR16.h \
   ..\CustomCode\Apps\Apps.h\APP_Gimbal.h \
+  ..\CustomCode\Apps\Apps.h\APP_Clamp.h \
+  ..\CustomCode\Devices\Devices.h\DEV_MX106.h \
   ..\CustomCode\Apps\Apps.h\APP_Vision.h \
   ..\CustomCode\Apps\Apps.h\APP_Shoot.h \
-  ..\CustomCode\Devices\Devices.h\DEV_MX106.h \
-  ..\CustomCode\Apps\Apps.h\APP_Clamp.h \
   ..\CustomCode\Devices\Devices.h\DEV_AIMU.h \
   ..\CustomCode\Devices\Devices.h\DEV_CIMU.h \
   ..\CustomCode\Devices\Devices.h\DEV_Buzzer.h \

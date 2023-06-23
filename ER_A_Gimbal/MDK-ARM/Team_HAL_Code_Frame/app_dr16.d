@@ -638,10 +638,10 @@ team_hal_code_frame/app_dr16.o: ..\CustomCode\Apps\Apps.cpp\APP_DR16.cpp \
   ..\Inc\can.h ..\Inc\usart.h ..\CustomCode\Unify\Wolf_Infantry.h \
   ..\CustomCode\Apps\Apps.h\APP_Devices.h \
   ..\CustomCode\Apps\Apps.h\APP_Gimbal.h \
+  ..\CustomCode\Apps\Apps.h\APP_Clamp.h \
+  ..\CustomCode\Devices\Devices.h\DEV_MX106.h \
   ..\CustomCode\Apps\Apps.h\APP_Vision.h \
   ..\CustomCode\Apps\Apps.h\APP_Shoot.h \
-  ..\CustomCode\Devices\Devices.h\DEV_MX106.h \
-  ..\CustomCode\Apps\Apps.h\APP_Clamp.h \
   ..\CustomCode\Devices\Devices.h\DEV_AIMU.h \
   ..\CustomCode\Devices\Devices.h\DEV_CIMU.h \
   ..\CustomCode\Devices\Devices.h\DEV_Buzzer.h \

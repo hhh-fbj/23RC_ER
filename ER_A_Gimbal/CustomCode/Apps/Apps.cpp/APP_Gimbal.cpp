@@ -41,20 +41,20 @@ Gimbal_classdef::Gimbal_classdef()
     //--- kp,ki,kd,ki_max,out_max,dt
 
 	/* Yaw 电机角度 */
-	UsePID[Yaw][PID_Outer].SetPIDParam(12.0f, 0.0, 0.0f, 8000, 80000, 0.002f);//
-	UsePID[Yaw][PID_Inner].SetPIDParam(3.0f, 1.7, 0.01f, 10000, 30000, 0.002f);//
+	UsePID[Yaw][PID_Outer].SetPIDParam(15.0f, 0.0, 0.0f, 8000, 80000, 0.002f);//
+	UsePID[Yaw][PID_Inner].SetPIDParam(1.6f, 1.6, 0.008f, 10000, 30000, 0.002f);//
 	UsePID[Yaw][PID_Inner].I_SeparThresh = 4000;
 	
 	/*--- Angle Init -------------------------------------------------------------------------*/
 	Set_InitAngle();
-
-	Param.Yaw_Max = 436860;
-	Param.Yaw_Centre = 395569;
-	Param.Yaw_Min = 354170;
-	Param.Yaw_Speed = 200;
+	
+	Param.Yaw_Centre = 563678;
+	Param.Yaw_Max = Param.Yaw_Centre+40960;
+	Param.Yaw_Min = Param.Yaw_Centre-40960;
+	Param.Yaw_Speed = 100;
 	Param.Angle_Big = 22.109448343751673f;
 	Param.Angle_small = 67.890551656248330f;//
-	Param.Yaw_TurnAngle = 455.11111111111111111111111111111;
+	Param.Yaw_TurnAngle = 1;//455.11111111111111111111111111111;
 }
 
 
@@ -72,14 +72,6 @@ void Gimbal_classdef::Control()
 	
 	//--- 云台更新——陀螺仪数据
 	IMU_Update(imu_Export.AIMU_onlyAngle, imu_Export.AIMU_gyro);
-//	UseIMU.Gyro[1] = imu_Export.AIMU_gyro[2];
-//	if(Imu_Det(imu_Export.AIMU_onlyAngle[0]) &&\
-//	Imu_Det(imu_Export.AIMU_onlyAngle[1]) &&\
-//	Imu_Det(imu_Export.AIMU_onlyAngle[2]))
-//	{
-////		DevicesMonitor.Update(Frame_GIMBAL_CIMU);
-//	}
-
 	if(init_mode)
 	{
 		//--- 等待IMU初始化完毕
@@ -108,6 +100,8 @@ void Gimbal_classdef::Control()
  */
 void Gimbal_classdef::IMU_Update(float *angle, float *gyro)
 {
+	if(DevicesMonitor.Get_State(Frame_GIMBAL_CIMU) == Off_line)
+	{
     for(uint8_t i = 0 ; i < 3 ; i++)
     {
         // //--- 角度
@@ -130,10 +124,12 @@ void Gimbal_classdef::IMU_Update(float *angle, float *gyro)
         UseIMU.Pre_Angle[i] = UseIMU.Angle[i];
     }
     //检测陀螺仪是否数据异常
-	if(Imu_Det(angle[0]) && Imu_Det(angle[1]) && Imu_Det(angle[2]))
-	{
-//		DevicesMonitor.Update(Frame_GIMBAL_CIMU);
+		if(Imu_Det(angle[0]) && Imu_Det(angle[1]) && Imu_Det(angle[2]))
+		{
+	//		DevicesMonitor.Update(Frame_GIMBAL_CIMU);
+		}
 	}
+	else{UseIMU.Gyro[0] = CIMU.Pack.Yaw_Z;init_mode = false;}
 }
 
 void Gimbal_classdef::wait_imuInit(void)
@@ -433,7 +429,7 @@ void Gimbal_classdef::Motor_PIDCalc()
 	UsePID[Yaw][PID_Outer].Current = Yaw_Encider.getTotolAngle();
 		
 		
-	UsePID[Yaw][PID_Inner].Target = UseIMU.Gyro[0] * Param.Yaw_TurnAngle; //Yaw_Motor.getSpeed()*60;
+	UsePID[Yaw][PID_Inner].Target = UseIMU.Gyro[0] * 455.11111111111111111111111111111; //Yaw_Motor.getSpeed()*60;
 	UsePID[Yaw][PID_Inner].Current = UsePID[Yaw][PID_Outer].Cal();
     
 	Yaw_Motor.Out = UsePID[Yaw][PID_Inner].Cal();
@@ -476,39 +472,37 @@ float *Gimbal_classdef::Get_TargetAngle(Gimbal_type_e type)
     return return_angle[type];
 }
 
-bool Gimbal_classdef::TarPos_Move(int angle)
-{	
+bool Gimbal_classdef::TarPos_Move(Tar_Select_e angle)
+{
 	switch(angle)
 	{
-		case 0:
-			clamp_angle = 0;
-		break;
-		
-		case 2:
-			clamp_angle = 0.0f;
-		break;
-		case 3:
-			clamp_angle = 67.11341748046875f;
-		break;
-		case 4:
-			clamp_angle = 21.93983349609375f;
-		break;
-		case 5:
-			clamp_angle = -21.91099658203125f;
-		break;
-		case 6:
-			clamp_angle = -66.982201171875f;
-		break;
-		case 7:
+		case Tar_MTen:
+		case Tar_MSeventy:
 			clamp_angle = 0.0f;
 		break;
 		
-		case 8:
-			clamp_angle = 17.0f;
+		case Tar_LTen:
+			clamp_angle = 10002;//67.11341748046875f;
 		break;
 		
-		case 9:
-			clamp_angle = -17.0f;
+		case Tar_RTen:
+			clamp_angle = -10382;//-66.982201171875f;
+		break;
+		
+		case Tar_LThirty:
+			clamp_angle = 31305;//21.93983349609375f;
+		break;
+		
+		case Tar_RThirty:
+			clamp_angle = -31323;//21.91099658203125f;
+		break;
+		
+		case Tar_DLThirty:
+			clamp_angle = 12.8739f*455.11111111111111111111111111111;;
+		break;
+		
+		case Tar_DRThirty:
+			clamp_angle = -12.8739f*455.11111111111111111111111111111;;
 		break;
 	}
 	
@@ -529,6 +523,19 @@ void Gimbal_classdef::setMode(Gimbal_CtrlMode_e mode)
 	}
 }
 
+void Gimbal_classdef::CIMU_Rev(uint8_t data[8])
+{
+	CIMU.data[0] = data[0];
+	CIMU.data[1] = data[1];
+	CIMU.data[2] = data[2];
+	CIMU.data[3] = data[3];
+	CIMU.data[4] = data[4];
+	CIMU.data[5] = data[5];
+	CIMU.data[6] = data[6];
+	CIMU.data[7] = data[7];
+	if(CIMU.Pack.error){DevicesMonitor.FrameCounter[Frame_GIMBAL_CIMU]=0;}
+	else{DevicesMonitor.Update(Frame_GIMBAL_CIMU);}
+}
 
 
 

@@ -10,8 +10,21 @@ enum Clamp_CtrlMode_e
 	Clamp_DisableMode = 0,	// 失能
 	Clamp_TransiMode,
 	Clamp_DebugMode,	// �??通运�??模式
+	Clamp_NDebugMode,
 	Clamp_AutoMode,
 	Clamp_LockMode,
+};
+
+enum Tar_Select_e
+{
+	Tar_MTen = 0,
+	Tar_LTen,
+	Tar_RTen,	
+	Tar_LThirty,
+	Tar_RThirty,
+	Tar_MSeventy,
+	Tar_DLThirty,
+	Tar_DRThirty,
 };
 
 class Clamp_classdef
@@ -35,7 +48,8 @@ private:
 	float Top_Lift = 0;
 	float Top_PickPlace = 0;
 	float now_place;
-
+	
+	float LiftStretch_K,LiftStretch_B,cs_yd;
 
 	struct{
 		float Stretch_Max;//伸出：软件限制最远位置—放环点
@@ -101,6 +115,8 @@ public:
 
 	MX106_classdef TurnPlace_Servo = MX106_classdef(1);
 	
+	Tar_Select_e Tar_Ring;
+	
 	uint8_t step;
 	uint8_t MX106_Data[MXDATASIZE];
 	
@@ -119,6 +135,7 @@ public:
 	GPIO_PinState A1;
 
 	void Control();
+	void AutoShoot(void);
 	void Init(void);
 	void Pick(void);
 	void Place_Point(void);

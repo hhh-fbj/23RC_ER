@@ -466,12 +466,6 @@ void Chassis_classdef::RUD_PIDCalc(uint8_t motor)
 //三轴速度解算四轮舵轮 舵角度 (直角坐标系)
 void Chassis_classdef::RudAngle_Calc(float Vx, float Vy, float Vw)
 {
-    //--- TODO 因为陀螺仪零漂会产生小幅度的Vw速度导致这里的InitAngle会来回跳变(暂时用个低级的方法解决)√
-
-    //--- TODO 还有就是45度刹车可能由于车的重心较高，高速运动的时候会刹的比较猛会出现前倾
-    //---      一个思路是不同的功率给不同的斜坡
-    //---      另一个是刹车的时候先保持原本的角度，先让前轮失能，等车稳定后再呈45度归中
-    //---      再一个是用高级点的加速曲线？
 
     if(Vx == 0 && Vy == 0 && Vw == 0)
     {

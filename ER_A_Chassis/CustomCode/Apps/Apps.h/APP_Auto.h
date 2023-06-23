@@ -58,8 +58,8 @@ private:
 
     // AUTO_CtrlMode_e mode;
 
-    int Spots[3][3] = {-2750,280, 0,\
-                -85, 500, 0,\
+    int Spots[3][3] = {-2780,250, 0,\
+                -150, 625, 0,\
                 -0,-0, 0};
 		
 		int Loop_Point_One[3]={-5881,608,0}, Loop_Point_Two[3], Loop_Point_Three[3], Loop_Point_Four[3];
@@ -79,8 +79,8 @@ private:
     void Left_PickIdea(void);
     void Front_PlaceIdea(void);
 
-  uint8_t Detection_Point_text(int *Spots);
-	bool IO_RTX(int io_s,int is_t);
+		uint8_t Detection_Point_text(int *Spots);
+		bool IO_RTX(int io_s,int is_t);
 public:
 		uint8_t Posture_ResFlag;
     Posture_Classdef Posture;

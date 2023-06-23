@@ -38,6 +38,10 @@ void Task_CAN1_Receive(void *argument)
                 Shoot.RightPull_Motor.update(CAN1_Rx.Data);
                 DevicesMonitor.Update(Frame_RIGHTPULL_MOTOR);
             break;
+						 
+						 case 0x350:
+								 Gimbal.CIMU_Rev(CAN1_Rx.Data);
+						 break;
         }
     }
 }

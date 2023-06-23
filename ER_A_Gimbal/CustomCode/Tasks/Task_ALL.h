@@ -6,6 +6,6 @@
 #include "Task_Control.h"
 #include "TASK_Imu.h"
 #include "TASK_UpComputer.h"
-
+#include "TASK_Vision.h"
 
 #endif 

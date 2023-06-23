@@ -4,6 +4,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "include.h"
 #include "APP_DR16.h"
+#include "APP_Clamp.h"
 /* Exported types ------------------------------------------------------------*/
 #define GIMBAL_YAW_CENTRE	2738    // Yaw 中心点
 
@@ -42,6 +43,19 @@ typedef struct
 	float OffsetGyro[3];  /*<! 解算后的角速度 */
     float Cnt[3]; 	  /*<! 累计圈数 */
 }IMU_Data_t;
+
+#pragma pack(1)
+typedef struct  // 视觉的协议 接收一帧的数据结构体
+{
+	int error;
+	float Yaw_Z;
+} CIMU_Pack_t;
+#pragma pack()
+typedef union
+{
+	uint8_t data[8];
+	CIMU_Pack_t Pack;
+}CIMUMsg_u;
 
 class Gimbal_classdef
 {
@@ -84,6 +98,7 @@ public:
 	GPIO_PinState Last_D12;
 	uint8_t Midpoint_Flag;
 	uint8_t Ding_TEXT_Flag;//云台中间打四柱子的转动标识符
+	CIMUMsg_u CIMU;
 
 	Gimbal_CtrlMode_e Mode; /*<! 云台运作模式 */
 	Gimbal_CtrlMode_e Next_Mode;
@@ -98,8 +113,9 @@ public:
 	IMU_Data_t UseIMU;  /*<! A or C 板陀螺仪 */
 
 	void Control();
+	void CIMU_Rev(uint8_t data[8]);
 	void setMode(Gimbal_CtrlMode_e mode);
-	bool TarPos_Move(int angle);
+	bool TarPos_Move(Tar_Select_e angle);
 };
 #endif
 
