@@ -4,9 +4,9 @@
 
 #include "DEV_Timer.h"
 
-#define SPEED_LIMIT 13000 //轮子电转速 单位：ERPM
+#define SPEED_LIMIT 15000 //轮子电转速 单位：ERPM
 #define POLE_PAIRS 20//极对数
-#define WHEEL_2R 106 //轮子直径 单位：mm
+#define WHEEL_2R 110 //轮子直径 单位：mm
 #define DATA_RATE 200 //数据刷新帧数 单位：帧/s
 
 
@@ -79,6 +79,11 @@ void Posture_Classdef::getMessage(uint8_t *PostureBuf)
 	// {
 		
 	// }
+	
+//		Other_Value[Posture_X]=Office_Value[Posture_X]-Final_Value[Posture_X];
+//		Other_Value[Posture_Y]=Office_Value[Posture_Y]-Final_Value[Posture_Y];
+//		Other_Value[Posture_W]=Final_ANGLE-Office_Value[Posture_W];
+
 
 	//tf坐标系变换
 	TF_ANGLE = Final_ANGLE;
@@ -88,7 +93,7 @@ void Posture_Classdef::getMessage(uint8_t *PostureBuf)
 //														+cos(radians(AV_Data.RAM_DATA.ZAngle)) 	* AV_Data.Final_data.Y_value;
 	
 	//TF坐标变换
-	POS_TF_Change(Final_Value[Posture_X], Final_Value[Posture_Y], RAM_Angle[Posture_Z],&TF_Value[Posture_X], &TF_Value[Posture_Y]);
+//	POS_TF_Change(Final_Value[Posture_X], Final_Value[Posture_Y], RAM_Angle[Posture_Z],&TF_Value[Posture_X], &TF_Value[Posture_Y]);
 	
 }
 
@@ -96,11 +101,9 @@ void Posture_Classdef::getMessage(uint8_t *PostureBuf)
   * @brief   全场定位复位
   * @param   void
   * @retval  void
- */
+ */uint8_t  sendData[4];
 void Posture_Classdef::Devices_Posture_Reset(void)
-{
-	uint8_t  sendData[4];
-	
+{	
 	sendData[0] =	'A';
 	sendData[1] =	'C';
 	sendData[2] =	'T';
@@ -117,24 +120,26 @@ void Posture_Classdef::Devices_Posture_Reset(void)
 // #define TF_POS
 float Posture_Classdef::POS_X(void)
 {
-	#ifdef TF_POS
-	return TF_Value[Posture_X];
-	#else
+//	#ifdef TF_POS
+//	return TF_Value[Posture_X];
+//	#else
+//	return Final_Value[Posture_X];//Office_Value[Posture_X];//-Final_Value[Posture_X];
+//	#endif
 	return Final_Value[Posture_X];
-	#endif
 }
 float Posture_Classdef::POS_Y(void)
 {
-	#ifdef TF_POS
-	return TF_Value[Posture_Y];
-	#else
-	return Final_Value[Posture_Y];
-	#endif
+//	#ifdef TF_POS
+//	return TF_Value[Posture_Y];
+//	#else
+//	return Final_Value[Posture_Y];//Office_Value[Posture_Y];//-Final_Value[Posture_Y];
+//	#endif
+	return Final_Value[Posture_Y];//Office_Value[Posture_Y];//-Final_Value[Posture_Y];
 }
 float Posture_Classdef::POS_W(void)
 {
 	// return RAM_Angle[Posture_W];
-	return Final_ANGLE;
+	return Final_ANGLE;//-Office_Value[Posture_W];
 }
 //tf坐标系变换
 float Posture_Classdef::POS_TF_X(void)

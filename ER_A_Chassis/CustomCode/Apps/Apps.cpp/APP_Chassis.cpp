@@ -32,8 +32,8 @@
 #define VALUE_CIRCLE 98304//32,768
 #define DEGREE_TURN_CIRCLE 273.06666666666666666666666666667
 
-#define CHASSIS_MAX_SPEED 8000  // 底盘驱动轮最大速度
-#define CHASSIS_MAX_VW    0.8*CHASSIS_MAX_SPEED  // 底盘旋转最大速度
+#define CHASSIS_MAX_SPEED 12000  // 底盘驱动轮最大速度
+#define CHASSIS_MAX_VW    0.6*CHASSIS_MAX_SPEED  // 底盘旋转最大速度
 
 
 /*------------------------------------------------------------ 初始化 ------------------------------------------------------------*/
@@ -56,7 +56,7 @@ Chassis_classdef::Chassis_classdef()
 	/*--- 外环 位置 PID -------------------------------------------------------------------------*/
     POS_PID[Posture_X][PID_Outer].SetPIDParam(2.5f, 0.0f, 0.0f, 4000, 15000, 0.002f);POS_PID[Posture_X][PID_Outer].DeadZone = 1;//4 11 0.0003
     POS_PID[Posture_X][PID_Outer].a_p = 4;POS_PID[Posture_X][PID_Outer].b_p = 11;POS_PID[Posture_X][PID_Outer].c_p = 0.0002;
-    POS_PID[Posture_Y][PID_Outer].SetPIDParam(2.5f, 0.0f, 0.0f, 4000, 15000, 0.002f);POS_PID[Posture_Y][PID_Outer].DeadZone = 1;//3.5		6 0.003	
+    POS_PID[Posture_Y][PID_Outer].SetPIDParam(2.8f, 0.0f, 0.0f, 4000, 15000, 0.002f);POS_PID[Posture_Y][PID_Outer].DeadZone = 1;//3.5		6 0.003	
     POS_PID[Posture_Y][PID_Outer].a_p = 3.5;POS_PID[Posture_Y][PID_Outer].b_p = 6;POS_PID[Posture_Y][PID_Outer].c_p = 0.0003;
     POS_PID[Posture_Z][PID_Outer].SetPIDParam(150.0f, 0.0f, 0.0f, 2000, 15000, 0.002f);POS_PID[Posture_Z][PID_Outer].DeadZone = 0.5;
     /*--- 内环 速度 PID 没用 -------------------------------------------------------------------------*/
@@ -184,16 +184,29 @@ uint8_t Chassis_classdef::ProblemDetection(void)
 }
 
 float P;
+float X_cs_speed;
+float zhuan_jiao_chi;
+float zhongjin_zhu_houtui_x;
+float zhongjin_zhu_houtui_y;
+float zhongjin_zhu_houtui_z;
 void Chassis_classdef::ChassisTar_Update()
 {
     switch ((int)Mode)
     {
         case CHAS_TransiMode:
+				{
             Pos_Target[0] = POS_PID[Posture_X][PID_Outer].Target = Auto.Posture.POS_X();//Auto.Posture.POS_W();
             Pos_Target[1] = POS_PID[Posture_Y][PID_Outer].Target = Auto.Posture.POS_Y();//Auto.Posture.POS_W();
             Pos_Target[2] = POS_PID[Posture_W][PID_Outer].Target = Auto.Posture.POS_W();//Auto.Posture.POS_W();
+						zhuan_jiao_chi = Auto.Posture.POS_W();
+							zhongjin_zhu_houtui_x=Auto.Posture.POS_X();
+							zhongjin_zhu_houtui_y=Auto.Posture.POS_Y();
+							zhongjin_zhu_houtui_z=Auto.Posture.POS_W();
             Auto.Vx = Auto.Vy = Auto.Vw = 0;
-            Mode = Next_Mode;
+            if(DR16.Get_LY_Norm()>-110)
+						{
+							Mode = Next_Mode;
+						}
             for(uint8_t i = 0 ; i < 3 ; i++)
             {
                 RUD_Motor[i].Out = 0;
@@ -204,6 +217,7 @@ void Chassis_classdef::ChassisTar_Update()
 								DRV_Motor[i].Out = 0;
             }
             Last_Mode = CHAS_TransiMode;
+				}
         break;
 
         case CHAS_ControlMode://视觉控制底盘
@@ -212,8 +226,18 @@ void Chassis_classdef::ChassisTar_Update()
         break;
     
         case CHAS_MoveMode:
-            Process(CTRL_DR16.Get_ExptVx(), CTRL_DR16.Get_ExptVy(), CTRL_DR16.Get_ExptVw());
+				{
+						Process(CTRL_DR16.Get_ExptVx(), CTRL_DR16.Get_ExptVy(), CTRL_DR16.Get_ExptVw());
+//					  if(CTRL_DR16.Get_ExptVy())
+//						{
+//							Process(CTRL_DR16.Get_ExptVx(), X_cs_speed, CTRL_DR16.Get_ExptVw());
+//						}
+//						else
+//						{
+//							Process(CTRL_DR16.Get_ExptVx(), 0, CTRL_DR16.Get_ExptVw());
+//						}
             Last_Mode = CHAS_MoveMode;
+				}
         break;
 
         case CHAS_LockMode:
@@ -222,6 +246,7 @@ void Chassis_classdef::ChassisTar_Update()
         break;
 
         case CHAS_AutoMode://跑自动
+				{
             Auto.Process();
             switch(NO_PostureMode)
             {
@@ -253,14 +278,20 @@ void Chassis_classdef::ChassisTar_Update()
                     P = atan2(POS_PID[Posture_Y][PID_Outer].Target-Auto.Posture.POS_Y(), POS_PID[Posture_X][PID_Outer].Target-Auto.Posture.POS_X());
                     POS_X_PID.Target = sqrt(pow((POS_PID[Posture_Y][PID_Outer].Target-Auto.Posture.POS_Y()),2)+pow((POS_PID[Posture_X][PID_Outer].Target-Auto.Posture.POS_X()),2));
                     POS_X_PID.Current = 0;
-            
+//										if(P<0){P+=2*PI;}
                     POS_PID[Posture_W][PID_Outer].Current = Auto.Posture.POS_W();
+								
+										
                     //根据yaw轴限xy轴速度
                     AF_WtoXY = AF_WtoXY_Stand/abs(POS_PID[Posture_W][PID_Outer].Target - POS_PID[Posture_W][PID_Outer].Current);
                     if(abs(AF_WtoXY)>=1){AF_WtoXY = 1;}
-                    Process(AF_WtoXY*(POS_X_PID.Cal()*arm_cos(P+Auto.Posture.POS_W()*0.01745329251994329576923690768489)-880), \
-                    AF_WtoXY*POS_X_PID.Cal()*arm_sin(P+Auto.Posture.POS_W()*0.01745329251994329576923690768489), POS_PID[Posture_W][PID_Outer].Cal());
-                break;
+//										Process(POS_X_PID.Cal()*arm_sin((90-Auto.Posture.POS_W())*0.01745329251994329576923690768489-P), \
+//                    POS_X_PID.Cal()*arm_cos((90-Auto.Posture.POS_W())*0.01745329251994329576923690768489-P), POS_PID[Posture_W][PID_Outer].Cal());
+
+											Process((POS_X_PID.Cal()*arm_cos(P+Auto.Posture.POS_W()*0.01745329251994329576923690768489)), \
+											POS_X_PID.Cal()*arm_sin(P+Auto.Posture.POS_W()*0.01745329251994329576923690768489), POS_PID[Posture_W][PID_Outer].Cal());
+
+									break;
 
                 case 66://初始去取环
                     POS_PID[Posture_X][PID_Outer].Current = Auto.Posture.POS_X();//Auto.Posture.POS_W();
@@ -278,9 +309,11 @@ void Chassis_classdef::ChassisTar_Update()
                 
             }
             Last_Mode = CHAS_AutoMode;
+				}
         break;
 
         case CHAS_IMUMode://使用C陀螺仪/全场定位陀螺仪进行修正
+				{
             if(Last_Mode != CHAS_IMUMode){Repair_PID[PID_Outer].Target = RecvCan_Msg.Pack.Yaw_Z;}//Auto.Posture.POS_W();}
             if((CTRL_DR16.Get_ExptVx() != 0 || CTRL_DR16.Get_ExptVy() != 0) && CTRL_DR16.Get_ExptVw() == 0)
             {
@@ -295,35 +328,86 @@ void Chassis_classdef::ChassisTar_Update()
                 Process(CTRL_DR16.Get_ExptVx(), CTRL_DR16.Get_ExptVy(), CTRL_DR16.Get_ExptVw());
             }
             Last_Mode = CHAS_IMUMode;
+				}
         break;
 
         case CHAS_LaserMode://使用激光测距进行修正
+				{
             Laser_PID[0].Target = 32768+32665;
             Laser_PID[0].Current = Auto.Analog.LaserRanging[9]+Auto.Analog.LaserRanging[8];
             Laser_PID[1].Target = 32665-Auto.Analog.LaserRanging[8];
             Laser_PID[1].Current = 32768-Auto.Analog.LaserRanging[9];
             Process(CTRL_DR16.Get_ExptVx(), Laser_PID[0].Cal(), Laser_PID[1].Cal());
             Last_Mode = CHAS_LaserMode;
+				}
         break;
 
         case CHAS_PostureMode://
-            Pos_Target[0] += CTRL_DR16.Get_ExptVx()*0.0001;
-            Pos_Target[1] += CTRL_DR16.Get_ExptVy()*0.0001;
-            Pos_Target[2] += CTRL_DR16.Get_ExptVw()*0.00001;
-            POS_PID[Posture_X][PID_Outer].Target = Pos_Target[0];//Auto.Posture.POS_W();
-            POS_PID[Posture_Y][PID_Outer].Target = Pos_Target[1];//Auto.Posture.POS_W();
-            POS_PID[Posture_W][PID_Outer].Target = Pos_Target[2];
+				{
+//            Pos_Target[0] += CTRL_DR16.Get_ExptVx()*0.0001;
+//            Pos_Target[1] += CTRL_DR16.Get_ExptVy()*0.0001;
+//            Pos_Target[2] = 0;//CTRL_DR16.Get_ExptVw()*0.00001;
+//            POS_PID[Posture_X][PID_Outer].Target = Pos_Target[0];//Auto.Posture.POS_W();
+//            POS_PID[Posture_Y][PID_Outer].Target = Pos_Target[1];//Auto.Posture.POS_W();
+//            POS_PID[Posture_W][PID_Outer].Target = Pos_Target[2];
 
-            POS_PID[Posture_X][PID_Outer].Current = Auto.Posture.POS_X();//Auto.Posture.POS_W();
-            POS_PID[Posture_Y][PID_Outer].Current = Auto.Posture.POS_Y();//Auto.Posture.POS_W();
-            POS_PID[Posture_W][PID_Outer].Current = Auto.Posture.POS_W();//Auto.Posture.POS_W();
+//            POS_PID[Posture_X][PID_Outer].Current = Auto.Posture.POS_X();//Auto.Posture.POS_W();
+//            POS_PID[Posture_Y][PID_Outer].Current = Auto.Posture.POS_Y();//Auto.Posture.POS_W();
+//            POS_PID[Posture_W][PID_Outer].Current = Auto.Posture.POS_W();//Auto.Posture.POS_W();
+//            Process(POS_PID[Posture_X][PID_Outer].Cal(), POS_PID[Posture_Y][PID_Outer].Cal(), POS_PID[Posture_W][PID_Outer].Cal());
+						
+				
+						if(CTRL_DR16.Get_ExptVx()&&CTRL_DR16.Get_ExptVy()){}
+							else{POS_PID[Posture_W][PID_Outer].Target = Auto.Posture.POS_W();}
+						if(CTRL_DR16.Get_ExptVw())
+						{
+							POS_PID[Posture_W][PID_Outer].Current = Auto.Posture.POS_W();
+							POS_PID[Posture_W][PID_Outer].Target = Auto.Posture.POS_W();
+							zhuan_jiao_chi = Auto.Posture.POS_W();
+						}
+						else
+						{
+							POS_PID[Posture_W][PID_Outer].Current = Auto.Posture.POS_W();
+							POS_PID[Posture_W][PID_Outer].Target = zhuan_jiao_chi;
+						}
+						Process(CTRL_DR16.Get_ExptVx(), CTRL_DR16.Get_ExptVy(), POS_PID[Posture_W][PID_Outer].Cal()+CTRL_DR16.Get_ExptVw());//CTRL_DR16.Get_ExptVw());
 
-            Process(POS_PID[Posture_X][PID_Outer].Cal(), POS_PID[Posture_Y][PID_Outer].Cal(), POS_PID[Posture_W][PID_Outer].Cal());
+						
+						
+						
+//						P = atan2(CTRL_DR16.Get_ExptVy(), CTRL_DR16.Get_ExptVx());
+//						POS_X_PID.Target = sqrt(pow(CTRL_DR16.Get_ExptVy(),2)+pow(CTRL_DR16.Get_ExptVx(),2));
+////										if(P<0){P+=2*PI;}
+//						POS_PID[Posture_W][PID_Outer].Current = Auto.Posture.POS_W();
+//				
+//						if(CTRL_DR16.Get_ExptVx()&&CTRL_DR16.Get_ExptVy()){}
+//						else{POS_PID[Posture_W][PID_Outer].Target = Auto.Posture.POS_W();}
+//					if(CTRL_DR16.Get_ExptVw())
+//					{
+//						POS_PID[Posture_W][PID_Outer].Current = Auto.Posture.POS_W();
+//						POS_PID[Posture_W][PID_Outer].Target = Auto.Posture.POS_W();
+//						zhuan_jiao_chi = Auto.Posture.POS_W();
+//					}
+//					else
+//					{
+//						POS_PID[Posture_W][PID_Outer].Current = Auto.Posture.POS_W();
+//						POS_PID[Posture_W][PID_Outer].Target = zhuan_jiao_chi;
+//					}
+////						Process(CTRL_DR16.Get_ExptVx(), CTRL_DR16.Get_ExptVy(), POS_PID[Posture_W][PID_Outer].Cal()+CTRL_DR16.Get_ExptVw());//CTRL_DR16.Get_ExptVw());
 
+//					
+//					Process((POS_X_PID.Target*arm_cos(P+Auto.Posture.POS_W()*0.01745329251994329576923690768489)), \
+//					POS_X_PID.Target*arm_sin(P+Auto.Posture.POS_W()*0.01745329251994329576923690768489), \
+//					POS_PID[Posture_W][PID_Outer].Cal()+CTRL_DR16.Get_ExptVw());
+
+
+						
             Last_Mode = CHAS_PostureMode;
+					}
         break;
 				
         case CHAS_DisableMode:
+				{
             for(uint8_t j = 0 ; j < 3 ; j++)
             {
                 RUD_PID[j][PID_Outer].Reset();
@@ -335,9 +419,78 @@ void Chassis_classdef::ChassisTar_Update()
                 RUD_Motor[j].Out = 0;  
                 Cal_Speed[j] = 0;
             }
-			HAL_GPIO_WritePin(GPIOD, GPIO_PIN_12, GPIO_PIN_RESET);//默认
+				HAL_GPIO_WritePin(GPIOD, GPIO_PIN_12, GPIO_PIN_RESET);//默认
             Last_Mode = CHAS_DisableMode;
-        break;
+				}
+				break;
+						
+				case CHAS_FZSPMode:
+				{
+					if(xxx_flag)
+					{
+            POS_PID[Posture_X][PID_Outer].Target = zhongjin_zhu_houtui_x;//Auto.Posture.POS_W();
+            POS_PID[Posture_Y][PID_Outer].Target = zhongjin_zhu_houtui_y-1030;//Auto.Posture.POS_W();
+            POS_PID[Posture_W][PID_Outer].Target = zhongjin_zhu_houtui_z;
+
+            POS_PID[Posture_X][PID_Outer].Current = Auto.Posture.POS_X();//Auto.Posture.POS_W();
+            POS_PID[Posture_Y][PID_Outer].Current = Auto.Posture.POS_Y();//Auto.Posture.POS_W();
+            POS_PID[Posture_W][PID_Outer].Current = Auto.Posture.POS_W();//Auto.Posture.POS_W();
+						
+				
+							if(abs(Auto.Posture.POS_X() - zhongjin_zhu_houtui_x) < 20 &&\
+							abs(Auto.Posture.POS_Y() - (zhongjin_zhu_houtui_y-1030)) < 20 &&\
+							abs(Auto.Posture.POS_W() - zhongjin_zhu_houtui_z) < 2 )
+						{
+							Process(0, 0, POS_PID[Posture_W][PID_Outer].Cal());
+							HAL_GPIO_WritePin(GPIOD, GPIO_PIN_12, GPIO_PIN_SET);//默认
+						}
+						else
+						{
+							HAL_GPIO_WritePin(GPIOD, GPIO_PIN_12, GPIO_PIN_RESET);//默认
+							Process(POS_PID[Posture_X][PID_Outer].Cal(), POS_PID[Posture_Y][PID_Outer].Cal(), POS_PID[Posture_W][PID_Outer].Cal());
+						}
+					}
+					else
+					{
+						HAL_GPIO_WritePin(GPIOD, GPIO_PIN_12, GPIO_PIN_RESET);//默认
+						if(EdgeDete[2] == GPIO_PIN_RESET &&\
+							EdgeDete[3] == GPIO_PIN_RESET)
+						{
+							zhongjin_zhu_houtui_x=Auto.Posture.POS_X();
+							zhongjin_zhu_houtui_y=Auto.Posture.POS_Y();
+							zhongjin_zhu_houtui_z=Auto.Posture.POS_W();
+							Process(0,1200,0);
+						}
+						else
+						{
+							POS_PID[Posture_W][PID_Outer].Target = zhongjin_zhu_houtui_z;
+							POS_PID[Posture_W][PID_Outer].Current = Auto.Posture.POS_W();
+							Process(0,1200,POS_PID[Posture_W][PID_Outer].Cal());
+						}
+						
+					}
+				}
+				break;
+				
+				case CHAS_TQQHMode:
+				{
+						if(CTRL_DR16.Get_ExptVx()&&CTRL_DR16.Get_ExptVy()){}
+						else{POS_PID[Posture_W][PID_Outer].Target = Auto.Posture.POS_W();}
+						if(CTRL_DR16.Get_ExptVw())
+						{
+							POS_PID[Posture_W][PID_Outer].Current = Auto.Posture.POS_W();
+							POS_PID[Posture_W][PID_Outer].Target = Auto.Posture.POS_W();
+							zhuan_jiao_chi = Auto.Posture.POS_W();
+						}
+						else
+						{
+							POS_PID[Posture_W][PID_Outer].Current = Auto.Posture.POS_W();
+							POS_PID[Posture_W][PID_Outer].Target = zhuan_jiao_chi;
+						}
+						Process(800, CTRL_DR16.Get_ExptVy(), POS_PID[Posture_W][PID_Outer].Cal()+CTRL_DR16.Get_ExptVw());//CTRL_DR16.Get_ExptVw());
+					}
+
+				break;
     }
 }
 

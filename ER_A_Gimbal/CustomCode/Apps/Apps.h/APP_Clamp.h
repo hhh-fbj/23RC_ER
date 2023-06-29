@@ -17,14 +17,15 @@ enum Clamp_CtrlMode_e
 
 enum Tar_Select_e
 {
-	Tar_MTen = 0,
+	Tar_MSeventy = 0,
 	Tar_LTen,
 	Tar_RTen,	
 	Tar_LThirty,
 	Tar_RThirty,
-	Tar_MSeventy,
+	Tar_MTen,
 	Tar_DLThirty,
 	Tar_DRThirty,
+	Tar_Mid,
 };
 
 class Clamp_classdef
@@ -129,6 +130,10 @@ public:
 	uint8_t Ctrl_Flag;
 	uint8_t Auto_Aim_Flag=0;
 	
+	uint8_t xuandian_flag;
+	
+	int D12_SetTime,D12_FwdNum;
+	
 	uint8_t PickPlace_Num = 0;
 	
 	GPIO_PinState A0;
@@ -143,6 +148,7 @@ public:
 	void Place_Auto(void);
 	void Place_Manual(void);
 	void Place_NoShoot(void);
+	void Place_XShoot(void);
 	void Place_Cs(void);
 	void setMode(Clamp_CtrlMode_e mode);
 };

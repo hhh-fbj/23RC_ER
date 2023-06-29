@@ -43,6 +43,8 @@ enum CHAS_CtrlMode_e
     CHAS_AutoMode, 
     CHAS_TransiMode,
     CHAS_PostureMode,       //
+		CHAS_FZSPMode,
+	CHAS_TQQHMode,
 	CHAS_InitMode,          // 初始化阶段
 };
 
@@ -121,6 +123,7 @@ public:
     uint8_t NO_PostureMode = 0;
     GPIO_PinState Ready_Flag = GPIO_PIN_RESET;
     GPIO_PinState Last_Ready_Flag = GPIO_PIN_RESET;
+		uint8_t xxx_flag;
     
     PositionPID POS_PID[3][2];
     PositionPID Laser_PID[2];

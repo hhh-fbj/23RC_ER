@@ -3183,7 +3183,7 @@ I (..\CustomCode\Algorithm\Algorithm.h\ALGO_Ramp.h)(0x646A275B)
 I (C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\include\libcxx\stdint.h)(0x63884908)
 I (C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\include\libcxx\__config)(0x63884902)
 I (C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\include\stdint.h)(0x63884908)
-I (..\CustomCode\Algorithm\ALGO_Math.h)(0x646A275B)
+I (..\CustomCode\Algorithm\ALGO_Math.h)(0x64987E54)
 I (..\Drivers\CMSIS\DSP\Include\arm_math.h)(0x646A2757)
 I (..\Drivers\CMSIS\DSP\Include\arm_math_types.h)(0x646A2757)
 I (..\Drivers\CMSIS\Include\cmsis_compiler.h)(0x646A26E7)
@@ -3354,9 +3354,9 @@ I (..\Drivers\CMSIS\DSP\Include\dsp\svm_defines.h)(0x646A2757)
 I (..\Drivers\CMSIS\DSP\Include\dsp\transform_functions.h)(0x646A2757)
 I (..\Drivers\CMSIS\DSP\Include\dsp\filtering_functions.h)(0x646A2757)
 I (..\Drivers\CMSIS\DSP\Include\dsp\quaternion_math_functions.h)(0x646A2757)
-F (..\CustomCode\Algorithm\ALGO_Math.h)(0x646A275B)()
-F (..\CustomCode\Apps\Apps.cpp\APP_Chassis.cpp)(0x648CB43F)(-xc++ -std=c++17 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-funsigned-char -fshort-enums -fshort-wchar -fno-exceptions-gdwarf-4 -O0 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../Drivers/CMSIS/DSP/Include -I ../Drivers/CMSIS/DSP/Include/dsp -I ../Drivers/CMSIS/Lib/ARM -I ../CustomCode/Apps/Apps.h -I ../CustomCode/Algorithm/Algorithm.h -I ../CustomCode/BSP/BSP.h -I ../CustomCode/Devices/Devices.h -I ../CustomCode/Devices -I ../CustomCode/Tasks/Tasks.h -I ../CustomCode/Unify -I ../CustomCode/Unify/Universe.h -I ../CustomCode/Algorithm -I ../CustomCode/Tasks-I./RTE/_Team_HAL_Code_Frame-IC:/NewJourney/Active/Equipment/Keil5/Packs/ARM/CMSIS/5.9.0/CMSIS/Core/Include-IC:/NewJourney/Active/Equipment/Keil5/Packs/Keil/STM32F4xx_DFP/2.16.0/Drivers/CMSIS/Device/ST/STM32F4xx/Include-D__UVISION_VERSION="538" -D_RTE_ -DSTM32F427xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F427xx-o team_hal_code_frame/app_chassis.o -MD)
-I (..\CustomCode\Apps\Apps.h\APP_Chassis.h)(0x64803304)
+F (..\CustomCode\Algorithm\ALGO_Math.h)(0x64987E54)()
+F (..\CustomCode\Apps\Apps.cpp\APP_Chassis.cpp)(0x649D4C62)(-xc++ -std=c++17 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-funsigned-char -fshort-enums -fshort-wchar -fno-exceptions-gdwarf-4 -O0 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../Drivers/CMSIS/DSP/Include -I ../Drivers/CMSIS/DSP/Include/dsp -I ../Drivers/CMSIS/Lib/ARM -I ../CustomCode/Apps/Apps.h -I ../CustomCode/Algorithm/Algorithm.h -I ../CustomCode/BSP/BSP.h -I ../CustomCode/Devices/Devices.h -I ../CustomCode/Devices -I ../CustomCode/Tasks/Tasks.h -I ../CustomCode/Unify -I ../CustomCode/Unify/Universe.h -I ../CustomCode/Algorithm -I ../CustomCode/Tasks-I./RTE/_Team_HAL_Code_Frame-IC:/NewJourney/Active/Equipment/Keil5/Packs/ARM/CMSIS/5.9.0/CMSIS/Core/Include-IC:/NewJourney/Active/Equipment/Keil5/Packs/Keil/STM32F4xx_DFP/2.16.0/Drivers/CMSIS/Device/ST/STM32F4xx/Include-D__UVISION_VERSION="538" -D_RTE_ -DSTM32F427xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F427xx-o team_hal_code_frame/app_chassis.o -MD)
+I (..\CustomCode\Apps\Apps.h\APP_Chassis.h)(0x649D4AD1)
 I (..\CustomCode\Unify\include.h)(0x646A275B)
 I (..\CustomCode\Unify\confing.h)(0x646A275B)
 I (..\CustomCode\Devices\Devices.h\DEV_DR16.h)(0x646A275B)
@@ -3951,7 +3951,7 @@ I (C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\include\libcxx\__memor
 I (C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\include\libcxx\__functional\reference_wrapper.h)(0x63884902)
 I (C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\include\libcxx\__functional\weak_result_type.h)(0x63884902)
 I (..\CustomCode\Algorithm\Algorithm.h\ALGO_Ramp.h)(0x646A275B)
-I (..\CustomCode\Algorithm\ALGO_Math.h)(0x646A275B)
+I (..\CustomCode\Algorithm\ALGO_Math.h)(0x64987E54)
 I (..\Drivers\CMSIS\DSP\Include\arm_math.h)(0x646A2757)
 I (..\Drivers\CMSIS\DSP\Include\arm_math_types.h)(0x646A2757)
 I (C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\include\libcxx\float.h)(0x63884908)
@@ -4001,8 +4001,8 @@ I (..\Middlewares\Third_Party\FreeRTOS\Source\include\event_groups.h)(0x646A26DD
 I (..\Inc\usart.h)(0x646A26DE)
 I (..\Inc\main.h)(0x646A26DE)
 I (..\CustomCode\Unify\Wolf_Infantry.h)(0x646A275B)
-I (..\CustomCode\Apps\Apps.h\APP_Auto.h)(0x649152E0)
-I (..\CustomCode\Devices\Devices.h\DEV_Posture.h)(0x6485C181)
+I (..\CustomCode\Apps\Apps.h\APP_Auto.h)(0x6498F1BD)
+I (..\CustomCode\Devices\Devices.h\DEV_Posture.h)(0x64986B82)
 I (..\CustomCode\Devices\Devices.h\DEV_Analog.h)(0x646A275B)
 I (..\CustomCode\Devices\Devices.h\DEV_Timer.h)(0x646A275B)
 I (..\CustomCode\Devices\Devices.h\DEV_CIMU.h)(0x646A275B)
@@ -4027,7 +4027,7 @@ I (..\Middlewares\Third_Party\FreeRTOS\Source\portable\RVDS\ARM_CM4F\portmacro.h
 I (..\Middlewares\Third_Party\FreeRTOS\Source\include\mpu_wrappers.h)(0x646A26DD)
 I (..\Middlewares\Third_Party\FreeRTOS\Source\include\task.h)(0x646A26DD)
 I (..\Middlewares\Third_Party\FreeRTOS\Source\include\list.h)(0x646A26DD)
-F (..\CustomCode\Apps\Apps.cpp\APP_DR16.cpp)(0x648C3039)(-xc++ -std=c++17 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-funsigned-char -fshort-enums -fshort-wchar -fno-exceptions-gdwarf-4 -O0 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../Drivers/CMSIS/DSP/Include -I ../Drivers/CMSIS/DSP/Include/dsp -I ../Drivers/CMSIS/Lib/ARM -I ../CustomCode/Apps/Apps.h -I ../CustomCode/Algorithm/Algorithm.h -I ../CustomCode/BSP/BSP.h -I ../CustomCode/Devices/Devices.h -I ../CustomCode/Devices -I ../CustomCode/Tasks/Tasks.h -I ../CustomCode/Unify -I ../CustomCode/Unify/Universe.h -I ../CustomCode/Algorithm -I ../CustomCode/Tasks-I./RTE/_Team_HAL_Code_Frame-IC:/NewJourney/Active/Equipment/Keil5/Packs/ARM/CMSIS/5.9.0/CMSIS/Core/Include-IC:/NewJourney/Active/Equipment/Keil5/Packs/Keil/STM32F4xx_DFP/2.16.0/Drivers/CMSIS/Device/ST/STM32F4xx/Include-D__UVISION_VERSION="538" -D_RTE_ -DSTM32F427xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F427xx-o team_hal_code_frame/app_dr16.o -MD)
+F (..\CustomCode\Apps\Apps.cpp\APP_DR16.cpp)(0x649D57D5)(-xc++ -std=c++17 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-funsigned-char -fshort-enums -fshort-wchar -fno-exceptions-gdwarf-4 -O0 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../Drivers/CMSIS/DSP/Include -I ../Drivers/CMSIS/DSP/Include/dsp -I ../Drivers/CMSIS/Lib/ARM -I ../CustomCode/Apps/Apps.h -I ../CustomCode/Algorithm/Algorithm.h -I ../CustomCode/BSP/BSP.h -I ../CustomCode/Devices/Devices.h -I ../CustomCode/Devices -I ../CustomCode/Tasks/Tasks.h -I ../CustomCode/Unify -I ../CustomCode/Unify/Universe.h -I ../CustomCode/Algorithm -I ../CustomCode/Tasks-I./RTE/_Team_HAL_Code_Frame-IC:/NewJourney/Active/Equipment/Keil5/Packs/ARM/CMSIS/5.9.0/CMSIS/Core/Include-IC:/NewJourney/Active/Equipment/Keil5/Packs/Keil/STM32F4xx_DFP/2.16.0/Drivers/CMSIS/Device/ST/STM32F4xx/Include-D__UVISION_VERSION="538" -D_RTE_ -DSTM32F427xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F427xx-o team_hal_code_frame/app_dr16.o -MD)
 I (..\CustomCode\Apps\Apps.h\APP_DR16.h)(0x646A275B)
 I (..\CustomCode\Unify\include.h)(0x646A275B)
 I (..\CustomCode\Unify\confing.h)(0x646A275B)
@@ -4623,7 +4623,7 @@ I (C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\include\libcxx\__memor
 I (C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\include\libcxx\__functional\reference_wrapper.h)(0x63884902)
 I (C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\include\libcxx\__functional\weak_result_type.h)(0x63884902)
 I (..\CustomCode\Algorithm\Algorithm.h\ALGO_Ramp.h)(0x646A275B)
-I (..\CustomCode\Algorithm\ALGO_Math.h)(0x646A275B)
+I (..\CustomCode\Algorithm\ALGO_Math.h)(0x64987E54)
 I (..\Drivers\CMSIS\DSP\Include\arm_math.h)(0x646A2757)
 I (..\Drivers\CMSIS\DSP\Include\arm_math_types.h)(0x646A2757)
 I (C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\include\libcxx\float.h)(0x63884908)
@@ -4668,12 +4668,12 @@ I (..\Inc\usart.h)(0x646A26DE)
 I (..\Inc\main.h)(0x646A26DE)
 I (..\CustomCode\Unify\Wolf_Infantry.h)(0x646A275B)
 I (..\CustomCode\Apps\Apps.h\APP_Devices.h)(0x646DD292)
-I (..\CustomCode\Apps\Apps.h\APP_Chassis.h)(0x64803304)
+I (..\CustomCode\Apps\Apps.h\APP_Chassis.h)(0x649D4AD1)
 I (..\CustomCode\Devices\Devices.h\DEV_BrtEncoder.h)(0x646A275B)
 I (..\CustomCode\Devices\Devices.h\DEV_Bldc.h)(0x646DD292)
 I (..\CustomCode\Devices\Devices.h\DEV_MX106.h)(0x646A275B)
-I (..\CustomCode\Apps\Apps.h\APP_Auto.h)(0x649152E0)
-I (..\CustomCode\Devices\Devices.h\DEV_Posture.h)(0x6485C181)
+I (..\CustomCode\Apps\Apps.h\APP_Auto.h)(0x6498F1BD)
+I (..\CustomCode\Devices\Devices.h\DEV_Posture.h)(0x64986B82)
 I (..\CustomCode\Devices\Devices.h\DEV_Analog.h)(0x646A275B)
 I (..\CustomCode\Devices\Devices.h\DEV_Timer.h)(0x646A275B)
 I (..\CustomCode\Devices\Devices.h\DEV_AIMU.h)(0x646A275B)
@@ -4683,8 +4683,8 @@ I (..\CustomCode\Devices\Devices.h\DEV_UpComputer.h)(0x646A275B)
 I (..\CustomCode\Devices\Devices.h\DEV_SD.h)(0x646A275B)
 I (..\CustomCode\Devices\Devices.h\DEV_DT35.h)(0x646A275B)
 I (..\CustomCode\Devices\Devices.h\DEV_DRF1609H.h)(0x646A275B)
-F (..\CustomCode\Apps\Apps.cpp\APP_Auto.cpp)(0x6491B71C)(-xc++ -std=c++17 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-funsigned-char -fshort-enums -fshort-wchar -fno-exceptions-gdwarf-4 -O0 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../Drivers/CMSIS/DSP/Include -I ../Drivers/CMSIS/DSP/Include/dsp -I ../Drivers/CMSIS/Lib/ARM -I ../CustomCode/Apps/Apps.h -I ../CustomCode/Algorithm/Algorithm.h -I ../CustomCode/BSP/BSP.h -I ../CustomCode/Devices/Devices.h -I ../CustomCode/Devices -I ../CustomCode/Tasks/Tasks.h -I ../CustomCode/Unify -I ../CustomCode/Unify/Universe.h -I ../CustomCode/Algorithm -I ../CustomCode/Tasks-I./RTE/_Team_HAL_Code_Frame-IC:/NewJourney/Active/Equipment/Keil5/Packs/ARM/CMSIS/5.9.0/CMSIS/Core/Include-IC:/NewJourney/Active/Equipment/Keil5/Packs/Keil/STM32F4xx_DFP/2.16.0/Drivers/CMSIS/Device/ST/STM32F4xx/Include-D__UVISION_VERSION="538" -D_RTE_ -DSTM32F427xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F427xx-o team_hal_code_frame/app_auto.o -MD)
-I (..\CustomCode\Apps\Apps.h\APP_Auto.h)(0x649152E0)
+F (..\CustomCode\Apps\Apps.cpp\APP_Auto.cpp)(0x649921AA)(-xc++ -std=c++17 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-funsigned-char -fshort-enums -fshort-wchar -fno-exceptions-gdwarf-4 -O0 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../Drivers/CMSIS/DSP/Include -I ../Drivers/CMSIS/DSP/Include/dsp -I ../Drivers/CMSIS/Lib/ARM -I ../CustomCode/Apps/Apps.h -I ../CustomCode/Algorithm/Algorithm.h -I ../CustomCode/BSP/BSP.h -I ../CustomCode/Devices/Devices.h -I ../CustomCode/Devices -I ../CustomCode/Tasks/Tasks.h -I ../CustomCode/Unify -I ../CustomCode/Unify/Universe.h -I ../CustomCode/Algorithm -I ../CustomCode/Tasks-I./RTE/_Team_HAL_Code_Frame-IC:/NewJourney/Active/Equipment/Keil5/Packs/ARM/CMSIS/5.9.0/CMSIS/Core/Include-IC:/NewJourney/Active/Equipment/Keil5/Packs/Keil/STM32F4xx_DFP/2.16.0/Drivers/CMSIS/Device/ST/STM32F4xx/Include-D__UVISION_VERSION="538" -D_RTE_ -DSTM32F427xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F427xx-o team_hal_code_frame/app_auto.o -MD)
+I (..\CustomCode\Apps\Apps.h\APP_Auto.h)(0x6498F1BD)
 I (..\CustomCode\Unify\include.h)(0x646A275B)
 I (..\CustomCode\Unify\confing.h)(0x646A275B)
 I (..\CustomCode\Devices\Devices.h\DEV_DR16.h)(0x646A275B)
@@ -5279,7 +5279,7 @@ I (C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\include\libcxx\__memor
 I (C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\include\libcxx\__functional\reference_wrapper.h)(0x63884902)
 I (C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\include\libcxx\__functional\weak_result_type.h)(0x63884902)
 I (..\CustomCode\Algorithm\Algorithm.h\ALGO_Ramp.h)(0x646A275B)
-I (..\CustomCode\Algorithm\ALGO_Math.h)(0x646A275B)
+I (..\CustomCode\Algorithm\ALGO_Math.h)(0x64987E54)
 I (..\Drivers\CMSIS\DSP\Include\arm_math.h)(0x646A2757)
 I (..\Drivers\CMSIS\DSP\Include\arm_math_types.h)(0x646A2757)
 I (C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\include\libcxx\float.h)(0x63884908)
@@ -5303,7 +5303,7 @@ I (..\Drivers\CMSIS\DSP\Include\dsp\transform_functions.h)(0x646A2757)
 I (..\Drivers\CMSIS\DSP\Include\dsp\filtering_functions.h)(0x646A2757)
 I (..\Drivers\CMSIS\DSP\Include\dsp\quaternion_math_functions.h)(0x646A2757)
 I (..\CustomCode\Algorithm\Algorithm.h\ALGO_Kalman.h)(0x646A275B)
-I (..\CustomCode\Devices\Devices.h\DEV_Posture.h)(0x6485C181)
+I (..\CustomCode\Devices\Devices.h\DEV_Posture.h)(0x64986B82)
 I (..\CustomCode\Devices\Devices.h\DEV_Analog.h)(0x646A275B)
 I (..\CustomCode\Unify\Universe.h\System_DataPool.h)(0x6485C1BA)
 I (C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\include\libcxx\stdbool.h)(0x63884908)
@@ -5327,7 +5327,7 @@ I (..\Inc\main.h)(0x646A26DE)
 I (..\CustomCode\Unify\Wolf_Infantry.h)(0x646A275B)
 I (..\CustomCode\Apps\Apps.h\APP_DR16.h)(0x646A275B)
 I (..\CustomCode\Apps\Apps.h\APP_Devices.h)(0x646DD292)
-I (..\CustomCode\Apps\Apps.h\APP_Chassis.h)(0x64803304)
+I (..\CustomCode\Apps\Apps.h\APP_Chassis.h)(0x649D4AD1)
 I (..\CustomCode\Devices\Devices.h\DEV_BrtEncoder.h)(0x646A275B)
 I (..\CustomCode\Devices\Devices.h\DEV_Bldc.h)(0x646DD292)
 I (..\CustomCode\Devices\Devices.h\DEV_MX106.h)(0x646A275B)
@@ -6156,7 +6156,7 @@ I (C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\include\libcxx\__memor
 I (C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\include\libcxx\__functional\reference_wrapper.h)(0x63884902)
 I (C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\include\libcxx\__functional\weak_result_type.h)(0x63884902)
 I (..\CustomCode\Algorithm\Algorithm.h\ALGO_Ramp.h)(0x646A275B)
-I (..\CustomCode\Algorithm\ALGO_Math.h)(0x646A275B)
+I (..\CustomCode\Algorithm\ALGO_Math.h)(0x64987E54)
 I (..\Drivers\CMSIS\DSP\Include\arm_math.h)(0x646A2757)
 I (..\Drivers\CMSIS\DSP\Include\arm_math_types.h)(0x646A2757)
 I (C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\include\libcxx\float.h)(0x63884908)
@@ -6202,12 +6202,12 @@ I (..\Inc\main.h)(0x646A26DE)
 I (..\CustomCode\Unify\Wolf_Infantry.h)(0x646A275B)
 I (..\CustomCode\Apps\Apps.h\APP_DR16.h)(0x646A275B)
 I (..\CustomCode\Apps\Apps.h\APP_Devices.h)(0x646DD292)
-I (..\CustomCode\Apps\Apps.h\APP_Chassis.h)(0x64803304)
+I (..\CustomCode\Apps\Apps.h\APP_Chassis.h)(0x649D4AD1)
 I (..\CustomCode\Devices\Devices.h\DEV_BrtEncoder.h)(0x646A275B)
 I (..\CustomCode\Devices\Devices.h\DEV_Bldc.h)(0x646DD292)
 I (..\CustomCode\Devices\Devices.h\DEV_MX106.h)(0x646A275B)
-I (..\CustomCode\Apps\Apps.h\APP_Auto.h)(0x649152E0)
-I (..\CustomCode\Devices\Devices.h\DEV_Posture.h)(0x6485C181)
+I (..\CustomCode\Apps\Apps.h\APP_Auto.h)(0x6498F1BD)
+I (..\CustomCode\Devices\Devices.h\DEV_Posture.h)(0x64986B82)
 I (..\CustomCode\Devices\Devices.h\DEV_Analog.h)(0x646A275B)
 I (..\CustomCode\Devices\Devices.h\DEV_Timer.h)(0x646A275B)
 I (..\CustomCode\Devices\Devices.h\DEV_AIMU.h)(0x646A275B)
@@ -6844,7 +6844,7 @@ I (..\CustomCode\BSP\BSP.h\BSP_CAN.h)(0x646A275B)
 I (..\CustomCode\BSP\BSP.h\BSP_UART.h)(0x646A275B)
 I (..\CustomCode\BSP\BSP.h\BSP_FLASH.h)(0x646A275B)
 I (..\CustomCode\Algorithm\Algorithm.h\ALGO_Ramp.h)(0x646A275B)
-I (..\CustomCode\Algorithm\ALGO_Math.h)(0x646A275B)
+I (..\CustomCode\Algorithm\ALGO_Math.h)(0x64987E54)
 I (..\Drivers\CMSIS\DSP\Include\arm_math.h)(0x646A2757)
 I (..\Drivers\CMSIS\DSP\Include\arm_math_types.h)(0x646A2757)
 I (C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\include\libcxx\float.h)(0x63884908)
@@ -6872,12 +6872,12 @@ I (..\Inc\usart.h)(0x646A26DE)
 I (..\CustomCode\Unify\Wolf_Infantry.h)(0x646A275B)
 I (..\CustomCode\Apps\Apps.h\APP_DR16.h)(0x646A275B)
 I (..\CustomCode\Apps\Apps.h\APP_Devices.h)(0x646DD292)
-I (..\CustomCode\Apps\Apps.h\APP_Chassis.h)(0x64803304)
+I (..\CustomCode\Apps\Apps.h\APP_Chassis.h)(0x649D4AD1)
 I (..\CustomCode\Devices\Devices.h\DEV_BrtEncoder.h)(0x646A275B)
 I (..\CustomCode\Devices\Devices.h\DEV_Bldc.h)(0x646DD292)
 I (..\CustomCode\Devices\Devices.h\DEV_MX106.h)(0x646A275B)
-I (..\CustomCode\Apps\Apps.h\APP_Auto.h)(0x649152E0)
-I (..\CustomCode\Devices\Devices.h\DEV_Posture.h)(0x6485C181)
+I (..\CustomCode\Apps\Apps.h\APP_Auto.h)(0x6498F1BD)
+I (..\CustomCode\Devices\Devices.h\DEV_Posture.h)(0x64986B82)
 I (..\CustomCode\Devices\Devices.h\DEV_Analog.h)(0x646A275B)
 I (..\CustomCode\Devices\Devices.h\DEV_Timer.h)(0x646A275B)
 I (..\CustomCode\Devices\Devices.h\DEV_CIMU.h)(0x646A275B)
@@ -7549,7 +7549,7 @@ I (C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\include\libcxx\__memor
 I (C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\include\libcxx\__functional\reference_wrapper.h)(0x63884902)
 I (C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\include\libcxx\__functional\weak_result_type.h)(0x63884902)
 I (..\CustomCode\Algorithm\Algorithm.h\ALGO_Ramp.h)(0x646A275B)
-I (..\CustomCode\Algorithm\ALGO_Math.h)(0x646A275B)
+I (..\CustomCode\Algorithm\ALGO_Math.h)(0x64987E54)
 I (..\Drivers\CMSIS\DSP\Include\arm_math.h)(0x646A2757)
 I (..\Drivers\CMSIS\DSP\Include\arm_math_types.h)(0x646A2757)
 I (C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\include\libcxx\float.h)(0x63884908)
@@ -7577,12 +7577,12 @@ I (..\Inc\usart.h)(0x646A26DE)
 I (..\CustomCode\Unify\Wolf_Infantry.h)(0x646A275B)
 I (..\CustomCode\Apps\Apps.h\APP_DR16.h)(0x646A275B)
 I (..\CustomCode\Apps\Apps.h\APP_Devices.h)(0x646DD292)
-I (..\CustomCode\Apps\Apps.h\APP_Chassis.h)(0x64803304)
+I (..\CustomCode\Apps\Apps.h\APP_Chassis.h)(0x649D4AD1)
 I (..\CustomCode\Devices\Devices.h\DEV_BrtEncoder.h)(0x646A275B)
 I (..\CustomCode\Devices\Devices.h\DEV_Bldc.h)(0x646DD292)
 I (..\CustomCode\Devices\Devices.h\DEV_MX106.h)(0x646A275B)
-I (..\CustomCode\Apps\Apps.h\APP_Auto.h)(0x649152E0)
-I (..\CustomCode\Devices\Devices.h\DEV_Posture.h)(0x6485C181)
+I (..\CustomCode\Apps\Apps.h\APP_Auto.h)(0x6498F1BD)
+I (..\CustomCode\Devices\Devices.h\DEV_Posture.h)(0x64986B82)
 I (..\CustomCode\Devices\Devices.h\DEV_Analog.h)(0x646A275B)
 I (..\CustomCode\Devices\Devices.h\DEV_Timer.h)(0x646A275B)
 I (..\CustomCode\Devices\Devices.h\DEV_AIMU.h)(0x646A275B)
@@ -8443,7 +8443,7 @@ I (C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\include\libcxx\__memor
 I (C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\include\libcxx\__functional\reference_wrapper.h)(0x63884902)
 I (C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\include\libcxx\__functional\weak_result_type.h)(0x63884902)
 I (..\CustomCode\Algorithm\Algorithm.h\ALGO_Ramp.h)(0x646A275B)
-I (..\CustomCode\Algorithm\ALGO_Math.h)(0x646A275B)
+I (..\CustomCode\Algorithm\ALGO_Math.h)(0x64987E54)
 I (..\Drivers\CMSIS\DSP\Include\arm_math.h)(0x646A2757)
 I (..\Drivers\CMSIS\DSP\Include\arm_math_types.h)(0x646A2757)
 I (C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\include\libcxx\float.h)(0x63884908)
@@ -8471,12 +8471,12 @@ I (..\Inc\usart.h)(0x646A26DE)
 I (..\CustomCode\Unify\Wolf_Infantry.h)(0x646A275B)
 I (..\CustomCode\Apps\Apps.h\APP_DR16.h)(0x646A275B)
 I (..\CustomCode\Apps\Apps.h\APP_Devices.h)(0x646DD292)
-I (..\CustomCode\Apps\Apps.h\APP_Chassis.h)(0x64803304)
+I (..\CustomCode\Apps\Apps.h\APP_Chassis.h)(0x649D4AD1)
 I (..\CustomCode\Devices\Devices.h\DEV_BrtEncoder.h)(0x646A275B)
 I (..\CustomCode\Devices\Devices.h\DEV_Bldc.h)(0x646DD292)
 I (..\CustomCode\Devices\Devices.h\DEV_MX106.h)(0x646A275B)
-I (..\CustomCode\Apps\Apps.h\APP_Auto.h)(0x649152E0)
-I (..\CustomCode\Devices\Devices.h\DEV_Posture.h)(0x6485C181)
+I (..\CustomCode\Apps\Apps.h\APP_Auto.h)(0x6498F1BD)
+I (..\CustomCode\Devices\Devices.h\DEV_Posture.h)(0x64986B82)
 I (..\CustomCode\Devices\Devices.h\DEV_Analog.h)(0x646A275B)
 I (..\CustomCode\Devices\Devices.h\DEV_Timer.h)(0x646A275B)
 I (..\CustomCode\Devices\Devices.h\DEV_AIMU.h)(0x646A275B)
@@ -9132,7 +9132,7 @@ I (C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\include\libcxx\__memor
 I (C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\include\libcxx\__functional\reference_wrapper.h)(0x63884902)
 I (C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\include\libcxx\__functional\weak_result_type.h)(0x63884902)
 I (..\CustomCode\Algorithm\Algorithm.h\ALGO_Ramp.h)(0x646A275B)
-I (..\CustomCode\Algorithm\ALGO_Math.h)(0x646A275B)
+I (..\CustomCode\Algorithm\ALGO_Math.h)(0x64987E54)
 I (..\Drivers\CMSIS\DSP\Include\arm_math.h)(0x646A2757)
 I (..\Drivers\CMSIS\DSP\Include\arm_math_types.h)(0x646A2757)
 I (C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\include\libcxx\float.h)(0x63884908)
@@ -9752,7 +9752,7 @@ I (C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\include\libcxx\__memor
 I (C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\include\libcxx\__functional\reference_wrapper.h)(0x63884902)
 I (C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\include\libcxx\__functional\weak_result_type.h)(0x63884902)
 I (..\CustomCode\Algorithm\Algorithm.h\ALGO_Ramp.h)(0x646A275B)
-I (..\CustomCode\Algorithm\ALGO_Math.h)(0x646A275B)
+I (..\CustomCode\Algorithm\ALGO_Math.h)(0x64987E54)
 I (..\Drivers\CMSIS\DSP\Include\arm_math.h)(0x646A2757)
 I (..\Drivers\CMSIS\DSP\Include\arm_math_types.h)(0x646A2757)
 I (C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\include\libcxx\float.h)(0x63884908)
@@ -9776,8 +9776,8 @@ I (..\Drivers\CMSIS\DSP\Include\dsp\transform_functions.h)(0x646A2757)
 I (..\Drivers\CMSIS\DSP\Include\dsp\filtering_functions.h)(0x646A2757)
 I (..\Drivers\CMSIS\DSP\Include\dsp\quaternion_math_functions.h)(0x646A2757)
 I (..\CustomCode\Algorithm\Algorithm.h\ALGO_Kalman.h)(0x646A275B)
-F (..\CustomCode\Devices\Devices.cpp\DEV_Posture.cpp)(0x6485C6CD)(-xc++ -std=c++17 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-funsigned-char -fshort-enums -fshort-wchar -fno-exceptions-gdwarf-4 -O0 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../Drivers/CMSIS/DSP/Include -I ../Drivers/CMSIS/DSP/Include/dsp -I ../Drivers/CMSIS/Lib/ARM -I ../CustomCode/Apps/Apps.h -I ../CustomCode/Algorithm/Algorithm.h -I ../CustomCode/BSP/BSP.h -I ../CustomCode/Devices/Devices.h -I ../CustomCode/Devices -I ../CustomCode/Tasks/Tasks.h -I ../CustomCode/Unify -I ../CustomCode/Unify/Universe.h -I ../CustomCode/Algorithm -I ../CustomCode/Tasks-I./RTE/_Team_HAL_Code_Frame-IC:/NewJourney/Active/Equipment/Keil5/Packs/ARM/CMSIS/5.9.0/CMSIS/Core/Include-IC:/NewJourney/Active/Equipment/Keil5/Packs/Keil/STM32F4xx_DFP/2.16.0/Drivers/CMSIS/Device/ST/STM32F4xx/Include-D__UVISION_VERSION="538" -D_RTE_ -DSTM32F427xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F427xx-o team_hal_code_frame/dev_posture.o -MD)
-I (..\CustomCode\Devices\Devices.h\DEV_Posture.h)(0x6485C181)
+F (..\CustomCode\Devices\Devices.cpp\DEV_Posture.cpp)(0x64986A34)(-xc++ -std=c++17 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-funsigned-char -fshort-enums -fshort-wchar -fno-exceptions-gdwarf-4 -O0 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../Drivers/CMSIS/DSP/Include -I ../Drivers/CMSIS/DSP/Include/dsp -I ../Drivers/CMSIS/Lib/ARM -I ../CustomCode/Apps/Apps.h -I ../CustomCode/Algorithm/Algorithm.h -I ../CustomCode/BSP/BSP.h -I ../CustomCode/Devices/Devices.h -I ../CustomCode/Devices -I ../CustomCode/Tasks/Tasks.h -I ../CustomCode/Unify -I ../CustomCode/Unify/Universe.h -I ../CustomCode/Algorithm -I ../CustomCode/Tasks-I./RTE/_Team_HAL_Code_Frame-IC:/NewJourney/Active/Equipment/Keil5/Packs/ARM/CMSIS/5.9.0/CMSIS/Core/Include-IC:/NewJourney/Active/Equipment/Keil5/Packs/Keil/STM32F4xx_DFP/2.16.0/Drivers/CMSIS/Device/ST/STM32F4xx/Include-D__UVISION_VERSION="538" -D_RTE_ -DSTM32F427xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F427xx-o team_hal_code_frame/dev_posture.o -MD)
+I (..\CustomCode\Devices\Devices.h\DEV_Posture.h)(0x64986B82)
 I (..\CustomCode\Unify\include.h)(0x646A275B)
 I (..\CustomCode\Unify\confing.h)(0x646A275B)
 I (..\CustomCode\Devices\Devices.h\DEV_DR16.h)(0x646A275B)
@@ -10372,7 +10372,7 @@ I (C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\include\libcxx\__memor
 I (C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\include\libcxx\__functional\reference_wrapper.h)(0x63884902)
 I (C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\include\libcxx\__functional\weak_result_type.h)(0x63884902)
 I (..\CustomCode\Algorithm\Algorithm.h\ALGO_Ramp.h)(0x646A275B)
-I (..\CustomCode\Algorithm\ALGO_Math.h)(0x646A275B)
+I (..\CustomCode\Algorithm\ALGO_Math.h)(0x64987E54)
 I (..\Drivers\CMSIS\DSP\Include\arm_math.h)(0x646A2757)
 I (..\Drivers\CMSIS\DSP\Include\arm_math_types.h)(0x646A2757)
 I (C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\include\libcxx\float.h)(0x63884908)
@@ -10418,11 +10418,11 @@ I (..\Inc\main.h)(0x646A26DE)
 I (..\CustomCode\Unify\Wolf_Infantry.h)(0x646A275B)
 I (..\CustomCode\Apps\Apps.h\APP_DR16.h)(0x646A275B)
 I (..\CustomCode\Apps\Apps.h\APP_Devices.h)(0x646DD292)
-I (..\CustomCode\Apps\Apps.h\APP_Chassis.h)(0x64803304)
+I (..\CustomCode\Apps\Apps.h\APP_Chassis.h)(0x649D4AD1)
 I (..\CustomCode\Devices\Devices.h\DEV_BrtEncoder.h)(0x646A275B)
 I (..\CustomCode\Devices\Devices.h\DEV_Bldc.h)(0x646DD292)
 I (..\CustomCode\Devices\Devices.h\DEV_MX106.h)(0x646A275B)
-I (..\CustomCode\Apps\Apps.h\APP_Auto.h)(0x649152E0)
+I (..\CustomCode\Apps\Apps.h\APP_Auto.h)(0x6498F1BD)
 I (..\CustomCode\Devices\Devices.h\DEV_Analog.h)(0x646A275B)
 I (..\CustomCode\Devices\Devices.h\DEV_Timer.h)(0x646A275B)
 I (..\CustomCode\Devices\Devices.h\DEV_AIMU.h)(0x646A275B)
@@ -11072,14 +11072,14 @@ I (C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\include\libcxx\__memor
 I (C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\include\libcxx\__functional\reference_wrapper.h)(0x63884902)
 I (C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\include\libcxx\__functional\weak_result_type.h)(0x63884902)
 I (..\CustomCode\Algorithm\Algorithm.h\ALGO_Ramp.h)(0x646A275B)
-I (..\CustomCode\Algorithm\ALGO_Math.h)(0x646A275B)
+I (..\CustomCode\Algorithm\ALGO_Math.h)(0x64987E54)
 I (..\CustomCode\Unify\Wolf_Infantry.h)(0x646A275B)
 I (..\CustomCode\Apps\Apps.h\APP_DR16.h)(0x646A275B)
-I (..\CustomCode\Apps\Apps.h\APP_Chassis.h)(0x64803304)
+I (..\CustomCode\Apps\Apps.h\APP_Chassis.h)(0x649D4AD1)
 I (..\CustomCode\Devices\Devices.h\DEV_BrtEncoder.h)(0x646A275B)
 I (..\CustomCode\Devices\Devices.h\DEV_Bldc.h)(0x646DD292)
-I (..\CustomCode\Apps\Apps.h\APP_Auto.h)(0x649152E0)
-I (..\CustomCode\Devices\Devices.h\DEV_Posture.h)(0x6485C181)
+I (..\CustomCode\Apps\Apps.h\APP_Auto.h)(0x6498F1BD)
+I (..\CustomCode\Devices\Devices.h\DEV_Posture.h)(0x64986B82)
 I (..\CustomCode\Devices\Devices.h\DEV_Analog.h)(0x646A275B)
 I (..\CustomCode\Devices\Devices.h\DEV_Timer.h)(0x646A275B)
 I (..\CustomCode\Devices\Devices.h\DEV_AIMU.h)(0x646A275B)
@@ -11685,7 +11685,7 @@ I (C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\include\libcxx\__memor
 I (C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\include\libcxx\__functional\reference_wrapper.h)(0x63884902)
 I (C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\include\libcxx\__functional\weak_result_type.h)(0x63884902)
 I (..\CustomCode\Algorithm\Algorithm.h\ALGO_Ramp.h)(0x646A275B)
-I (..\CustomCode\Algorithm\ALGO_Math.h)(0x646A275B)
+I (..\CustomCode\Algorithm\ALGO_Math.h)(0x64987E54)
 I (..\Drivers\CMSIS\DSP\Include\arm_math.h)(0x646A2757)
 I (..\Drivers\CMSIS\DSP\Include\arm_math_types.h)(0x646A2757)
 I (C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\include\libcxx\float.h)(0x63884908)
@@ -11731,12 +11731,12 @@ I (..\Inc\main.h)(0x646A26DE)
 I (..\CustomCode\Unify\Wolf_Infantry.h)(0x646A275B)
 I (..\CustomCode\Apps\Apps.h\APP_DR16.h)(0x646A275B)
 I (..\CustomCode\Apps\Apps.h\APP_Devices.h)(0x646DD292)
-I (..\CustomCode\Apps\Apps.h\APP_Chassis.h)(0x64803304)
+I (..\CustomCode\Apps\Apps.h\APP_Chassis.h)(0x649D4AD1)
 I (..\CustomCode\Devices\Devices.h\DEV_BrtEncoder.h)(0x646A275B)
 I (..\CustomCode\Devices\Devices.h\DEV_Bldc.h)(0x646DD292)
 I (..\CustomCode\Devices\Devices.h\DEV_MX106.h)(0x646A275B)
-I (..\CustomCode\Apps\Apps.h\APP_Auto.h)(0x649152E0)
-I (..\CustomCode\Devices\Devices.h\DEV_Posture.h)(0x6485C181)
+I (..\CustomCode\Apps\Apps.h\APP_Auto.h)(0x6498F1BD)
+I (..\CustomCode\Devices\Devices.h\DEV_Posture.h)(0x64986B82)
 I (..\CustomCode\Devices\Devices.h\DEV_Timer.h)(0x646A275B)
 I (..\CustomCode\Devices\Devices.h\DEV_AIMU.h)(0x646A275B)
 I (..\CustomCode\Devices\Devices.h\DEV_CIMU.h)(0x646A275B)
@@ -12341,7 +12341,7 @@ I (C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\include\libcxx\__memor
 I (C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\include\libcxx\__functional\reference_wrapper.h)(0x63884902)
 I (C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\include\libcxx\__functional\weak_result_type.h)(0x63884902)
 I (..\CustomCode\Algorithm\Algorithm.h\ALGO_Ramp.h)(0x646A275B)
-I (..\CustomCode\Algorithm\ALGO_Math.h)(0x646A275B)
+I (..\CustomCode\Algorithm\ALGO_Math.h)(0x64987E54)
 I (..\Drivers\CMSIS\DSP\Include\arm_math.h)(0x646A2757)
 I (..\Drivers\CMSIS\DSP\Include\arm_math_types.h)(0x646A2757)
 I (C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\include\libcxx\float.h)(0x63884908)
@@ -12387,12 +12387,12 @@ I (..\Inc\main.h)(0x646A26DE)
 I (..\CustomCode\Unify\Wolf_Infantry.h)(0x646A275B)
 I (..\CustomCode\Apps\Apps.h\APP_DR16.h)(0x646A275B)
 I (..\CustomCode\Apps\Apps.h\APP_Devices.h)(0x646DD292)
-I (..\CustomCode\Apps\Apps.h\APP_Chassis.h)(0x64803304)
+I (..\CustomCode\Apps\Apps.h\APP_Chassis.h)(0x649D4AD1)
 I (..\CustomCode\Devices\Devices.h\DEV_BrtEncoder.h)(0x646A275B)
 I (..\CustomCode\Devices\Devices.h\DEV_Bldc.h)(0x646DD292)
 I (..\CustomCode\Devices\Devices.h\DEV_MX106.h)(0x646A275B)
-I (..\CustomCode\Apps\Apps.h\APP_Auto.h)(0x649152E0)
-I (..\CustomCode\Devices\Devices.h\DEV_Posture.h)(0x6485C181)
+I (..\CustomCode\Apps\Apps.h\APP_Auto.h)(0x6498F1BD)
+I (..\CustomCode\Devices\Devices.h\DEV_Posture.h)(0x64986B82)
 I (..\CustomCode\Devices\Devices.h\DEV_Analog.h)(0x646A275B)
 I (..\CustomCode\Devices\Devices.h\DEV_Timer.h)(0x646A275B)
 I (..\CustomCode\Devices\Devices.h\DEV_AIMU.h)(0x646A275B)
@@ -13016,7 +13016,7 @@ I (C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\include\libcxx\__memor
 I (C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\include\libcxx\__functional\reference_wrapper.h)(0x63884902)
 I (C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\include\libcxx\__functional\weak_result_type.h)(0x63884902)
 I (..\CustomCode\Algorithm\Algorithm.h\ALGO_Ramp.h)(0x646A275B)
-I (..\CustomCode\Algorithm\ALGO_Math.h)(0x646A275B)
+I (..\CustomCode\Algorithm\ALGO_Math.h)(0x64987E54)
 I (..\Drivers\CMSIS\DSP\Include\arm_math.h)(0x646A2757)
 I (..\Drivers\CMSIS\DSP\Include\arm_math_types.h)(0x646A2757)
 I (C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\include\libcxx\float.h)(0x63884908)
@@ -13043,12 +13043,12 @@ I (..\CustomCode\Algorithm\Algorithm.h\ALGO_Kalman.h)(0x646A275B)
 I (..\CustomCode\Unify\Wolf_Infantry.h)(0x646A275B)
 I (..\CustomCode\Apps\Apps.h\APP_DR16.h)(0x646A275B)
 I (..\CustomCode\Apps\Apps.h\APP_Devices.h)(0x646DD292)
-I (..\CustomCode\Apps\Apps.h\APP_Chassis.h)(0x64803304)
+I (..\CustomCode\Apps\Apps.h\APP_Chassis.h)(0x649D4AD1)
 I (..\CustomCode\Devices\Devices.h\DEV_BrtEncoder.h)(0x646A275B)
 I (..\CustomCode\Devices\Devices.h\DEV_Bldc.h)(0x646DD292)
 I (..\CustomCode\Devices\Devices.h\DEV_MX106.h)(0x646A275B)
-I (..\CustomCode\Apps\Apps.h\APP_Auto.h)(0x649152E0)
-I (..\CustomCode\Devices\Devices.h\DEV_Posture.h)(0x6485C181)
+I (..\CustomCode\Apps\Apps.h\APP_Auto.h)(0x6498F1BD)
+I (..\CustomCode\Devices\Devices.h\DEV_Posture.h)(0x64986B82)
 I (..\CustomCode\Devices\Devices.h\DEV_Analog.h)(0x646A275B)
 I (..\CustomCode\Devices\Devices.h\DEV_Timer.h)(0x646A275B)
 I (..\CustomCode\Devices\Devices.h\DEV_AIMU.h)(0x646A275B)
@@ -13060,7 +13060,7 @@ I (..\CustomCode\Devices\Devices.h\DEV_DT35.h)(0x646A275B)
 I (C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\include\stdarg.h)(0x63884908)
 F (..\CustomCode\Tasks\Tasks.cpp\TASK_Can.cpp)(0x6474B699)(-xc++ -std=c++17 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-funsigned-char -fshort-enums -fshort-wchar -fno-exceptions-gdwarf-4 -O0 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../Drivers/CMSIS/DSP/Include -I ../Drivers/CMSIS/DSP/Include/dsp -I ../Drivers/CMSIS/Lib/ARM -I ../CustomCode/Apps/Apps.h -I ../CustomCode/Algorithm/Algorithm.h -I ../CustomCode/BSP/BSP.h -I ../CustomCode/Devices/Devices.h -I ../CustomCode/Devices -I ../CustomCode/Tasks/Tasks.h -I ../CustomCode/Unify -I ../CustomCode/Unify/Universe.h -I ../CustomCode/Algorithm -I ../CustomCode/Tasks-I./RTE/_Team_HAL_Code_Frame-IC:/NewJourney/Active/Equipment/Keil5/Packs/ARM/CMSIS/5.9.0/CMSIS/Core/Include-IC:/NewJourney/Active/Equipment/Keil5/Packs/Keil/STM32F4xx_DFP/2.16.0/Drivers/CMSIS/Device/ST/STM32F4xx/Include-D__UVISION_VERSION="538" -D_RTE_ -DSTM32F427xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F427xx-o team_hal_code_frame/task_can.o -MD)
 I (..\CustomCode\Tasks\Tasks.h\TASK_Can.h)(0x646A275B)
-I (..\CustomCode\Apps\Apps.h\APP_Chassis.h)(0x64803304)
+I (..\CustomCode\Apps\Apps.h\APP_Chassis.h)(0x649D4AD1)
 I (..\CustomCode\Unify\include.h)(0x646A275B)
 I (..\CustomCode\Unify\confing.h)(0x646A275B)
 I (..\CustomCode\Devices\Devices.h\DEV_DR16.h)(0x646A275B)
@@ -13655,7 +13655,7 @@ I (C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\include\libcxx\__memor
 I (C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\include\libcxx\__functional\reference_wrapper.h)(0x63884902)
 I (C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\include\libcxx\__functional\weak_result_type.h)(0x63884902)
 I (..\CustomCode\Algorithm\Algorithm.h\ALGO_Ramp.h)(0x646A275B)
-I (..\CustomCode\Algorithm\ALGO_Math.h)(0x646A275B)
+I (..\CustomCode\Algorithm\ALGO_Math.h)(0x64987E54)
 I (..\Drivers\CMSIS\DSP\Include\arm_math.h)(0x646A2757)
 I (..\Drivers\CMSIS\DSP\Include\arm_math_types.h)(0x646A2757)
 I (C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\include\libcxx\float.h)(0x63884908)
@@ -13704,8 +13704,8 @@ I (..\Middlewares\Third_Party\FreeRTOS\Source\include\event_groups.h)(0x646A26DD
 I (..\Inc\usart.h)(0x646A26DE)
 I (..\Inc\main.h)(0x646A26DE)
 I (..\CustomCode\Unify\Wolf_Infantry.h)(0x646A275B)
-I (..\CustomCode\Apps\Apps.h\APP_Auto.h)(0x649152E0)
-I (..\CustomCode\Devices\Devices.h\DEV_Posture.h)(0x6485C181)
+I (..\CustomCode\Apps\Apps.h\APP_Auto.h)(0x6498F1BD)
+I (..\CustomCode\Devices\Devices.h\DEV_Posture.h)(0x64986B82)
 I (..\CustomCode\Devices\Devices.h\DEV_Analog.h)(0x646A275B)
 I (..\CustomCode\Devices\Devices.h\DEV_Timer.h)(0x646A275B)
 I (..\CustomCode\Devices\Devices.h\DEV_AIMU.h)(0x646A275B)
@@ -14334,7 +14334,7 @@ I (C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\include\libcxx\__memor
 I (C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\include\libcxx\__functional\reference_wrapper.h)(0x63884902)
 I (C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\include\libcxx\__functional\weak_result_type.h)(0x63884902)
 I (..\CustomCode\Algorithm\Algorithm.h\ALGO_Ramp.h)(0x646A275B)
-I (..\CustomCode\Algorithm\ALGO_Math.h)(0x646A275B)
+I (..\CustomCode\Algorithm\ALGO_Math.h)(0x64987E54)
 I (..\Drivers\CMSIS\DSP\Include\arm_math.h)(0x646A2757)
 I (..\Drivers\CMSIS\DSP\Include\arm_math_types.h)(0x646A2757)
 I (C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\include\libcxx\float.h)(0x63884908)
@@ -14361,12 +14361,12 @@ I (..\CustomCode\Algorithm\Algorithm.h\ALGO_Kalman.h)(0x646A275B)
 I (..\Inc\usart.h)(0x646A26DE)
 I (..\CustomCode\Unify\Wolf_Infantry.h)(0x646A275B)
 I (..\CustomCode\Apps\Apps.h\APP_DR16.h)(0x646A275B)
-I (..\CustomCode\Apps\Apps.h\APP_Chassis.h)(0x64803304)
+I (..\CustomCode\Apps\Apps.h\APP_Chassis.h)(0x649D4AD1)
 I (..\CustomCode\Devices\Devices.h\DEV_BrtEncoder.h)(0x646A275B)
 I (..\CustomCode\Devices\Devices.h\DEV_Bldc.h)(0x646DD292)
 I (..\CustomCode\Devices\Devices.h\DEV_MX106.h)(0x646A275B)
-I (..\CustomCode\Apps\Apps.h\APP_Auto.h)(0x649152E0)
-I (..\CustomCode\Devices\Devices.h\DEV_Posture.h)(0x6485C181)
+I (..\CustomCode\Apps\Apps.h\APP_Auto.h)(0x6498F1BD)
+I (..\CustomCode\Devices\Devices.h\DEV_Posture.h)(0x64986B82)
 I (..\CustomCode\Devices\Devices.h\DEV_Analog.h)(0x646A275B)
 I (..\CustomCode\Devices\Devices.h\DEV_Timer.h)(0x646A275B)
 I (..\CustomCode\Devices\Devices.h\DEV_AIMU.h)(0x646A275B)
@@ -14375,7 +14375,7 @@ I (..\CustomCode\Devices\Devices.h\DEV_Buzzer.h)(0x646A275B)
 I (..\CustomCode\Devices\Devices.h\DEV_SD.h)(0x646A275B)
 I (..\CustomCode\Devices\Devices.h\DEV_DT35.h)(0x646A275B)
 I (..\CustomCode\Devices\Devices.h\DEV_DRF1609H.h)(0x646A275B)
-F (..\CustomCode\Tasks\Tasks.cpp\TASK_Control.cpp)(0x646A275B)(-xc++ -std=c++17 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-funsigned-char -fshort-enums -fshort-wchar -fno-exceptions-gdwarf-4 -O0 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../Drivers/CMSIS/DSP/Include -I ../Drivers/CMSIS/DSP/Include/dsp -I ../Drivers/CMSIS/Lib/ARM -I ../CustomCode/Apps/Apps.h -I ../CustomCode/Algorithm/Algorithm.h -I ../CustomCode/BSP/BSP.h -I ../CustomCode/Devices/Devices.h -I ../CustomCode/Devices -I ../CustomCode/Tasks/Tasks.h -I ../CustomCode/Unify -I ../CustomCode/Unify/Universe.h -I ../CustomCode/Algorithm -I ../CustomCode/Tasks-I./RTE/_Team_HAL_Code_Frame-IC:/NewJourney/Active/Equipment/Keil5/Packs/ARM/CMSIS/5.9.0/CMSIS/Core/Include-IC:/NewJourney/Active/Equipment/Keil5/Packs/Keil/STM32F4xx_DFP/2.16.0/Drivers/CMSIS/Device/ST/STM32F4xx/Include-D__UVISION_VERSION="538" -D_RTE_ -DSTM32F427xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F427xx-o team_hal_code_frame/task_control.o -MD)
+F (..\CustomCode\Tasks\Tasks.cpp\TASK_Control.cpp)(0x64986D21)(-xc++ -std=c++17 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-funsigned-char -fshort-enums -fshort-wchar -fno-exceptions-gdwarf-4 -O0 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../Drivers/CMSIS/DSP/Include -I ../Drivers/CMSIS/DSP/Include/dsp -I ../Drivers/CMSIS/Lib/ARM -I ../CustomCode/Apps/Apps.h -I ../CustomCode/Algorithm/Algorithm.h -I ../CustomCode/BSP/BSP.h -I ../CustomCode/Devices/Devices.h -I ../CustomCode/Devices -I ../CustomCode/Tasks/Tasks.h -I ../CustomCode/Unify -I ../CustomCode/Unify/Universe.h -I ../CustomCode/Algorithm -I ../CustomCode/Tasks-I./RTE/_Team_HAL_Code_Frame-IC:/NewJourney/Active/Equipment/Keil5/Packs/ARM/CMSIS/5.9.0/CMSIS/Core/Include-IC:/NewJourney/Active/Equipment/Keil5/Packs/Keil/STM32F4xx_DFP/2.16.0/Drivers/CMSIS/Device/ST/STM32F4xx/Include-D__UVISION_VERSION="538" -D_RTE_ -DSTM32F427xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F427xx-o team_hal_code_frame/task_control.o -MD)
 I (..\CustomCode\Tasks\Tasks.h\Task_Control.h)(0x646A275B)
 I (..\CustomCode\Unify\Universe.h\System_DataPool.h)(0x6485C1BA)
 I (C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\include\libcxx\stdint.h)(0x63884908)
@@ -14988,7 +14988,7 @@ I (C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\include\libcxx\__memor
 I (C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\include\libcxx\__functional\reference_wrapper.h)(0x63884902)
 I (C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\include\libcxx\__functional\weak_result_type.h)(0x63884902)
 I (..\CustomCode\Algorithm\Algorithm.h\ALGO_Ramp.h)(0x646A275B)
-I (..\CustomCode\Algorithm\ALGO_Math.h)(0x646A275B)
+I (..\CustomCode\Algorithm\ALGO_Math.h)(0x64987E54)
 I (..\Drivers\CMSIS\DSP\Include\arm_math.h)(0x646A2757)
 I (..\Drivers\CMSIS\DSP\Include\arm_math_types.h)(0x646A2757)
 I (C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\include\libcxx\float.h)(0x63884908)
@@ -15017,12 +15017,12 @@ I (..\Inc\main.h)(0x646A26DE)
 I (..\CustomCode\Unify\Wolf_Infantry.h)(0x646A275B)
 I (..\CustomCode\Apps\Apps.h\APP_DR16.h)(0x646A275B)
 I (..\CustomCode\Apps\Apps.h\APP_Devices.h)(0x646DD292)
-I (..\CustomCode\Apps\Apps.h\APP_Chassis.h)(0x64803304)
+I (..\CustomCode\Apps\Apps.h\APP_Chassis.h)(0x649D4AD1)
 I (..\CustomCode\Devices\Devices.h\DEV_BrtEncoder.h)(0x646A275B)
 I (..\CustomCode\Devices\Devices.h\DEV_Bldc.h)(0x646DD292)
 I (..\CustomCode\Devices\Devices.h\DEV_MX106.h)(0x646A275B)
-I (..\CustomCode\Apps\Apps.h\APP_Auto.h)(0x649152E0)
-I (..\CustomCode\Devices\Devices.h\DEV_Posture.h)(0x6485C181)
+I (..\CustomCode\Apps\Apps.h\APP_Auto.h)(0x6498F1BD)
+I (..\CustomCode\Devices\Devices.h\DEV_Posture.h)(0x64986B82)
 I (..\CustomCode\Devices\Devices.h\DEV_Analog.h)(0x646A275B)
 I (..\CustomCode\Devices\Devices.h\DEV_Timer.h)(0x646A275B)
 I (..\CustomCode\Devices\Devices.h\DEV_AIMU.h)(0x646A275B)
@@ -15032,7 +15032,7 @@ I (..\CustomCode\Devices\Devices.h\DEV_UpComputer.h)(0x646A275B)
 I (..\CustomCode\Devices\Devices.h\DEV_SD.h)(0x646A275B)
 I (..\CustomCode\Devices\Devices.h\DEV_DT35.h)(0x646A275B)
 I (..\CustomCode\Devices\Devices.h\DEV_DRF1609H.h)(0x646A275B)
-F (..\CustomCode\Tasks\Tasks.cpp\TASK_Imu.cpp)(0x6481BF31)(-xc++ -std=c++17 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-funsigned-char -fshort-enums -fshort-wchar -fno-exceptions-gdwarf-4 -O0 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../Drivers/CMSIS/DSP/Include -I ../Drivers/CMSIS/DSP/Include/dsp -I ../Drivers/CMSIS/Lib/ARM -I ../CustomCode/Apps/Apps.h -I ../CustomCode/Algorithm/Algorithm.h -I ../CustomCode/BSP/BSP.h -I ../CustomCode/Devices/Devices.h -I ../CustomCode/Devices -I ../CustomCode/Tasks/Tasks.h -I ../CustomCode/Unify -I ../CustomCode/Unify/Universe.h -I ../CustomCode/Algorithm -I ../CustomCode/Tasks-I./RTE/_Team_HAL_Code_Frame-IC:/NewJourney/Active/Equipment/Keil5/Packs/ARM/CMSIS/5.9.0/CMSIS/Core/Include-IC:/NewJourney/Active/Equipment/Keil5/Packs/Keil/STM32F4xx_DFP/2.16.0/Drivers/CMSIS/Device/ST/STM32F4xx/Include-D__UVISION_VERSION="538" -D_RTE_ -DSTM32F427xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F427xx-o team_hal_code_frame/task_imu.o -MD)
+F (..\CustomCode\Tasks\Tasks.cpp\TASK_Imu.cpp)(0x6495BA00)(-xc++ -std=c++17 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-funsigned-char -fshort-enums -fshort-wchar -fno-exceptions-gdwarf-4 -O0 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../Drivers/CMSIS/DSP/Include -I ../Drivers/CMSIS/DSP/Include/dsp -I ../Drivers/CMSIS/Lib/ARM -I ../CustomCode/Apps/Apps.h -I ../CustomCode/Algorithm/Algorithm.h -I ../CustomCode/BSP/BSP.h -I ../CustomCode/Devices/Devices.h -I ../CustomCode/Devices -I ../CustomCode/Tasks/Tasks.h -I ../CustomCode/Unify -I ../CustomCode/Unify/Universe.h -I ../CustomCode/Algorithm -I ../CustomCode/Tasks-I./RTE/_Team_HAL_Code_Frame-IC:/NewJourney/Active/Equipment/Keil5/Packs/ARM/CMSIS/5.9.0/CMSIS/Core/Include-IC:/NewJourney/Active/Equipment/Keil5/Packs/Keil/STM32F4xx_DFP/2.16.0/Drivers/CMSIS/Device/ST/STM32F4xx/Include-D__UVISION_VERSION="538" -D_RTE_ -DSTM32F427xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F427xx-o team_hal_code_frame/task_imu.o -MD)
 I (..\CustomCode\Tasks\Tasks.h\TASK_Imu.h)(0x646A275B)
 I (..\CustomCode\Devices\Devices.h\DEV_AIMU.h)(0x646A275B)
 I (C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\include\libcxx\stdio.h)(0x63884908)
@@ -15646,7 +15646,7 @@ I (..\CustomCode\BSP\BSP.h\BSP_CAN.h)(0x646A275B)
 I (..\CustomCode\BSP\BSP.h\BSP_UART.h)(0x646A275B)
 I (..\CustomCode\BSP\BSP.h\BSP_FLASH.h)(0x646A275B)
 I (..\CustomCode\Algorithm\Algorithm.h\ALGO_Ramp.h)(0x646A275B)
-I (..\CustomCode\Algorithm\ALGO_Math.h)(0x646A275B)
+I (..\CustomCode\Algorithm\ALGO_Math.h)(0x64987E54)
 I (..\Drivers\CMSIS\DSP\Include\arm_math.h)(0x646A2757)
 I (..\Drivers\CMSIS\DSP\Include\arm_math_types.h)(0x646A2757)
 I (C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\include\libcxx\float.h)(0x63884908)
@@ -15675,12 +15675,12 @@ I (..\Inc\main.h)(0x646A26DE)
 I (..\CustomCode\Unify\Wolf_Infantry.h)(0x646A275B)
 I (..\CustomCode\Apps\Apps.h\APP_DR16.h)(0x646A275B)
 I (..\CustomCode\Apps\Apps.h\APP_Devices.h)(0x646DD292)
-I (..\CustomCode\Apps\Apps.h\APP_Chassis.h)(0x64803304)
+I (..\CustomCode\Apps\Apps.h\APP_Chassis.h)(0x649D4AD1)
 I (..\CustomCode\Devices\Devices.h\DEV_BrtEncoder.h)(0x646A275B)
 I (..\CustomCode\Devices\Devices.h\DEV_Bldc.h)(0x646DD292)
 I (..\CustomCode\Devices\Devices.h\DEV_MX106.h)(0x646A275B)
-I (..\CustomCode\Apps\Apps.h\APP_Auto.h)(0x649152E0)
-I (..\CustomCode\Devices\Devices.h\DEV_Posture.h)(0x6485C181)
+I (..\CustomCode\Apps\Apps.h\APP_Auto.h)(0x6498F1BD)
+I (..\CustomCode\Devices\Devices.h\DEV_Posture.h)(0x64986B82)
 I (..\CustomCode\Devices\Devices.h\DEV_Analog.h)(0x646A275B)
 I (..\CustomCode\Devices\Devices.h\DEV_Timer.h)(0x646A275B)
 I (..\CustomCode\Devices\Devices.h\DEV_CIMU.h)(0x646A275B)
@@ -16302,7 +16302,7 @@ I (C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\include\libcxx\__memor
 I (C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\include\libcxx\__functional\reference_wrapper.h)(0x63884902)
 I (C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\include\libcxx\__functional\weak_result_type.h)(0x63884902)
 I (..\CustomCode\Algorithm\Algorithm.h\ALGO_Ramp.h)(0x646A275B)
-I (..\CustomCode\Algorithm\ALGO_Math.h)(0x646A275B)
+I (..\CustomCode\Algorithm\ALGO_Math.h)(0x64987E54)
 I (..\Drivers\CMSIS\DSP\Include\arm_math.h)(0x646A2757)
 I (..\Drivers\CMSIS\DSP\Include\arm_math_types.h)(0x646A2757)
 I (C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\include\libcxx\float.h)(0x63884908)
@@ -16331,12 +16331,12 @@ I (..\Inc\main.h)(0x646A26DE)
 I (..\CustomCode\Unify\Wolf_Infantry.h)(0x646A275B)
 I (..\CustomCode\Apps\Apps.h\APP_DR16.h)(0x646A275B)
 I (..\CustomCode\Apps\Apps.h\APP_Devices.h)(0x646DD292)
-I (..\CustomCode\Apps\Apps.h\APP_Chassis.h)(0x64803304)
+I (..\CustomCode\Apps\Apps.h\APP_Chassis.h)(0x649D4AD1)
 I (..\CustomCode\Devices\Devices.h\DEV_BrtEncoder.h)(0x646A275B)
 I (..\CustomCode\Devices\Devices.h\DEV_Bldc.h)(0x646DD292)
 I (..\CustomCode\Devices\Devices.h\DEV_MX106.h)(0x646A275B)
-I (..\CustomCode\Apps\Apps.h\APP_Auto.h)(0x649152E0)
-I (..\CustomCode\Devices\Devices.h\DEV_Posture.h)(0x6485C181)
+I (..\CustomCode\Apps\Apps.h\APP_Auto.h)(0x6498F1BD)
+I (..\CustomCode\Devices\Devices.h\DEV_Posture.h)(0x64986B82)
 I (..\CustomCode\Devices\Devices.h\DEV_Analog.h)(0x646A275B)
 I (..\CustomCode\Devices\Devices.h\DEV_Timer.h)(0x646A275B)
 I (..\CustomCode\Devices\Devices.h\DEV_AIMU.h)(0x646A275B)
@@ -16347,7 +16347,7 @@ I (..\CustomCode\Devices\Devices.h\DEV_SD.h)(0x646A275B)
 I (..\CustomCode\Devices\Devices.h\DEV_DT35.h)(0x646A275B)
 I (..\CustomCode\Devices\Devices.h\DEV_DRF1609H.h)(0x646A275B)
 F (..\CustomCode\Tasks\Task_ALL.h)(0x646A275B)()
-F (..\CustomCode\Unify\Universe.cpp\System_Config.cpp)(0x6482F2FC)(-xc++ -std=c++17 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-funsigned-char -fshort-enums -fshort-wchar -fno-exceptions-gdwarf-4 -O0 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../Drivers/CMSIS/DSP/Include -I ../Drivers/CMSIS/DSP/Include/dsp -I ../Drivers/CMSIS/Lib/ARM -I ../CustomCode/Apps/Apps.h -I ../CustomCode/Algorithm/Algorithm.h -I ../CustomCode/BSP/BSP.h -I ../CustomCode/Devices/Devices.h -I ../CustomCode/Devices -I ../CustomCode/Tasks/Tasks.h -I ../CustomCode/Unify -I ../CustomCode/Unify/Universe.h -I ../CustomCode/Algorithm -I ../CustomCode/Tasks-I./RTE/_Team_HAL_Code_Frame-IC:/NewJourney/Active/Equipment/Keil5/Packs/ARM/CMSIS/5.9.0/CMSIS/Core/Include-IC:/NewJourney/Active/Equipment/Keil5/Packs/Keil/STM32F4xx_DFP/2.16.0/Drivers/CMSIS/Device/ST/STM32F4xx/Include-D__UVISION_VERSION="538" -D_RTE_ -DSTM32F427xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F427xx-o team_hal_code_frame/system_config.o -MD)
+F (..\CustomCode\Unify\Universe.cpp\System_Config.cpp)(0x64990C46)(-xc++ -std=c++17 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-funsigned-char -fshort-enums -fshort-wchar -fno-exceptions-gdwarf-4 -O0 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../Drivers/CMSIS/DSP/Include -I ../Drivers/CMSIS/DSP/Include/dsp -I ../Drivers/CMSIS/Lib/ARM -I ../CustomCode/Apps/Apps.h -I ../CustomCode/Algorithm/Algorithm.h -I ../CustomCode/BSP/BSP.h -I ../CustomCode/Devices/Devices.h -I ../CustomCode/Devices -I ../CustomCode/Tasks/Tasks.h -I ../CustomCode/Unify -I ../CustomCode/Unify/Universe.h -I ../CustomCode/Algorithm -I ../CustomCode/Tasks-I./RTE/_Team_HAL_Code_Frame-IC:/NewJourney/Active/Equipment/Keil5/Packs/ARM/CMSIS/5.9.0/CMSIS/Core/Include-IC:/NewJourney/Active/Equipment/Keil5/Packs/Keil/STM32F4xx_DFP/2.16.0/Drivers/CMSIS/Device/ST/STM32F4xx/Include-D__UVISION_VERSION="538" -D_RTE_ -DSTM32F427xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F427xx-o team_hal_code_frame/system_config.o -MD)
 I (..\CustomCode\Unify\Universe.h\System_Config.h)(0x646A275B)
 I (..\Inc\main.h)(0x646A26DE)
 I (..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal.h)(0x646A26E0)
@@ -16952,7 +16952,7 @@ I (..\CustomCode\Devices\Devices.h\DEV_DR16.h)(0x646A275B)
 I (..\CustomCode\Devices\DEV_Motor.h)(0x646A275B)
 I (..\CustomCode\BSP\BSP.h\BSP_CAN.h)(0x646A275B)
 I (..\CustomCode\Algorithm\Algorithm.h\ALGO_Ramp.h)(0x646A275B)
-I (..\CustomCode\Algorithm\ALGO_Math.h)(0x646A275B)
+I (..\CustomCode\Algorithm\ALGO_Math.h)(0x64987E54)
 I (..\Drivers\CMSIS\DSP\Include\arm_math.h)(0x646A2757)
 I (..\Drivers\CMSIS\DSP\Include\arm_math_types.h)(0x646A2757)
 I (C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\include\libcxx\float.h)(0x63884908)
@@ -16995,12 +16995,12 @@ I (..\Inc\usart.h)(0x646A26DE)
 I (..\CustomCode\Unify\Wolf_Infantry.h)(0x646A275B)
 I (..\CustomCode\Apps\Apps.h\APP_DR16.h)(0x646A275B)
 I (..\CustomCode\Apps\Apps.h\APP_Devices.h)(0x646DD292)
-I (..\CustomCode\Apps\Apps.h\APP_Chassis.h)(0x64803304)
+I (..\CustomCode\Apps\Apps.h\APP_Chassis.h)(0x649D4AD1)
 I (..\CustomCode\Devices\Devices.h\DEV_BrtEncoder.h)(0x646A275B)
 I (..\CustomCode\Devices\Devices.h\DEV_Bldc.h)(0x646DD292)
 I (..\CustomCode\Devices\Devices.h\DEV_MX106.h)(0x646A275B)
-I (..\CustomCode\Apps\Apps.h\APP_Auto.h)(0x649152E0)
-I (..\CustomCode\Devices\Devices.h\DEV_Posture.h)(0x6485C181)
+I (..\CustomCode\Apps\Apps.h\APP_Auto.h)(0x6498F1BD)
+I (..\CustomCode\Devices\Devices.h\DEV_Posture.h)(0x64986B82)
 I (..\CustomCode\Devices\Devices.h\DEV_Analog.h)(0x646A275B)
 I (..\CustomCode\Devices\Devices.h\DEV_Timer.h)(0x646A275B)
 I (..\CustomCode\Devices\Devices.h\DEV_CIMU.h)(0x646A275B)
@@ -17629,7 +17629,7 @@ I (C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\include\libcxx\__memor
 I (C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\include\libcxx\__functional\reference_wrapper.h)(0x63884902)
 I (C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\include\libcxx\__functional\weak_result_type.h)(0x63884902)
 I (..\CustomCode\Algorithm\Algorithm.h\ALGO_Ramp.h)(0x646A275B)
-I (..\CustomCode\Algorithm\ALGO_Math.h)(0x646A275B)
+I (..\CustomCode\Algorithm\ALGO_Math.h)(0x64987E54)
 I (..\Drivers\CMSIS\DSP\Include\arm_math.h)(0x646A2757)
 I (..\Drivers\CMSIS\DSP\Include\arm_math_types.h)(0x646A2757)
 I (C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\include\libcxx\float.h)(0x63884908)
@@ -17658,12 +17658,12 @@ I (..\Inc\main.h)(0x646A26DE)
 I (..\CustomCode\Unify\Wolf_Infantry.h)(0x646A275B)
 I (..\CustomCode\Apps\Apps.h\APP_DR16.h)(0x646A275B)
 I (..\CustomCode\Apps\Apps.h\APP_Devices.h)(0x646DD292)
-I (..\CustomCode\Apps\Apps.h\APP_Chassis.h)(0x64803304)
+I (..\CustomCode\Apps\Apps.h\APP_Chassis.h)(0x649D4AD1)
 I (..\CustomCode\Devices\Devices.h\DEV_BrtEncoder.h)(0x646A275B)
 I (..\CustomCode\Devices\Devices.h\DEV_Bldc.h)(0x646DD292)
 I (..\CustomCode\Devices\Devices.h\DEV_MX106.h)(0x646A275B)
-I (..\CustomCode\Apps\Apps.h\APP_Auto.h)(0x649152E0)
-I (..\CustomCode\Devices\Devices.h\DEV_Posture.h)(0x6485C181)
+I (..\CustomCode\Apps\Apps.h\APP_Auto.h)(0x6498F1BD)
+I (..\CustomCode\Devices\Devices.h\DEV_Posture.h)(0x64986B82)
 I (..\CustomCode\Devices\Devices.h\DEV_Analog.h)(0x646A275B)
 I (..\CustomCode\Devices\Devices.h\DEV_Timer.h)(0x646A275B)
 I (..\CustomCode\Devices\Devices.h\DEV_AIMU.h)(0x646A275B)

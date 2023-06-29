@@ -57,9 +57,11 @@ private:
     float LR_out_time = 0;
 
     // AUTO_CtrlMode_e mode;
-
-    int Spots[3][3] = {-2780,250, 0,\
-                -150, 625, 0,\
+		//5650 1000{730,340, 50,\
+                370, 1000, 0,\
+                -0,-0, 0};
+    int Spots[3][3] = {-5200,-0, 0,\
+                -5100, -100, 50,\
                 -0,-0, 0};
 		
 		int Loop_Point_One[3]={-5881,608,0}, Loop_Point_Two[3], Loop_Point_Three[3], Loop_Point_Four[3];
@@ -95,7 +97,7 @@ public:
 		float Vx,Vy,Vw;
 		uint8_t WallFlag;
     
-    void Game_Step(void);
+		void Game_Step();
 		void Text_Step(void);
     void Process(void);
     uint8_t Detection_Point(int *Spots);

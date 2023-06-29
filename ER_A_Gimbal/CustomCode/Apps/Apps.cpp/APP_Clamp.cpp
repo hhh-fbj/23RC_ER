@@ -17,6 +17,7 @@
 
 //小心在取环机构初始化时，取环夹子松了与发送盘发送接触
 
+int yuntai_kedong;
 Clamp_classdef::Clamp_classdef()
 {
 	Stretch_PID[PID_Outer].SetPIDParam(1.5f, 0.0, 0.0f, 8000, 10000, 0.002f);//
@@ -50,7 +51,7 @@ Clamp_classdef::Clamp_classdef()
 	Param.PickPlace_Release = 500000;//250000;
 	Param.PickPlace_Loop = 470000;//485000;
 	Param.PickPlace_Speed = 8000;
-	Param.Shoot_WaitTime = 40;
+	Param.Shoot_WaitTime = 80;
 	
 	//推算参数
 	Param.PickPlace_D = -8200;
@@ -66,8 +67,8 @@ Clamp_classdef::Clamp_classdef()
 	Param.Servo_OverPos = 1080;
 	Param.Servo_ErrorPos = 25;
 	Param.Stretch_ErrorPos = 400;
-	Param.PickPlace_ErrorPos = 500;
-	Param.Lift_ErrorPos = 4000;
+	Param.PickPlace_ErrorPos = 800;
+	Param.Lift_ErrorPos = 6000;
 }
 
 
@@ -102,7 +103,7 @@ void Clamp_classdef::Control()
 }
 
 
-int D12_SetTime,D12_FwdNum;
+
 uint8_t Clamp_classdef::ProblemDetection(void)
 {
 	if(Clamp_Mode == Clamp_DisableMode ||\
@@ -143,6 +144,8 @@ uint8_t Clamp_classdef::ProblemDetection(void)
 		Pick_Flag=0;
 		Place_Point_Flag=0;
 		Place_Flag=0;
+		yuntai_kedong = 0;
+		Tar_Ring = Tar_MSeventy;
 
 		Set_TurnPlacel(0,TurnPlace_Servo.Posotion);
 		TurnPlace_Servo.Torque_Flag = 0;
@@ -195,7 +198,7 @@ void Clamp_classdef::Tar_Update(void)
 			UseTarget[1] = Lift_Motor.get_totalencoder();
 			UseTarget[2] = PickPlace_Motor.get_totalencoder();
 			D12_SetTime = 0;
-			D12_FwdNum = 0;
+//			D12_FwdNum = 0;
 			step = 0;
 			
 			Init_Flag=0;
@@ -363,43 +366,80 @@ void Clamp_classdef::Tar_Update(void)
 		case Clamp_AutoMode:
 		{
 			
-			//与底盘联系进行自瞄发送与跑点
-			if (Gimbal.D12 == GPIO_PIN_SET &&\
-			Gimbal.Last_D12 == GPIO_PIN_RESET &&\
-			(D12_SetTime == 0))
-			{
-				D12_SetTime++;
-			}
-			if(Gimbal.D12 == GPIO_PIN_SET && D12_SetTime)
-			{
-				D12_SetTime++;
-			}
-			else
-			{
-				D12_SetTime = 0;
-			}
+//			//与底盘联系进行自瞄发送与跑点
+//			if (Gimbal.D12 == GPIO_PIN_SET &&\
+//			Gimbal.Last_D12 == GPIO_PIN_RESET &&\
+//			(D12_SetTime == 0))
+//			{
+//				D12_SetTime++;
+//			}
+//			if(Gimbal.D12 == GPIO_PIN_SET && D12_SetTime)
+//			{
+//				D12_SetTime++;
+//			}
+//			else if(D12_SetTime!=99)
+//			{
+//				D12_SetTime = 0;
+//			}
 			
-			//计数进行步骤
-			if(D12_SetTime > 5)
+//			//计数进行步骤
+//			if(D12_SetTime > 5)
+//			{
+//				D12_FwdNum++;
+//				switch(D12_FwdNum-1)
+//				{
+//					case 0:
+//						Pick_Flag = 1;
+//					break;
+//					
+//					case 1:Tar_Ring = Tar_MSeventy;Place_Flag = 1;break;
+//					case 2:Tar_Ring = Tar_MTen;Place_Flag = 1;break;
+//					case 3:Tar_Ring = Tar_LThirty;Place_Flag = 1;break;
+//					case 4:Tar_Ring = Tar_LTen;Place_Flag = 1;break;
+//					case 5:Tar_Ring = Tar_RTen;Place_Flag = 1;break;
+//					case 6:Tar_Ring = Tar_RThirty;Place_Flag = 1;break;
+//					case 7:Tar_Ring = Tar_DLThirty;Place_Flag = 1;break;
+//					case 8:Tar_Ring = Tar_DRThirty;Place_Flag = 1;break;
+//				}
+//				D12_SetTime=0;
+//			}
+
+			if(D12_SetTime>0 && D12_FwdNum<5)
 			{
 				D12_FwdNum++;
-				switch(D12_FwdNum-1)
+				switch(D12_FwdNum)
 				{
-					case 0:
-						Pick_Flag = 1;
-					break;
-					
-					case 1:Tar_Ring = Tar_MSeventy;Place_Flag = 1;break;
-					case 2:Tar_Ring = Tar_MTen;Place_Flag = 1;break;
-					case 3:Tar_Ring = Tar_LTen;Place_Flag = 1;break;
-					case 4:Tar_Ring = Tar_LThirty;Place_Flag = 1;break;
-					case 5:Tar_Ring = Tar_RThirty;Place_Flag = 1;break;
-					case 6:Tar_Ring = Tar_RTen;Place_Flag = 1;break;
-					case 7:Tar_Ring = Tar_DLThirty;Place_Flag = 1;break;
-					case 8:Tar_Ring = Tar_DRThirty;Place_Flag = 1;break;
+					case 1:Tar_Ring = Tar_LTen;Place_Flag = 1;break;
+					case 2:Tar_Ring = Tar_LThirty;Place_Flag = 1;break;
+					case 3:Tar_Ring = Tar_RThirty;Place_Flag = 1;break;
+					case 4:Tar_Ring = Tar_RTen;Place_Flag = 1;break;
+					case 5:Tar_Ring = Tar_MTen;Place_Flag = 1;break;
+//					case 6:Tar_Ring = Tar_MSeventy;Place_Flag = 1;break;
+//					case 7:Tar_Ring = Tar_DLThirty;Place_Flag = 1;break;
+//					case 8:Tar_Ring = Tar_DRThirty;Place_Flag = 1;break;
 				}
 				D12_SetTime=0;
 			}
+			
+		if(PickPlace_Num==10 && !Clamp.Init_Flag && !Clamp.Pick_Flag &&\
+			!Clamp.Place_Point_Flag && !Clamp.Place_Flag)
+		{						
+			DRF1609H.DRF_page0Flag=10;
+			Init_Flag = 1;
+			Pick_Flag = 0;
+			Place_Point_Flag = 0;
+			Place_Flag = 0;
+			step = 0;
+			PickPlace_Num = 0;
+		}
+		if(D12_FwdNum==6)
+		{
+			yuntai_kedong=1;
+		}
+		else if(D12_FwdNum!=6)
+		{
+			yuntai_kedong=0;
+		}
 			
 			Init();
 			
@@ -412,7 +452,15 @@ void Clamp_classdef::Tar_Update(void)
 			}
 			
 			AutoShoot();
-			Place_NoShoot();
+			
+			if(D12_FwdNum==6)
+			{
+				Place_XShoot();
+			}
+			else
+			{
+				Place_NoShoot();
+			}
 			
 			if(Top_Lift_Flag){}else{if(AddVar[1]<0){(AddVar[1]=0);}}
 			if(Top_PickPlace_Flag){}else{if(AddVar[2]<0){(AddVar[2]=0);}}
@@ -454,7 +502,7 @@ void Clamp_classdef::AngleLimit(void)
 			Top_Lift = Lift_Motor.get_totalencoder();
 			Top_Lift_Flag = 1;
 			
-			LiftStretch_K=(Param.Stretch_Max-Param.Stretch_Min)/(273261-62000);
+			LiftStretch_K=(Param.Stretch_Max-Param.Stretch_Min)/(273261-40000);
 			LiftStretch_B=Param.Stretch_Min - LiftStretch_K * (Top_Lift-273261);
 		}
 		else if(Top_Lift_Flag == 1 && UseTarget[1]>=Top_Lift)
@@ -551,16 +599,24 @@ void Clamp_classdef::setMode(Clamp_CtrlMode_e mode)
 }
 
 
+
 void Clamp_classdef::Init(void)
 {
 	if(Init_Flag)
 	{
+		xuandian_flag = 0;
 		switch (step)
 		{
 			case 0:
-				Gimbal.TarPos_Move(Tar_Ring);
-				Shoot.Set_ShootServo(Tar_Ring);
-				Shoot.Pull_Move(Tar_Ring);
+				if(D12_FwdNum==6)
+				{
+					Tar_Ring = Tar_Mid;
+				}
+				Gimbal.TarPos_Move(Tar_Mid);
+				Shoot.Set_ShootServo(Tar_Mid);
+				Shoot.Pull_Move(Tar_Mid);
+				//
+
 				step=2;
 			break;
 				
@@ -590,26 +646,35 @@ void Clamp_classdef::Init(void)
 			break;
 			
 			case 5:
+				if(Top_Lift_Flag)
+				{
+					Lift(Top_Lift-Param.Lift_Hold);
+					step=6;
+				}
+				else
+				{
 				if(Lift(Lift_Motor.get_totalencoder(),true)){step=6;}
+				}
 			break;
 			
 			case 6:
-				if(PickPlace(PickPlace_Motor.get_totalencoder(),true)){step=7;}
+				if(Gimbal.TarPos_Move(Tar_Mid)){step=7;}
 			break;
 			
 			case 7:
-				if(Gimbal.TarPos_Move(Tar_Ring) && Stretch(Param.Stretch_Min,true)){step=8;}
+					if(PickPlace(PickPlace_Motor.get_totalencoder(),true)&\
+							Shoot.Pull_Move(Tar_Mid)&\
+					Lift(Top_Lift-Param.Lift_Hold)){step=8;}
 			break;
 			
 			case 8:
-				if(Lift(Top_Lift-Param.Lift_Hold) && PickPlace(Top_PickPlace-Param.PickPlace_Release)\
-					&& Shoot.Set_ShootServo(Tar_Ring))
+				if(Lift(Top_Lift-Param.Lift_Hold) && PickPlace(Top_PickPlace-Param.PickPlace_Release) &&\
+					Shoot.Set_ShootServo(Tar_Mid))
 				{
 					Gimbal.Midpoint_Flag = 0;
 					Init_Flag = 0;
 					step=0;
 					D12_SetTime = 0;
-					D12_FwdNum = 0;
 				}
 			break;
 		}
@@ -636,7 +701,7 @@ void Clamp_classdef::Pick(void)
 		{
 			case 0:
 					//(Lift(Lift_Motor.get_totalencoder(),true) |
-					if(Gimbal.TarPos_Move(Tar_Ring) || 1){step = 1;}
+					if(Gimbal.TarPos_Move(Tar_Mid) || 1){step = 1;}
 					HAL_GPIO_WritePin(GPIOD, GPIO_PIN_13, GPIO_PIN_RESET);//默认
 			break;
 					
@@ -653,7 +718,7 @@ void Clamp_classdef::Pick(void)
 			break;
 			
 			case 4:
-				if(Gimbal.TarPos_Move(Tar_Ring)){step = 5;}
+				if(Gimbal.TarPos_Move(Tar_Mid)){step = 5;}
 			break;
 
 			case 5:
@@ -677,7 +742,7 @@ void Clamp_classdef::Pick(void)
 				}
 				if(Lift_Motor.get_totalencoder() > Top_Lift-800000)
 				{
-					HAL_GPIO_WritePin(GPIOD, GPIO_PIN_13, GPIO_PIN_SET);// 第一次转正，底盘去中间
+//					HAL_GPIO_WritePin(GPIOD, GPIO_PIN_13, GPIO_PIN_SET);// 第一次转正，底盘去中间
 				}
 			break;
 		
@@ -690,65 +755,224 @@ void Clamp_classdef::Pick(void)
 	}
 }
 
-void Clamp_classdef::Place_Point(void)
+uint32_t chazhi[9],dqz[9];
+void Clamp_classdef::AutoShoot(void)
 {
-	if(Place_Point_Flag)
+	if(Pick_Flag)
 	{
 		switch (step)
 		{
 			case 0:
-				if(Gimbal.TarPos_Move(Tar_Ring) || 1){step = 1;}
+					Gimbal.TarPos_Move(Tar_Mid);
+					step = 1;dqz[0]=Get_SystemTimer();
+					HAL_GPIO_WritePin(GPIOD, GPIO_PIN_13, GPIO_PIN_RESET);//默认
 			break;
-				
+					
 			case 1:
-//				if(Lift(Top_Lift,true)){step = 2;}
-			if(Lift(Top_Lift-62000,false)){step = 2;}
+				if(Stretch(Param.Stretch_Min,true)){step = 2;dqz[1]=Get_SystemTimer();chazhi[0]=dqz[1]-dqz[0];}
 			break;
-				
+			
 			case 2:
-				if(Stretch(Param.Stretch_Min,true)){step = 3;}
+				
+				
+				if(Set_TurnPlacel(Param.Servo_PosCtrl, Param.Servo_InitPos)){step = 4;dqz[2]=Get_SystemTimer();chazhi[1]=dqz[2]-dqz[1];}
 			break;
 			
 			case 3:
-				if(PickPlace(Top_PickPlace-Param.PickPlace_Release)){step = 4;}
+				
+//				if(PickPlace(PickPlace_Motor.get_totalencoder(),true)){step = 4;}
 			break;
 			
 			case 4:
-				if(Set_TurnPlacel(Param.Servo_PosCtrl, Param.Servo_InitPos)){step = 5;}
-			break;
-			
-			case 5:
-				if(Gimbal.TarPos_Move(Tar_Ring)){step = 8;}
+				
+				
+				if(Gimbal.TarPos_Move(Tar_Mid)){step = 5;dqz[3]=Get_SystemTimer();chazhi[2]=dqz[3]-dqz[2];}
 			break;
 
+			case 5:
+				if(PickPlace(Top_PickPlace-Param.PickPlace_Release)){step = 6;dqz[4]=Get_SystemTimer();chazhi[3]=dqz[4]-dqz[3];}//应该可优
+			break;
+				
 			case 6:
-				if(PickPlace(Top_PickPlace-Param.PickPlace_Ready)){step = 8;}
-			break;
-			
-			case 7:
-				if(Set_TurnPlacel(Param.Servo_PosCtrl, Param.Servo_OverPos)){step = 8;}
-			break;
-			
-			case 8:
-//				if(Stretch(Param.Stretch_Min))
-				if(PickPlace(Top_PickPlace-Param.PickPlace_Ready) & Set_TurnPlacel(Param.Servo_PosCtrl, Param.Servo_OverPos) & Stretch(Param.Stretch_Max))
+				if(Lift(Top_Lift-Param.Lift_Max))
 				{
-					step = 0;
-					Place_Point_Flag = 0;
-					HAL_GPIO_WritePin(GPIOD, GPIO_PIN_13, GPIO_PIN_RESET);//恢复准备下一次转正
-					PickPlace_Num = 0;
+					pick_wait_time++;
+					if(pick_wait_time>Param.Lift_PickWaitTime){pick_wait_time=0;step = 7;dqz[5]=Get_SystemTimer();chazhi[4]=dqz[5]-dqz[4];}
 				}
 			break;
 
+			case 7:
+				if(Lift(Top_Lift-40000,false) &\
+					PickPlace(Top_PickPlace-Param.PickPlace_Ready))
+				{
+					Stretch(Param.Stretch_Max);
+					step = 8;
+					dqz[6]=Get_SystemTimer();
+					chazhi[5]=dqz[6]-dqz[5];
+				}
+				if(Top_Lift_Flag &&\
+				Lift_Motor.get_totalencoder() < Top_Lift &&\
+				Lift_Motor.get_totalencoder() > Top_Lift-273261)
+				{
+					if(Set_TurnPlacel(Param.Servo_PosCtrl, Param.Servo_OverPos))
+					{
+						Stretch(LiftStretch_K * Lift_Motor.get_totalencoder() + LiftStretch_B);
+					}
+				}
+				
+				if(Lift_Motor.get_totalencoder() > Top_Lift-800000)
+				{
+					HAL_GPIO_WritePin(GPIOD, GPIO_PIN_13, GPIO_PIN_SET);// 第一次转正，底盘去中间
+				}
+			break;
+				
+			case 8:
+				if(Stretch(Param.Stretch_Max)){step = 9;dqz[7]=Get_SystemTimer();chazhi[6]=dqz[7]-dqz[6];}
+			break;
+				
+			case 9:
+				
+				if(Set_TurnPlacel(Param.Servo_PosCtrl, Param.Servo_OverPos))
+				{
+						Pick_Flag=0;
+						step = 0;
+						HAL_GPIO_WritePin(GPIOD, GPIO_PIN_13, GPIO_PIN_RESET);//恢复准备下一次转正
+						PickPlace_Num = 0;
+					
+						dqz[8]=Get_SystemTimer();
+						chazhi[7]=dqz[8]-dqz[7];
+					
+						xuandian_flag=1;
+					
+						Tar_Ring = Tar_Mid;
+				}
+			break;
+		
 			default:
 			break;
 		}
 	}
 }
 
+
+
 int shoot_wait_time;
 void Clamp_classdef::Place_NoShoot(void)
 {
+
+	if(yuntai_kedong && xuandian_flag)
+	{
+		Shoot.Pull_Move(Tar_Ring);
+		Shoot.Set_ShootServo(Tar_Ring);
+		Gimbal.TarPos_Move(Tar_Ring);
+		Shoot.Pull_Move(Tar_Ring);
+	}
+		if(Place_Flag)
+		{
+			switch (step)
+			{
+				case 0:
+					HAL_GPIO_WritePin(GPIOD, GPIO_PIN_13, GPIO_PIN_RESET);
+					Shoot.Pull_Move(Tar_Ring);
+					Shoot.Set_ShootServo(Tar_Ring);
+					if(Lift(Top_Lift-40000,false)){step = 1;PickPlace_Num++;}
+				break;
+				
+				case 1:
+					if(PickPlace(now_place)){step = 2;}
+				break;
+				
+				case 2:
+					Shoot.Set_ShootServo(Tar_Ring);
+					if(Set_TurnPlacel(Param.Servo_PosCtrl, Param.Servo_OverPos)){step = 3;}
+				break;
+				
+				case 3:
+					if(Gimbal.TarPos_Move(Tar_Ring) & Shoot.Pull_Move(Tar_Ring) & Shoot.Set_ShootServo(Tar_Ring)){step = 4;}
+//					if(Gimbal.TarPos_Move(Tar_Ring) & Shoot.Pull_Move(Tar_Ring) & Shoot.Set_ShootServo(Tar_Ring))
+//					{
+//						step = 0;
+//						Place_Flag = 0;
+//						now_place = UseTarget[2];
+//						HAL_GPIO_WritePin(GPIOD, GPIO_PIN_13, GPIO_PIN_SET);
+//						if(D12_FwdNum<5){D12_SetTime=1;if(D12_FwdNum==4){DRF1609H.DRF_pageFlag=5;}}
+//						else 
+//						{
+//							D12_SetTime=0;
+//							D12_FwdNum=6;
+//						}
+//						DRF1609H.DRF_shejijieshuFlag=5;
+//					}
+				break;
+				
+				case 4:
+					if(PickPlace_Num == 1)
+					{
+						if(PickPlace(now_place-(Param.PickPlace_A1+Param.PickPlace_D)))
+						{
+							shoot_wait_time++;
+							if(shoot_wait_time>Param.Shoot_WaitTime)
+							{
+								shoot_wait_time=0;
+								step = 5;
+							}
+						}
+					}
+					else
+					{
+						if(PickPlace(now_place-(Param.PickPlace_A1+Param.PickPlace_D*(PickPlace_Num-2))))
+						{
+							shoot_wait_time++;
+							if(shoot_wait_time>Param.Shoot_WaitTime)
+							{
+								shoot_wait_time=0;
+								step = 5;
+							}
+						}
+					}
+					HAL_GPIO_WritePin(GPIOD, GPIO_PIN_13, GPIO_PIN_RESET);
+				break;
+
+				case 5:
+				if(Shoot.Set_Shoot(true))
+				{
+						step = 0;
+						Place_Flag = 0;
+						now_place = UseTarget[2];
+						HAL_GPIO_WritePin(GPIOD, GPIO_PIN_13, GPIO_PIN_SET);
+						if(D12_FwdNum<5){D12_SetTime=1;if(D12_FwdNum==4){DRF1609H.DRF_page1Flag=10;}}
+						else 
+						{
+							D12_SetTime=0;
+							D12_FwdNum=6;
+						}
+				}
+				break;
+
+				default:
+				break;
+			}
+		}
+		else
+		{
+			shoot_wait_time=0;
+			Homeing_Flag = 0;
+			Place_Flag = 0;
+	//		now_place = PickPlace_Motor.get_totalencoder();
+			now_place = UseTarget[2];
+		}
+}
+
+void Clamp_classdef::Place_XShoot(void)
+{
+	if(yuntai_kedong && xuandian_flag)
+	{
+		Shoot.Pull_Move(Tar_Ring);
+		Shoot.Set_ShootServo(Tar_Ring);
+		Gimbal.TarPos_Move(Tar_Ring);
+		Shoot.Pull_Move(Tar_Ring);
+	}
+
 	if(Place_Flag)
 	{
 		switch (step)
@@ -757,7 +981,7 @@ void Clamp_classdef::Place_NoShoot(void)
 				HAL_GPIO_WritePin(GPIOD, GPIO_PIN_13, GPIO_PIN_RESET);
 				Shoot.Pull_Move(Tar_Ring);
 				Shoot.Set_ShootServo(Tar_Ring);
-				if(Lift(Top_Lift-62000,false)){step = 1;PickPlace_Num++;}
+				if(Lift(Top_Lift-40000,false)){step = 1;PickPlace_Num++;}
 			break;
 			
 			case 1:
@@ -801,14 +1025,15 @@ void Clamp_classdef::Place_NoShoot(void)
 				HAL_GPIO_WritePin(GPIOD, GPIO_PIN_13, GPIO_PIN_RESET);
 			break;
 
-			case 5:
-				if(Shoot.Set_Shoot(true))
-				{
+		case 5:
+			if(Shoot.Set_Shoot(true))
+			{
 					step = 0;
 					Place_Flag = 0;
 					now_place = UseTarget[2];
 					HAL_GPIO_WritePin(GPIOD, GPIO_PIN_13, GPIO_PIN_SET);
-				}
+					DRF1609H.DRF_shejijieshuFlag=15;
+			}
 			break;
 
 			default:
@@ -828,99 +1053,7 @@ void Clamp_classdef::Place_NoShoot(void)
 
 
 
-uint32_t chazhi[9],dqz[9];
-void Clamp_classdef::AutoShoot(void)
-{
-	if(Pick_Flag)
-	{
-		switch (step)
-		{
-			case 0:
-					Gimbal.TarPos_Move(Tar_Ring);
-					step = 1;dqz[0]=Get_SystemTimer();
-					HAL_GPIO_WritePin(GPIOD, GPIO_PIN_13, GPIO_PIN_RESET);//默认
-			break;
-					
-			case 1:
-				if(Stretch(Param.Stretch_Min,true)){step = 2;dqz[1]=Get_SystemTimer();chazhi[0]=dqz[1]-dqz[0];}
-			break;
-			
-			case 2:
-				
-				
-				if(Set_TurnPlacel(Param.Servo_PosCtrl, Param.Servo_InitPos)){step = 4;dqz[2]=Get_SystemTimer();chazhi[1]=dqz[2]-dqz[1];}
-			break;
-			
-			case 3:
-				
-//				if(PickPlace(PickPlace_Motor.get_totalencoder(),true)){step = 4;}
-			break;
-			
-			case 4:
-				
-				
-				if(Gimbal.TarPos_Move(Tar_Ring)){step = 5;dqz[3]=Get_SystemTimer();chazhi[2]=dqz[3]-dqz[2];}
-			break;
 
-			case 5:
-				if(PickPlace(Top_PickPlace-Param.PickPlace_Release)){step = 6;dqz[4]=Get_SystemTimer();chazhi[3]=dqz[4]-dqz[3];}//应该可优
-			break;
-				
-			case 6:
-				if(Lift(Top_Lift-Param.Lift_Max))
-				{
-					pick_wait_time++;
-					if(pick_wait_time>Param.Lift_PickWaitTime){pick_wait_time=0;step = 7;dqz[5]=Get_SystemTimer();chazhi[4]=dqz[5]-dqz[4];}
-				}
-			break;
-
-			case 7:
-				if(Lift(Top_Lift-62000,false) &\
-					PickPlace(Top_PickPlace-Param.PickPlace_Ready))
-				{
-					Stretch(Param.Stretch_Max);
-					step = 8;
-					dqz[6]=Get_SystemTimer();
-					chazhi[5]=dqz[6]-dqz[5];
-				}
-				if(Top_Lift_Flag &&\
-				Lift_Motor.get_totalencoder() < Top_Lift &&\
-				Lift_Motor.get_totalencoder() > Top_Lift-273261)
-				{
-					if(Set_TurnPlacel(Param.Servo_PosCtrl, Param.Servo_OverPos))
-					{
-						Stretch(LiftStretch_K * Lift_Motor.get_totalencoder() + LiftStretch_B);
-					}
-				}
-				
-				if(Lift_Motor.get_totalencoder() > Top_Lift-800000)
-				{
-					HAL_GPIO_WritePin(GPIOD, GPIO_PIN_13, GPIO_PIN_SET);// 第一次转正，底盘去中间
-				}
-			break;
-				
-			case 8:
-				if(Stretch(Param.Stretch_Max)){step = 9;dqz[7]=Get_SystemTimer();chazhi[6]=dqz[7]-dqz[6];}
-			break;
-				
-			case 9:
-				
-				if(Set_TurnPlacel(Param.Servo_PosCtrl, Param.Servo_OverPos))
-				{
-						Pick_Flag=0;
-						step = 0;
-						HAL_GPIO_WritePin(GPIOD, GPIO_PIN_13, GPIO_PIN_RESET);//恢复准备下一次转正
-						PickPlace_Num = 0;
-						dqz[8]=Get_SystemTimer();
-						chazhi[7]=dqz[8]-dqz[7];
-				}
-			break;
-		
-			default:
-			break;
-		}
-	}
-}
 
 bool Clamp_classdef::Stretch(float pos,bool datum,float*rp)
 {

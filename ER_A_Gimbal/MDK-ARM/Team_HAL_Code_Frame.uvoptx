@@ -283,6 +283,21 @@
           <WinNumber>1</WinNumber>
           <ItemText>\\Team_HAL_Code_Frame\../CustomCode/Unify/Universe.cpp/System_DataPool.cpp\Gimbal.Yaw_Encider.totolAngle</ItemText>
         </Ww>
+        <Ww>
+          <count>19</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>DRF1609H,0x0A</ItemText>
+        </Ww>
+        <Ww>
+          <count>20</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>\\Team_HAL_Code_Frame\../CustomCode/Unify/Universe.cpp/System_DataPool.cpp\Gimbal.Yaw_Encider</ItemText>
+        </Ww>
+        <Ww>
+          <count>21</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>idea_ctrl</ItemText>
+        </Ww>
       </WatchWindow1>
       <WatchWindow2>
         <Ww>
@@ -1609,24 +1624,24 @@
     <File>
       <GroupNumber>9</GroupNumber>
       <FileNumber>86</FileNumber>
-      <FileType>8</FileType>
-      <tvExp>0</tvExp>
-      <tvExpOptDlg>0</tvExpOptDlg>
-      <bDave2>0</bDave2>
-      <PathWithFileName>..\CustomCode\Devices\Devices.cpp\DEV_DRF1609H.cpp</PathWithFileName>
-      <FilenameWithoutPath>DEV_DRF1609H.cpp</FilenameWithoutPath>
-      <RteFlg>0</RteFlg>
-      <bShared>0</bShared>
-    </File>
-    <File>
-      <GroupNumber>9</GroupNumber>
-      <FileNumber>87</FileNumber>
       <FileType>5</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
       <PathWithFileName>..\CustomCode\Devices\DEV_Motor.h</PathWithFileName>
       <FilenameWithoutPath>DEV_Motor.h</FilenameWithoutPath>
+      <RteFlg>0</RteFlg>
+      <bShared>0</bShared>
+    </File>
+    <File>
+      <GroupNumber>9</GroupNumber>
+      <FileNumber>87</FileNumber>
+      <FileType>8</FileType>
+      <tvExp>0</tvExp>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <bDave2>0</bDave2>
+      <PathWithFileName>..\CustomCode\Devices\Devices.cpp\DEV_DRF1609H.cpp</PathWithFileName>
+      <FilenameWithoutPath>DEV_DRF1609H.cpp</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>

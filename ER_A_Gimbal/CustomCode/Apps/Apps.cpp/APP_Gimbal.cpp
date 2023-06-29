@@ -41,14 +41,17 @@ Gimbal_classdef::Gimbal_classdef()
     //--- kp,ki,kd,ki_max,out_max,dt
 
 	/* Yaw µç»ú½Ç¶È */
-	UsePID[Yaw][PID_Outer].SetPIDParam(15.0f, 0.0, 0.0f, 8000, 80000, 0.002f);//
-	UsePID[Yaw][PID_Inner].SetPIDParam(1.6f, 1.6, 0.008f, 10000, 30000, 0.002f);//
-	UsePID[Yaw][PID_Inner].I_SeparThresh = 4000;
+	UsePID[Yaw][PID_Outer].SetPIDParam(0.65f, 0.0, 0.0f, 700, 80000, 0.002f);//
+	UsePID[Yaw][PID_Inner].SetPIDParam(50.0f, 0.0, 1.4f, 12000, 30000, 0.002f);//
+
+//	UsePID[Yaw][PID_Outer].SetPIDParam(15.0f, 0.0, 0.0f, 8000, 80000, 0.002f);//
+//	UsePID[Yaw][PID_Inner].SetPIDParam(1.70f, 1.7, 0.008f, 12000, 30000, 0.002f);//
+//	UsePID[Yaw][PID_Inner].I_SeparThresh = 2200;
 	
 	/*--- Angle Init -------------------------------------------------------------------------*/
 	Set_InitAngle();
 	
-	Param.Yaw_Centre = 563678;
+	Param.Yaw_Centre = 183685;
 	Param.Yaw_Max = Param.Yaw_Centre+40960;
 	Param.Yaw_Min = Param.Yaw_Centre-40960;
 	Param.Yaw_Speed = 100;
@@ -396,7 +399,10 @@ void Gimbal_classdef::TargetAngle_Update(void)
 			}
 			else
 			{
-				UseTarget[Yaw] = Param.Yaw_Centre+clamp_angle*Param.Yaw_TurnAngle;
+				UseTarget[Yaw] = Param.Yaw_Centre+(int)(clamp_angle*Param.Yaw_TurnAngle);
+	
+
+
 			}
 			Last_Mode = Gimbal_AutoMode;
 		}
@@ -429,7 +435,7 @@ void Gimbal_classdef::Motor_PIDCalc()
 	UsePID[Yaw][PID_Outer].Current = Yaw_Encider.getTotolAngle();
 		
 		
-	UsePID[Yaw][PID_Inner].Target = UseIMU.Gyro[0] * 455.11111111111111111111111111111; //Yaw_Motor.getSpeed()*60;
+	UsePID[Yaw][PID_Inner].Target = UseIMU.Gyro[0];// * 455.11111111111111111111111111111; //Yaw_Motor.getSpeed()*60;
 	UsePID[Yaw][PID_Inner].Current = UsePID[Yaw][PID_Outer].Cal();
     
 	Yaw_Motor.Out = UsePID[Yaw][PID_Inner].Cal();
@@ -478,35 +484,36 @@ bool Gimbal_classdef::TarPos_Move(Tar_Select_e angle)
 	{
 		case Tar_MTen:
 		case Tar_MSeventy:
+		case Tar_Mid:
 			clamp_angle = 0.0f;
 		break;
 		
 		case Tar_LTen:
-			clamp_angle = 10002;//67.11341748046875f;
+			clamp_angle = 31677;//67.11341748046875f;
 		break;
 		
 		case Tar_RTen:
-			clamp_angle = -10382;//-66.982201171875f;
+			clamp_angle = -31324;//-66.982201171875f;
 		break;
 		
 		case Tar_LThirty:
-			clamp_angle = 31305;//21.93983349609375f;
+			clamp_angle = 10393;//21.93983349609375f;
 		break;
 		
 		case Tar_RThirty:
-			clamp_angle = -31323;//21.91099658203125f;
+			clamp_angle = -9904;//21.91099658203125f;
 		break;
 		
 		case Tar_DLThirty:
-			clamp_angle = 12.8739f*455.11111111111111111111111111111;;
+			clamp_angle = 6043;
 		break;
 		
 		case Tar_DRThirty:
-			clamp_angle = -12.8739f*455.11111111111111111111111111111;;
+			clamp_angle = -5552;
 		break;
 	}
 	
-	if(abs(Yaw_Encider.getTotolAngle()-(Param.Yaw_Centre+clamp_angle*Param.Yaw_TurnAngle)) <= 1000)
+	if(abs(Yaw_Encider.getTotolAngle()-(Param.Yaw_Centre+clamp_angle*Param.Yaw_TurnAngle)) <= 100)
 	{
 		return true;
 	}

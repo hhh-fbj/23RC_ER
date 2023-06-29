@@ -63,12 +63,12 @@ void CTRL_DR16_classdef::LeverMode_Update(void)
             {
                 case Lever_UP:/* 左上-右上 START ------------------------------------------*/ 
                 {
-									Gimbal.setMode(Gimbal_AutoMode);//Gimbal_HalfAutoMode;
+										Gimbal.setMode(Gimbal_AutoMode);//Gimbal_HalfAutoMode;
                   Shoot.Shoot_Mode_Set(Shoot_NewAutoMode);
                   Shoot.Pull_Mode_Set(Pull_AutoMode);//(Pull_DebugMode);//Pull_LockMode
                   Clamp.setMode(Clamp_AutoMode);
 
-                  if(DR16.Get_DW_Norm() == 0)
+									if(DR16.Get_DW_Norm() == 0)
                   {
                     DW_Zero = true;
                   }
@@ -83,73 +83,130 @@ void CTRL_DR16_classdef::LeverMode_Update(void)
                               init_pick = 0;
                               Clamp.Pick_Flag = 1;
                           }
-                          else
-                          {
-                               Clamp.Place_Flag = 1;
-//                              Vision.aim = 1;
-                          }
                        }
                        DW_Zero = false;
-                  }
-                  else if(DR16.Get_DW_Norm() <= -330 && DW_Zero)
-                  {
-                      init_pick = 1;
-                      Clamp.Init_Flag = 1;
-                      Clamp.Pick_Flag = 0;
-                      Clamp.Place_Point_Flag = 0;
-                      Clamp.Place_Flag = 0;
-											Clamp.step = 0;
-                      DW_Zero = false;
-                  }
-									Mode = RCCtrl_Update_DisableMode;
+										}
+										else if(DR16.Get_DW_Norm() <= -330 && DW_Zero)
+										{
+												init_pick = 1;
+												Clamp.Init_Flag = 1;
+												Clamp.Pick_Flag = 0;
+												Clamp.Place_Point_Flag = 0;
+												Clamp.Place_Flag = 0;
+												Clamp.step = 0;
+												DW_Zero = false;
+										}
+										Mode = RCCtrl_Update_DisableMode;
                 }
                 break;  /* �?
                 �?-右上 END ------------------------------------------*/
                 
                 case Lever_MID:/* 左上-右中 START ------------------------------------------*/ 
                 {
-                    // 正常发射
-                    Gimbal.setMode(Gimbal_NormalMode);
-										Shoot.Shoot_Mode_Set(Shoot_NewAutoMode);
-                    Shoot.Pull_Mode_Set(Pull_DebugMode);
-										Clamp.setMode(Clamp_AutoMode);
+//                    // 正常发射
+//                    Gimbal.setMode(Gimbal_NormalMode);
+//										Shoot.Shoot_Mode_Set(Shoot_NewAutoMode);
+//                    Shoot.Pull_Mode_Set(Pull_DebugMode);
+//										Clamp.setMode(Clamp_AutoMode);
 
-//									if(DR16.Get_DW_Norm() == 0)
-//                  {
-//                    DW_Zero = true;
-//                  }
-//                  if(DR16.Get_DW_Norm() >= 110 && DW_Zero)
-//                  {
-//                      if(Clamp.Init_Flag || Clamp.Pick_Flag ||\
-//                       Clamp.Place_Point_Flag || Clamp.Place_Flag){}
-//                       else
-//                       {
-//													Clamp.Place_Flag = 1;
-//                       }
-//                       DW_Zero = false;
-//                  }
-//                  else if(DR16.Get_DW_Norm() <= -110 && DW_Zero)
-//                  {
-//                      Clamp.Init_Flag = 1;
-//                      Clamp.Pick_Flag = 0;
-//                      Clamp.Place_Point_Flag = 0;
-//                      Clamp.Place_Flag = 0;
-//											Clamp.step = 0;
-//                      DW_Zero = false;
-//                  }
+////									if(DR16.Get_DW_Norm() == 0)
+////                  {
+////                    DW_Zero = true;
+////                  }
+////                  if(DR16.Get_DW_Norm() >= 110 && DW_Zero)
+////                  {
+////                      if(Clamp.Init_Flag || Clamp.Pick_Flag ||\
+////                       Clamp.Place_Point_Flag || Clamp.Place_Flag){}
+////                       else
+////                       {
+////													Clamp.Place_Flag = 1;
+////                       }
+////                       DW_Zero = false;
+////                  }
+////                  else if(DR16.Get_DW_Norm() <= -110 && DW_Zero)
+////                  {
+////                      Clamp.Init_Flag = 1;
+////                      Clamp.Pick_Flag = 0;
+////                      Clamp.Place_Point_Flag = 0;
+////                      Clamp.Place_Flag = 0;
+////											Clamp.step = 0;
+////                      DW_Zero = false;
+////                  }
+//									
+//									Mode = RCCtrl_Update_DisableMode;
 									
-									Mode = RCCtrl_Update_DisableMode;
+									Gimbal.setMode(Gimbal_NormalMode);
+									Shoot.Shoot_Mode_Set(Shoot_DebugMode);
+									Shoot.Pull_Mode_Set(Pull_NewDebugMode);//(Pull_DebugMode);
+									Clamp.setMode(Clamp_LockMode);
+									Mode = RCCtrl_Update_AllShootMode;
                 }
                 break;  /* 左上-右中 END ------------------------------------------*/
 
                 case Lever_DOWN:/* 左上-右下 START ------------------------------------------*/ 
                 {
-                    //发射调整
-                    Gimbal.setMode(Gimbal_LockMode);
-                    Shoot.Shoot_Mode_Set(Shoot_LockMode);
-                    Shoot.Pull_Mode_Set(Pull_LockMode);//(Pull_DebugMode);
-                    Clamp.setMode(Clamp_NDebugMode);
-										Mode = RCCtrl_Update_ClampMode;
+									Gimbal.setMode(Gimbal_AutoMode);//Gimbal_HalfAutoMode;
+                  Shoot.Shoot_Mode_Set(Shoot_NewAutoMode);
+                  Shoot.Pull_Mode_Set(Pull_AutoMode);//(Pull_DebugMode);//Pull_LockMode
+                  Clamp.setMode(Clamp_AutoMode);
+
+									if(DR16.Get_DW_Norm() == 0)
+                  {
+                    DW_Zero = true;
+                  }
+                  if(DR16.Get_DW_Norm() >= 330 && DW_Zero)
+                  {
+                      if(Clamp.Init_Flag || Clamp.Pick_Flag ||\
+                       Clamp.Place_Point_Flag || Clamp.Place_Flag){}
+                       else
+                       {
+												 Clamp.D12_SetTime=1;
+													Clamp.Place_Flag = 1;
+                       }
+                       DW_Zero = false;
+									}
+									
+									if(DR16.Get_LY_Norm()<-550&&DR16.Get_RY_Norm()<-550)
+									{
+										Clamp.Tar_Ring = Tar_MTen;
+									}
+									if(DR16.Get_LY_Norm()<-550&&DR16.Get_RX_Norm()<-550)
+									{
+										Clamp.Tar_Ring = Tar_LTen;
+									}
+									if(DR16.Get_LY_Norm()<-550&&DR16.Get_RX_Norm()>550)
+									{
+										Clamp.Tar_Ring = Tar_RTen;
+									}
+									if(DR16.Get_LY_Norm()==0&&DR16.Get_RX_Norm()<-550)
+									{
+										Clamp.Tar_Ring = Tar_LThirty;
+									}
+									if(DR16.Get_LY_Norm()==0&&DR16.Get_RX_Norm()>550)
+									{
+										Clamp.Tar_Ring = Tar_RThirty;
+									}
+									if(DR16.Get_LY_Norm()==0&&DR16.Get_RY_Norm()>550)
+									{
+										Clamp.Tar_Ring = Tar_MSeventy;
+									}
+									if(DR16.Get_LY_Norm()>550&&DR16.Get_RX_Norm()<-550)
+									{
+										Clamp.Tar_Ring = Tar_DLThirty;
+									}
+									if(DR16.Get_LY_Norm()>550&&DR16.Get_RX_Norm()>550)
+									{
+										Clamp.Tar_Ring = Tar_DRThirty;
+									}
+										
+									Mode = RCCtrl_Update_DisableMode;
+									
+//                    //发射调整
+//                    Gimbal.setMode(Gimbal_LockMode);
+//                    Shoot.Shoot_Mode_Set(Shoot_LockMode);
+//                    Shoot.Pull_Mode_Set(Pull_LockMode);//(Pull_DebugMode);
+//                    Clamp.setMode(Clamp_NDebugMode);
+//										Mode = RCCtrl_Update_ClampMode;
                 }
                 break;  /* 左上-右下 END ------------------------------------------*/
             }
@@ -168,10 +225,40 @@ void CTRL_DR16_classdef::LeverMode_Update(void)
                 case Lever_UP:/* 左中-右上 START ------------------------------------------*/ 
                 {
                     // 正常发射
+//									Gimbal.setMode(Gimbal_AutoMode);//Gimbal_HalfAutoMode;
+//                  Shoot.Shoot_Mode_Set(Shoot_NewAutoMode);
+//                  Shoot.Pull_Mode_Set(Pull_AutoMode);//(Pull_DebugMode);//Pull_LockMode
+//                  Clamp.setMode(Clamp_AutoMode);
+									
 									Gimbal.setMode(Gimbal_AutoMode);//Gimbal_HalfAutoMode;
                   Shoot.Shoot_Mode_Set(Shoot_NewAutoMode);
                   Shoot.Pull_Mode_Set(Pull_AutoMode);//(Pull_DebugMode);//Pull_LockMode
                   Clamp.setMode(Clamp_AutoMode);
+
+                  if(DR16.Get_DW_Norm() == 0)
+                  {
+                    DW_Zero = true;
+                  }
+                  if(DR16.Get_DW_Norm() >= 330 && DW_Zero)
+                  {
+                      if(Clamp.Init_Flag || Clamp.Pick_Flag ||\
+                       Clamp.Place_Point_Flag || Clamp.Place_Flag){}
+                       else
+                       {
+												 Clamp.Pick_Flag = 1;
+                       }
+                       DW_Zero = false;
+                  }
+                  else if(DR16.Get_DW_Norm() <= -330 && DW_Zero)
+                  {
+                      init_pick = 1;
+                      Clamp.Init_Flag = 1;
+                      Clamp.Pick_Flag = 0;
+                      Clamp.Place_Point_Flag = 0;
+                      Clamp.Place_Flag = 0;
+											Clamp.step = 0;
+                      DW_Zero = false;
+                  }                  
 
 										Mode = RCCtrl_Update_DisableMode;
                 }
@@ -179,6 +266,75 @@ void CTRL_DR16_classdef::LeverMode_Update(void)
 
                 case Lever_MID:/* 左中-右中 START ------------------------------------------*/ 
                 {
+									Gimbal.setMode(Gimbal_AutoMode);//Gimbal_HalfAutoMode;
+                  Shoot.Shoot_Mode_Set(Shoot_NewAutoMode);
+                  Shoot.Pull_Mode_Set(Pull_AutoMode);//(Pull_DebugMode);//Pull_LockMode
+                  Clamp.setMode(Clamp_AutoMode);
+									
+//									 if(DR16.Get_DW_Norm() == 0)
+//                  {
+//                    DW_Zero = true;
+//                  }
+//                  if(DR16.Get_DW_Norm() >= 330 && DW_Zero)
+//                  {
+//                      Clamp.D12_SetTime=99;
+//                       DW_Zero = false;
+//                  }
+//                  else if(DR16.Get_DW_Norm() <= -330 && DW_Zero)
+//                  {
+//                      Clamp.Init_Flag = 1;
+//                      Clamp.Pick_Flag = 0;
+//                      Clamp.Place_Point_Flag = 0;
+//                      Clamp.Place_Flag = 0;
+//											Clamp.step = 0;
+//                      DW_Zero = false;
+//                  }
+									Mode = RCCtrl_Update_DisableMode;
+									
+									
+									
+									
+//									Gimbal.setMode(Gimbal_AutoMode);//Gimbal_HalfAutoMode;
+//                  Shoot.Shoot_Mode_Set(Shoot_NewAutoMode);
+//                  Shoot.Pull_Mode_Set(Pull_AutoMode);//(Pull_DebugMode);//Pull_LockMode
+//                  Clamp.setMode(Clamp_AutoMode);
+
+//                  if(DR16.Get_DW_Norm() == 0)
+//                  {
+//                    DW_Zero = true;
+//                  }
+//                  if(DR16.Get_DW_Norm() >= 330 && DW_Zero)
+//                  {
+//                      if(Clamp.Init_Flag || Clamp.Pick_Flag ||\
+//                       Clamp.Place_Point_Flag || Clamp.Place_Flag){}
+//                       else
+//                       {
+//                          if(init_pick)
+//                          {
+//                              init_pick = 0;
+//                              Clamp.Pick_Flag = 1;
+//                          }
+//                          else
+//                          {
+//                               Clamp.Place_Flag = 1;
+////                              Vision.aim = 1;
+//                          }
+//                       }
+//                       DW_Zero = false;
+//                  }
+//                  else if(DR16.Get_DW_Norm() <= -330 && DW_Zero)
+//                  {
+//                      init_pick = 1;
+//                      Clamp.Init_Flag = 1;
+//                      Clamp.Pick_Flag = 0;
+//                      Clamp.Place_Point_Flag = 0;
+//                      Clamp.Place_Flag = 0;
+//											Clamp.step = 0;
+//                      DW_Zero = false;
+//                  }
+//									Mode = RCCtrl_Update_DisableMode;
+                
+									
 //                    Gimbal.Mode = Gimbal_LockMode;
 //                    Shoot.Shoot_Mode = Shoot_NewAutoMode;
 //                    Shoot.Pull_Mode_Set(Pull_DebugMode);//Pull_LockMode
@@ -193,11 +349,11 @@ void CTRL_DR16_classdef::LeverMode_Update(void)
 //                    {
 //                        Gimbal.Ding_TEXT_Flag = 2;
 //                    }
-											Gimbal.setMode(Gimbal_LockMode);
-											Shoot.Shoot_Mode_Set(Shoot_LockMode);
-											Shoot.Pull_Mode_Set(Pull_LockMode);
-											Clamp.setMode(Clamp_LockMode);
-											Mode = RCCtrl_Update_DisableMode;
+//											Gimbal.setMode(Gimbal_LockMode);
+//											Shoot.Shoot_Mode_Set(Shoot_LockMode);
+//											Shoot.Pull_Mode_Set(Pull_LockMode);
+//											Clamp.setMode(Clamp_LockMode);
+//											Mode = RCCtrl_Update_DisableMode;
 									
                     
                 }
@@ -205,15 +361,6 @@ void CTRL_DR16_classdef::LeverMode_Update(void)
 
                 case Lever_DOWN:/* 左中-右下 START ------------------------------------------*/ 
                 {
-//										Gimbal.Mode = Gimbal_PCMode;
-//                    Shoot.Shoot_Mode = Shoot_LockMode;
-//                    Shoot.Pull_Mode_Set(Pull_LockMode);//Pull_LockMode
-//                    Clamp.setMode(Clamp_LockMode);
-//										if(DR16.Get_DW_Norm() >= 550)
-//										{
-//											Vision.aim = 1;
-//										}
-										
                     // Gimbal.Mode = Gimbal_DisableMode;
                     // Shoot.Shoot_Mode = Shoot_DisableMode;
                     // Shoot.Pull_Mode_Set(Pull_DisableMode);
@@ -228,15 +375,46 @@ void CTRL_DR16_classdef::LeverMode_Update(void)
 //												 HAL_GPIO_WritePin(GPIOD, GPIO_PIN_13, GPIO_PIN_RESET);
 //										 }
 										
-									Gimbal.setMode(Gimbal_NormalMode);
-									Shoot.Shoot_Mode_Set(Shoot_DebugMode);
-									Shoot.Pull_Mode_Set(Pull_NewDebugMode);//(Pull_DebugMode);
-									Clamp.setMode(Clamp_LockMode);
-									Mode = RCCtrl_Update_AllShootMode;
+//									Gimbal.setMode(Gimbal_NormalMode);
+//									Shoot.Shoot_Mode_Set(Shoot_DebugMode);
+//									Shoot.Pull_Mode_Set(Pull_NewDebugMode);//(Pull_DebugMode);
+//									Clamp.setMode(Clamp_LockMode);
+//									Mode = RCCtrl_Update_AllShootMode;
+									
+									Gimbal.setMode(Gimbal_AutoMode);//Gimbal_HalfAutoMode;
+                  Shoot.Shoot_Mode_Set(Shoot_NewAutoMode);
+                  Shoot.Pull_Mode_Set(Pull_AutoMode);//(Pull_DebugMode);//Pull_LockMode
+                  Clamp.setMode(Clamp_AutoMode);
+
+                  if(DR16.Get_DW_Norm() == 0)
+                  {
+                    DW_Zero = true;
+                  }
+                  if(DR16.Get_DW_Norm() >= 330 && DW_Zero)
+                  {
+                      if(Clamp.Init_Flag || Clamp.Pick_Flag ||\
+                       Clamp.Place_Point_Flag || Clamp.Place_Flag){}
+                       else
+                       {
+												 Clamp.Pick_Flag = 1;
+                       }
+                       DW_Zero = false;
+                  }
+                  else if(DR16.Get_DW_Norm() <= -330 && DW_Zero)
+                  {
+                      init_pick = 1;
+                      Clamp.Init_Flag = 1;
+                      Clamp.Pick_Flag = 0;
+                      Clamp.Place_Point_Flag = 0;
+                      Clamp.Place_Flag = 0;
+											Clamp.step = 0;
+                      DW_Zero = false;
+                  }                  
+										Mode = RCCtrl_Update_DisableMode;
                 }
                 break;/* 左中-右下 END ------------------------------------------*/
-            }
-        }
+						}
+				}
         break;  // 左中 END ---------------------------------------------------
 
         case Lever_DOWN: // --- 左下 ----------------------------------------------
@@ -295,7 +473,7 @@ void CTRL_DR16_classdef::RCCtrl_Update(void)
             Expt.L_X = DR16.Get_LX_Norm() * 0;
             Expt.L_Y = DR16.Get_LY_Norm() * 15;
             Expt.D_W = DR16.Get_DW_Norm() * 1;
-            Expt.R_X = abs(DR16.Get_RX_Norm()) * DR16.Get_RX_Norm() * sq(Yaw_Turn);
+            Expt.R_X = abs(DR16.Get_RX_Norm()) * DR16.Get_RX_Norm() * sq(Yaw_Turn)*6;
             Expt.R_Y = DR16.Get_RY_Norm() * 15;
         break;
 				

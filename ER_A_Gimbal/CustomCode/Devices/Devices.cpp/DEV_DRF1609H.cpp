@@ -4,9 +4,9 @@
 #include "System_DataPool.h"
 #include "stdarg.h"
 #include "stdio.h"
-#define STR_LENGTH 30
+#define STR_LENGTH 40
 
-//收件ID:K/Y/D/A 头二帧0x53  寄件ID:K/Y/D 功能目标  尾帧0x45
+//收件ID:K/Y/D/A 头二帧0x53功能 目标 第几次 尾帧0x45
 //定时发送数据过来/过去 AK C000
 /* 云台
 收到控制器数据：YK
@@ -18,77 +18,115 @@ DRF1609H_classdef::DRF1609H_classdef(void)
 	
 }
 
-//头帧 ID 特殊0?\APP1~7?\DEV8~F? 功能 尾帧
-int time_num;
-uint8_t Last_DRF_REC_Data[DRF_REC_SIZE];
-uint8_t jl_sum;
+//
+uint32_t last_idea_ctrl,idea_ctrl;
+int Last_Num,Last_Tar;
 void DRF1609H_classdef::Receive(uint8_t *data)
 {
-    if(DRF_REC_Data[2]=='K' && DRF_REC_Data[1] == 0x53 && DRF_REC_Data[5]==0x45)
-    {
-			if(Last_DRF_REC_Data[4] == DRF_REC_Data[4] &&\
-				Last_DRF_REC_Data[3] == DRF_REC_Data[3])
+//	if(DRF_REC_Data[0]=='K')
+//	{
+//    if(DRF_REC_Data[1] == 0x53 && DRF_REC_Data[6]==0x45)
+//		{
+//			idea_ctrl = DRF_REC_Data[2]<<24 | DRF_REC_Data[3]<<16 | DRF_REC_Data[4]<<8 | DRF_REC_Data[5]<<0;
+//			if(last_idea_ctrl != idea_ctrl)
+//			{
+//				if(DRF_REC_Data[5]!=Last_Num)
+//				{
+//					switch(DRF_REC_Data[4])
+//					{
+//						case 0x00000000:break;
+//						case 0xff:Clamp.Init_Flag = 1;break;
+//						case 0x01:Clamp.Tar_Ring = Tar_LTen;Clamp.Place_Flag = 1;break;
+//						case 0x02:Clamp.Tar_Ring = Tar_MTen;Clamp.Place_Flag = 1;break;
+//						case 0x03:Clamp.Tar_Ring = Tar_RTen;Clamp.Place_Flag = 1;break;
+//						case 0x04:Clamp.Tar_Ring = Tar_LThirty;Clamp.Place_Flag = 1;break;
+//						case 0x05:Clamp.Tar_Ring = Tar_RThirty;Clamp.Place_Flag = 1;break;
+//						case 0x06:Clamp.Tar_Ring = Tar_MSeventy;Clamp.Place_Flag = 1;break;
+//						case 0x07:Clamp.Tar_Ring = Tar_DLThirty;Clamp.Place_Flag = 1;break;
+//						case 0x08:Clamp.Tar_Ring = Tar_DRThirty;Clamp.Place_Flag = 1;break;
+//					}
+//				}
+//			}
+//			Last_Num = DRF_REC_Data[5];
+//			last_idea_ctrl = idea_ctrl;
+//		}
+//	}
+	if(DRF_REC_Data[0] == 0x53 && DRF_REC_Data[5]==0x45)
+	{
+		idea_ctrl = DRF_REC_Data[1]<<24 | DRF_REC_Data[2]<<16 | DRF_REC_Data[3]<<8 | DRF_REC_Data[4]<<0;
+			if(last_idea_ctrl != idea_ctrl)
 			{
-				jl_sum++;
-				if(jl_sum>102){jl_sum=3;}
-			}
-			else
-			{
-				jl_sum = 2;
-			}
-			if(jl_sum<3)
-			{
-				jl_sum=3;
-				switch(DRF_REC_Data[3])
+				if(DRF_REC_Data[1]==1 && DRF_REC_Data[2]==0)
 				{
-					case 0x58://X 选择
-						switch(DRF_REC_Data[4])
+					if(Last_Tar != DRF_REC_Data[3])
+					{
+						switch(DRF_REC_Data[3])
 						{
-							case 001:Clamp.Tar_Ring = Tar_LTen;Clamp.Place_Flag = 1;break;
-							case 011:Clamp.Tar_Ring = Tar_MTen;Clamp.Place_Flag = 1;break;
-							case 021:Clamp.Tar_Ring = Tar_RTen;Clamp.Place_Flag = 1;break;
-							case 003:Clamp.Tar_Ring = Tar_LThirty;Clamp.Place_Flag = 1;break;
-							case 023:Clamp.Tar_Ring = Tar_RThirty;Clamp.Place_Flag = 1;break;
-							case 017:Clamp.Tar_Ring = Tar_MSeventy;Clamp.Place_Flag = 1;break;
-							case 103:Clamp.Tar_Ring = Tar_DLThirty;Clamp.Place_Flag = 1;break;
-							case 123:Clamp.Tar_Ring = Tar_DRThirty;Clamp.Place_Flag = 1;break;
+							case 0x00000000:break;
+							case 0xff:Clamp.Init_Flag = 1;break;
+							case 0x01:Clamp.Tar_Ring = Tar_LTen;Clamp.Place_Flag = 1;break;
+							case 0x02:Clamp.Tar_Ring = Tar_MTen;Clamp.Place_Flag = 1;break;
+							case 0x03:Clamp.Tar_Ring = Tar_RTen;Clamp.Place_Flag = 1;break;
+							case 0x04:Clamp.Tar_Ring = Tar_LThirty;Clamp.Place_Flag = 1;break;
+							case 0x05:Clamp.Tar_Ring = Tar_RThirty;Clamp.Place_Flag = 1;break;
+							case 0x06:Clamp.Tar_Ring = Tar_MSeventy;Clamp.Place_Flag = 1;break;
+							case 0x07:Clamp.Tar_Ring = Tar_DLThirty;Clamp.Place_Flag = 1;break;
+							case 0x08:Clamp.Tar_Ring = Tar_DRThirty;Clamp.Place_Flag = 1;break;
 						}
-					break;
-						
-					case 0x51://Q 取环
-						if(DRF_REC_Data[4]==0)Clamp.Init_Flag = 1;break;
-					break;
-					
-					case 0x43://C 测试
-						
-					break;
-					
-					case 0x4B://K 启动
-					break;
+					}
+					else if(Last_Num != DRF_REC_Data[4])
+					{
+						switch(DRF_REC_Data[3])
+						{
+							case 0x00000000:break;
+							case 0xff:Clamp.Init_Flag = 1;break;
+							case 0x01:Clamp.Tar_Ring = Tar_LTen;Clamp.Place_Flag = 1;break;
+							case 0x02:Clamp.Tar_Ring = Tar_MTen;Clamp.Place_Flag = 1;break;
+							case 0x03:Clamp.Tar_Ring = Tar_RTen;Clamp.Place_Flag = 1;break;
+							case 0x04:Clamp.Tar_Ring = Tar_LThirty;Clamp.Place_Flag = 1;break;
+							case 0x05:Clamp.Tar_Ring = Tar_RThirty;Clamp.Place_Flag = 1;break;
+							case 0x06:Clamp.Tar_Ring = Tar_MSeventy;Clamp.Place_Flag = 1;break;
+							case 0x07:Clamp.Tar_Ring = Tar_DLThirty;Clamp.Place_Flag = 1;break;
+							case 0x08:Clamp.Tar_Ring = Tar_DRThirty;Clamp.Place_Flag = 1;break;
+						}
+					}
 				}
 			}
-		}
-		for(uint8_t i = 0;i<DRF_REC_SIZE;i++)
-		{
-			Last_DRF_REC_Data[i]=DRF_REC_Data[i];
-		}
-		//检测
+		Last_Tar = DRF_REC_Data[3];
+		Last_Num = DRF_REC_Data[4];
+		last_idea_ctrl = idea_ctrl;
+	}
 }
 
-//
-//功能[3] 模块[4] 数据[5]~[8] 
-uint8_t js_S;
-void DRF1609H_classdef::Send(void)
+void DRF1609H_classdef::DRT_Printf(const char *str, ...)
 {
-	DRF_SEN.data[0]='K';
-	DRF_SEN.data[1]= 0x53 ;
-	DRF_SEN.data[2]='Y';
-	DRF_SEN.data[8]=0x45;
-	if(js_S>0){js_S--;}else{js_S=0;DRF_SEN.data[3]=0;DRF_SEN.Pack.Data=0;}
-	HAL_UART_Transmit_DMA(&huart8 , DRF_SEN.data, sizeof(DRF_SEN.data));
+//	if(huart7.gState == HAL_UART_STATE_READY)
+//	{
+			char buffer[STR_LENGTH]={0};  // 数据长度
+			va_list arg_ptr;
+			va_start(arg_ptr, str);
+			int len = vsnprintf(buffer, STR_LENGTH, str, arg_ptr);
+			va_end(arg_ptr);
+
+			buffer[len] = 0xff;
+			buffer[len+1] = 0xff;
+			buffer[len+2] = 0xff;
+			HAL_UART_Transmit_IT(&huart8, (uint8_t *)buffer, len+3);
+//	}
+    while(huart8.gState != HAL_UART_STATE_READY);	//等待发送完毕
 }
 
-void DRF1609H_classdef::SetSend(void)
-{
-	js_S=3;
-}
+////
+////功能[3] 模块[4] 数据[5]~[8] 
+//uint8_t js_S;
+//void DRF1609H_classdef::Send(uint32_t idea)
+//{
+//	DRF_SEN_Data[0] = 'K';
+//	DRF_SEN_Data[1] = 0x53;
+//	DRF_SEN_Data[2] = idea>>24;
+//	DRF_SEN_Data[3] = idea>>16;
+//	DRF_SEN_Data[4] = idea>>8;
+//	DRF_SEN_Data[5] = idea>>0;
+//	DRF_SEN_Data[6] = 0x45;
+//	HAL_UART_Transmit_DMA(&huart8 , DRF_SEN_Data, DRF_SEN_SIZE);
+//}

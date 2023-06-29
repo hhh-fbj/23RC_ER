@@ -43,7 +43,7 @@ Shoot_classdef::Shoot_classdef()
 	// Pre_Tar[1] = -100;
 
 	Param.Shoot_Hold = 263138;//560000;//520000
-	Param.Shoot_Speed = 1320;
+	Param.Shoot_Speed = 1320;//1320;
 	Param.Shoot_Circle = 677667;//848380;
 	Param.Shoot_ErrorPos = 1000;
 	Param.Pull_Max = 13100000;
@@ -277,30 +277,38 @@ void Shoot_classdef::PullTar_Update(void)
 			else{RightPull_TarAngle += Param.Pull_InitSpeed;}
 			if(Top_LeftPull_Flag && Top_RightPull_Flag)
 			{
-				if(LeftPull_TarAngle > Top_LeftPull + clamp_pos_L + (-Param.Pull_InitSpeed))
+				if(clamp_pos_L == 0 && clamp_pos_R == 0)
 				{
-					LeftPull_TarAngle -= (-Param.Pull_InitSpeed);
-				}
-				else if(LeftPull_TarAngle < Top_LeftPull + clamp_pos_L - (-Param.Pull_InitSpeed))
-				{
-					LeftPull_TarAngle += (-Param.Pull_InitSpeed);
+					LeftPull_TarAngle += Param.Pull_InitSpeed;
+					RightPull_TarAngle += Param.Pull_InitSpeed;
 				}
 				else
 				{
-					LeftPull_TarAngle = Top_LeftPull + clamp_pos_L;
-				}
+					if(LeftPull_TarAngle > Top_LeftPull + clamp_pos_L + (-Param.Pull_InitSpeed))
+					{
+						LeftPull_TarAngle -= (-Param.Pull_InitSpeed);
+					}
+					else if(LeftPull_TarAngle < Top_LeftPull + clamp_pos_L - (-Param.Pull_InitSpeed))
+					{
+						LeftPull_TarAngle += (-Param.Pull_InitSpeed);
+					}
+					else
+					{
+						LeftPull_TarAngle = Top_LeftPull + clamp_pos_L;
+					}
 
-				if(RightPull_TarAngle > Top_RightPull + clamp_pos_R + (-Param.Pull_InitSpeed))
-				{
-					RightPull_TarAngle -= (-Param.Pull_InitSpeed);
-				}
-				else if(RightPull_TarAngle < Top_RightPull + clamp_pos_R - (-Param.Pull_InitSpeed))
-				{
-					RightPull_TarAngle += (-Param.Pull_InitSpeed);
-				}
-				else
-				{
-					RightPull_TarAngle = Top_RightPull + clamp_pos_R;
+					if(RightPull_TarAngle > Top_RightPull + clamp_pos_R + (-Param.Pull_InitSpeed))
+					{
+						RightPull_TarAngle -= (-Param.Pull_InitSpeed);
+					}
+					else if(RightPull_TarAngle < Top_RightPull + clamp_pos_R - (-Param.Pull_InitSpeed))
+					{
+						RightPull_TarAngle += (-Param.Pull_InitSpeed);
+					}
+					else
+					{
+						RightPull_TarAngle = Top_RightPull + clamp_pos_R;
+					}
 				}
 			}
 		}
@@ -569,34 +577,47 @@ bool Shoot_classdef::Pull_Move(Tar_Select_e pos)
 		switch(pos)
 		{
 			case Tar_MTen:
-				clamp_pos_L = 3623722;
-				clamp_pos_R = 3630579;
+				clamp_pos_L = 1646136;
+				clamp_pos_R = 1646741;
 			break;
 			case Tar_MSeventy:
-				clamp_pos_L = 3622876;
-				clamp_pos_R = 3629733;
+				clamp_pos_L = 2421724;
+				clamp_pos_R = 2424193;
+			break;
+			
+			case Tar_Mid:
+				clamp_pos_L = 0;
+				clamp_pos_R = 0;
 			break;
 			
 			case Tar_LTen:
+				clamp_pos_L = 0;
+				clamp_pos_R = 0;
+			break;
+			
 			case Tar_RTen:
-				clamp_pos_L = 276038;
-				clamp_pos_R = 275043;
+				clamp_pos_L = 0;
+				clamp_pos_R = 0;
 			break;
 			
 			case Tar_LThirty:
+				clamp_pos_L = 242561;
+				clamp_pos_R = 244171;
+			break;
+			
 			case Tar_RThirty:
-				clamp_pos_L = 10976;
-				clamp_pos_R = 11915;
+				clamp_pos_L = 209019;
+				clamp_pos_R = 208879;
 			break;
 			
 			case Tar_DLThirty:
-				clamp_pos_L = 0;
-				clamp_pos_R = 0;
+				clamp_pos_L = 3105004;//3145322;
+				clamp_pos_R = 3100182;//3128846;
 			break;
 			
 			case Tar_DRThirty:
-				clamp_pos_L = 0;
-				clamp_pos_R = 0;
+				clamp_pos_L = 3067017;
+				clamp_pos_R = 3073687;
 			break;
 		}
 		if(abs(LeftPull_Motor.get_totalencoder()-(Top_LeftPull+clamp_pos_L)) <= 800 && \
@@ -702,6 +723,7 @@ bool Shoot_classdef::Set_ShootServo(Tar_Select_e sta)
 		case Tar_MSeventy:
 		case Tar_DLThirty:
 		case Tar_DRThirty:
+		case Tar_Mid:
 			if(Set_TurnPlacel(Param.Servo_PosCtrl,Param.Servo_InitPos)){return true;}
 			else{return false;}
 		break;

@@ -35,7 +35,6 @@ class Posture_Classdef
 {
 private: 
     float RAM_Angle[3],RAM_Value[3];
-    float Final_Value[3], Final_ANGLE;
     float TF_Value[3], TF_ANGLE;
     float Z_LastAngle;
     int32_t Z_count;  //圈数
@@ -51,9 +50,12 @@ private:
     void TF_Change(float X,float Y,float angle,float *tf_X,float *tf_Y);
 public: 
     Posture_Classdef();
+    float Final_Value[3], Final_ANGLE;
     bool error;
+		float TenMi;
 		float time_long[2];
     float Last_POS[3];
+		float Office_Value[3],Other_Value[3];
     PostureRecvMsg_u Recv_Msg;
     void getMessage(uint8_t *PostureBuf);
     void POSTure_Init(void);

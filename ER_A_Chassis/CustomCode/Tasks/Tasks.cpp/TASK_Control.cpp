@@ -16,8 +16,16 @@ void Task_Control(void *argument)
   
   for(;;)
   {
-    led_cnt++;
-		Chassis.Control();
+		if(Auto.Posture.TenMi)
+		{
+			Auto.Posture.TenMi++;
+			if(Auto.Posture.TenMi>3000){Auto.Posture.TenMi=0;}
+			Chassis.Set_Mode(CHAS_DisableMode);
+			Auto.Posture.error = false;
+			HAL_GPIO_WritePin(GPIOD, GPIO_PIN_12, GPIO_PIN_RESET);//默认
+		}
+			led_cnt++;
+			Chassis.Control();
     if((led_cnt%=50) == 0)
     {   //--- 任务正常运行流水灯
         Buzzer.Waterfall_LED();
