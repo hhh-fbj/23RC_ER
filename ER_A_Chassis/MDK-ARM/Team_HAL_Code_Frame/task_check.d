@@ -651,4 +651,5 @@ team_hal_code_frame/task_check.o: \
   ..\CustomCode\Devices\Devices.h\DEV_Buzzer.h \
   ..\CustomCode\Devices\Devices.h\DEV_SD.h \
   ..\CustomCode\Devices\Devices.h\DEV_DT35.h \
-  ..\CustomCode\Devices\Devices.h\DEV_DRF1609H.h
+  ..\CustomCode\Devices\Devices.h\DEV_DRF1609H.h \
+  ..\CustomCode\Devices\Devices.h\DEV_L1TTL.h

@@ -25,6 +25,7 @@ enum Tar_Select_e
 	Tar_MTen,
 	Tar_DLThirty,
 	Tar_DRThirty,
+	Tar_MTwenty_Five,
 	Tar_Mid,
 };
 
@@ -149,6 +150,7 @@ public:
 	void Place_Manual(void);
 	void Place_NoShoot(void);
 	void Place_XShoot(void);
+	void Place_TrueNoShoot(void);
 	void Place_Cs(void);
 	void setMode(Clamp_CtrlMode_e mode);
 };

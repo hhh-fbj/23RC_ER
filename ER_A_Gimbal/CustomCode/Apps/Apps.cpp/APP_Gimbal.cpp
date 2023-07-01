@@ -88,7 +88,10 @@ void Gimbal_classdef::Control()
 
 	//更新角度
 	TargetAngle_Update();
-
+	
+	//
+	CS_SJ = Yaw_Encider.getTotolAngle() - Param.Yaw_Centre;
+	
 	//限制角度
 	AngleLimit();
 		
@@ -482,34 +485,42 @@ bool Gimbal_classdef::TarPos_Move(Tar_Select_e angle)
 {
 	switch(angle)
 	{
-		case Tar_MTen:
+		
 		case Tar_MSeventy:
+			clamp_angle = -300;
+		break;
+		case Tar_MTen:
 		case Tar_Mid:
 			clamp_angle = 0.0f;
 		break;
 		
 		case Tar_LTen:
-			clamp_angle = 31677;//67.11341748046875f;
+			clamp_angle = 215218-183685-455;//215218-183685;//31677-455;//67.11341748046875f;
 		break;
 		
 		case Tar_RTen:
-			clamp_angle = -31324;//-66.982201171875f;
+			clamp_angle = 152214-183685;//-31324-455;//-66.982201171875f;
 		break;
 		
 		case Tar_LThirty:
-			clamp_angle = 10393;//21.93983349609375f;
+			clamp_angle = 194021-183685;//+100;//10393-455;//21.93983349609375f;
 		break;
 		
+		
 		case Tar_RThirty:
-			clamp_angle = -9904;//21.91099658203125f;
+			clamp_angle = 173507-183685;//-100;//-9904-455;//21.91099658203125f;
 		break;
 		
 		case Tar_DLThirty:
-			clamp_angle = 6043;
+			clamp_angle = 189500-183685;//6043-455;
 		break;
 		
 		case Tar_DRThirty:
-			clamp_angle = -5552;
+			clamp_angle = 177917-183685;//-5552-455;
+		break;
+		
+		case Tar_MTwenty_Five:
+			clamp_angle = 0.0f;
 		break;
 	}
 	

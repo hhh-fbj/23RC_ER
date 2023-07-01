@@ -25,6 +25,7 @@ public:
 		
 		uint8_t DRF_UpFlag,DRF_shejijieshuFlag;
 		uint8_t DRF_page0Flag,DRF_page1Flag;
+		uint8_t Read_Flag;
 };
 
 #endif

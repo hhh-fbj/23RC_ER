@@ -61,40 +61,40 @@ void BldcDrive_VESC::Set_rpm(CAN_HandleTypeDef* CAN_Num , float rpm)
   * @param[in] 
   * @retval None
   */
-int a,b,c,d,e,f,g;
+int bldc_a,bldc_b,bldc_c,bldc_d,bldc_e,bldc_f,bldc_g;
 void BldcDrive_VESC::State_getInfo(uint32_t cmd,uint8_t can_rx_data[])
 {
 	int ind;
 	switch((CAN_PACKET_ID)cmd)//cmd判断		
 	{ 		
 		case CAN_PACKET_SET_DUTY:
-			a++;
+			bldc_a++;
 			ind = 0;
 		break;
 
 		case CAN_PACKET_SET_CURRENT:
-			b++;
+			bldc_b++;
 			ind = 0;
 
 		break;
 
 		case CAN_PACKET_SET_CURRENT_BRAKE:
-			c++;
+			bldc_c++;
 			ind = 0;
 		break;
 
 		case CAN_PACKET_SET_RPM:
-			d++;
+			bldc_d++;
 			ind = 0;
 		break;
 
 		case CAN_PACKET_SET_POS:
-			e++;
+			bldc_e++;
 			ind = 0;
 		break;
 
 		case CAN_PACKET_STATUS:
-			f++;
+			bldc_f++;
 			ind = 0;
 			rx_time = 0;//rx_time 存取
 			rpm = (float)buffer_get_int32(can_rx_data, &ind); //转速
@@ -103,7 +103,7 @@ void BldcDrive_VESC::State_getInfo(uint32_t cmd,uint8_t can_rx_data[])
 		break;
 	
 		default:
-			g++;
+			bldc_g++;
 		break;
 	}
 }

@@ -652,4 +652,5 @@ team_hal_code_frame/dev_oled.o: \
   ..\CustomCode\Devices\Devices.h\DEV_UpComputer.h \
   ..\CustomCode\Devices\Devices.h\DEV_SD.h \
   ..\CustomCode\Devices\Devices.h\DEV_DT35.h \
-  ..\CustomCode\Devices\Devices.h\DEV_DRF1609H.h ..\Inc\adc.h
+  ..\CustomCode\Devices\Devices.h\DEV_DRF1609H.h \
+  ..\CustomCode\Devices\Devices.h\DEV_L1TTL.h ..\Inc\adc.h

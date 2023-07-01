@@ -45,6 +45,7 @@ enum CHAS_CtrlMode_e
     CHAS_PostureMode,       //
 		CHAS_FZSPMode,
 	CHAS_TQQHMode,
+	CHAS_CSMode,
 	CHAS_InitMode,          // 初始化阶段
 };
 

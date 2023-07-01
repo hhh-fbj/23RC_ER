@@ -34,6 +34,7 @@
 #include "DEV_SD.h"
 #include "DEV_DT35.h"
 #include "DEV_DRF1609H.h"
+#include "DEV_L1TTL.h"
 
 /* Macro Definitions ---------------------------------------------------------*/
 #define TASK_STACK_SIZE_64    64
@@ -114,6 +115,7 @@ extern DevicesMonitor_classdef DevicesMonitor;
 extern Chassis_classdef Chassis;
 extern Auto_classdef Auto;
 extern DRF1609H_classdef DRF1609H;
+//extern L1TTL_classdef L1TTL;
 
 extern AIMU_Data_Classdef imu_Export;
 extern Buzzer_Classdef Buzzer;

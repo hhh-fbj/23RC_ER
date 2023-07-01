@@ -82,6 +82,7 @@
 "team_hal_code_frame\dev_analog.o"
 "team_hal_code_frame\dev_dt35.o"
 "team_hal_code_frame\dev_drf1609h.o"
+"team_hal_code_frame\dev_l1ttl.o"
 "team_hal_code_frame\task_can.o"
 "team_hal_code_frame\task_check.o"
 "team_hal_code_frame\task_control.o"

@@ -95,13 +95,16 @@ Chassis_classdef::Chassis_classdef()
 /*------------------------------------------------------------ 控制 ------------------------------------------------------------*/
 //底盘总控制函数
 float P_pid[3];
+float PID_pid[3];
 float I_MAX_CS;
 void Chassis_classdef::Control()
 {
-//		DRV_PID[0].SetPIDParam(P_pid[0], P_pid[1], P_pid[2], I_MAX_CS, 10000, 0.002f);
-//		DRV_PID[1].SetPIDParam(P_pid[0], P_pid[1], P_pid[2], I_MAX_CS, 10000, 0.002f);
-//		DRV_PID[2].SetPIDParam(P_pid[0], P_pid[1], P_pid[2], I_MAX_CS, 10000, 0.002f);
-	
+//		RUD_PID[0][PID_Outer].SetPIDParam(P_pid[0], P_pid[1], P_pid[2], I_MAX_CS, 10000, 0.002f);
+//		RUD_PID[1][PID_Outer].SetPIDParam(P_pid[0], P_pid[1], P_pid[2], I_MAX_CS, 10000, 0.002f);
+//		RUD_PID[2][PID_Outer].SetPIDParam(P_pid[0], P_pid[1], P_pid[2], I_MAX_CS, 10000, 0.002f);
+//		RUD_PID[0][PID_Inner].SetPIDParam(PID_pid[0], PID_pid[1], PID_pid[2], I_MAX_CS, 10000, 0.002f);
+//		RUD_PID[1][PID_Inner].SetPIDParam(PID_pid[0], PID_pid[1], PID_pid[2], I_MAX_CS, 10000, 0.002f);
+//		RUD_PID[2][PID_Inner].SetPIDParam(PID_pid[0], PID_pid[1], PID_pid[2], I_MAX_CS, 10000, 0.002f);
     //微动开关检测
     Sensor();
 	
@@ -189,6 +192,7 @@ float zhuan_jiao_chi;
 float zhongjin_zhu_houtui_x;
 float zhongjin_zhu_houtui_y;
 float zhongjin_zhu_houtui_z;
+float spe_x,spe_y,spe_w;
 void Chassis_classdef::ChassisTar_Update()
 {
     switch ((int)Mode)
@@ -491,6 +495,73 @@ void Chassis_classdef::ChassisTar_Update()
 					}
 
 				break;
+					
+				case CHAS_CSMode:
+				{
+					
+						if(CTRL_DR16.Get_ExptVx()&&CTRL_DR16.Get_ExptVy()){}
+							else{POS_PID[Posture_W][PID_Outer].Target = Auto.Posture.POS_W();}
+						if(CTRL_DR16.Get_ExptVw())
+						{
+							POS_PID[Posture_W][PID_Outer].Current = Auto.Posture.POS_W();
+							POS_PID[Posture_W][PID_Outer].Target = Auto.Posture.POS_W();
+							zhuan_jiao_chi = Auto.Posture.POS_W();
+						}
+						else
+						{
+							POS_PID[Posture_W][PID_Outer].Current = Auto.Posture.POS_W();
+							POS_PID[Posture_W][PID_Outer].Target = zhuan_jiao_chi;
+						}
+//						Process(CTRL_DR16.Get_ExptVx(), CTRL_DR16.Get_ExptVy(), (POS_PID[Posture_W][PID_Outer].Cal()+CTRL_DR16.Get_ExptVw())*(pow((Auto.Posture.POS_W()+180-60)/120,2)));//CTRL_DR16.Get_ExptVw());
+						if( Auto.Posture.POS_W()-(-90)<-5)
+						{
+							POS_PID[Posture_W][PID_Outer].Target = -90;
+							if(POS_PID[Posture_W][PID_Outer].Cal()+CTRL_DR16.Get_ExptVw()<0)
+							{
+								spe_x=CTRL_DR16.Get_ExptVx();
+								spe_y=CTRL_DR16.Get_ExptVy()*(pow((Auto.Posture.POS_W()+180-60)/120,2));
+								spe_w=0;
+							}
+							else
+							{
+								spe_x=CTRL_DR16.Get_ExptVx();
+								spe_y=CTRL_DR16.Get_ExptVy()*((Auto.Posture.POS_W()+180-60)/120);
+								if(pow((Auto.Posture.POS_W()+180-60)/120,2)>1)
+								{
+									spe_w=POS_PID[Posture_W][PID_Outer].Cal()+CTRL_DR16.Get_ExptVw();
+								}
+								else
+								{
+								spe_w=POS_PID[Posture_W][PID_Outer].Cal()+CTRL_DR16.Get_ExptVw()*(pow((Auto.Posture.POS_W()+180-60)/120,2));
+								}
+							}
+							
+						}
+						else if(abs(Auto.Posture.POS_W()-(-90))<5)
+						{
+							spe_x=CTRL_DR16.Get_ExptVx();
+							spe_y=CTRL_DR16.Get_ExptVy()*((Auto.Posture.POS_W()+180-60)/120)+800;
+							if(pow((Auto.Posture.POS_W()+180-60)/120,2)>1)
+							{
+								spe_w=POS_PID[Posture_W][PID_Outer].Cal()+CTRL_DR16.Get_ExptVw();
+							}
+							else{spe_w=POS_PID[Posture_W][PID_Outer].Cal()+CTRL_DR16.Get_ExptVw()*(pow((Auto.Posture.POS_W()+180-60)/120,2));}
+						}
+						else
+						{							
+							spe_x=CTRL_DR16.Get_ExptVx();
+							spe_y=CTRL_DR16.Get_ExptVy()*((Auto.Posture.POS_W()+180-60)/120);
+							if(pow((Auto.Posture.POS_W()+180-60)/120,2)>1)
+							{
+								spe_w=POS_PID[Posture_W][PID_Outer].Cal()+CTRL_DR16.Get_ExptVw();
+							}
+							else{spe_w=POS_PID[Posture_W][PID_Outer].Cal()+CTRL_DR16.Get_ExptVw()*(pow((Auto.Posture.POS_W()+180-60)/120,2));}
+
+						}
+						Process(spe_x, spe_y, spe_w);//CTRL_DR16.Get_ExptVw());
+
+				}
+				break;
     }
 }
 
@@ -586,9 +657,9 @@ void Chassis_classdef::Rudder_Solve(float Vx, float Vy, float Vw, float *cal_spe
         Param = (float)CHASSIS_MAX_SPEED / MaxSpeed;
     }
 
-    if(abs(RUD_PID[Front_Rud][PID_Outer].Target) <= 1500 &&
-        abs(RUD_PID[Left_Rud][PID_Outer].Target) <= 1500 &&
-        abs(RUD_PID[Right_Rud][PID_Outer].Target) <= 1500)
+    if(abs(RUD_PID[Front_Rud][PID_Outer].Target) <= 300 &&
+        abs(RUD_PID[Left_Rud][PID_Outer].Target) <= 300 &&
+        abs(RUD_PID[Right_Rud][PID_Outer].Target) <= 300)
     {
         cal_speed[Front_Rud] *= Param;
         cal_speed[Left_Rud] *= Param;

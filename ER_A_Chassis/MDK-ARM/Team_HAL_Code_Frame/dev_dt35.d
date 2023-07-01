@@ -649,4 +649,5 @@ team_hal_code_frame/dev_dt35.o: \
   ..\CustomCode\Devices\Devices.h\DEV_Buzzer.h \
   ..\CustomCode\Devices\Devices.h\DEV_UpComputer.h \
   ..\CustomCode\Devices\Devices.h\DEV_SD.h \
-  ..\CustomCode\Devices\Devices.h\DEV_DRF1609H.h
+  ..\CustomCode\Devices\Devices.h\DEV_DRF1609H.h \
+  ..\CustomCode\Devices\Devices.h\DEV_L1TTL.h

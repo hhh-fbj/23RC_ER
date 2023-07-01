@@ -82,6 +82,13 @@ uint32_t DRF1609H_Recv_Callback(uint8_t* Recv_Data, uint16_t ReceiveLen)
     return 0;
 }
 
+
+uint32_t L1TTL_Recv_Callback(uint8_t* Recv_Data, uint16_t ReceiveLen)
+{
+		
+    return 0;
+}
+
 /**
  * @brief      CAN1 接收中断回调函数
  * @param[in]  CAN_RxMessage

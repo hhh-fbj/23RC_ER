@@ -1,6 +1,10 @@
-team_hal_code_frame/system_config.o: \
-  ..\CustomCode\Unify\Universe.cpp\System_Config.cpp \
-  ..\CustomCode\Unify\Universe.h\System_Config.h ..\Inc\main.h \
+team_hal_code_frame/dev_l1ttl.o: \
+  ..\CustomCode\Devices\Devices.cpp\DEV_L1TTL.cpp \
+  ..\CustomCode\Devices\Devices.h\DEV_L1TTL.h \
+  C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\libcxx\stdint.h \
+  C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\libcxx\__config \
+  C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\stdint.h \
+  ..\Inc\usart.h ..\Inc\main.h \
   ..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal.h \
   ..\Inc\stm32f4xx_hal_conf.h \
   ..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_rcc.h \
@@ -8,9 +12,6 @@ team_hal_code_frame/system_config.o: \
   ..\Drivers\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h \
   ..\Drivers\CMSIS\Device\ST\STM32F4xx\Include\stm32f427xx.h \
   ..\Drivers\CMSIS\Include\core_cm4.h \
-  C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\libcxx\stdint.h \
-  C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\libcxx\__config \
-  C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\stdint.h \
   ..\Drivers\CMSIS\Include\cmsis_version.h \
   ..\Drivers\CMSIS\Include\cmsis_compiler.h \
   ..\Drivers\CMSIS\Include\cmsis_armclang.h \
@@ -44,38 +45,56 @@ team_hal_code_frame/system_config.o: \
   ..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_spi.h \
   ..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_tim.h \
   ..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_tim_ex.h \
-  ..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_uart.h ..\Inc\tim.h \
-  ..\Inc\iwdg.h ..\CustomCode\BSP\BSP.h\BSP_PVD.h \
-  C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\libcxx\stdio.h \
-  C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\stdio.h \
+  ..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_uart.h \
+  ..\CustomCode\Unify\Universe.h\System_DataPool.h \
   C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\libcxx\string.h \
   C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\string.h \
-  ..\CustomCode\BSP\BSP.h\BSP_UART.h ..\CustomCode\BSP\BSP.h\BSP_FLASH.h \
-  ..\CustomCode\BSP\BSP.h\BSP_FlashStore.h \
   C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\libcxx\stdbool.h \
   C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\stdbool.h \
-  ..\CustomCode\Devices\Devices.h\DEV_AIMU.h \
-  C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\libcxx\math.h \
-  C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\math.h \
-  C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\libcxx\__type_traits\promote.h \
-  C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\libcxx\__type_traits\integral_constant.h \
-  C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\libcxx\__type_traits\is_same.h \
-  C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\libcxx\__utility\declval.h \
-  C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\libcxx\cstddef \
+  ..\Middlewares\Third_Party\FreeRTOS\Source\include\FreeRTOS.h \
+  ..\Inc\FreeRTOSConfig.h \
+  ..\Middlewares\Third_Party\FreeRTOS\Source\include\projdefs.h \
+  ..\Middlewares\Third_Party\FreeRTOS\Source\include\portable.h \
+  ..\Middlewares\Third_Party\FreeRTOS\Source\include\deprecated_definitions.h \
+  ..\Middlewares\Third_Party\FreeRTOS\Source\portable\RVDS\ARM_CM4F\portmacro.h \
+  ..\Middlewares\Third_Party\FreeRTOS\Source\include\mpu_wrappers.h \
+  ..\Middlewares\Third_Party\FreeRTOS\Source\include\task.h \
+  ..\Middlewares\Third_Party\FreeRTOS\Source\include\list.h \
+  ..\Middlewares\Third_Party\FreeRTOS\Source\include\queue.h \
+  ..\Middlewares\Third_Party\FreeRTOS\Source\include\timers.h \
+  ..\Middlewares\Third_Party\FreeRTOS\Source\include\semphr.h \
+  ..\Middlewares\Third_Party\FreeRTOS\Source\CMSIS_RTOS\cmsis_os.h \
+  ..\Middlewares\Third_Party\FreeRTOS\Source\include\event_groups.h \
+  ..\CustomCode\Unify\include.h ..\CustomCode\Unify\confing.h \
+  ..\CustomCode\Devices\Devices.h\DEV_DR16.h \
+  ..\CustomCode\Devices\DEV_Motor.h ..\CustomCode\BSP\BSP.h\BSP_CAN.h \
+  ..\CustomCode\BSP\BSP.h\BSP_UART.h ..\CustomCode\BSP\BSP.h\BSP_FLASH.h \
+  ..\CustomCode\Algorithm\Algorithm.h\ALGO_PID.h \
+  C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\libcxx\stdio.h \
+  C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\stdio.h \
+  C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\libcxx\limits.h \
+  C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\limits.h \
+  ..\CustomCode\Algorithm\Algorithm.h\ALGO_Filter.h \
+  C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\libcxx\algorithm \
   C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\libcxx\__assert \
   C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\libcxx\__verbose_abort \
   C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\libcxx\__availability \
+  C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\libcxx\__bits \
+  C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\libcxx\__undef_macros \
+  C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\libcxx\__debug \
+  C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\libcxx\cstddef \
   C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\libcxx\__type_traits\enable_if.h \
+  C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\libcxx\__type_traits\integral_constant.h \
   C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\libcxx\__type_traits\is_integral.h \
   C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\libcxx\__type_traits\remove_cv.h \
   C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\libcxx\__type_traits\remove_const.h \
   C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\libcxx\__type_traits\remove_volatile.h \
   C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\libcxx\version \
-  C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\libcxx\limits \
   C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\libcxx\type_traits \
   C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\libcxx\__functional\invoke.h \
   C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\libcxx\__type_traits\add_lvalue_reference.h \
   C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\libcxx\__type_traits\is_referenceable.h \
+  C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\libcxx\__type_traits\is_same.h \
   C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\libcxx\__type_traits\apply_cv.h \
   C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\libcxx\__type_traits\is_const.h \
   C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\libcxx\__type_traits\is_volatile.h \
@@ -94,6 +113,7 @@ team_hal_code_frame/system_config.o: \
   C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\libcxx\__type_traits\is_member_object_pointer.h \
   C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\libcxx\__type_traits\is_reference_wrapper.h \
   C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\libcxx\__type_traits\nat.h \
+  C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\libcxx\__utility\declval.h \
   C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\libcxx\__utility\forward.h \
   C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\libcxx\__fwd\hash.h \
   C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\libcxx\__type_traits\add_const.h \
@@ -190,16 +210,6 @@ team_hal_code_frame/system_config.o: \
   C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\libcxx\__type_traits\result_of.h \
   C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\libcxx\__type_traits\type_identity.h \
   C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\libcxx\cstdint \
-  C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\libcxx\__undef_macros \
-  C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\libcxx\stdlib.h \
-  C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\stdlib.h \
-  ..\CustomCode\Algorithm\Algorithm.h\ALGO_PID.h \
-  C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\libcxx\limits.h \
-  C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\limits.h \
-  ..\CustomCode\Algorithm\Algorithm.h\ALGO_Filter.h \
-  C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\libcxx\algorithm \
-  C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\libcxx\__bits \
-  C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\libcxx\__debug \
   C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\libcxx\cstring \
   C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\libcxx\__algorithm\adjacent_find.h \
   C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\libcxx\__algorithm\comp.h \
@@ -247,6 +257,9 @@ team_hal_code_frame/system_config.o: \
   C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\libcxx\__utility\convert_to_integral.h \
   C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\libcxx\__utility\unreachable.h \
   C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\libcxx\cstdlib \
+  C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\libcxx\stdlib.h \
+  C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\stdlib.h \
+  C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\libcxx\limits \
   C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\libcxx\__iterator\distance.h \
   C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\libcxx\__ranges\access.h \
   C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\libcxx\__ranges\enable_borrowed_range.h \
@@ -358,6 +371,9 @@ team_hal_code_frame/system_config.o: \
   C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\libcxx\__bit\bit_cast.h \
   C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\libcxx\__utility\priority_tag.h \
   C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\libcxx\cmath \
+  C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\libcxx\math.h \
+  C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\math.h \
+  C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\libcxx\__type_traits\promote.h \
   C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\libcxx\__compare\compare_strong_order_fallback.h \
   C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\libcxx\__compare\compare_weak_order_fallback.h \
   C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\libcxx\__compare\is_eq.h \
@@ -593,10 +609,6 @@ team_hal_code_frame/system_config.o: \
   C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\libcxx\__memory\shared_ptr.h \
   C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\libcxx\__functional\reference_wrapper.h \
   C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\libcxx\__functional\weak_result_type.h \
-  ..\CustomCode\Devices\Devices.h\DEV_COMM.h \
-  ..\CustomCode\Unify\include.h ..\CustomCode\Unify\confing.h \
-  ..\CustomCode\Devices\Devices.h\DEV_DR16.h \
-  ..\CustomCode\Devices\DEV_Motor.h ..\CustomCode\BSP\BSP.h\BSP_CAN.h \
   ..\CustomCode\Algorithm\Algorithm.h\ALGO_Ramp.h \
   ..\CustomCode\Algorithm\ALGO_Math.h \
   ..\Drivers\CMSIS\DSP\Include\arm_math.h \
@@ -622,22 +634,7 @@ team_hal_code_frame/system_config.o: \
   ..\Drivers\CMSIS\DSP\Include\dsp\filtering_functions.h \
   ..\Drivers\CMSIS\DSP\Include\dsp\quaternion_math_functions.h \
   ..\CustomCode\Algorithm\Algorithm.h\ALGO_Kalman.h \
-  ..\CustomCode\Unify\Universe.h\System_DataPool.h \
-  ..\Middlewares\Third_Party\FreeRTOS\Source\include\FreeRTOS.h \
-  ..\Inc\FreeRTOSConfig.h \
-  ..\Middlewares\Third_Party\FreeRTOS\Source\include\projdefs.h \
-  ..\Middlewares\Third_Party\FreeRTOS\Source\include\portable.h \
-  ..\Middlewares\Third_Party\FreeRTOS\Source\include\deprecated_definitions.h \
-  ..\Middlewares\Third_Party\FreeRTOS\Source\portable\RVDS\ARM_CM4F\portmacro.h \
-  ..\Middlewares\Third_Party\FreeRTOS\Source\include\mpu_wrappers.h \
-  ..\Middlewares\Third_Party\FreeRTOS\Source\include\task.h \
-  ..\Middlewares\Third_Party\FreeRTOS\Source\include\list.h \
-  ..\Middlewares\Third_Party\FreeRTOS\Source\include\queue.h \
-  ..\Middlewares\Third_Party\FreeRTOS\Source\include\timers.h \
-  ..\Middlewares\Third_Party\FreeRTOS\Source\include\semphr.h \
-  ..\Middlewares\Third_Party\FreeRTOS\Source\CMSIS_RTOS\cmsis_os.h \
-  ..\Middlewares\Third_Party\FreeRTOS\Source\include\event_groups.h \
-  ..\Inc\usart.h ..\CustomCode\Unify\Wolf_Infantry.h \
+  ..\CustomCode\Unify\Wolf_Infantry.h \
   ..\CustomCode\Apps\Apps.h\APP_DR16.h \
   ..\CustomCode\Apps\Apps.h\APP_Devices.h \
   ..\CustomCode\Apps\Apps.h\APP_Chassis.h \
@@ -648,16 +645,11 @@ team_hal_code_frame/system_config.o: \
   ..\CustomCode\Devices\Devices.h\DEV_Posture.h \
   ..\CustomCode\Devices\Devices.h\DEV_Analog.h \
   ..\CustomCode\Devices\Devices.h\DEV_Timer.h \
+  ..\CustomCode\Devices\Devices.h\DEV_AIMU.h \
   ..\CustomCode\Devices\Devices.h\DEV_CIMU.h \
   ..\CustomCode\Devices\Devices.h\DEV_Buzzer.h \
   ..\CustomCode\Devices\Devices.h\DEV_UpComputer.h \
   ..\CustomCode\Devices\Devices.h\DEV_SD.h \
   ..\CustomCode\Devices\Devices.h\DEV_DT35.h \
   ..\CustomCode\Devices\Devices.h\DEV_DRF1609H.h \
-  ..\CustomCode\Devices\Devices.h\DEV_L1TTL.h \
-  ..\CustomCode\Devices\Devices.h\DEV_OLED.h ..\Inc\spi.h \
-  ..\CustomCode\Tasks\Task_ALL.h ..\CustomCode\Tasks\Tasks.h\TASK_Can.h \
-  ..\CustomCode\Tasks\Tasks.h\TASK_Check.h \
-  ..\CustomCode\Tasks\Tasks.h\Task_Control.h \
-  ..\CustomCode\Tasks\Tasks.h\TASK_Imu.h \
-  ..\CustomCode\Tasks\Tasks.h\TASK_UpComputer.h
+  C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\stdarg.h

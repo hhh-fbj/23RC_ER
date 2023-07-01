@@ -98,6 +98,8 @@ void Shoot_classdef::Control()
     //改拉�?+发射 �?
     PullTar_Update();
 		ShootSpe_Update();
+		Left_CS_SJ = LeftPull_Motor.get_totalencoder()-Top_LeftPull;
+		Right_CS_SJ = RightPull_Motor.get_totalencoder()-Top_RightPull;
 		
 		Servo_Control();
 	
@@ -173,10 +175,10 @@ void Shoot_classdef::PullTar_Update(void)
 			else{RightPull_TarAngle += Param.Pull_InitSpeed;}
 			if(Top_LeftPull_Flag && Top_RightPull_Flag)
 			{
-				if(CTRL_DR16.Get_RY() != 0)
+				if(CTRL_DR16.Get_LY() != 0)
 				{
-						LeftPull_TarAngle += (-CTRL_DR16.Get_RY());
-						RightPull_TarAngle += (-CTRL_DR16.Get_RY());
+						LeftPull_TarAngle += (-CTRL_DR16.Get_LY());
+						RightPull_TarAngle += (-CTRL_DR16.Get_LY());
 				}
 				else
 				{
@@ -417,11 +419,11 @@ void Shoot_classdef::ShootSpe_Update(void)
 			Shoot_PID[PID_Outer].Target = Shoot_TarAngle;
 			Shoot_PID[PID_Outer].Current = Shoot_Motor.get_totalencoder();
 			Shoot_PID[PID_Inner].Target = Shoot_PID[PID_Outer].Cal();
-			if(CTRL_DR16.Get_LY() > 0)
+			if(CTRL_DR16.Get_RY() > 0)
 			{
 				Set_TurnPlacel(Param.Servo_PosCtrl,Param.Servo_OverPos);
 			}
-			if(CTRL_DR16.Get_LY() < 0)
+			if(CTRL_DR16.Get_RY() < 0)
 			{
 				Set_TurnPlacel(Param.Servo_PosCtrl,Param.Servo_InitPos);
 			}
@@ -577,47 +579,52 @@ bool Shoot_classdef::Pull_Move(Tar_Select_e pos)
 		switch(pos)
 		{
 			case Tar_MTen:
-				clamp_pos_L = 1646136;
-				clamp_pos_R = 1646741;
+				clamp_pos_L = 1720136;//+50000;//一1720136;//1680136;
+				clamp_pos_R = 1720741;//+50000;//一1720741;//1680741;
 			break;
 			case Tar_MSeventy:
-				clamp_pos_L = 2421724;
-				clamp_pos_R = 2424193;
+				clamp_pos_L = 2581724;//+50000;//一2581724;
+				clamp_pos_R = 2584193;//+50000;//一2584193;
 			break;
 			
 			case Tar_Mid:
-				clamp_pos_L = 0;
-				clamp_pos_R = 0;
+				clamp_pos_L = 0;//+70000;
+				clamp_pos_R = 0;//+70000;
 			break;
 			
 			case Tar_LTen:
-				clamp_pos_L = 0;
-				clamp_pos_R = 0;
+				clamp_pos_L = 20000;//+50000;
+				clamp_pos_R = 20000;//+50000;
 			break;
 			
 			case Tar_RTen:
-				clamp_pos_L = 0;
-				clamp_pos_R = 0;
+				clamp_pos_L = 0;//+50000;
+				clamp_pos_R = 0;//+50000;
 			break;
 			
 			case Tar_LThirty:
-				clamp_pos_L = 242561;
-				clamp_pos_R = 244171;
+				clamp_pos_L = 242561;//+50000;
+				clamp_pos_R = 244171;//+50000;
 			break;
 			
 			case Tar_RThirty:
-				clamp_pos_L = 209019;
-				clamp_pos_R = 208879;
+				clamp_pos_L = 209019;//+50000;
+				clamp_pos_R = 208879;//+50000;
 			break;
 			
 			case Tar_DLThirty:
-				clamp_pos_L = 3105004;//3145322;
-				clamp_pos_R = 3100182;//3128846;
+				clamp_pos_L = 3145004;//+50000;//3105004;//3145322;
+				clamp_pos_R = 3140182;//+50000;//3100182;//3128846;
 			break;
 			
 			case Tar_DRThirty:
-				clamp_pos_L = 3067017;
-				clamp_pos_R = 3073687;
+				clamp_pos_L = 3107017;//+130000;//3067017;
+				clamp_pos_R = 3103687;//+130000;//3073687;
+			break;
+			
+			case Tar_MTwenty_Five:
+				clamp_pos_L = 3107017;//+130000;//3067017;
+				clamp_pos_R = 3103687;//+130000;//3073687;
 			break;
 		}
 		if(abs(LeftPull_Motor.get_totalencoder()-(Top_LeftPull+clamp_pos_L)) <= 800 && \

@@ -651,4 +651,5 @@ team_hal_code_frame/dev_drf1609h.o: \
   ..\CustomCode\Devices\Devices.h\DEV_UpComputer.h \
   ..\CustomCode\Devices\Devices.h\DEV_SD.h \
   ..\CustomCode\Devices\Devices.h\DEV_DT35.h \
+  ..\CustomCode\Devices\Devices.h\DEV_L1TTL.h \
   C:\NewJourney\Active\Fight\Services\Keil5\ARM\ARMCLANG\Bin\..\include\stdarg.h

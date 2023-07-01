@@ -138,5 +138,7 @@ public:
 	void Shoot_Mode_Set(Shoot_CtrlMode_e mode);
 	void Pull_Mode_Set(Pull_CtrlMode_e mode);
 	bool Pull_Move(Tar_Select_e pos);
+	
+	int Left_CS_SJ,Right_CS_SJ;
 };
 #endif

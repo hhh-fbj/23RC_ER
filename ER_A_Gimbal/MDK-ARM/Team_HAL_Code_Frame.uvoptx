@@ -298,6 +298,11 @@
           <WinNumber>1</WinNumber>
           <ItemText>idea_ctrl</ItemText>
         </Ww>
+        <Ww>
+          <count>22</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>vision_sssss,0x0A</ItemText>
+        </Ww>
       </WatchWindow1>
       <WatchWindow2>
         <Ww>

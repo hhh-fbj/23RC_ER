@@ -20,7 +20,7 @@ DRF1609H_classdef::DRF1609H_classdef(void)
 
 //
 uint32_t last_idea_ctrl,idea_ctrl;
-int Last_Num,Last_Tar;
+int Last_Num,Last_Tar,Last_Mode,Last_Page;
 void DRF1609H_classdef::Receive(uint8_t *data)
 {
 //	if(DRF_REC_Data[0]=='K')
@@ -53,48 +53,133 @@ void DRF1609H_classdef::Receive(uint8_t *data)
 //	}
 	if(DRF_REC_Data[0] == 0x53 && DRF_REC_Data[5]==0x45)
 	{
-		idea_ctrl = DRF_REC_Data[1]<<24 | DRF_REC_Data[2]<<16 | DRF_REC_Data[3]<<8 | DRF_REC_Data[4]<<0;
-			if(last_idea_ctrl != idea_ctrl)
+		Read_Flag=0;
+		switch(DRF_REC_Data[1])
+		{
+			case 1:
 			{
-				if(DRF_REC_Data[1]==1 && DRF_REC_Data[2]==0)
+				switch(DRF_REC_Data[2])
 				{
-					if(Last_Tar != DRF_REC_Data[3])
+					case 0://发射
 					{
-						switch(DRF_REC_Data[3])
+						if(Last_Tar != DRF_REC_Data[3])
 						{
-							case 0x00000000:break;
-							case 0xff:Clamp.Init_Flag = 1;break;
-							case 0x01:Clamp.Tar_Ring = Tar_LTen;Clamp.Place_Flag = 1;break;
-							case 0x02:Clamp.Tar_Ring = Tar_MTen;Clamp.Place_Flag = 1;break;
-							case 0x03:Clamp.Tar_Ring = Tar_RTen;Clamp.Place_Flag = 1;break;
-							case 0x04:Clamp.Tar_Ring = Tar_LThirty;Clamp.Place_Flag = 1;break;
-							case 0x05:Clamp.Tar_Ring = Tar_RThirty;Clamp.Place_Flag = 1;break;
-							case 0x06:Clamp.Tar_Ring = Tar_MSeventy;Clamp.Place_Flag = 1;break;
-							case 0x07:Clamp.Tar_Ring = Tar_DLThirty;Clamp.Place_Flag = 1;break;
-							case 0x08:Clamp.Tar_Ring = Tar_DRThirty;Clamp.Place_Flag = 1;break;
+							switch(DRF_REC_Data[3])
+							{
+								case 0x00000000:break;
+								case 0x01:Clamp.Tar_Ring = Tar_LTen;Clamp.Place_Flag = 1;break;
+								case 0x02:Clamp.Tar_Ring = Tar_MTen;Clamp.Place_Flag = 1;break;
+								case 0x03:Clamp.Tar_Ring = Tar_RTen;Clamp.Place_Flag = 1;break;
+								case 0x04:Clamp.Tar_Ring = Tar_LThirty;Clamp.Place_Flag = 1;break;
+								case 0x05:Clamp.Tar_Ring = Tar_RThirty;Clamp.Place_Flag = 1;break;
+								case 0x06:Clamp.Tar_Ring = Tar_MSeventy;Clamp.Place_Flag = 1;break;
+								case 0x07:Clamp.Tar_Ring = Tar_DLThirty;Clamp.Place_Flag = 1;break;
+								case 0x08:Clamp.Tar_Ring = Tar_DRThirty;Clamp.Place_Flag = 1;break;
+								case 0x0A:Clamp.Tar_Ring = Tar_MTwenty_Five;Clamp.Place_Flag = 1;break;
+							}
+						}
+						else if(Last_Num != DRF_REC_Data[4])
+						{
+							switch(DRF_REC_Data[3])
+							{
+								case 0x00000000:break;
+								case 0x01:Clamp.Tar_Ring = Tar_LTen;Clamp.Place_Flag = 1;break;
+								case 0x02:Clamp.Tar_Ring = Tar_MTen;Clamp.Place_Flag = 1;break;
+								case 0x03:Clamp.Tar_Ring = Tar_RTen;Clamp.Place_Flag = 1;break;
+								case 0x04:Clamp.Tar_Ring = Tar_LThirty;Clamp.Place_Flag = 1;break;
+								case 0x05:Clamp.Tar_Ring = Tar_RThirty;Clamp.Place_Flag = 1;break;
+								case 0x06:Clamp.Tar_Ring = Tar_MSeventy;Clamp.Place_Flag = 1;break;
+								case 0x07:Clamp.Tar_Ring = Tar_DLThirty;Clamp.Place_Flag = 1;break;
+								case 0x08:Clamp.Tar_Ring = Tar_DRThirty;Clamp.Place_Flag = 1;break;
+								case 0x0A:Clamp.Tar_Ring = Tar_MTwenty_Five;Clamp.Place_Flag = 1;break;
+							}
 						}
 					}
-					else if(Last_Num != DRF_REC_Data[4])
-					{
-						switch(DRF_REC_Data[3])
-						{
-							case 0x00000000:break;
-							case 0xff:Clamp.Init_Flag = 1;break;
-							case 0x01:Clamp.Tar_Ring = Tar_LTen;Clamp.Place_Flag = 1;break;
-							case 0x02:Clamp.Tar_Ring = Tar_MTen;Clamp.Place_Flag = 1;break;
-							case 0x03:Clamp.Tar_Ring = Tar_RTen;Clamp.Place_Flag = 1;break;
-							case 0x04:Clamp.Tar_Ring = Tar_LThirty;Clamp.Place_Flag = 1;break;
-							case 0x05:Clamp.Tar_Ring = Tar_RThirty;Clamp.Place_Flag = 1;break;
-							case 0x06:Clamp.Tar_Ring = Tar_MSeventy;Clamp.Place_Flag = 1;break;
-							case 0x07:Clamp.Tar_Ring = Tar_DLThirty;Clamp.Place_Flag = 1;break;
-							case 0x08:Clamp.Tar_Ring = Tar_DRThirty;Clamp.Place_Flag = 1;break;
-						}
-					}
+					break;
 				}
+				
 			}
+			break;
+			
+			case 2:
+			{
+				switch(DRF_REC_Data[2])
+				{
+					case 1://瞄准
+					{
+						if(Last_Tar != DRF_REC_Data[3])
+						{
+							switch(DRF_REC_Data[3])
+							{
+								case 0x00000000:break;
+								case 0x01:Clamp.Tar_Ring = Tar_LTen;break;
+								case 0x02:Clamp.Tar_Ring = Tar_MTen;;break;
+								case 0x03:Clamp.Tar_Ring = Tar_RTen;break;
+								case 0x04:Clamp.Tar_Ring = Tar_LThirty;break;
+								case 0x05:Clamp.Tar_Ring = Tar_RThirty;break;
+								case 0x06:Clamp.Tar_Ring = Tar_MSeventy;break;
+								case 0x07:Clamp.Tar_Ring = Tar_DLThirty;break;
+								case 0x08:Clamp.Tar_Ring = Tar_DRThirty;break;
+								case 0x0A:Clamp.Tar_Ring = Tar_MTwenty_Five;break;
+							}
+						}
+						else if(Last_Num != DRF_REC_Data[4])
+						{
+							switch(DRF_REC_Data[3])
+							{
+								case 0x00000000:break;
+								case 0x01:Clamp.Tar_Ring = Tar_LTen;break;
+								case 0x02:Clamp.Tar_Ring = Tar_MTen;break;
+								case 0x03:Clamp.Tar_Ring = Tar_RTen;break;
+								case 0x04:Clamp.Tar_Ring = Tar_LThirty;break;
+								case 0x05:Clamp.Tar_Ring = Tar_RThirty;break;
+								case 0x06:Clamp.Tar_Ring = Tar_MSeventy;break;
+								case 0x07:Clamp.Tar_Ring = Tar_DLThirty;break;
+								case 0x08:Clamp.Tar_Ring = Tar_DRThirty;break;
+								case 0x0A:Clamp.Tar_Ring = Tar_MTwenty_Five;break;
+							}
+						}
+					}
+					break;
+					
+					case 2://初始化
+					{
+						if(Last_Mode != DRF_REC_Data[2])
+						{
+							Clamp.Init_Flag = 1;
+							Clamp.Pick_Flag = 0;
+							Clamp.Place_Point_Flag = 0;
+							Clamp.Place_Flag = 0;
+							Clamp.step = 0;
+						}
+					}
+					break;
+					
+					case 3://取环
+					{
+						if(Last_Mode != DRF_REC_Data[2])
+						{
+							if(Clamp.Init_Flag || Clamp.Pick_Flag ||\
+							 Clamp.Place_Point_Flag || Clamp.Place_Flag){}
+							 else
+							 {
+								 Clamp.Pick_Flag = 1;
+							 }
+						}
+					}
+					break;
+				}
+				Read_Flag=1;
+			}
+			break;
+		}
+		Last_Page = DRF_REC_Data[1];
+		Last_Mode = DRF_REC_Data[2];
 		Last_Tar = DRF_REC_Data[3];
 		Last_Num = DRF_REC_Data[4];
 		last_idea_ctrl = idea_ctrl;
+		DevicesMonitor.Update(Frame_VISION);
+		
 	}
 }
 

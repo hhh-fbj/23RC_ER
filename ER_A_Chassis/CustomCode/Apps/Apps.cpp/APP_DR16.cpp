@@ -53,14 +53,13 @@ CTRL_DR16_classdef::CTRL_DR16_classdef()
 /*------------------------------------------------------------ RC遥控器控?? ------------------------------------------------------------*/
 //拨杆模式更新
 uint16_t Reset_cnt;
-uint8_t yyy,ccc;
+uint8_t lllccc;
 void CTRL_DR16_classdef::LeverMode_Update(void)
 {
     switch((uint8_t)DR16.Get_S1_L())
     {
         case Lever_UP:  // --- 左上 -----------------------------------------------
         {
-						ccc = 0;
             Auto.Posture_ResFlag = 1;
             // Chassis.Set_Mode(CHAS_LockMode);
             switch((uint8_t)DR16.Get_S2_R())
@@ -69,10 +68,7 @@ void CTRL_DR16_classdef::LeverMode_Update(void)
                 case Lever_UP:/* 左上-右上 START ------------------------------------------*/ 
                 {
 //                    Chassis.Set_Mode(CHAS_LockMode);
-									if(yyy==0)
-									{
                     Chassis.Set_Mode(CHAS_FZSPMode);
-									}
                 }
                 break;  /* 左上-右上 END ------------------------------------------*/
                 
@@ -85,7 +81,26 @@ void CTRL_DR16_classdef::LeverMode_Update(void)
 
                 case Lever_DOWN:/* 左上-右下 START ------------------------------------------*/ 
                 {
-                    Chassis.Set_Mode(CHAS_FZSPMode);
+                    
+									switch(lllccc)
+									{
+										case 2:
+											if(DR16.Get_DW_Norm() >= 330)
+											{
+												lllccc = 3;
+											}
+											Chassis.Set_Mode(CHAS_FZSPMode);
+										break;
+											
+										case 3:
+										case 5:
+											Chassis.Set_Mode(CHAS_FZSPMode);
+										break;
+											
+										default:
+											Chassis.Set_Mode(CHAS_FZSPMode);
+										break;
+									}
 //										if(DR16.Get_LY_Norm()<-550&&DR16.Get_RY_Norm()<-550)
 //									{
 //										Chassis.xxx_flag=1;
@@ -103,13 +118,17 @@ void CTRL_DR16_classdef::LeverMode_Update(void)
         case Lever_MID:  // --- 左中 ----------------------------------------------
         {
             Auto.Posture_ResFlag = 1;
-						yyy = 0;
             switch((uint8_t)DR16.Get_S2_R())
             {
                 case Lever_UP:/* 左中-右上 START ------------------------------------------*/ 
-                {
+                {	
+
+									Chassis.Set_Mode(CHAS_MoveMode);
 									
-									Chassis.Set_Mode(CHAS_PostureMode);
+									
+//									Chassis.Set_Mode(CHAS_PostureMode);
+									
+									
 //                    Chassis.Set_Mode(CHAS_AutoMode);
 //                    if(DR16.Get_DW_Norm() >= 550 && Auto.overFlag == 0){Auto.startFlag=1;}
 //                    else if(DR16.Get_DW_Norm() <= -550 && Auto.SX == 0){Auto.SX=99;}
@@ -152,42 +171,40 @@ void CTRL_DR16_classdef::LeverMode_Update(void)
 
                 case Lever_MID:/* 左中-右中 START ------------------------------------------*/ 
                 {
-                    Chassis.Set_Mode(CHAS_MoveMode);
+										Chassis.Set_Mode(CHAS_PostureMode);
+                    
                 }
                 break;/* 左中-右中 END ------------------------------------------*/
 
                 case Lever_DOWN:/* 左中-右下 START ------------------------------------------*/ 
                 {
-//                    Chassis.Set_Mode(CHAS_LockMode);//CHAS_LockMode; CHAS_LaserMode
-//                    if(DR16.Get_DW_Norm() >= 550)
-//                    {
-//                        HAL_GPIO_WritePin(GPIOD, GPIO_PIN_12, GPIO_PIN_SET);//正转
-//                    }
-//                    if(DR16.Get_DW_Norm() <= -550)
-//                    {
-//                        HAL_GPIO_WritePin(GPIOD, GPIO_PIN_12, GPIO_PIN_RESET);//默认
-//                    }
-                    // Chassis.Set_Mode(CHAS_PostureMode);
-									
-									switch(ccc)
+									switch(lllccc)
 									{
 										case 0:
+											Chassis.Set_Mode(CHAS_PostureMode);
 											if(DR16.Get_DW_Norm() <= -330)
 											{
-												ccc=1;
+												lllccc = 1;
 											}
-											Chassis.Set_Mode(CHAS_PostureMode);
 										break;
 											
 										case 1:
 											Chassis.Set_Mode(CHAS_TQQHMode);
 											if(DR16.Get_DW_Norm() >= 330)
 											{
-												ccc=2;
+												lllccc = 2;
 											}
 										break;
 											
 										case 2:
+											Chassis.Set_Mode(CHAS_CSMode);
+										break;
+											
+										case 3:
+											Chassis.Set_Mode(CHAS_PostureMode);
+										break;
+											
+										default:
 											Chassis.Set_Mode(CHAS_PostureMode);
 										break;
 									}
@@ -199,9 +216,7 @@ void CTRL_DR16_classdef::LeverMode_Update(void)
 
         case Lever_DOWN: // --- 左下 ----------------------------------------------
         {
-           
-						yyy = 0;
-						ccc = 0;
+           lllccc=0;
             if(Auto.Posture_ResFlag)
             {
 //								if(Auto.Posture_ResFlag==0){Auto.Posture.time_long[0] = Get_SystemTimer();}
@@ -248,7 +263,7 @@ void CTRL_DR16_classdef::RCCtrl_Update(void)
 {
     Expt.Target_Vx = DR16.Get_LX_Norm()*abs(DR16.Get_LX_Norm())/660*20;//220
     Expt.Target_Vy = DR16.Get_LY_Norm()*abs(DR16.Get_LY_Norm())/660*20;//660
-    Expt.Target_Vw = DR16.Get_RX_Norm()*abs(DR16.Get_RX_Norm())/660 * 8;
+    Expt.Target_Vw = DR16.Get_RX_Norm()*abs(DR16.Get_RX_Norm())/660 * 4;
 }
 
 /*------------------------------------------------------------ 处理 ------------------------------------------------------------*/

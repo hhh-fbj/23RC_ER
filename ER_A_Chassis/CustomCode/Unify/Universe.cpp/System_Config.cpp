@@ -48,7 +48,7 @@ void User_System_Init(void)
 //	DR16_USART_IT_Init();
 	Uart_Init(&huart1,Uart1_Rx_Buff,USART1_RX_BUFFER_SIZE,DR16_Recv_Callback);
 	Uart_Init(&huart6,Auto.Posture.Recv_Msg.data,Post_Buffer_SIZE,Posture_Recv_Callback);
-//	Uart_Init(&huart7,Auto.Analog.ReceiveData, REC_DATA_NUM, Analog_Recv_Callback);
+//	Uart_Init(&huart7,L1TTL.REC_REC_DATA, DRF_REC_SIZE, L1TTL_Recv_Callback);
 //	Uart_Init(&huart7,DRF1609H.TJC4827X343_Data, TJC4827X343_SIZE, DRF1609H_Recv_Callback);
 
 	CAN_Init(&hcan1,User_CAN1_RxCpltCallback);

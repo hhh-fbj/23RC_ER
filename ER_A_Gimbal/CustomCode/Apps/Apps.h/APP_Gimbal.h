@@ -100,6 +100,8 @@ public:
 	uint8_t Ding_TEXT_Flag;//云台中间打四柱子的转动标识符
 	CIMUMsg_u CIMU;
 
+	
+
 	Gimbal_CtrlMode_e Mode; /*<! 云台运作模式 */
 	Gimbal_CtrlMode_e Next_Mode;
 	Gimbal_CtrlMode_e Last_Mode;
@@ -116,6 +118,8 @@ public:
 	void CIMU_Rev(uint8_t data[8]);
 	void setMode(Gimbal_CtrlMode_e mode);
 	bool TarPos_Move(Tar_Select_e angle);
+	
+	int CS_SJ;
 };
 #endif
 
