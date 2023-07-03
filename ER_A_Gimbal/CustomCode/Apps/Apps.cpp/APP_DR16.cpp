@@ -136,6 +136,12 @@ void CTRL_DR16_classdef::LeverMode_Update(void)
                        }
                        DW_Zero = false;
 									}
+									else if(DR16.Get_DW_Norm() <= -550 && DW_Zero)
+									{
+										 if(Clamp.Init_Flag || Clamp.Pick_Flag ||\
+                       Clamp.Place_Point_Flag || Clamp.Place_Flag){Clamp.step++;}
+                       DW_Zero = false;
+									}
 									
 									if(DR16.Get_LY_Norm()<-550&&DR16.Get_RY_Norm()<-550)
 									{
@@ -316,8 +322,8 @@ void CTRL_DR16_classdef::LeverMode_Update(void)
                   Shoot.Shoot_Mode_Set(Shoot_NewAutoMode);
                   Shoot.Pull_Mode_Set(Pull_AutoMode);//(Pull_DebugMode);//Pull_LockMode
                   Clamp.setMode(Clamp_AutoMode);
-
-                  if(DR16.Get_DW_Norm() == 0)
+									
+									if(DR16.Get_DW_Norm() == 0)
                   {
                     DW_Zero = true;
                   }
@@ -327,20 +333,56 @@ void CTRL_DR16_classdef::LeverMode_Update(void)
                        Clamp.Place_Point_Flag || Clamp.Place_Flag){}
                        else
                        {
-												 Clamp.Pick_Flag = 1;
+                          if(init_pick)
+                          {
+                              init_pick = 0;
+                              Clamp.Pick_Flag = 1;
+                          }
+													else
+													{
+														Clamp.Place_PickShootFlag = 1;
+													}
                        }
                        DW_Zero = false;
-                  }
-                  else if(DR16.Get_DW_Norm() <= -330 && DW_Zero)
-                  {
-                      init_pick = 1;
-                      Clamp.Init_Flag = 1;
-                      Clamp.Pick_Flag = 0;
-                      Clamp.Place_Point_Flag = 0;
-                      Clamp.Place_Flag = 0;
-											Clamp.step = 0;
-                      DW_Zero = false;
-                  }                  
+										}
+										else if(DR16.Get_DW_Norm() <= -330 && DW_Zero)
+										{
+												init_pick = 1;
+												Clamp.Init_Flag = 1;
+												Clamp.Pick_Flag = 0;
+												Clamp.Place_Point_Flag = 0;
+												Clamp.Place_Flag = 0;
+											
+												Clamp.Place_PickShootFlag = 0;
+											
+												Clamp.step = 0;
+												DW_Zero = false;
+										}
+
+//                  if(DR16.Get_DW_Norm() == 0)
+//                  {
+//                    DW_Zero = true;
+//                  }
+//                  if(DR16.Get_DW_Norm() >= 330 && DW_Zero)
+//                  {
+//                      if(Clamp.Init_Flag || Clamp.Pick_Flag ||\
+//                       Clamp.Place_Point_Flag || Clamp.Place_Flag){}
+//                       else
+//                       {
+//												 Clamp.Pick_Flag = 1;
+//                       }
+//                       DW_Zero = false;
+//                  }
+//                  else if(DR16.Get_DW_Norm() <= -330 && DW_Zero)
+//                  {
+//                      init_pick = 1;
+//                      Clamp.Init_Flag = 1;
+//                      Clamp.Pick_Flag = 0;
+//                      Clamp.Place_Point_Flag = 0;
+//                      Clamp.Place_Flag = 0;
+//											Clamp.step = 0;
+//                      DW_Zero = false;
+//                  }                  
 										Mode = RCCtrl_Update_DisableMode;
 									
 //									 if(DR16.Get_DW_Norm() == 0)

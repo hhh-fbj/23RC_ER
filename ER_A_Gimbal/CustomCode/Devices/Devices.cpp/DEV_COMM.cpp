@@ -104,7 +104,11 @@ uint32_t ClampMX106_Recv_Callback(uint8_t* Recv_Data, uint16_t ReceiveLen)
 
 uint32_t ShootMX106_Recv_Callback(uint8_t* Recv_Data, uint16_t ReceiveLen)
 {
-    Shoot.Shoot_Servo.Receive(Recv_Data);
+		switch(Recv_Data[4])
+		{
+			case 2:Shoot.Shoot_Servo.Receive(Recv_Data);break;
+			case 1:Shoot.Shoot_Servo_Mid.Receive(Recv_Data);break;
+		}
     DevicesMonitor.Update(Frame_TURNPLACE_SERVO);
     return 0;
 }

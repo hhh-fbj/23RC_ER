@@ -61,6 +61,7 @@ public:
 		uint8_t MX106_Data[MXDATASIZE];
     uint8_t Torque_Flag;
 		uint32_t Posotion;
+		uint8_t Tyg;
 
     void Ping(void);
     void Torque(uint8_t NON);

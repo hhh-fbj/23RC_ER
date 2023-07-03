@@ -17,16 +17,16 @@ enum Clamp_CtrlMode_e
 
 enum Tar_Select_e
 {
-	Tar_MSeventy = 0,
+	Tar_Mid= 0,
 	Tar_LTen,
+	Tar_MTen,
 	Tar_RTen,	
 	Tar_LThirty,
 	Tar_RThirty,
-	Tar_MTen,
+	Tar_MSeventy,
 	Tar_DLThirty,
 	Tar_DRThirty,
 	Tar_MTwenty_Five,
-	Tar_Mid,
 };
 
 class Clamp_classdef
@@ -50,6 +50,7 @@ private:
 	float Top_Lift = 0;
 	float Top_PickPlace = 0;
 	float now_place;
+	float now_place_pickshoot;
 	
 	float LiftStretch_K,LiftStretch_B,cs_yd;
 
@@ -126,6 +127,7 @@ public:
 	uint8_t Pick_Flag;
 	uint8_t Place_Point_Flag;
 	uint8_t Place_Flag;
+	uint8_t Place_PickShootFlag;
 	
 	uint8_t Homeing_Flag;
 	uint8_t Ctrl_Flag;
@@ -151,6 +153,7 @@ public:
 	void Place_NoShoot(void);
 	void Place_XShoot(void);
 	void Place_TrueNoShoot(void);
+	void Place_PickShoot(void);
 	void Place_Cs(void);
 	void setMode(Clamp_CtrlMode_e mode);
 };

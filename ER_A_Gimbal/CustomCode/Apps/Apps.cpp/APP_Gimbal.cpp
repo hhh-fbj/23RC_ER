@@ -54,13 +54,23 @@ Gimbal_classdef::Gimbal_classdef()
 	Param.Yaw_Centre = 183685;
 	Param.Yaw_Max = Param.Yaw_Centre+40960;
 	Param.Yaw_Min = Param.Yaw_Centre-40960;
-	Param.Yaw_Speed = 100;
+	Param.Yaw_Speed = 200;
 	Param.Angle_Big = 22.109448343751673f;
 	Param.Angle_small = 67.890551656248330f;//
 	Param.Yaw_TurnAngle = 1;//455.11111111111111111111111111111;
+	
+	//左为正，右为负
+	Param.Yaw_TarError[0] = 0.0f;
+	Param.Yaw_TarError[1] = 31276+400-200;
+	Param.Yaw_TarError[2] = 6;
+	Param.Yaw_TarError[3] = -31636;
+	Param.Yaw_TarError[4] = 10096;
+	Param.Yaw_TarError[5] = -10578+300;                                                                                                 ;
+	Param.Yaw_TarError[6] = -358+270;
+	Param.Yaw_TarError[7] = 5596+300-400+400;
+	Param.Yaw_TarError[8] = -6100+200-200+200;
+
 }
-
-
 /**
  * @brief      云台总控函数
  * @param[in]  None
@@ -70,8 +80,9 @@ Gimbal_classdef::Gimbal_classdef()
 void Gimbal_classdef::Control()
 {	
 	//传感器检测结果获取
-	Last_D12 = D12;
-	D12 = HAL_GPIO_ReadPin(GPIOD, GPIO_PIN_12);
+	
+//	Last_D12 = D12;
+//	D12 = HAL_GPIO_ReadPin(GPIOD, GPIO_PIN_12);
 	
 	//--- 云台更新——陀螺仪数据
 	IMU_Update(imu_Export.AIMU_onlyAngle, imu_Export.AIMU_gyro);
@@ -403,13 +414,31 @@ void Gimbal_classdef::TargetAngle_Update(void)
 			else
 			{
 				UseTarget[Yaw] = Param.Yaw_Centre+(int)(clamp_angle*Param.Yaw_TurnAngle);
-	
-
-
 			}
 			Last_Mode = Gimbal_AutoMode;
 		}
 		break;
+		
+		case Gimbal_RevAutoMode:
+		{
+			if(Clamp.Tar_Ring==Tar_Mid)YawRevise[Clamp.Tar_Ring]=0;
+			YawRevise[Clamp.Tar_Ring]-=CTRL_DR16.Get_RX();
+			if(UseTarget[Yaw] > Param.Yaw_Centre+clamp_angle*Param.Yaw_TurnAngle + Param.Yaw_Speed + YawRevise[Clamp.Tar_Ring])
+			{
+				UseTarget[Yaw] -= Param.Yaw_Speed;
+			}
+			else if(UseTarget[Yaw] < Param.Yaw_Centre+clamp_angle*Param.Yaw_TurnAngle - Param.Yaw_Speed + YawRevise[Clamp.Tar_Ring])
+			{
+				UseTarget[Yaw] += Param.Yaw_Speed;
+			}
+			else
+			{
+				UseTarget[Yaw] = Param.Yaw_Centre+(int)(clamp_angle*Param.Yaw_TurnAngle)+YawRevise[Clamp.Tar_Ring];
+			}
+			Last_Mode = Gimbal_AutoMode;
+		}
+		break;
+		
 	}
 }
 
@@ -485,40 +514,33 @@ bool Gimbal_classdef::TarPos_Move(Tar_Select_e angle)
 {
 	switch(angle)
 	{
-		
-		case Tar_MSeventy:
-			clamp_angle = -300;
+		case Tar_Mid:
+			clamp_angle = Param.Yaw_TarError[0];
+		break;
+		case Tar_LTen:
+			clamp_angle = Param.Yaw_TarError[1];//215218-183685;//31677-455;//67.11341748046875f;
 		break;
 		case Tar_MTen:
-		case Tar_Mid:
-			clamp_angle = 0.0f;
+			clamp_angle = Param.Yaw_TarError[2];
 		break;
-		
-		case Tar_LTen:
-			clamp_angle = 215218-183685-455;//215218-183685;//31677-455;//67.11341748046875f;
-		break;
-		
 		case Tar_RTen:
-			clamp_angle = 152214-183685;//-31324-455;//-66.982201171875f;
+			clamp_angle = Param.Yaw_TarError[3];//-31324-455;//-66.982201171875f;
 		break;
-		
 		case Tar_LThirty:
-			clamp_angle = 194021-183685;//+100;//10393-455;//21.93983349609375f;
+			clamp_angle = Param.Yaw_TarError[4];//+100;//10393-455;//21.93983349609375f;
 		break;
-		
-		
 		case Tar_RThirty:
-			clamp_angle = 173507-183685;//-100;//-9904-455;//21.91099658203125f;
+			clamp_angle = Param.Yaw_TarError[5];//-100;//-9904-455;//21.91099658203125f;
 		break;
-		
+		case Tar_MSeventy:
+			clamp_angle = Param.Yaw_TarError[6];
+		break;
 		case Tar_DLThirty:
-			clamp_angle = 189500-183685;//6043-455;
+			clamp_angle = Param.Yaw_TarError[7];//6043-455;
 		break;
-		
 		case Tar_DRThirty:
-			clamp_angle = 177917-183685;//-5552-455;
+			clamp_angle = Param.Yaw_TarError[8];//-5552-455;
 		break;
-		
 		case Tar_MTwenty_Five:
 			clamp_angle = 0.0f;
 		break;

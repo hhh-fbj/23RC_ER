@@ -30,9 +30,19 @@ void MX106_classdef::Ping(void)
 	switch(ID)
 	{
 		case 1:
-			if((&huart6)->gState == HAL_UART_STATE_READY) 
+			if(Tyg)
 			{
-				HAL_UART_Transmit_DMA(&huart6, send_data, 16);
+				if((&huart7)->gState == HAL_UART_STATE_READY) 
+				{
+					HAL_UART_Transmit_DMA(&huart7, send_data, 16);
+				}
+			}
+			else
+			{
+				if((&huart6)->gState == HAL_UART_STATE_READY) 
+				{
+					HAL_UART_Transmit_DMA(&huart6, send_data, 16);
+				}
 			}
 		break;
 			
@@ -110,22 +120,32 @@ void MX106_classdef::Torque(uint8_t NON)
     send_data[13] = 0X00;
     send_data[14] = 0X00;
     send_data[15] = 0X00;
-		switch(ID)
-		{
-			case 1:
-				if((&huart6)->gState == HAL_UART_STATE_READY) 
-				{
-					HAL_UART_Transmit_DMA(&huart6, send_data, 16);
-				}
-			break;
-				
-			case 2:
+	switch(ID)
+	{
+		case 1:
+			if(Tyg)
+			{
 				if((&huart7)->gState == HAL_UART_STATE_READY) 
 				{
 					HAL_UART_Transmit_DMA(&huart7, send_data, 16);
 				}
-			break;
-		}
+			}
+			else
+			{
+				if((&huart6)->gState == HAL_UART_STATE_READY) 
+				{
+					HAL_UART_Transmit_DMA(&huart6, send_data, 16);
+				}
+			}
+		break;
+			
+		case 2:
+			if((&huart7)->gState == HAL_UART_STATE_READY) 
+			{
+				HAL_UART_Transmit_DMA(&huart7, send_data, 16);
+			}
+		break;
+	}
     set_Torque_state = NON;
     State = 0X03;
 }
@@ -153,22 +173,32 @@ void MX106_classdef::Position_Control(uint32_t position)
     send_data[14] = (crc & 0xFF);
     send_data[15] = ((crc>>8) & 0xFF);
 		// HAL_UART_Transmit(&huart6, send_data, 16, 2000);
-		switch(ID)
-		{
-			case 1:
-				if((&huart6)->gState == HAL_UART_STATE_READY) 
-				{
-					HAL_UART_Transmit_DMA(&huart6, send_data, 16);
-				}
-			break;
-				
-			case 2:
+	switch(ID)
+	{
+		case 1:
+			if(Tyg)
+			{
 				if((&huart7)->gState == HAL_UART_STATE_READY) 
 				{
 					HAL_UART_Transmit_DMA(&huart7, send_data, 16);
 				}
-			break;
-		}
+			}
+			else
+			{
+				if((&huart6)->gState == HAL_UART_STATE_READY) 
+				{
+					HAL_UART_Transmit_DMA(&huart6, send_data, 16);
+				}
+			}
+		break;
+			
+		case 2:
+			if((&huart7)->gState == HAL_UART_STATE_READY) 
+			{
+				HAL_UART_Transmit_DMA(&huart7, send_data, 16);
+			}
+		break;
+	}
     State = 0X04;
 }
 
@@ -195,22 +225,32 @@ void MX106_classdef::ExtendPosition_Control(uint32_t position)
     send_data[14] = (crc & 0xFF);
     send_data[15] = ((crc>>8) & 0xFF);
 		// HAL_UART_Transmit(&huart6, send_data, 16, 2000);
-		switch(ID)
-		{
-			case 1:
-				if((&huart6)->gState == HAL_UART_STATE_READY) 
-				{
-					HAL_UART_Transmit_DMA(&huart6, send_data, 16);
-				}
-			break;
-				
-			case 2:
+	switch(ID)
+	{
+		case 1:
+			if(Tyg)
+			{
 				if((&huart7)->gState == HAL_UART_STATE_READY) 
 				{
 					HAL_UART_Transmit_DMA(&huart7, send_data, 16);
 				}
-			break;
-		}
+			}
+			else
+			{
+				if((&huart6)->gState == HAL_UART_STATE_READY) 
+				{
+					HAL_UART_Transmit_DMA(&huart6, send_data, 16);
+				}
+			}
+		break;
+			
+		case 2:
+			if((&huart7)->gState == HAL_UART_STATE_READY) 
+			{
+				HAL_UART_Transmit_DMA(&huart7, send_data, 16);
+			}
+		break;
+	}
 		
 		
     State = 0X04;
@@ -239,22 +279,32 @@ void MX106_classdef::ReadPosition()
     send_data[14] = 0X00;
     send_data[15] = 0X00;
 //		HAL_UART_Transmit(&huart6, send_data, 16, 2000);
-		switch(ID)
-		{
-			case 1:
-				if((&huart6)->gState == HAL_UART_STATE_READY) 
-				{
-					HAL_UART_Transmit_DMA(&huart6, send_data, 16);
-				}
-			break;
-				
-			case 2:
+	switch(ID)
+	{
+		case 1:
+			if(Tyg)
+			{
 				if((&huart7)->gState == HAL_UART_STATE_READY) 
 				{
 					HAL_UART_Transmit_DMA(&huart7, send_data, 16);
 				}
-			break;
-		}
+			}
+			else
+			{
+				if((&huart6)->gState == HAL_UART_STATE_READY) 
+				{
+					HAL_UART_Transmit_DMA(&huart6, send_data, 16);
+				}
+			}
+		break;
+			
+		case 2:
+			if((&huart7)->gState == HAL_UART_STATE_READY) 
+			{
+				HAL_UART_Transmit_DMA(&huart7, send_data, 16);
+			}
+		break;
+	}
     State = 0X06;
 }
 

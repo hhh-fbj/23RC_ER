@@ -27,6 +27,7 @@ enum Pull_CtrlMode_e
 	Pull_NewDebugMode,
 	Pull_GearSetMode,
 	Pull_AutoMode,
+	Pull_RevAutoMode,
 };
 
 
@@ -61,6 +62,7 @@ private:
 	float clamp_pos_L;
 	
 	float ServoPos_Target;
+	float ServoPos_Mid_Target;
 	
 	struct{
 		float Shoot_Circle;
@@ -86,6 +88,11 @@ private:
 		float Servo_InitPos;//舵机：初始位置
 		float Servo_OverPos;//舵机：发射位置
 		float Servo_ErrorPos;//舵机：判断条件的范围
+		
+		float Servo_Mid_InitPos;//舵机：初始位置
+		float Servo_Mid_OverPos;//舵机：发射位置
+		
+		float Pull_TarError[9][2];
 	}Param;
 
 	uint8_t ProblemDetection(void);
@@ -97,6 +104,7 @@ private:
 	void PullMotor_PIDCalc(void);
 	void ShootMotor_PIDCalc(void);
 	bool Set_TurnPlacel(int mode,int position);
+	bool Set_Mid_TurnPlacel(int mode,int position);
 public:
 	Shoot_classdef();
 	//发送发射电机数据用
@@ -108,7 +116,7 @@ public:
 	float LeftPull_TarAngle, RightPull_TarAngle;
 	float Manual_Flag;
 	float Shoot_C6;
-	uint8_t Ctrl_Flag;
+	uint8_t Ctrl_Flag,Ctrl_Mid_Flag;
 	uint8_t sj;
 	
 	//发射电机1
@@ -122,6 +130,7 @@ public:
 	PositionPID RightPull_PID[2];
 
 	MX106_classdef Shoot_Servo = MX106_classdef(2);
+	MX106_classdef Shoot_Servo_Mid = MX106_classdef(1);
 		
 	// PositionPID Pre_PID[2];
 
@@ -140,5 +149,6 @@ public:
 	bool Pull_Move(Tar_Select_e pos);
 	
 	int Left_CS_SJ,Right_CS_SJ;
+	float PullRevise[9][2];
 };
 #endif

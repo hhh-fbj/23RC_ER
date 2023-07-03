@@ -24,6 +24,7 @@ enum Gimbal_CtrlMode_e
 	Gimbal_LockMode,
 	Gimbal_AutoMode,
 	Gimbal_HalfAutoMode,
+	Gimbal_RevAutoMode,
 };
 
 /* --- 云台电机 ID ------------------------------------------------------------*/
@@ -79,6 +80,8 @@ private:
 		float Angle_Big;
 		float Angle_small;
 		float Yaw_TurnAngle;
+		
+		float Yaw_TarError[9];
 	}Param;
 	
 	
@@ -120,6 +123,7 @@ public:
 	bool TarPos_Move(Tar_Select_e angle);
 	
 	int CS_SJ;
+	float YawRevise[9];
 };
 #endif
 
