@@ -12,7 +12,7 @@ void Task_Vision(void *argument)
   portTickType xLastWakeTime;
   xLastWakeTime = xTaskGetTickCount();
 
-  const TickType_t TimeIncrement = pdMS_TO_TICKS(10);  // --- 1MS
+  const TickType_t TimeIncrement = pdMS_TO_TICKS(50);  // --- 1MS
   for(;;)
   {
     //  Shoot.BsqJnP2.Read_Float();
@@ -32,9 +32,9 @@ void Task_Vision(void *argument)
 	{
 		switch(Read_Time)
 		{
-			case 1:Read_Time=2;DRF1609H.DRT_Printf("n3.val=%d",Gimbal.CS_SJ);break;
-			case 2:Read_Time=3;DRF1609H.DRT_Printf("n4.val=%d",Shoot.Left_CS_SJ);break;
-			case 3:Read_Time=4;DRF1609H.DRT_Printf("n5.val=%d",Shoot.Right_CS_SJ);break;
+			case 1:Read_Time=2;DRF1609H.DRT_Printf("p1_y=%d",Gimbal.CS_SJ);break;
+			case 2:Read_Time=3;DRF1609H.DRT_Printf("p1_l=%d",Shoot.Left_CS_SJ);break;
+			case 3:Read_Time=4;DRF1609H.DRT_Printf("p1_r=%d",Shoot.Right_CS_SJ);break;
 			case 4:Read_Time=1;DRF1609H.DRT_Printf("n0.val++");break;
 		}
 		a++;b+=2;c-=5;

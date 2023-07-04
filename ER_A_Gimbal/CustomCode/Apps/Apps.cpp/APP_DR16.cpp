@@ -116,9 +116,9 @@ void CTRL_DR16_classdef::LeverMode_Update(void)
 //										Clamp.setMode(Clamp_AutoMode);
 
 									
-									Gimbal.setMode(Gimbal_AutoMode);//Gimbal_HalfAutoMode;
+									Gimbal.setMode(Gimbal_RevAutoMode);//Gimbal_HalfAutoMode;
                   Shoot.Shoot_Mode_Set(Shoot_NewAutoMode);
-                  Shoot.Pull_Mode_Set(Pull_AutoMode);//(Pull_DebugMode);//Pull_LockMode
+                  Shoot.Pull_Mode_Set(Pull_NewRevDebugMode);//(Pull_DebugMode);//Pull_LockMode
                   Clamp.setMode(Clamp_AutoMode);
 
 									if(DR16.Get_DW_Norm() == 0)
@@ -143,40 +143,40 @@ void CTRL_DR16_classdef::LeverMode_Update(void)
                        DW_Zero = false;
 									}
 									
-									if(DR16.Get_LY_Norm()<-550&&DR16.Get_RY_Norm()<-550)
-									{
-										Clamp.Tar_Ring = Tar_MTen;
-									}
-									if(DR16.Get_LY_Norm()<-550&&DR16.Get_RX_Norm()<-550)
-									{
-										Clamp.Tar_Ring = Tar_LTen;
-									}
-									if(DR16.Get_LY_Norm()<-550&&DR16.Get_RX_Norm()>550)
-									{
-										Clamp.Tar_Ring = Tar_RTen;
-									}
-									if(DR16.Get_LY_Norm()==0&&DR16.Get_RX_Norm()<-550)
-									{
-										Clamp.Tar_Ring = Tar_LThirty;
-									}
-									if(DR16.Get_LY_Norm()==0&&DR16.Get_RX_Norm()>550)
-									{
-										Clamp.Tar_Ring = Tar_RThirty;
-									}
-									if(DR16.Get_LY_Norm()==0&&DR16.Get_RY_Norm()>550)
-									{
-										Clamp.Tar_Ring = Tar_MSeventy;
-									}
-									if(DR16.Get_LY_Norm()>550&&DR16.Get_RX_Norm()<-550)
-									{
-										Clamp.Tar_Ring = Tar_DLThirty;
-									}
-									if(DR16.Get_LY_Norm()>550&&DR16.Get_RX_Norm()>550)
-									{
-										Clamp.Tar_Ring = Tar_DRThirty;
-									}
+//									if(DR16.Get_LY_Norm()<-550&&DR16.Get_RY_Norm()<-550)
+//									{
+//										Clamp.Tar_Ring = Tar_MTen;
+//									}
+//									if(DR16.Get_LY_Norm()<-550&&DR16.Get_RX_Norm()<-550)
+//									{
+//										Clamp.Tar_Ring = Tar_LTen;
+//									}
+//									if(DR16.Get_LY_Norm()<-550&&DR16.Get_RX_Norm()>550)
+//									{
+//										Clamp.Tar_Ring = Tar_RTen;
+//									}
+//									if(DR16.Get_LY_Norm()==0&&DR16.Get_RX_Norm()<-550)
+//									{
+//										Clamp.Tar_Ring = Tar_LThirty;
+//									}
+//									if(DR16.Get_LY_Norm()==0&&DR16.Get_RX_Norm()>550)
+//									{
+//										Clamp.Tar_Ring = Tar_RThirty;
+//									}
+//									if(DR16.Get_LY_Norm()==0&&DR16.Get_RY_Norm()>550)
+//									{
+//										Clamp.Tar_Ring = Tar_MSeventy;
+//									}
+//									if(DR16.Get_LY_Norm()>550&&DR16.Get_RX_Norm()<-550)
+//									{
+//										Clamp.Tar_Ring = Tar_DLThirty;
+//									}
+//									if(DR16.Get_LY_Norm()>550&&DR16.Get_RX_Norm()>550)
+//									{
+//										Clamp.Tar_Ring = Tar_DRThirty;
+//									}
 										
-									Mode = RCCtrl_Update_DisableMode;
+									Mode = RCCtrl_Update_AllShootMode;
 										
 //									Gimbal.setMode(Gimbal_NormalMode);
 //									Shoot.Shoot_Mode_Set(Shoot_DebugMode);
@@ -209,42 +209,41 @@ void CTRL_DR16_classdef::LeverMode_Update(void)
                        DW_Zero = false;
 									}
 									
-									if(DR16.Get_LY_Norm()<-550&&DR16.Get_RY_Norm()<-550)
+									if(DR16.Get_LY_Norm()<-550)
 									{
-										Clamp.Tar_Ring = Tar_MTen;
+										if(DR16.Get_RY_Norm()<-550){Clamp.Tar_Ring = Tar_MTen;}
+										if(DR16.Get_RX_Norm()<-550){Clamp.Tar_Ring = Tar_LTen;}
+										if(DR16.Get_RX_Norm()>550){Clamp.Tar_Ring = Tar_RTen;}
 									}
-									if(DR16.Get_LY_Norm()<-550&&DR16.Get_RX_Norm()<-550)
+									else if(DR16.Get_LY_Norm()==0)
 									{
-										Clamp.Tar_Ring = Tar_LTen;
+										if(DR16.Get_RY_Norm()<-330&&DR16.Get_RX_Norm()<-330)
+										{
+											Clamp.Tar_Ring = Tar_LThirty;
+										}
+										else if(DR16.Get_RY_Norm()<-330&&DR16.Get_RX_Norm()>330)
+										{
+											Clamp.Tar_Ring = Tar_RThirty;
+										}
+										else if(DR16.Get_RY_Norm()>330&&DR16.Get_RX_Norm()<-330)
+										{
+											Clamp.Tar_Ring = Tar_DLThirty;
+										}
+										else if(DR16.Get_RY_Norm()>330&&DR16.Get_RX_Norm()>330)
+										{
+											Clamp.Tar_Ring = Tar_DRThirty;
+										}
+										
 									}
-									if(DR16.Get_LY_Norm()<-550&&DR16.Get_RX_Norm()>550)
-									{
-										Clamp.Tar_Ring = Tar_RTen;
-									}
-									if(DR16.Get_LY_Norm()==0&&DR16.Get_RX_Norm()<-550)
-									{
-										Clamp.Tar_Ring = Tar_LThirty;
-									}
-									if(DR16.Get_LY_Norm()==0&&DR16.Get_RX_Norm()>550)
-									{
-										Clamp.Tar_Ring = Tar_RThirty;
-									}
-									if(DR16.Get_LY_Norm()==0&&DR16.Get_RY_Norm()>550)
+									else if(DR16.Get_LY_Norm()>=550)
 									{
 										Clamp.Tar_Ring = Tar_MSeventy;
 									}
-									if(DR16.Get_LY_Norm()>550&&DR16.Get_RX_Norm()<-550)
-									{
-										Clamp.Tar_Ring = Tar_DLThirty;
-									}
-									if(DR16.Get_LY_Norm()>550&&DR16.Get_RX_Norm()>550)
-									{
-										Clamp.Tar_Ring = Tar_DRThirty;
-									}
-									if(DR16.Get_LY_Norm()>550&&DR16.Get_RY_Norm()>550)
-									{
-										Clamp.Tar_Ring = Tar_MTwenty_Five;
-									}
+
+//									if(DR16.Get_LY_Norm()>550&&DR16.Get_RY_Norm()>550)
+//									{
+//										Clamp.Tar_Ring = Tar_MTwenty_Five;
+//									}
 										
 									Mode = RCCtrl_Update_DisableMode;
 									

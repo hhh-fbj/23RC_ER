@@ -96,9 +96,46 @@ void DRF1609H_classdef::Receive(uint8_t *data)
 						}
 					}
 					break;
+					
+					case 1:
+					{
+						if(Last_Tar != DRF_REC_Data[3])
+						{
+							switch(DRF_REC_Data[3])
+							{
+								case 0x00000000:break;
+								case 0x01:Clamp.Tar_Ring = Tar_LTen;break;
+								case 0x02:Clamp.Tar_Ring = Tar_MTen;;break;
+								case 0x03:Clamp.Tar_Ring = Tar_RTen;break;
+								case 0x04:Clamp.Tar_Ring = Tar_LThirty;break;
+								case 0x05:Clamp.Tar_Ring = Tar_RThirty;break;
+								case 0x06:Clamp.Tar_Ring = Tar_MSeventy;break;
+								case 0x07:Clamp.Tar_Ring = Tar_DLThirty;break;
+								case 0x08:Clamp.Tar_Ring = Tar_DRThirty;break;
+								case 0x0A:Clamp.Tar_Ring = Tar_MTwenty_Five;break;
+							}
+						}
+						else if(Last_Num != DRF_REC_Data[4])
+						{
+							switch(DRF_REC_Data[3])
+							{
+								case 0x00000000:break;
+								case 0x01:Clamp.Tar_Ring = Tar_LTen;break;
+								case 0x02:Clamp.Tar_Ring = Tar_MTen;break;
+								case 0x03:Clamp.Tar_Ring = Tar_RTen;break;
+								case 0x04:Clamp.Tar_Ring = Tar_LThirty;break;
+								case 0x05:Clamp.Tar_Ring = Tar_RThirty;break;
+								case 0x06:Clamp.Tar_Ring = Tar_MSeventy;break;
+								case 0x07:Clamp.Tar_Ring = Tar_DLThirty;break;
+								case 0x08:Clamp.Tar_Ring = Tar_DRThirty;break;
+								case 0x0A:Clamp.Tar_Ring = Tar_MTwenty_Five;break;
+							}
+						}
+					}
+					break;
 				}
-				
 			}
+			Read_Flag=1;
 			break;
 			
 			case 2:
@@ -140,6 +177,7 @@ void DRF1609H_classdef::Receive(uint8_t *data)
 							}
 						}
 					}
+					Read_Flag=1;
 					break;
 					
 					case 2://初始化

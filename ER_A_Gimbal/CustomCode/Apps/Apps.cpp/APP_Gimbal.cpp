@@ -61,14 +61,14 @@ Gimbal_classdef::Gimbal_classdef()
 	
 	//左为正，右为负
 	Param.Yaw_TarError[0] = 0.0f;
-	Param.Yaw_TarError[1] = 31276+400-200;
+	Param.Yaw_TarError[1] = 31276+400;
 	Param.Yaw_TarError[2] = 6;
 	Param.Yaw_TarError[3] = -31636;
 	Param.Yaw_TarError[4] = 10096;
-	Param.Yaw_TarError[5] = -10578+300;                                                                                                 ;
+	Param.Yaw_TarError[5] = -10578;                                                                                                 ;
 	Param.Yaw_TarError[6] = -358+270;
-	Param.Yaw_TarError[7] = 5596+300-400+400;
-	Param.Yaw_TarError[8] = -6100+200-200+200;
+	Param.Yaw_TarError[7] = 5596+300-400;
+	Param.Yaw_TarError[8] = -6100+200-200;
 
 }
 /**
@@ -421,21 +421,10 @@ void Gimbal_classdef::TargetAngle_Update(void)
 		
 		case Gimbal_RevAutoMode:
 		{
-			if(Clamp.Tar_Ring==Tar_Mid)YawRevise[Clamp.Tar_Ring]=0;
-			YawRevise[Clamp.Tar_Ring]-=CTRL_DR16.Get_RX();
-			if(UseTarget[Yaw] > Param.Yaw_Centre+clamp_angle*Param.Yaw_TurnAngle + Param.Yaw_Speed + YawRevise[Clamp.Tar_Ring])
-			{
-				UseTarget[Yaw] -= Param.Yaw_Speed;
-			}
-			else if(UseTarget[Yaw] < Param.Yaw_Centre+clamp_angle*Param.Yaw_TurnAngle - Param.Yaw_Speed + YawRevise[Clamp.Tar_Ring])
-			{
-				UseTarget[Yaw] += Param.Yaw_Speed;
-			}
-			else
-			{
-				UseTarget[Yaw] = Param.Yaw_Centre+(int)(clamp_angle*Param.Yaw_TurnAngle)+YawRevise[Clamp.Tar_Ring];
-			}
-			Last_Mode = Gimbal_AutoMode;
+			if(Clamp.Tar_Ring==Tar_Mid){YawRevise[Clamp.Tar_Ring]=0;}
+			UseTarget[Yaw] -= CTRL_DR16.Get_RX();
+			Param.Yaw_TarError[Clamp.Tar_Ring] = Yaw_Encider.getTotolAngle() - Param.Yaw_Centre;
+			Last_Mode = Gimbal_RevAutoMode;
 		}
 		break;
 		
@@ -510,6 +499,7 @@ float *Gimbal_classdef::Get_TargetAngle(Gimbal_type_e type)
     return return_angle[type];
 }
 
+int gimbal_time;
 bool Gimbal_classdef::TarPos_Move(Tar_Select_e angle)
 {
 	switch(angle)
@@ -548,7 +538,12 @@ bool Gimbal_classdef::TarPos_Move(Tar_Select_e angle)
 	
 	if(abs(Yaw_Encider.getTotolAngle()-(Param.Yaw_Centre+clamp_angle*Param.Yaw_TurnAngle)) <= 100)
 	{
-		return true;
+		gimbal_time++;
+		if(gimbal_time>10)
+		{
+			gimbal_time=0;
+			return true;
+		}
 	}
 	return false;
 }

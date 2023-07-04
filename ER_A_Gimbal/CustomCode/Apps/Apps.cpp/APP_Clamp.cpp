@@ -409,16 +409,16 @@ void Clamp_classdef::Tar_Update(void)
 //				D12_SetTime=0;
 //			}
 
-			if(D12_SetTime>0 && D12_FwdNum<5)
+			if(D12_SetTime>0 && D12_FwdNum<3)
 			{
 				D12_FwdNum++;
 				switch(D12_FwdNum)
 				{
 					case 1:Tar_Ring = Tar_LTen;Place_Flag = 1;break;
-					case 2:Tar_Ring = Tar_LThirty;Place_Flag = 1;break;
-					case 3:Tar_Ring = Tar_RThirty;Place_Flag = 1;break;
-					case 4:Tar_Ring = Tar_RTen;Place_Flag = 1;break;
-					case 5:Tar_Ring = Tar_MTen;Place_Flag = 1;break;
+					case 2:Tar_Ring = Tar_MTen;Place_Flag = 1;break;
+					case 3:Tar_Ring = Tar_RTen;Place_Flag = 1;break;
+//					case 4:Tar_Ring = Tar_RThirty;Place_Flag = 1;break;
+//					case 5:Tar_Ring = Tar_LThirty;Place_Flag = 1;break;
 //					case 6:Tar_Ring = Tar_MSeventy;Place_Flag = 1;break;
 //					case 7:Tar_Ring = Tar_DLThirty;Place_Flag = 1;break;
 //					case 8:Tar_Ring = Tar_DRThirty;Place_Flag = 1;break;
@@ -438,11 +438,11 @@ void Clamp_classdef::Tar_Update(void)
 			PickPlace_Num = 0;
 			Place_PickShootFlag = 0;
 		}
-		if(D12_FwdNum==6)
+		if(D12_FwdNum==4)
 		{
 			yuntai_kedong=1;
 		}
-		else if(D12_FwdNum!=6)
+		else if(D12_FwdNum!=4)
 		{
 			yuntai_kedong=0;
 		}
@@ -459,7 +459,7 @@ void Clamp_classdef::Tar_Update(void)
 			
 			AutoShoot();
 			
-			if(D12_FwdNum==6)
+			if(D12_FwdNum==4)
 			{
 				Place_XShoot();
 			}
@@ -615,7 +615,7 @@ void Clamp_classdef::Init(void)
 		switch (step)
 		{
 			case 0:
-				if(D12_FwdNum==6)
+				if(D12_FwdNum==4)
 				{
 					Tar_Ring = Tar_Mid;
 				}
@@ -870,7 +870,7 @@ void Clamp_classdef::Place_NoShoot(void)
 	if(yuntai_kedong && xuandian_flag)
 	{
 		Shoot.Pull_Move(Tar_Ring);
-		Shoot.Set_ShootServo(Tar_Ring);
+//		Shoot.Set_ShootServo(Tar_Ring);
 		Gimbal.TarPos_Move(Tar_Ring);
 		Shoot.Pull_Move(Tar_Ring);
 	}
@@ -947,11 +947,11 @@ void Clamp_classdef::Place_NoShoot(void)
 						Place_Flag = 0;
 						now_place = UseTarget[2];
 						HAL_GPIO_WritePin(GPIOD, GPIO_PIN_13, GPIO_PIN_SET);
-						if(D12_FwdNum<5){D12_SetTime=1;if(D12_FwdNum==4){DRF1609H.DRF_page1Flag=10;}}
+						if(D12_FwdNum<3){D12_SetTime=1;if(D12_FwdNum==2){DRF1609H.DRF_page1Flag=10;}}
 						else 
 						{
 							D12_SetTime=0;
-							D12_FwdNum=6;
+							D12_FwdNum=4;
 						}
 				}
 				break;
@@ -975,9 +975,9 @@ void Clamp_classdef::Place_XShoot(void)
 	if(yuntai_kedong && xuandian_flag)
 	{
 		Shoot.Pull_Move(Tar_Ring);
-		Shoot.Set_ShootServo(Tar_Ring);
+//		Shoot.Set_ShootServo(Tar_Ring);
 		Gimbal.TarPos_Move(Tar_Ring);
-		Shoot.Pull_Move(Tar_Ring);
+//		Shoot.Pull_Move(Tar_Ring);
 	}
 
 	if(Place_Flag)
@@ -1132,11 +1132,11 @@ void Clamp_classdef::Place_TrueNoShoot(void)
 						Place_Flag = 0;
 						now_place = UseTarget[2];
 						HAL_GPIO_WritePin(GPIOD, GPIO_PIN_13, GPIO_PIN_SET);
-						if(D12_FwdNum<5){D12_SetTime=1;if(D12_FwdNum==4){DRF1609H.DRF_page1Flag=10;}}
+						if(D12_FwdNum<3){D12_SetTime=1;if(D12_FwdNum==2){DRF1609H.DRF_page1Flag=10;}}
 						else 
 						{
 							D12_SetTime=0;
-							D12_FwdNum=6;
+							D12_FwdNum=4;
 						}
 				break;
 
@@ -1201,7 +1201,7 @@ void Clamp_classdef::Place_PickShoot(void)
 						now_place_pickshoot = 0;
 						now_place_pickshoot = UseTarget[2];
 						HAL_GPIO_WritePin(GPIOD, GPIO_PIN_13, GPIO_PIN_SET);
-						D12_FwdNum=6;
+						D12_FwdNum=4;
 //						if(D12_FwdNum<5){D12_SetTime=1;if(D12_FwdNum==4){DRF1609H.DRF_page1Flag=10;}}
 //						else 
 //						{
