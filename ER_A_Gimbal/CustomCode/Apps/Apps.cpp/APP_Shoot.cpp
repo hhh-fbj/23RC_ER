@@ -71,32 +71,32 @@ Shoot_classdef::Shoot_classdef()
 	Param.Servo_Mid_OverPos = 3045;
 
 	//0
-	Param.Pull_TarError[0][0]=3559067+120000+130000;
-	Param.Pull_TarError[0][1]=3565900+120000+120000;
+	Param.Pull_TarError[0][0]=0;//3559067+120000+130000;
+	Param.Pull_TarError[0][1]=0;//3565900+120000+120000;
 	//1
-	Param.Pull_TarError[1][0]=3348766;//20000;
-	Param.Pull_TarError[1][1]=3352062;//20000;
+	Param.Pull_TarError[1][0]=3300000;//20000;
+	Param.Pull_TarError[1][1]=3300000;//20000;
 	//2
-	Param.Pull_TarError[2][0]=3197529;//1720136;
-	Param.Pull_TarError[2][1]=3203395;//1720741;
+	Param.Pull_TarError[2][0]=3120000;//1720136;
+	Param.Pull_TarError[2][1]=3120000;//1720741;
 	//3
-	Param.Pull_TarError[3][0]=3379021;
-	Param.Pull_TarError[3][1]=3379480;
+	Param.Pull_TarError[3][0]=3230000;
+	Param.Pull_TarError[3][1]=3230000;
 	//4
-	Param.Pull_TarError[4][0]=3876606+80000;//242561;
-	Param.Pull_TarError[4][1]=3878265+80000;//244171;
+	Param.Pull_TarError[4][0]=3560000;//242561;
+	Param.Pull_TarError[4][1]=3560000;//244171;
 	//5
-	Param.Pull_TarError[5][0]=3974902;//209019;
-	Param.Pull_TarError[5][1]=3977721;//208879;
+	Param.Pull_TarError[5][0]=3480000;//209019;
+	Param.Pull_TarError[5][1]=3480000;//208879;
 	//6
-	Param.Pull_TarError[6][0]=3559067+120000+130000;//2581724;
-	Param.Pull_TarError[6][1]=3565900+120000+120000;//2584193;
+	Param.Pull_TarError[6][0]=3410000;//2581724;
+	Param.Pull_TarError[6][1]=3410000;//2584193;
 	//7
-	Param.Pull_TarError[7][0]=4111704+80000+60000+150000;//3145004;
-	Param.Pull_TarError[7][1]=4109631+80000+70000+150000;//3140182;
+	Param.Pull_TarError[7][0]=4040000;//3145004;
+	Param.Pull_TarError[7][1]=4040000;//3140182;
 	//8
-	Param.Pull_TarError[8][0]=4078258+80000+100000+150000;//3107017;
-	Param.Pull_TarError[8][1]=4077711+80000+100000+150000;//3103687;		
+	Param.Pull_TarError[8][0]=3910000;//3107017;
+	Param.Pull_TarError[8][1]=3910000;//3103687;		
 	Shoot_Servo_Mid.Tyg=1;
 }
 
@@ -749,36 +749,36 @@ bool Shoot_classdef::Pull_Move(Tar_Select_e pos)
 				clamp_pos_R = Param.Pull_TarError[0][1];//+70000;
 			break;
 			case Tar_LTen:
-				clamp_pos_L = Param.Pull_TarError[1][0];//+50000;
-				clamp_pos_R = Param.Pull_TarError[1][1];//+50000;
+				clamp_pos_L = Param.Pull_TarError[1][0]+PullRevise[1][0];//+50000;
+				clamp_pos_R = Param.Pull_TarError[1][1]+PullRevise[1][1];//+50000;
 			break;
 			case Tar_MTen:
-				clamp_pos_L = Param.Pull_TarError[2][0];//+50000;//一1720136;//1680136;
-				clamp_pos_R = Param.Pull_TarError[2][1];//+50000;//一1720741;//1680741;
+				clamp_pos_L = Param.Pull_TarError[2][0]+PullRevise[2][0];//+50000;//一1720136;//1680136;
+				clamp_pos_R = Param.Pull_TarError[2][1]+PullRevise[2][1];//+50000;//一1720741;//1680741;
 			break;
 			case Tar_RTen:
-				clamp_pos_L = Param.Pull_TarError[3][0];//+50000;
-				clamp_pos_R = Param.Pull_TarError[3][1];//+50000;
+				clamp_pos_L = Param.Pull_TarError[3][0]+PullRevise[3][0];;//+50000;
+				clamp_pos_R = Param.Pull_TarError[3][1]+PullRevise[3][1];//+50000;
 			break;
 			case Tar_LThirty:
-				clamp_pos_L = Param.Pull_TarError[4][0];//+50000;
-				clamp_pos_R = Param.Pull_TarError[4][1];//+50000;
+				clamp_pos_L = Param.Pull_TarError[4][0]+PullRevise[4][0];;//+50000;
+				clamp_pos_R = Param.Pull_TarError[4][1]+PullRevise[4][1];//+50000;
 			break;
 			case Tar_RThirty:
-				clamp_pos_L = Param.Pull_TarError[5][0];//+50000;
-				clamp_pos_R = Param.Pull_TarError[5][1];//+50000;
+				clamp_pos_L = Param.Pull_TarError[5][0]+PullRevise[5][0];;//+50000;
+				clamp_pos_R = Param.Pull_TarError[5][1]+PullRevise[5][1];//+50000;
 			break;
 			case Tar_MSeventy:
-				clamp_pos_L = Param.Pull_TarError[6][0];//+50000;//一2581724;
-				clamp_pos_R = Param.Pull_TarError[6][1];//+50000;//一2584193;
+				clamp_pos_L = Param.Pull_TarError[6][0]+PullRevise[6][0];;//+50000;//一2581724;
+				clamp_pos_R = Param.Pull_TarError[6][1]+PullRevise[6][1];//+50000;//一2584193;
 			break;
 			case Tar_DLThirty:
-				clamp_pos_L = Param.Pull_TarError[7][0];//+50000;//3105004;//3145322;
-				clamp_pos_R = Param.Pull_TarError[7][1];//+50000;//3100182;//3128846;
+				clamp_pos_L = Param.Pull_TarError[7][0]+PullRevise[7][0];;//+50000;//3105004;//3145322;
+				clamp_pos_R = Param.Pull_TarError[7][1]+PullRevise[7][1];//+50000;//3100182;//3128846;
 			break;
 			case Tar_DRThirty:
-				clamp_pos_L = Param.Pull_TarError[8][0];//+130000;//3067017;
-				clamp_pos_R = Param.Pull_TarError[8][1];//+130000;//3073687;
+				clamp_pos_L = Param.Pull_TarError[8][0]+PullRevise[8][0];;//+130000;//3067017;
+				clamp_pos_R = Param.Pull_TarError[8][1]+PullRevise[8][1];//+130000;//3073687;
 			break;
 			
 			case Tar_MTwenty_Five:
@@ -874,6 +874,72 @@ bool Shoot_classdef::Set_Shoot(bool shoot)
 //			}
 			return false;
 		}
+		
+//		if(shoot)//发射
+//		{
+//			AddAngle = Param.Shoot_Speed;
+//			//消抖
+//			//一圈+500容差
+//			if((A2 == GPIO_PIN_SET  &&\
+//			(Shoot_Motor.get_totalencoder() > stop_shoot+Param.Shoot_Circle/2))||\
+//			Shoot_Motor.get_totalencoder()>(stop_shoot+Param.Shoot_Circle+800))
+//			{
+//				stop_time++;
+//			}
+//			else if(shoot_tin==0 && shoot_qianjin==0)
+//			{
+//				stop_time = 0;
+//				return false;
+//			}
+//			
+//			if(stop_time>Param.Shoot_StopTime && shoot_tin==0)
+//			{
+//				stop_shoot = Shoot_TarAngle = Shoot_Motor.get_totalencoder();
+//				shoot_tin=1;
+//				AddAngle = 0;
+//				return false;
+//			}
+//			
+//			if(shoot_tin)
+//			{
+//				AddAngle = 0;
+//				tin_time++;
+//				if(tin_time>=150)
+//				{
+//					shoot_qianjin=1;
+//				}
+//			}
+//			
+//			if(shoot_qianjin)
+//			{
+//				if(Shoot_TarAngle >= stop_shoot+108292+Param.Shoot_Speed)
+//				{
+//					AddAngle = -Param.Shoot_Speed;
+//					return false;
+//				}
+//				else if(Shoot_TarAngle <= stop_shoot+108292-Param.Shoot_Speed)
+//				{
+//					AddAngle = Param.Shoot_Speed;
+//					return false;
+//				}
+//				else
+//				{
+//					AddAngle = 0;
+//					Shoot_TarAngle = stop_shoot+108292;
+
+//					if(abs(Shoot_Motor.get_totalencoder() - (stop_shoot+108292)) < Param.Shoot_ErrorPos)
+//					{
+//						tin_time=0;
+//						shoot_tin=0;
+//						stop_time = 0;
+//						shoot_qianjin=0;
+//						return true;
+//					}
+//					return false;
+//				}
+//			}
+//			return false;
+//		}
 		else//停到某个位置——二代可以不用但需要修改发射因为检测冲突
 		{
 			if(Shoot_TarAngle >= stop_shoot+Param.Shoot_Hold+Param.Shoot_Speed)

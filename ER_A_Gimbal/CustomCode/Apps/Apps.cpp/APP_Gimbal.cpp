@@ -60,15 +60,24 @@ Gimbal_classdef::Gimbal_classdef()
 	Param.Yaw_TurnAngle = 1;//455.11111111111111111111111111111;
 	
 	//左为正，右为负
+//	Param.Yaw_TarError[0] = 0.0f;
+//	Param.Yaw_TarError[1] = 31276+400;
+//	Param.Yaw_TarError[2] = 6;
+//	Param.Yaw_TarError[3] = -31636;
+//	Param.Yaw_TarError[4] = 10096;
+//	Param.Yaw_TarError[5] = -10578+225;                                                                                                 ;
+//	Param.Yaw_TarError[6] = -358+270;
+//	Param.Yaw_TarError[7] = 5596+300-400+405;
+//	Param.Yaw_TarError[8] = -6100+200-200+405;
 	Param.Yaw_TarError[0] = 0.0f;
-	Param.Yaw_TarError[1] = 31276+400;
+	Param.Yaw_TarError[1] = 31656;
 	Param.Yaw_TarError[2] = 6;
 	Param.Yaw_TarError[3] = -31636;
 	Param.Yaw_TarError[4] = 10096;
-	Param.Yaw_TarError[5] = -10578;                                                                                                 ;
-	Param.Yaw_TarError[6] = -358+270;
-	Param.Yaw_TarError[7] = 5596+300-400;
-	Param.Yaw_TarError[8] = -6100+200-200;
+	Param.Yaw_TarError[5] = -10353;                                                                                                 ;
+	Param.Yaw_TarError[6] = -88;
+	Param.Yaw_TarError[7] = 5901;
+	Param.Yaw_TarError[8] = -5695;
 
 }
 /**
@@ -508,28 +517,28 @@ bool Gimbal_classdef::TarPos_Move(Tar_Select_e angle)
 			clamp_angle = Param.Yaw_TarError[0];
 		break;
 		case Tar_LTen:
-			clamp_angle = Param.Yaw_TarError[1];//215218-183685;//31677-455;//67.11341748046875f;
+			clamp_angle = Param.Yaw_TarError[1]+YawRevise[1];//215218-183685;//31677-455;//67.11341748046875f;
 		break;
 		case Tar_MTen:
-			clamp_angle = Param.Yaw_TarError[2];
+			clamp_angle = Param.Yaw_TarError[2]+YawRevise[2];
 		break;
 		case Tar_RTen:
-			clamp_angle = Param.Yaw_TarError[3];//-31324-455;//-66.982201171875f;
+			clamp_angle = Param.Yaw_TarError[3]+YawRevise[3];//-31324-455;//-66.982201171875f;
 		break;
 		case Tar_LThirty:
-			clamp_angle = Param.Yaw_TarError[4];//+100;//10393-455;//21.93983349609375f;
+			clamp_angle = Param.Yaw_TarError[4]+YawRevise[4];//+100;//10393-455;//21.93983349609375f;
 		break;
 		case Tar_RThirty:
-			clamp_angle = Param.Yaw_TarError[5];//-100;//-9904-455;//21.91099658203125f;
+			clamp_angle = Param.Yaw_TarError[5]+YawRevise[5];//-100;//-9904-455;//21.91099658203125f;
 		break;
 		case Tar_MSeventy:
-			clamp_angle = Param.Yaw_TarError[6];
+			clamp_angle = Param.Yaw_TarError[6]+YawRevise[6];
 		break;
 		case Tar_DLThirty:
-			clamp_angle = Param.Yaw_TarError[7];//6043-455;
+			clamp_angle = Param.Yaw_TarError[7]+YawRevise[7];//6043-455;
 		break;
 		case Tar_DRThirty:
-			clamp_angle = Param.Yaw_TarError[8];//-5552-455;
+			clamp_angle = Param.Yaw_TarError[8]+YawRevise[8];//-5552-455;
 		break;
 		case Tar_MTwenty_Five:
 			clamp_angle = 0.0f;

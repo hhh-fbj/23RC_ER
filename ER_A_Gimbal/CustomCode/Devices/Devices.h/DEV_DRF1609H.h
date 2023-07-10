@@ -3,7 +3,7 @@
 
 #include <stdint.h>
 
-#define DRF_REC_SIZE 6
+#define DRF_REC_SIZE 19
 #define DRF_SEN_SIZE 7
 
 

@@ -43,7 +43,7 @@ void Task_Vision(void *argument)
 //	if(DRF1609H.DRF_page1Flag){DRF1609H.DRF_page1Flag--;DRF1609H.DRT_Printf("page page1");}
 //	else if(DRF1609H.DRF_page0Flag){DRF1609H.DRF_page0Flag--;DRF1609H.DRT_Printf("page page0");}
 //	if(DRF1609H.DRF_shejijieshuFlag){DRF1609H.DRF_shejijieshuFlag--;DRF1609H.DRT_Printf("t1.txt=\"无\"");}
-//  DRF1609H.DRT_Printf("n0.val++");
+  DRF1609H.DRT_Printf("n0.val++");
   vTaskDelayUntil(&xLastWakeTime, TimeIncrement);
   }
 }

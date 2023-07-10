@@ -463,13 +463,13 @@ void Chassis_classdef::ChassisTar_Update()
 							zhongjin_zhu_houtui_x=Auto.Posture.POS_X();
 							zhongjin_zhu_houtui_y=Auto.Posture.POS_Y();
 							zhongjin_zhu_houtui_z=Auto.Posture.POS_W();
-							Process(0,1200,0);
+							Process(0,1500,0);
 						}
 						else
 						{
 							POS_PID[Posture_W][PID_Outer].Target = zhongjin_zhu_houtui_z;
 							POS_PID[Posture_W][PID_Outer].Current = Auto.Posture.POS_W();
-							Process(0,1200,POS_PID[Posture_W][PID_Outer].Cal());
+							Process(0,1500,POS_PID[Posture_W][PID_Outer].Cal());
 						}
 						
 					}
